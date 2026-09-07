@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luyện Viết Chữ Hán - Thống Kê Từ Vựng</title>
+  <title>Biên phiên dịch by QuyKy</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root {
@@ -32,14 +32,47 @@
       text-align: center;
       box-sizing: border-box;
     }
+
+    /* Bộ lọc theo bài, thứ tự và số lượng */
+    .filter-panel {
+      display: flex;
+      gap: 12px;
+      background: #f1f5f9;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .filter-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .filter-item label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .filter-item select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+    }
+
     .vietnamese-prompt {
       font-size: 24px;
       font-weight: bold;
       color: #1e293b;
       margin-bottom: 8px;
     }
-    
-    /* Khu vực nút và gợi ý Pinyin */
+
+    /* Pinyin toggle */
     .pinyin-container {
       margin-bottom: 20px;
       min-height: 28px;
@@ -56,19 +89,16 @@
       padding: 4px 10px;
       border-radius: 6px;
       cursor: pointer;
-      transition: all 0.2s;
     }
-    .btn-toggle-pinyin:hover {
-      background: #e2e8f0;
-      color: #0f172a;
-    }
+    .btn-toggle-pinyin:hover { background: #e2e8f0; }
     .pinyin-hint {
       font-size: 16px;
       color: #0284c7;
       font-weight: 600;
-      display: none; /* Mặc định ẩn */
+      display: none;
     }
 
+    /* Canvas vẽ chữ Hán */
     .boxes-container {
       display: flex;
       flex-wrap: wrap;
@@ -94,15 +124,11 @@
         linear-gradient(to right, transparent calc(50% - 0.5px), #e2e8f0 50%, transparent calc(50% + 0.5px)),
         linear-gradient(to bottom, transparent calc(50% - 0.5px), #e2e8f0 50%, transparent calc(50% + 0.5px));
       touch-action: none;
-      transition: border-color 0.2s;
     }
     .canvas-container.correct { border-color: var(--success); background-color: #f0fdf4; }
     .canvas-container.wrong { border-color: var(--error); }
-    canvas {
-      width: 100%;
-      height: 100%;
-      cursor: crosshair;
-    }
+    canvas { width: 100%; height: 100%; cursor: crosshair; }
+    
     .btn-clear-single {
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
@@ -112,6 +138,8 @@
       padding: 4px 8px;
       cursor: pointer;
     }
+
+    /* Nút bấm điều khiển */
     .button-group {
       display: flex;
       gap: 10px;
@@ -139,6 +167,7 @@
     .msg-correct { color: var(--success); }
     .msg-wrong { color: var(--error); }
 
+    /* Thống kê từ */
     .lists-container {
       display: flex;
       gap: 16px;
@@ -164,20 +193,43 @@
     }
     .correct-box .list-title { color: var(--success); }
     .wrong-box .list-title { color: var(--error); }
-    .word-item {
-      padding: 4px 0;
-      border-bottom: 1px dashed rgba(0,0,0,0.06);
-    }
+    .word-item { padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.06); }
     .word-item:last-child { border-bottom: none; }
-    .word-item strong { font-size: 15px; }
   </style>
 </head>
 <body>
 
   <div class="card">
+    <!-- Bộ lọc bài học -->
+    <div class="filter-panel">
+      <div class="filter-item">
+        <label>Chọn bài:</label>
+        <select id="lessonFilter" onchange="applyFilters()">
+          <option value="all">Tất cả các bài</option>
+        </select>
+      </div>
+
+      <div class="filter-item">
+        <label>Thứ tự:</label>
+        <select id="modeFilter" onchange="applyFilters()">
+          <option value="order">Tuần tự</option>
+          <option value="random">Ngẫu nhiên</option>
+        </select>
+      </div>
+
+      <div class="filter-item">
+        <label>Số lượng:</label>
+        <select id="limitFilter" onchange="applyFilters()">
+          <option value="all">Tất cả</option>
+          <option value="10">10 từ</option>
+          <option value="20">20 từ</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Hiển thị câu hỏi -->
     <div class="vietnamese-prompt" id="prompt-vn">Đang tải danh sách từ vựng...</div>
     
-    <!-- Khu vực Pinyin ẩn kèm nút bật/tắt -->
     <div class="pinyin-container">
       <button class="btn-toggle-pinyin" id="btn-toggle-pinyin" onclick="togglePinyin()">👁 Xem gợi ý Pinyin</button>
       <span class="pinyin-hint" id="prompt-pinyin"></span>
@@ -188,32 +240,28 @@
     <div class="button-group">
       <button class="main-btn btn-clear-all" onclick="clearAllBoxes()">Xóa hết</button>
       <button class="main-btn btn-check" onclick="checkAllBoxes()">Kiểm tra</button>
-      <button class="main-btn btn-next" id="btn-next" onclick="nextWord(false)">Từ tiếp theo ➔</button>
+      <button class="main-btn btn-next" id="btn-next" onclick="nextWord()">Từ tiếp theo ➔</button>
     </div>
 
     <div id="result-msg"></div>
 
+    <!-- Bảng phân loại Đúng / Sai -->
     <div class="lists-container">
       <div class="list-box correct-box">
-        <div class="list-title">
-          <span>Đã nhớ (Đúng)</span>
-          <span id="correct-count">0</span>
-        </div>
+        <div class="list-title"><span>Đã thuộc</span><span id="correct-count">0</span></div>
         <div id="correct-list"></div>
       </div>
 
       <div class="list-box wrong-box">
-        <div class="list-title">
-          <span>Cần ôn lại (Sai/Bỏ qua)</span>
-          <span id="wrong-count">0</span>
-        </div>
+        <div class="list-title"><span>Cần ôn lại</span><span id="wrong-count">0</span></div>
         <div id="wrong-list"></div>
       </div>
     </div>
   </div>
 
   <script>
-    let wordList = [];
+    let allWords = [];
+    let activeWords = [];
     let currentIndex = 0;
     let canvasInstances = [];
     let isPinyinVisible = false;
@@ -224,17 +272,17 @@
     async function autoLoadExcel() {
       try {
         const response = await fetch("words.xlsx?t=" + new Date().getTime());
-        if (!response.ok) throw new Error("Chưa thấy file words.xlsx");
+        if (!response.ok) throw new Error("Chưa thấy words.xlsx");
         
         const arrayBuffer = await response.arrayBuffer();
         const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: "array" });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
+        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
         const rawData = XLSX.utils.sheet_to_json(worksheet);
 
         if (rawData && rawData.length > 0) {
-          wordList = rawData;
-          loadWord(0);
+          allWords = rawData;
+          setupLessonDropdown();
+          applyFilters();
         } else {
           document.getElementById("prompt-vn").innerText = "File words.xlsx không có dữ liệu!";
         }
@@ -244,12 +292,54 @@
       }
     }
 
-    function loadWord(index) {
-      if (wordList.length === 0) return;
-      const item = wordList[index];
-      document.getElementById("prompt-vn").innerText = `Viết từ: "${item.vn}"`;
+    // Tự động tìm các bài học có trong Excel đổ vào Dropdown
+    function setupLessonDropdown() {
+      const select = document.getElementById("lessonFilter");
+      const lessons = [...new Set(allWords.map(w => w.lesson).filter(Boolean))];
       
-      // Đưa Pinyin về trạng thái ẩn mặc định cho từ mới
+      select.innerHTML = '<option value="all">Tất cả các bài</option>';
+      lessons.forEach(l => {
+        select.innerHTML += `<option value="${l}">${l}</option>`;
+      });
+    }
+
+    // Áp dụng bộ lọc bài học / ngẫu nhiên / số lượng
+    function applyFilters() {
+      const selectedLesson = document.getElementById("lessonFilter").value;
+      const selectedMode = document.getElementById("modeFilter").value;
+      const selectedLimit = document.getElementById("limitFilter").value;
+
+      let filtered = selectedLesson === "all" 
+        ? [...allWords] 
+        : allWords.filter(w => String(w.lesson) === selectedLesson);
+
+      if (selectedMode === "random") {
+        filtered.sort(() => Math.random() - 0.5);
+      }
+
+      if (selectedLimit !== "all") {
+        const limit = parseInt(selectedLimit, 10);
+        filtered = filtered.slice(0, limit);
+      }
+
+      activeWords = filtered;
+      currentIndex = 0;
+
+      if (activeWords.length === 0) {
+        document.getElementById("prompt-vn").innerText = "Không tìm thấy từ vựng nào trong bài này!";
+        document.getElementById("boxesContainer").innerHTML = "";
+        return;
+      }
+
+      loadWord(currentIndex);
+    }
+
+    function loadWord(index) {
+      if (activeWords.length === 0) return;
+      const item = activeWords[index];
+      const lessonTag = item.lesson ? `[${item.lesson}] ` : "";
+      document.getElementById("prompt-vn").innerText = `${lessonTag}Viết từ: "${item.vn || ''}"`;
+      
       const pinyinEl = document.getElementById("prompt-pinyin");
       pinyinEl.innerText = `[ ${item.pinyin || ""} ]`;
       pinyinEl.style.display = "none";
@@ -262,19 +352,12 @@
       setupCanvasBoxes(String(item.hanzi).trim());
     }
 
-    // Bật / tắt hiển thị Pinyin
     function togglePinyin() {
       const pinyinEl = document.getElementById("prompt-pinyin");
       const toggleBtn = document.getElementById("btn-toggle-pinyin");
       isPinyinVisible = !isPinyinVisible;
-
-      if (isPinyinVisible) {
-        pinyinEl.style.display = "inline";
-        toggleBtn.innerText = "🙈 Ẩn Pinyin";
-      } else {
-        pinyinEl.style.display = "none";
-        toggleBtn.innerText = "👁 Xem gợi ý Pinyin";
-      }
+      pinyinEl.style.display = isPinyinVisible ? "inline" : "none";
+      toggleBtn.innerText = isPinyinVisible ? "🙈 Ẩn Pinyin" : "👁 Xem gợi ý Pinyin";
     }
 
     function setupCanvasBoxes(hanziWord) {
@@ -284,7 +367,6 @@
 
       for (let i = 0; i < hanziWord.length; i++) {
         const char = hanziWord[i];
-
         const wrapper = document.createElement("div");
         wrapper.className = "box-wrapper";
 
@@ -312,16 +394,9 @@
         ctx.strokeStyle = "#1e293b";
 
         const state = {
-          charTarget: char,
-          canvas: canvas,
-          ctx: ctx,
-          container: canvasBox,
-          strokes: [],
-          currentStrokeX: [],
-          currentStrokeY: [],
-          currentStrokeT: [],
-          isDrawing: false,
-          strokeStartTime: 0
+          charTarget: char, canvas, ctx, container: canvasBox,
+          strokes: [], currentStrokeX: [], currentStrokeY: [], currentStrokeT: [],
+          isDrawing: false, strokeStartTime: 0
         };
 
         initDrawingEvents(state);
@@ -331,15 +406,11 @@
 
     function initDrawingEvents(state) {
       const { canvas, ctx } = state;
-
       function getCoords(e) {
         const rect = canvas.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        return [
-          Math.round(clientX - rect.left),
-          Math.round(clientY - rect.top)
-        ];
+        return [Math.round(clientX - rect.left), Math.round(clientY - rect.top)];
       }
 
       function startStroke(e) {
@@ -348,7 +419,6 @@
         const [x, y] = getCoords(e);
         ctx.beginPath();
         ctx.moveTo(x, y);
-
         state.currentStrokeX = [x];
         state.currentStrokeY = [y];
         state.currentStrokeT = [0];
@@ -360,7 +430,6 @@
         const [x, y] = getCoords(e);
         ctx.lineTo(x, y);
         ctx.stroke();
-
         state.currentStrokeX.push(x);
         state.currentStrokeY.push(y);
         state.currentStrokeT.push(Date.now() - state.strokeStartTime);
@@ -375,7 +444,6 @@
       canvas.addEventListener("mousedown", startStroke);
       canvas.addEventListener("mousemove", moveStroke);
       window.addEventListener("mouseup", endStroke);
-
       canvas.addEventListener("touchstart", startStroke, { passive: false });
       canvas.addEventListener("touchmove", moveStroke, { passive: false });
       window.addEventListener("touchend", endStroke);
@@ -389,29 +457,18 @@
     }
 
     function clearAllBoxes() {
-      for (let i = 0; i < canvasInstances.length; i++) {
-        clearSingleBox(i);
-      }
+      for (let i = 0; i < canvasInstances.length; i++) clearSingleBox(i);
       document.getElementById("result-msg").innerText = "";
-      document.getElementById("result-msg").className = "";
     }
 
     async function recognizeChar(strokes) {
       if (!strokes || strokes.length === 0) return [];
-
       const payload = {
-        app_version: 0.4,
-        api_level: "537.36",
-        device: "5.0",
-        input_type: "0",
-        options: "enable_pre_space",
+        app_version: 0.4, api_level: "537.36", device: "5.0", input_type: "0", options: "enable_pre_space",
         requests: [{
           writing_guide: { writing_area_width: 180, writing_area_height: 180 },
-          pre_context: "",
-          max_num_results: 10,
-          max_completions: 0,
-          language: "zh-t-i0-handwrit",
-          ink: strokes
+          pre_context: "", max_num_results: 10, max_completions: 0,
+          language: "zh-t-i0-handwrit", ink: strokes
         }]
       };
 
@@ -422,13 +479,10 @@
           body: JSON.stringify(payload)
         });
         const data = await response.json();
-        if (data[0] === "SUCCESS") {
-          return data[1][0][1];
-        }
+        return data[0] === "SUCCESS" ? data[1][0][1] : [];
       } catch (err) {
-        console.error(err);
+        return [];
       }
-      return [];
     }
 
     async function checkAllBoxes() {
@@ -441,7 +495,6 @@
 
       for (let i = 0; i < canvasInstances.length; i++) {
         const state = canvasInstances[i];
-
         if (state.strokes.length === 0) {
           state.container.classList.add("wrong");
           emptyFound = true;
@@ -450,7 +503,6 @@
         }
 
         const candidates = await recognizeChar(state.strokes);
-
         if (candidates.includes(state.charTarget)) {
           state.container.classList.remove("wrong");
           state.container.classList.add("correct");
@@ -461,7 +513,7 @@
         }
       }
 
-      const currentWord = wordList[currentIndex];
+      const currentWord = activeWords[currentIndex];
 
       if (emptyFound) {
         resultMsg.className = "msg-wrong";
@@ -473,7 +525,7 @@
         recordWord(currentWord, true);
       } else {
         resultMsg.className = "msg-wrong";
-        resultMsg.innerText = "Có chữ chưa đúng (viền đỏ). Bạn có thể xem Pinyin gợi ý hoặc thử lại!";
+        resultMsg.innerText = "Có chữ chưa đúng (ô viền đỏ). Bạn có thể xem gợi ý Pinyin!";
         recordWord(currentWord, false);
       }
     }
@@ -484,9 +536,7 @@
         memorizedWords.set(key, wordObj);
         needReviewWords.delete(key);
       } else {
-        if (!memorizedWords.has(key)) {
-          needReviewWords.set(key, wordObj);
-        }
+        if (!memorizedWords.has(key)) needReviewWords.set(key, wordObj);
       }
       renderWordLists();
     }
@@ -507,16 +557,15 @@
       document.getElementById("wrong-count").innerText = needReviewWords.size;
     }
 
-    function nextWord(isSkip = false) {
-      if (wordList.length === 0) return;
-
-      const currentWord = wordList[currentIndex];
+    function nextWord() {
+      if (activeWords.length === 0) return;
+      const currentWord = activeWords[currentIndex];
       if (!memorizedWords.has(currentWord.hanzi) && !needReviewWords.has(currentWord.hanzi)) {
         needReviewWords.set(currentWord.hanzi, currentWord);
         renderWordLists();
       }
 
-      currentIndex = (currentIndex + 1) % wordList.length;
+      currentIndex = (currentIndex + 1) % activeWords.length;
       loadWord(currentIndex);
     }
 
