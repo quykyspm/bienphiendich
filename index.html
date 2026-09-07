@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luyện Viết Chữ Hán - Tự Động Nạp Từ</title>
+  <title>Luyện Viết Chữ Hán - Thống Kê Từ Vựng</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root {
@@ -88,7 +88,7 @@
     }
     .button-group {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       margin-top: 10px;
     }
     button.main-btn {
@@ -96,13 +96,14 @@
       padding: 12px 0;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
     }
     .btn-check { background: var(--primary); color: white; }
     .btn-clear-all { background: #e2e8f0; color: #334155; }
-    .btn-next { background: #0f172a; color: white; display: none; margin-top: 15px; width: 100%; }
+    .btn-next { background: #0f172a; color: white; }
+    
     #result-msg {
       margin-top: 16px;
       font-size: 16px;
@@ -111,12 +112,45 @@
     }
     .msg-correct { color: var(--success); }
     .msg-wrong { color: var(--error); }
+
+    /* Khu vực bảng phân loại từ đã nhớ / từ sai */
+    .lists-container {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      text-align: left;
+    }
+    .list-box {
+      flex: 1;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid #e2e8f0;
+    }
+    .correct-box { background: #f0fdf4; border-color: #bbf7d0; }
+    .wrong-box { background: #fef2f2; border-color: #fecaca; }
+    .list-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .correct-box .list-title { color: var(--success); }
+    .wrong-box .list-title { color: var(--error); }
+    .word-item {
+      padding: 4px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.06);
+    }
+    .word-item:last-child { border-bottom: none; }
+    .word-item strong { font-size: 15px; }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <div class="vietnamese-prompt" id="prompt-vn">Đang đọc danh sách từ vựng...</div>
+    <div class="vietnamese-prompt" id="prompt-vn">Đang tải danh sách từ vựng...</div>
     <div class="pinyin-hint" id="prompt-pinyin"></div>
 
     <div class="boxes-container" id="boxesContainer"></div>
@@ -124,10 +158,29 @@
     <div class="button-group">
       <button class="main-btn btn-clear-all" onclick="clearAllBoxes()">Xóa hết</button>
       <button class="main-btn btn-check" onclick="checkAllBoxes()">Kiểm tra</button>
+      <button class="main-btn btn-next" id="btn-next" onclick="nextWord(false)">Từ tiếp theo ➔</button>
     </div>
 
     <div id="result-msg"></div>
-    <button class="main-btn btn-next" id="btn-next" onclick="nextWord()">Từ tiếp theo ➔</button>
+
+    <!-- Bảng hiển thị danh sách phân loại từ vựng -->
+    <div class="lists-container">
+      <div class="list-box correct-box">
+        <div class="list-title">
+          <span>Đã nhớ (Đúng)</span>
+          <span id="correct-count">0</span>
+        </div>
+        <div id="correct-list"></div>
+      </div>
+
+      <div class="list-box wrong-box">
+        <div class="list-title">
+          <span>Cần ôn lại (Sai/Bỏ qua)</span>
+          <span id="wrong-count">0</span>
+        </div>
+        <div id="wrong-list"></div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -135,11 +188,14 @@
     let currentIndex = 0;
     let canvasInstances = [];
 
-    // Tự động tải ngầm file words.xlsx khi mở trang web
+    // Bộ lưu trữ từ đã nhớ và từ cần ôn lại (lưu dạng Map để không trùng)
+    const memorizedWords = new Map();
+    const needReviewWords = new Map();
+
     async function autoLoadExcel() {
       try {
-        const response = await fetch("words.xlsx");
-        if (!response.ok) throw new Error("Không tìm thấy file words.xlsx");
+        const response = await fetch("words.xlsx?t=" + new Date().getTime());
+        if (!response.ok) throw new Error("Chưa thấy file words.xlsx");
         
         const arrayBuffer = await response.arrayBuffer();
         const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: "array" });
@@ -147,15 +203,15 @@
         const worksheet = workbook.Sheets[firstSheetName];
         const rawData = XLSX.utils.sheet_to_json(worksheet);
 
-        if (rawData.length > 0) {
+        if (rawData && rawData.length > 0) {
           wordList = rawData;
-          loadWord(currentIndex);
+          loadWord(0);
         } else {
           document.getElementById("prompt-vn").innerText = "File words.xlsx không có dữ liệu!";
         }
       } catch (err) {
         console.error(err);
-        document.getElementById("prompt-vn").innerText = "Lỗi: Không tìm thấy file words.xlsx trên GitHub!";
+        document.getElementById("prompt-vn").innerText = "Lỗi: Không tải được file words.xlsx!";
       }
     }
 
@@ -166,7 +222,6 @@
       document.getElementById("prompt-pinyin").innerText = `Pinyin: [ ${item.pinyin || ""} ]`;
       document.getElementById("result-msg").innerText = "";
       document.getElementById("result-msg").className = "";
-      document.getElementById("btn-next").style.display = "none";
 
       setupCanvasBoxes(String(item.hanzi).trim());
     }
@@ -328,7 +383,7 @@
     async function checkAllBoxes() {
       const resultMsg = document.getElementById("result-msg");
       resultMsg.className = "";
-      resultMsg.innerText = "Đang kiểm tra từng ô...";
+      resultMsg.innerText = "Đang kiểm tra nét viết...";
 
       let allCorrect = true;
       let emptyFound = false;
@@ -355,25 +410,69 @@
         }
       }
 
+      const currentWord = wordList[currentIndex];
+
       if (emptyFound) {
         resultMsg.className = "msg-wrong";
-        resultMsg.innerText = "Bạn chưa hoàn thành hết các chữ trong từ!";
+        resultMsg.innerText = "Bạn chưa viết đủ các chữ!";
+        recordWord(currentWord, false);
       } else if (allCorrect) {
         resultMsg.className = "msg-correct";
-        resultMsg.innerText = `Chính xác! (${wordList[currentIndex].hanzi})`;
-        document.getElementById("btn-next").style.display = "block";
+        resultMsg.innerText = `Chính xác! (${currentWord.hanzi})`;
+        recordWord(currentWord, true);
       } else {
         resultMsg.className = "msg-wrong";
-        resultMsg.innerText = "Có chữ chưa chính xác (ô viền đỏ). Vui lòng sửa lại!";
+        resultMsg.innerText = "Có chữ chưa đúng (viền đỏ). Bạn có thể thử lại hoặc bấm Từ tiếp theo!";
+        recordWord(currentWord, false);
       }
     }
 
-    function nextWord() {
+    // Cập nhật từ vào bảng Đúng hoặc Sai
+    function recordWord(wordObj, isCorrect) {
+      const key = wordObj.hanzi;
+      if (isCorrect) {
+        memorizedWords.set(key, wordObj);
+        needReviewWords.delete(key); // Xóa khỏi danh sách sai nếu đã nhớ đúng
+      } else {
+        if (!memorizedWords.has(key)) {
+          needReviewWords.set(key, wordObj);
+        }
+      }
+      renderWordLists();
+    }
+
+    function renderWordLists() {
+      // Danh sách đúng
+      const correctListEl = document.getElementById("correct-list");
+      correctListEl.innerHTML = "";
+      memorizedWords.forEach(w => {
+        correctListEl.innerHTML += `<div class="word-item"><strong>${w.hanzi}</strong> (${w.pinyin}): ${w.vn}</div>`;
+      });
+      document.getElementById("correct-count").innerText = memorizedWords.size;
+
+      // Danh sách sai / cần ôn
+      const wrongListEl = document.getElementById("wrong-list");
+      wrongListEl.innerHTML = "";
+      needReviewWords.forEach(w => {
+        wrongListEl.innerHTML += `<div class="word-item"><strong>${w.hanzi}</strong> (${w.pinyin}): ${w.vn}</div>`;
+      });
+      document.getElementById("wrong-count").innerText = needReviewWords.size;
+    }
+
+    function nextWord(isSkip = false) {
+      if (wordList.length === 0) return;
+
+      // Nếu bấm next khi chưa bấm kiểm tra và chưa thuộc từ này, đưa vào danh sách cần ôn
+      const currentWord = wordList[currentIndex];
+      if (!memorizedWords.has(currentWord.hanzi) && !needReviewWords.has(currentWord.hanzi)) {
+        needReviewWords.set(currentWord.hanzi, currentWord);
+        renderWordLists();
+      }
+
       currentIndex = (currentIndex + 1) % wordList.length;
       loadWord(currentIndex);
     }
 
-    // Tự động nạp khi vừa vào web
     autoLoadExcel();
   </script>
 </body>
