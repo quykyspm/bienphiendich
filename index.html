@@ -36,13 +36,39 @@
       font-size: 24px;
       font-weight: bold;
       color: #1e293b;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+    }
+    
+    /* Khu vực nút và gợi ý Pinyin */
+    .pinyin-container {
+      margin-bottom: 20px;
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-toggle-pinyin {
+      background: #f1f5f9;
+      border: 1px dashed #94a3b8;
+      color: #475569;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-toggle-pinyin:hover {
+      background: #e2e8f0;
+      color: #0f172a;
     }
     .pinyin-hint {
       font-size: 16px;
-      color: #64748b;
-      margin-bottom: 20px;
+      color: #0284c7;
+      font-weight: 600;
+      display: none; /* Mặc định ẩn */
     }
+
     .boxes-container {
       display: flex;
       flex-wrap: wrap;
@@ -113,7 +139,6 @@
     .msg-correct { color: var(--success); }
     .msg-wrong { color: var(--error); }
 
-    /* Khu vực bảng phân loại từ đã nhớ / từ sai */
     .lists-container {
       display: flex;
       gap: 16px;
@@ -151,7 +176,12 @@
 
   <div class="card">
     <div class="vietnamese-prompt" id="prompt-vn">Đang tải danh sách từ vựng...</div>
-    <div class="pinyin-hint" id="prompt-pinyin"></div>
+    
+    <!-- Khu vực Pinyin ẩn kèm nút bật/tắt -->
+    <div class="pinyin-container">
+      <button class="btn-toggle-pinyin" id="btn-toggle-pinyin" onclick="togglePinyin()">👁 Xem gợi ý Pinyin</button>
+      <span class="pinyin-hint" id="prompt-pinyin"></span>
+    </div>
 
     <div class="boxes-container" id="boxesContainer"></div>
 
@@ -163,7 +193,6 @@
 
     <div id="result-msg"></div>
 
-    <!-- Bảng hiển thị danh sách phân loại từ vựng -->
     <div class="lists-container">
       <div class="list-box correct-box">
         <div class="list-title">
@@ -187,8 +216,8 @@
     let wordList = [];
     let currentIndex = 0;
     let canvasInstances = [];
+    let isPinyinVisible = false;
 
-    // Bộ lưu trữ từ đã nhớ và từ cần ôn lại (lưu dạng Map để không trùng)
     const memorizedWords = new Map();
     const needReviewWords = new Map();
 
@@ -219,11 +248,33 @@
       if (wordList.length === 0) return;
       const item = wordList[index];
       document.getElementById("prompt-vn").innerText = `Viết từ: "${item.vn}"`;
-      document.getElementById("prompt-pinyin").innerText = `Pinyin: [ ${item.pinyin || ""} ]`;
+      
+      // Đưa Pinyin về trạng thái ẩn mặc định cho từ mới
+      const pinyinEl = document.getElementById("prompt-pinyin");
+      pinyinEl.innerText = `[ ${item.pinyin || ""} ]`;
+      pinyinEl.style.display = "none";
+      isPinyinVisible = false;
+      document.getElementById("btn-toggle-pinyin").innerText = "👁 Xem gợi ý Pinyin";
+
       document.getElementById("result-msg").innerText = "";
       document.getElementById("result-msg").className = "";
 
       setupCanvasBoxes(String(item.hanzi).trim());
+    }
+
+    // Bật / tắt hiển thị Pinyin
+    function togglePinyin() {
+      const pinyinEl = document.getElementById("prompt-pinyin");
+      const toggleBtn = document.getElementById("btn-toggle-pinyin");
+      isPinyinVisible = !isPinyinVisible;
+
+      if (isPinyinVisible) {
+        pinyinEl.style.display = "inline";
+        toggleBtn.innerText = "🙈 Ẩn Pinyin";
+      } else {
+        pinyinEl.style.display = "none";
+        toggleBtn.innerText = "👁 Xem gợi ý Pinyin";
+      }
     }
 
     function setupCanvasBoxes(hanziWord) {
@@ -422,17 +473,16 @@
         recordWord(currentWord, true);
       } else {
         resultMsg.className = "msg-wrong";
-        resultMsg.innerText = "Có chữ chưa đúng (viền đỏ). Bạn có thể thử lại hoặc bấm Từ tiếp theo!";
+        resultMsg.innerText = "Có chữ chưa đúng (viền đỏ). Bạn có thể xem Pinyin gợi ý hoặc thử lại!";
         recordWord(currentWord, false);
       }
     }
 
-    // Cập nhật từ vào bảng Đúng hoặc Sai
     function recordWord(wordObj, isCorrect) {
       const key = wordObj.hanzi;
       if (isCorrect) {
         memorizedWords.set(key, wordObj);
-        needReviewWords.delete(key); // Xóa khỏi danh sách sai nếu đã nhớ đúng
+        needReviewWords.delete(key);
       } else {
         if (!memorizedWords.has(key)) {
           needReviewWords.set(key, wordObj);
@@ -442,7 +492,6 @@
     }
 
     function renderWordLists() {
-      // Danh sách đúng
       const correctListEl = document.getElementById("correct-list");
       correctListEl.innerHTML = "";
       memorizedWords.forEach(w => {
@@ -450,7 +499,6 @@
       });
       document.getElementById("correct-count").innerText = memorizedWords.size;
 
-      // Danh sách sai / cần ôn
       const wrongListEl = document.getElementById("wrong-list");
       wrongListEl.innerHTML = "";
       needReviewWords.forEach(w => {
@@ -462,7 +510,6 @@
     function nextWord(isSkip = false) {
       if (wordList.length === 0) return;
 
-      // Nếu bấm next khi chưa bấm kiểm tra và chưa thuộc từ này, đưa vào danh sách cần ôn
       const currentWord = wordList[currentIndex];
       if (!memorizedWords.has(currentWord.hanzi) && !needReviewWords.has(currentWord.hanzi)) {
         needReviewWords.set(currentWord.hanzi, currentWord);
