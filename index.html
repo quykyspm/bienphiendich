@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luyện Viết Chữ Hán</title>
+  <title>Luyện Viết Chữ Hán - Từng Ký Tự</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root {
       --primary: #2563eb;
       --success: #16a34a;
       --error: #dc2626;
+      --border: #cbd5e1;
       --bg: #f8fafc;
     }
     body {
@@ -17,7 +19,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 20px 10px;
       margin: 0;
     }
     .card {
@@ -26,191 +28,299 @@
       border-radius: 12px;
       box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
       width: 100%;
-      max-width: 380px;
+      max-width: 650px;
       text-align: center;
+      box-sizing: border-box;
+    }
+    .file-upload {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #e2e8f0;
     }
     .vietnamese-prompt {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
       color: #1e293b;
       margin-bottom: 6px;
     }
     .pinyin-hint {
-      font-size: 15px;
+      font-size: 16px;
       color: #64748b;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
-    /* Khung vẽ chữ Hán kèm ô mễ điền (chữ điền / chữ mễ) */
+    
+    /* Vùng chứa danh sách các ô canvas */
+    .boxes-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .box-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
     .canvas-container {
       position: relative;
-      width: 280px;
-      height: 280px;
-      margin: 0 auto;
-      border: 2px solid #cbd5e1;
+      width: 180px;
+      height: 180px;
+      border: 2px solid var(--border);
       border-radius: 8px;
       background: 
         linear-gradient(to top right, transparent calc(50% - 0.5px), #f1f5f9 50%, transparent calc(50% + 0.5px)),
         linear-gradient(to bottom right, transparent calc(50% - 0.5px), #f1f5f9 50%, transparent calc(50% + 0.5px)),
         linear-gradient(to right, transparent calc(50% - 0.5px), #e2e8f0 50%, transparent calc(50% + 0.5px)),
         linear-gradient(to bottom, transparent calc(50% - 0.5px), #e2e8f0 50%, transparent calc(50% + 0.5px));
-      touch-action: none; /* Tránh cuộn trang khi vẽ trên điện thoại */
+      touch-action: none;
+      transition: border-color 0.2s;
     }
+    .canvas-container.correct { border-color: var(--success); background-color: #f0fdf4; }
+    .canvas-container.wrong { border-color: var(--error); }
+    
     canvas {
       width: 100%;
       height: 100%;
       cursor: crosshair;
     }
+    
+    .btn-clear-single {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #475569;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+    .btn-clear-single:hover { background: #e2e8f0; }
+
     .button-group {
       display: flex;
-      gap: 10px;
-      margin-top: 18px;
+      gap: 12px;
+      margin-top: 10px;
     }
-    button {
+    button.main-btn {
       flex: 1;
-      padding: 10px 0;
+      padding: 12px 0;
       border: none;
       border-radius: 6px;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
     }
     .btn-check { background: var(--primary); color: white; }
-    .btn-clear { background: #e2e8f0; color: #334155; }
-    .btn-next { background: #0f172a; color: white; display: none; margin-top: 10px; width: 100%; }
+    .btn-clear-all { background: #e2e8f0; color: #334155; }
+    .btn-next { background: #0f172a; color: white; display: none; margin-top: 15px; width: 100%; }
     
     #result-msg {
-      margin-top: 15px;
+      margin-top: 16px;
       font-size: 16px;
       font-weight: bold;
       min-height: 24px;
     }
-    .correct { color: var(--success); }
-    .wrong { color: var(--error); }
+    .msg-correct { color: var(--success); }
+    .msg-wrong { color: var(--error); }
   </style>
 </head>
 <body>
 
   <div class="card">
+    <div class="file-upload">
+      <label style="font-size: 13px; color: #64748b; display: block; margin-bottom: 6px;">Nạp thêm từ file Excel (.xlsx):</label>
+      <input type="file" id="excelFileInput" accept=".xlsx, .xls" onchange="handleExcelUpload(event)">
+    </div>
+
     <div class="vietnamese-prompt" id="prompt-vn">Đang tải...</div>
     <div class="pinyin-hint" id="prompt-pinyin"></div>
 
-    <div class="canvas-container">
-      <canvas id="drawCanvas" width="280" height="280"></canvas>
-    </div>
+    <!-- Nơi sinh ra các ô vuông theo số chữ Hán -->
+    <div class="boxes-container" id="boxesContainer"></div>
 
     <div class="button-group">
-      <button class="btn-clear" onclick="clearCanvas()">Xóa nét</button>
-      <button class="btn-check" onclick="checkAnswer()">Kiểm tra</button>
+      <button class="main-btn btn-clear-all" onclick="clearAllBoxes()">Xóa hết</button>
+      <button class="main-btn btn-check" onclick="checkAllBoxes()">Kiểm tra</button>
     </div>
 
     <div id="result-msg"></div>
-    <button class="btn-next" id="btn-next" onclick="nextWord()">Từ tiếp theo ➔</button>
+    <button class="main-btn btn-next" id="btn-next" onclick="nextWord()">Từ tiếp theo ➔</button>
   </div>
 
   <script>
-    // 1. Danh sách từ vựng kiểm tra
-    const wordList = [
-      { hanzi: "你", pinyin: "nǐ", vn: "Bạn / Anh / Chị" },
-      { hanzi: "好", pinyin: "hǎo", vn: "Tốt / Đẹp / Khỏe" },
-      { hanzi: "学", pinyin: "xué", vn: "Học tập" },
-      { hanzi: "生", pinyin: "shēng", vn: "Sinh / Sinh viên" },
+    let wordList = [
+      { hanzi: "你好", pinyin: "nǐ hǎo", vn: "Xin chào" },
+      { hanzi: "学生", pinyin: "xué sheng", vn: "Học sinh" },
+      { hanzi: "对不起", pinyin: "duì bu qǐ", vn: "Xin lỗi" },
       { hanzi: "谢", pinyin: "xiè", vn: "Cảm ơn" }
     ];
 
     let currentIndex = 0;
-    const canvas = document.getElementById("drawCanvas");
-    const ctx = canvas.getContext("2d");
-    
-    // Mảng lưu tọa độ nét phục vụ Google API
-    // Cấu trúc: [ [ [x1, x2, ...], [y1, y2, ...], [t1, t2, ...] ], ... ]
-    let strokes = [];
-    let currentStrokeX = [];
-    let currentStrokeY = [];
-    let currentStrokeT = [];
-    let isDrawing = false;
-    let strokeStartTime = 0;
+    let canvasInstances = []; // Quản lý trạng thái từng canvas
 
-    // Cài đặt nét vẽ
-    ctx.lineWidth = 8;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = "#1e293b";
+    function handleExcelUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const rawData = XLSX.utils.sheet_to_json(worksheet);
+
+        if (rawData.length === 0) {
+          alert("File Excel không có dữ liệu!");
+          return;
+        }
+
+        wordList = rawData;
+        currentIndex = 0;
+        loadWord(currentIndex);
+        alert(`Đã nạp thành công ${wordList.length} từ vựng!`);
+      };
+      reader.readAsArrayBuffer(file);
+    }
 
     function loadWord(index) {
       const item = wordList[index];
       document.getElementById("prompt-vn").innerText = `Viết từ: "${item.vn}"`;
-      document.getElementById("prompt-pinyin").innerText = `Pinyin: [ ${item.pinyin} ]`;
+      document.getElementById("prompt-pinyin").innerText = `Pinyin: [ ${item.pinyin || ""} ]`;
       document.getElementById("result-msg").innerText = "";
+      document.getElementById("result-msg").className = "";
       document.getElementById("btn-next").style.display = "none";
-      clearCanvas();
+
+      setupCanvasBoxes(item.hanzi.trim());
     }
 
-    function getCoords(e) {
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return [
-        Math.round(clientX - rect.left),
-        Math.round(clientY - rect.top)
-      ];
+    // Tự động sinh ra các ô vuông theo độ dài của chữ Hán
+    function setupCanvasBoxes(hanziWord) {
+      const container = document.getElementById("boxesContainer");
+      container.innerHTML = "";
+      canvasInstances = [];
+
+      for (let i = 0; i < hanziWord.length; i++) {
+        const char = hanziWord[i];
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "box-wrapper";
+
+        const canvasBox = document.createElement("div");
+        canvasBox.className = "canvas-container";
+        canvasBox.id = `box-container-${i}`;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = 180;
+        canvas.height = 180;
+        canvas.id = `canvas-${i}`;
+
+        const clearBtn = document.createElement("button");
+        clearBtn.className = "btn-clear-single";
+        clearBtn.innerText = `Xóa ô ${i + 1}`;
+        clearBtn.onclick = () => clearSingleBox(i);
+
+        canvasBox.appendChild(canvas);
+        wrapper.appendChild(canvasBox);
+        wrapper.appendChild(clearBtn);
+        container.appendChild(wrapper);
+
+        // Khởi tạo context vẽ cho ô này
+        const ctx = canvas.getContext("2d");
+        ctx.lineWidth = 6;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.strokeStyle = "#1e293b";
+
+        const state = {
+          charTarget: char,
+          canvas: canvas,
+          ctx: ctx,
+          container: canvasBox,
+          strokes: [],
+          currentStrokeX: [],
+          currentStrokeY: [],
+          currentStrokeT: [],
+          isDrawing: false,
+          strokeStartTime: 0
+        };
+
+        initDrawingEvents(state);
+        canvasInstances.push(state);
+      }
     }
 
-    // Bắt sự kiện vẽ (Chuột & Màn hình cảm ứng)
-    function startStroke(e) {
-      isDrawing = true;
-      strokeStartTime = Date.now();
-      const [x, y] = getCoords(e);
-      ctx.beginPath();
-      ctx.moveTo(x, y);
+    function initDrawingEvents(state) {
+      const { canvas, ctx } = state;
 
-      currentStrokeX = [x];
-      currentStrokeY = [y];
-      currentStrokeT = [0];
-    }
-
-    function moveStroke(e) {
-      if (!isDrawing) return;
-      e.preventDefault();
-      const [x, y] = getCoords(e);
-      ctx.lineTo(x, y);
-      ctx.stroke();
-
-      currentStrokeX.push(x);
-      currentStrokeY.push(y);
-      currentStrokeT.push(Date.now() - strokeStartTime);
-    }
-
-    function endStroke() {
-      if (!isDrawing) return;
-      isDrawing = false;
-      strokes.push([currentStrokeX, currentStrokeY, currentStrokeT]);
-    }
-
-    canvas.addEventListener("mousedown", startStroke);
-    canvas.addEventListener("mousemove", moveStroke);
-    window.addEventListener("mouseup", endStroke);
-
-    canvas.addEventListener("touchstart", startStroke, { passive: false });
-    canvas.addEventListener("touchmove", moveStroke, { passive: false });
-    window.addEventListener("touchend", endStroke);
-
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      strokes = [];
-      document.getElementById("result-msg").innerText = "";
-    }
-
-    // 2. Gửi nét vẽ lên Google Input Tools API để nhận diện
-    async function checkAnswer() {
-      if (strokes.length === 0) {
-        alert("Vui lòng vẽ chữ trước khi kiểm tra!");
-        return;
+      function getCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return [
+          Math.round(clientX - rect.left),
+          Math.round(clientY - rect.top)
+        ];
       }
 
-      const resultEl = document.getElementById("result-msg");
-      resultEl.className = "";
-      resultEl.innerText = "Đang nhận diện nét vẽ...";
+      function startStroke(e) {
+        state.isDrawing = true;
+        state.strokeStartTime = Date.now();
+        const [x, y] = getCoords(e);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+
+        state.currentStrokeX = [x];
+        state.currentStrokeY = [y];
+        state.currentStrokeT = [0];
+      }
+
+      function moveStroke(e) {
+        if (!state.isDrawing) return;
+        e.preventDefault();
+        const [x, y] = getCoords(e);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+
+        state.currentStrokeX.push(x);
+        state.currentStrokeY.push(y);
+        state.currentStrokeT.push(Date.now() - state.strokeStartTime);
+      }
+
+      function endStroke() {
+        if (!state.isDrawing) return;
+        state.isDrawing = false;
+        state.strokes.push([state.currentStrokeX, state.currentStrokeY, state.currentStrokeT]);
+      }
+
+      canvas.addEventListener("mousedown", startStroke);
+      canvas.addEventListener("mousemove", moveStroke);
+      window.addEventListener("mouseup", endStroke);
+
+      canvas.addEventListener("touchstart", startStroke, { passive: false });
+      canvas.addEventListener("touchmove", moveStroke, { passive: false });
+      window.addEventListener("touchend", endStroke);
+    }
+
+    function clearSingleBox(index) {
+      const state = canvasInstances[index];
+      state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+      state.strokes = [];
+      state.container.classList.remove("correct", "wrong");
+    }
+
+    function clearAllBoxes() {
+      for (let i = 0; i < canvasInstances.length; i++) {
+        clearSingleBox(i);
+      }
+      document.getElementById("result-msg").innerText = "";
+      document.getElementById("result-msg").className = "";
+    }
+
+    // Nhận diện từng ký tự độc lập qua API
+    async function recognizeChar(strokes) {
+      if (!strokes || strokes.length === 0) return [];
 
       const payload = {
         app_version: 0.4,
@@ -219,11 +329,11 @@
         input_type: "0",
         options: "enable_pre_space",
         requests: [{
-          writing_guide: { writing_area_width: 280, writing_area_height: 280 },
+          writing_guide: { writing_area_width: 180, writing_area_height: 180 },
           pre_context: "",
           max_num_results: 10,
           max_completions: 0,
-          language: "zh-t-i0-handwrit", // Nhận diện chữ Hán
+          language: "zh-t-i0-handwrit",
           ink: strokes
         }]
       };
@@ -234,27 +344,57 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
-
         const data = await response.json();
-        
         if (data[0] === "SUCCESS") {
-          const candidates = data[1][0][1]; // Mảng các chữ gợi ý: ["你", "仁", ...]
-          const target = wordList[currentIndex].hanzi;
-
-          if (candidates.includes(target)) {
-            resultEl.className = "correct";
-            resultEl.innerText = `Chính xác! Bạn đã viết đúng chữ: ${target}`;
-            document.getElementById("btn-next").style.display = "block";
-          } else {
-            resultEl.className = "wrong";
-            resultEl.innerText = `Chưa đúng! Hệ thống nhận diện thành: ${candidates.slice(0, 3).join(", ")}. Hãy thử lại!`;
-          }
-        } else {
-          resultEl.innerText = "Không thể nhận diện, vui lòng thử lại!";
+          return data[1][0][1]; // Mảng danh sách chữ gợi ý
         }
       } catch (err) {
         console.error(err);
-        resultEl.innerText = "Lỗi kết nối khi nhận diện nét vẽ!";
+      }
+      return [];
+    }
+
+    // Kiểm tra toàn bộ các ô
+    async function checkAllBoxes() {
+      const resultMsg = document.getElementById("result-msg");
+      resultMsg.className = "";
+      resultMsg.innerText = "Đang kiểm tra từng ô...";
+
+      let allCorrect = true;
+      let emptyFound = false;
+
+      for (let i = 0; i < canvasInstances.length; i++) {
+        const state = canvasInstances[i];
+
+        if (state.strokes.length === 0) {
+          state.container.classList.add("wrong");
+          emptyFound = true;
+          allCorrect = false;
+          continue;
+        }
+
+        const candidates = await recognizeChar(state.strokes);
+
+        if (candidates.includes(state.charTarget)) {
+          state.container.classList.remove("wrong");
+          state.container.classList.add("correct");
+        } else {
+          state.container.classList.remove("correct");
+          state.container.classList.add("wrong");
+          allCorrect = false;
+        }
+      }
+
+      if (emptyFound) {
+        resultMsg.className = "msg-wrong";
+        resultMsg.innerText = "Bạn chưa hoàn thành hết các chữ trong từ!";
+      } else if (allCorrect) {
+        resultMsg.className = "msg-correct";
+        resultMsg.innerText = `Chính xác hoàn toàn! (${wordList[currentIndex].hanzi})`;
+        document.getElementById("btn-next").style.display = "block";
+      } else {
+        resultMsg.className = "msg-wrong";
+        resultMsg.innerText = "Có chữ chưa chính xác (ô viền đỏ). Vui lòng xóa và thử lại!";
       }
     }
 
@@ -263,7 +403,7 @@
       loadWord(currentIndex);
     }
 
-    // Khởi tạo từ đầu tiên
+    // Chạy từ đầu tiên
     loadWord(currentIndex);
   </script>
 </body>
