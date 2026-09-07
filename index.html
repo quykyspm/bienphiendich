@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luyện Viết Chữ Hán - Từng Ký Tự</title>
+  <title>Luyện Viết Chữ Hán - Tự Động Nạp Từ</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root {
@@ -32,11 +32,6 @@
       text-align: center;
       box-sizing: border-box;
     }
-    .file-upload {
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 1px dashed #e2e8f0;
-    }
     .vietnamese-prompt {
       font-size: 24px;
       font-weight: bold;
@@ -48,8 +43,6 @@
       color: #64748b;
       margin-bottom: 20px;
     }
-    
-    /* Vùng chứa danh sách các ô canvas */
     .boxes-container {
       display: flex;
       flex-wrap: wrap;
@@ -79,13 +72,11 @@
     }
     .canvas-container.correct { border-color: var(--success); background-color: #f0fdf4; }
     .canvas-container.wrong { border-color: var(--error); }
-    
     canvas {
       width: 100%;
       height: 100%;
       cursor: crosshair;
     }
-    
     .btn-clear-single {
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
@@ -95,8 +86,6 @@
       padding: 4px 8px;
       cursor: pointer;
     }
-    .btn-clear-single:hover { background: #e2e8f0; }
-
     .button-group {
       display: flex;
       gap: 12px;
@@ -114,7 +103,6 @@
     .btn-check { background: var(--primary); color: white; }
     .btn-clear-all { background: #e2e8f0; color: #334155; }
     .btn-next { background: #0f172a; color: white; display: none; margin-top: 15px; width: 100%; }
-    
     #result-msg {
       margin-top: 16px;
       font-size: 16px;
@@ -128,15 +116,9 @@
 <body>
 
   <div class="card">
-    <div class="file-upload">
-      <label style="font-size: 13px; color: #64748b; display: block; margin-bottom: 6px;">Nạp thêm từ file Excel (.xlsx):</label>
-      <input type="file" id="excelFileInput" accept=".xlsx, .xls" onchange="handleExcelUpload(event)">
-    </div>
-
-    <div class="vietnamese-prompt" id="prompt-vn">Đang tải...</div>
+    <div class="vietnamese-prompt" id="prompt-vn">Đang đọc danh sách từ vựng...</div>
     <div class="pinyin-hint" id="prompt-pinyin"></div>
 
-    <!-- Nơi sinh ra các ô vuông theo số chữ Hán -->
     <div class="boxes-container" id="boxesContainer"></div>
 
     <div class="button-group">
@@ -149,42 +131,36 @@
   </div>
 
   <script>
-    let wordList = [
-      { hanzi: "你好", pinyin: "nǐ hǎo", vn: "Xin chào" },
-      { hanzi: "学生", pinyin: "xué sheng", vn: "Học sinh" },
-      { hanzi: "对不起", pinyin: "duì bu qǐ", vn: "Xin lỗi" },
-      { hanzi: "谢", pinyin: "xiè", vn: "Cảm ơn" }
-    ];
-
+    let wordList = [];
     let currentIndex = 0;
-    let canvasInstances = []; // Quản lý trạng thái từng canvas
+    let canvasInstances = [];
 
-    function handleExcelUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
+    // Tự động tải ngầm file words.xlsx khi mở trang web
+    async function autoLoadExcel() {
+      try {
+        const response = await fetch("words.xlsx");
+        if (!response.ok) throw new Error("Không tìm thấy file words.xlsx");
+        
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: "array" });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const rawData = XLSX.utils.sheet_to_json(worksheet);
 
-        if (rawData.length === 0) {
-          alert("File Excel không có dữ liệu!");
-          return;
+        if (rawData.length > 0) {
+          wordList = rawData;
+          loadWord(currentIndex);
+        } else {
+          document.getElementById("prompt-vn").innerText = "File words.xlsx không có dữ liệu!";
         }
-
-        wordList = rawData;
-        currentIndex = 0;
-        loadWord(currentIndex);
-        alert(`Đã nạp thành công ${wordList.length} từ vựng!`);
-      };
-      reader.readAsArrayBuffer(file);
+      } catch (err) {
+        console.error(err);
+        document.getElementById("prompt-vn").innerText = "Lỗi: Không tìm thấy file words.xlsx trên GitHub!";
+      }
     }
 
     function loadWord(index) {
+      if (wordList.length === 0) return;
       const item = wordList[index];
       document.getElementById("prompt-vn").innerText = `Viết từ: "${item.vn}"`;
       document.getElementById("prompt-pinyin").innerText = `Pinyin: [ ${item.pinyin || ""} ]`;
@@ -192,10 +168,9 @@
       document.getElementById("result-msg").className = "";
       document.getElementById("btn-next").style.display = "none";
 
-      setupCanvasBoxes(item.hanzi.trim());
+      setupCanvasBoxes(String(item.hanzi).trim());
     }
 
-    // Tự động sinh ra các ô vuông theo độ dài của chữ Hán
     function setupCanvasBoxes(hanziWord) {
       const container = document.getElementById("boxesContainer");
       container.innerHTML = "";
@@ -209,12 +184,10 @@
 
         const canvasBox = document.createElement("div");
         canvasBox.className = "canvas-container";
-        canvasBox.id = `box-container-${i}`;
 
         const canvas = document.createElement("canvas");
         canvas.width = 180;
         canvas.height = 180;
-        canvas.id = `canvas-${i}`;
 
         const clearBtn = document.createElement("button");
         clearBtn.className = "btn-clear-single";
@@ -226,7 +199,6 @@
         wrapper.appendChild(clearBtn);
         container.appendChild(wrapper);
 
-        // Khởi tạo context vẽ cho ô này
         const ctx = canvas.getContext("2d");
         ctx.lineWidth = 6;
         ctx.lineCap = "round";
@@ -318,7 +290,6 @@
       document.getElementById("result-msg").className = "";
     }
 
-    // Nhận diện từng ký tự độc lập qua API
     async function recognizeChar(strokes) {
       if (!strokes || strokes.length === 0) return [];
 
@@ -346,7 +317,7 @@
         });
         const data = await response.json();
         if (data[0] === "SUCCESS") {
-          return data[1][0][1]; // Mảng danh sách chữ gợi ý
+          return data[1][0][1];
         }
       } catch (err) {
         console.error(err);
@@ -354,7 +325,6 @@
       return [];
     }
 
-    // Kiểm tra toàn bộ các ô
     async function checkAllBoxes() {
       const resultMsg = document.getElementById("result-msg");
       resultMsg.className = "";
@@ -390,11 +360,11 @@
         resultMsg.innerText = "Bạn chưa hoàn thành hết các chữ trong từ!";
       } else if (allCorrect) {
         resultMsg.className = "msg-correct";
-        resultMsg.innerText = `Chính xác hoàn toàn! (${wordList[currentIndex].hanzi})`;
+        resultMsg.innerText = `Chính xác! (${wordList[currentIndex].hanzi})`;
         document.getElementById("btn-next").style.display = "block";
       } else {
         resultMsg.className = "msg-wrong";
-        resultMsg.innerText = "Có chữ chưa chính xác (ô viền đỏ). Vui lòng xóa và thử lại!";
+        resultMsg.innerText = "Có chữ chưa chính xác (ô viền đỏ). Vui lòng sửa lại!";
       }
     }
 
@@ -403,8 +373,8 @@
       loadWord(currentIndex);
     }
 
-    // Chạy từ đầu tiên
-    loadWord(currentIndex);
+    // Tự động nạp khi vừa vào web
+    autoLoadExcel();
   </script>
 </body>
 </html>
