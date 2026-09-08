@@ -83,7 +83,7 @@
       z-index: 9999;
       padding: 16px;
     }
-    .name-modal-overlay.hidden { display: none; }
+    .name-modal-overlay.hidden { display: none !important; }
     .name-modal-box {
       background: white;
       border-radius: 12px;
@@ -415,7 +415,7 @@
         <button class="main-btn" style="background:#d97706; color:white; font-size:18px; padding:15px;" onclick="startArenaMatch()">🚀 BẮT ĐẦU SOLO (60s)</button>
       </div>
 
-      <!-- Khu vực thi đấu (ẩn mặc định, hiện khi bấm bắt đầu) -->
+      <!-- Khu vực thi đấu -->
       <div id="arenaGameArea" style="display: none; margin-top: 15px;">
         <div class="arena-timer">⏱ Thời gian còn lại: <span id="arenaTimerDisplay">60</span>s</div>
         <div style="font-size: 22px; font-weight: bold; margin-bottom: 12px;" id="arena-prompt-vn">Đang tạo đề...</div>
@@ -503,8 +503,9 @@
 
     window.addEventListener("DOMContentLoaded", () => {
       document.getElementById("arenaHighScore").innerText = myBestScore;
-      if (!playerName) openNameModal();
-      else {
+      if (!playerName) {
+        openNameModal();
+      } else {
         document.getElementById("nameModal").classList.add("hidden");
         document.getElementById("displayNameTag").innerText = playerName;
       }
@@ -518,27 +519,34 @@
     }
 
     function submitPlayerName() {
-      const val = document.getElementById("modalNameInput").value.trim();
+      const input = document.getElementById("modalNameInput");
+      const val = input ? input.value.trim() : "";
       if (!val) return alert("Vui lòng nhập tên!");
+      
       playerName = val;
       localStorage.setItem("chinese_player_name", playerName);
-      document.getElementById("displayNameTag").innerText = playerName;
-      document.getElementById("nameModal").classList.add("hidden");
+      
+      const tag = document.getElementById("displayNameTag");
+      if (tag) tag.innerText = playerName;
+      
+      const modal = document.getElementById("nameModal");
+      if (modal) modal.classList.add("hidden");
+
       syncScoreToFirebase(myBestScore);
     }
 
-   function syncScoreToFirebase(scoreToSave) {
+    function syncScoreToFirebase(scoreToSave) {
       if (!db || !playerName) return;
 
-      // Cập nhật kỷ lục nếu điểm mới lớn hơn hoặc bằng
-      if (scoreToSave !== undefined && scoreToSave >= myBestScore) {
-        myBestScore = scoreToSave;
+      const numScore = Number(scoreToSave) || 0;
+      if (numScore >= myBestScore) {
+        myBestScore = numScore;
         localStorage.setItem("chinese_arena_best", myBestScore);
       }
       
-      document.getElementById("arenaHighScore").innerText = myBestScore;
+      const highEl = document.getElementById("arenaHighScore");
+      if (highEl) highEl.innerText = myBestScore;
 
-      // Đẩy trực tiếp lên Firebase và bắt lỗi nếu bị chặn quyền ghi
       db.ref("leaderboard/" + playerId).set({
         name: playerName,
         score: myBestScore,
@@ -548,10 +556,9 @@
       });
     }
 
-function listenLeaderboard() {
+    function listenLeaderboard() {
       if (!db) return;
       
-      // Lấy toàn bộ danh sách về và để JavaScript tự sắp xếp điểm từ cao xuống thấp
       db.ref("leaderboard").on("value", snapshot => {
         const data = snapshot.val();
         const tbody = document.getElementById("leaderboardBody");
@@ -562,10 +569,9 @@ function listenLeaderboard() {
           return;
         }
 
-        // Chuyển object thành mảng và sắp xếp giảm dần theo điểm
         const list = Object.values(data)
           .sort((a, b) => (b.score || 0) - (a.score || 0))
-          .slice(0, 10); // Lấy Top 10
+          .slice(0, 10);
 
         list.forEach((p, idx) => {
           let badge = `#${idx + 1}`;
@@ -584,24 +590,6 @@ function listenLeaderboard() {
         });
       }, err => {
         console.error("Lỗi đọc Firebase:", err);
-      });
-    }
-
-        list.forEach((p, idx) => {
-          let badge = `#${idx + 1}`;
-          if (idx === 0) badge = "🥇 1";
-          else if (idx === 1) badge = "🥈 2";
-          else if (idx === 2) badge = "🥉 3";
-
-          const isMe = (p.name === playerName) ? 'style="font-weight:bold; color:var(--primary);"' : '';
-          tbody.innerHTML += `
-            <tr ${isMe}>
-              <td style="font-weight:bold;">${badge}</td>
-              <td>${p.name}</td>
-              <td style="text-align:right;font-weight:bold;color:#d97706;">${p.score} từ</td>
-            </tr>
-          `;
-        });
       });
     }
 
