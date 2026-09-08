@@ -196,7 +196,7 @@
     .btn-clear-all { background: #e2e8f0; color: #334155; }
     .btn-next { background: #0f172a; color: white; }
     
-    #result-msg { margin-top: 16px; font-size: 16px; font-weight: bold; min-height: 24px; }
+    #result-msg, #arena-result-msg { margin-top: 16px; font-size: 16px; font-weight: bold; min-height: 24px; }
     .msg-correct { color: var(--success); }
     .msg-wrong { color: var(--error); }
 
@@ -270,6 +270,12 @@
       margin-bottom: 20px;
       font-weight: bold;
       color: #92400e;
+    }
+    .arena-timer {
+      font-size: 24px;
+      font-weight: bold;
+      color: #dc2626;
+      margin-bottom: 12px;
     }
     .leaderboard-card {
       margin-top: 20px;
@@ -395,12 +401,33 @@
     <!-- ================= TAB 3: ĐẤU TRƯỜNG & BẢNG XẾP HẠNG ================= -->
     <div id="tab-arena" class="tab-content">
       <div class="arena-banner">
-        <h2 style="margin: 0 0 6px 0;">⚔️ Đấu Trường Chữ Hán</h2>
-        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Viết đúng càng nhiều từ càng tốt để tranh tài trên bảng xếp hạng!</p>
+        <h2 style="margin: 0 0 6px 0;">⚔️ SOLO??</h2>
+        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Viết đúng càng nhiều từ càng tốt trong 60 giây để tranh Top 1!</p>
       </div>
 
       <div class="arena-score-box">
-        <div>Điểm cao nhất của bạn: <span id="arenaHighScore" style="color: #d97706; font-size: 18px;">0</span> từ</div>
+        <div>Kỷ lục của bạn: <span id="arenaHighScore" style="color: #d97706; font-size: 18px;">0</span> từ</div>
+        <div id="arenaLiveScoreTag" style="display:none; color:#2563eb;">Điểm hiệp này: <span id="arenaCurrentScore" style="font-size: 18px;">0</span></div>
+      </div>
+
+      <!-- Màn hình chờ bắt đầu -->
+      <div id="arenaLobby">
+        <button class="main-btn" style="background:#d97706; color:white; font-size:18px; padding:15px;" onclick="startArenaMatch()">🚀 BẮT ĐẦU SOLO (60s)</button>
+      </div>
+
+      <!-- Khu vực thi đấu (ẩn mặc định, hiện khi bấm bắt đầu) -->
+      <div id="arenaGameArea" style="display: none; margin-top: 15px;">
+        <div class="arena-timer">⏱ Thời gian còn lại: <span id="arenaTimerDisplay">60</span>s</div>
+        <div style="font-size: 22px; font-weight: bold; margin-bottom: 12px;" id="arena-prompt-vn">Đang tạo đề...</div>
+        
+        <div class="boxes-container" id="arenaBoxesContainer"></div>
+
+        <div class="button-group">
+          <button class="main-btn btn-clear-all" onclick="clearArenaBoxes()">Xóa nét</button>
+          <button class="main-btn btn-check" onclick="checkArenaBoxes()">Gửi đáp án ➔</button>
+          <button class="main-btn" style="background:#64748b; color:white;" onclick="skipArenaWord()">Bỏ qua</button>
+        </div>
+        <div id="arena-result-msg"></div>
       </div>
 
       <div class="leaderboard-card">
@@ -413,7 +440,7 @@
             <tr style="border-bottom: 2px solid #e2e8f0; color: #64748b;">
               <th style="width: 60px; text-align: left;">Hạng</th>
               <th style="text-align: left;">Học viên</th>
-              <th style="width: 100px; text-align: right;">Thành tích</th>
+              <th style="width: 100px; text-align: right;">Kỷ lục</th>
             </tr>
           </thead>
           <tbody id="leaderboardBody">
@@ -467,6 +494,7 @@
     const masteredWordsSet = new Set();
     let playerId = localStorage.getItem("chinese_player_id");
     let playerName = localStorage.getItem("chinese_player_name") || "";
+    let myBestScore = parseInt(localStorage.getItem("chinese_arena_best") || "0", 10);
 
     if (!playerId) {
       playerId = "user_" + Math.random().toString(36).substr(2, 9);
@@ -474,6 +502,7 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("arenaHighScore").innerText = myBestScore;
       if (!playerName) openNameModal();
       else {
         document.getElementById("nameModal").classList.add("hidden");
@@ -495,17 +524,20 @@
       localStorage.setItem("chinese_player_name", playerName);
       document.getElementById("displayNameTag").innerText = playerName;
       document.getElementById("nameModal").classList.add("hidden");
-      syncScoreToFirebase();
+      syncScoreToFirebase(myBestScore);
     }
 
-    function syncScoreToFirebase() {
+    function syncScoreToFirebase(scoreToSave) {
       if (!db || !playerName) return;
-      const currentScore = masteredWordsSet.size;
-      document.getElementById("arenaHighScore").innerText = currentScore;
+      if (scoreToSave > myBestScore) {
+        myBestScore = scoreToSave;
+        localStorage.setItem("chinese_arena_best", myBestScore);
+      }
+      document.getElementById("arenaHighScore").innerText = myBestScore;
       
       db.ref("leaderboard/" + playerId).set({
         name: playerName,
-        score: currentScore,
+        score: myBestScore,
         updatedAt: Date.now()
       });
     }
@@ -542,7 +574,122 @@
       });
     }
 
-    /* ================= KẾT NỐI VERCEL SERVERLESS PROXY ================= */
+    /* ================= ĐẤU TRƯỜNG THI ĐẤU (60 GIÂY) ================= */
+    let arenaTimer = null;
+    let arenaTimeLeft = 60;
+    let arenaCurrentScore = 0;
+    let arenaCurrentWord = null;
+    let arenaCanvasInstances = [];
+
+    function startArenaMatch() {
+      if (allWords.length === 0) return alert("Chưa nạp xong từ vựng, vui lòng chờ!");
+      document.getElementById("arenaLobby").style.display = "none";
+      document.getElementById("arenaGameArea").style.display = "block";
+      document.getElementById("arenaLiveScoreTag").style.display = "block";
+      
+      arenaCurrentScore = 0;
+      arenaTimeLeft = 60;
+      document.getElementById("arenaCurrentScore").innerText = "0";
+      document.getElementById("arenaTimerDisplay").innerText = "60";
+      document.getElementById("arena-result-msg").innerText = "";
+
+      loadNextArenaWord();
+
+      clearInterval(arenaTimer);
+      arenaTimer = setInterval(() => {
+        arenaTimeLeft--;
+        document.getElementById("arenaTimerDisplay").innerText = arenaTimeLeft;
+        if (arenaTimeLeft <= 0) {
+          endArenaMatch();
+        }
+      }, 1000);
+    }
+
+    function endArenaMatch() {
+      clearInterval(arenaTimer);
+      document.getElementById("arenaLobby").style.display = "block";
+      document.getElementById("arenaGameArea").style.display = "none";
+      document.getElementById("arenaLiveScoreTag").style.display = "none";
+      
+      alert(`⏰ HẾT GIỜ!\nBạn hoàn thành: ${arenaCurrentScore} từ!`);
+      if (arenaCurrentScore > myBestScore) {
+        syncScoreToFirebase(arenaCurrentScore);
+      }
+    }
+
+    function loadNextArenaWord() {
+      const randomIndex = Math.floor(Math.random() * allWords.length);
+      arenaCurrentWord = allWords[randomIndex];
+      document.getElementById("arena-prompt-vn").innerText = `Viết: "${arenaCurrentWord.vn || ''}"`;
+      document.getElementById("arena-result-msg").innerText = "";
+      setupArenaCanvas(String(arenaCurrentWord.hanzi).trim());
+    }
+
+    function skipArenaWord() {
+      loadNextArenaWord();
+    }
+
+    function setupArenaCanvas(word) {
+      const container = document.getElementById("arenaBoxesContainer");
+      container.innerHTML = "";
+      arenaCanvasInstances = [];
+      for (let i = 0; i < word.length; i++) {
+        const wrap = document.createElement("div"); wrap.className = "box-wrapper";
+        const cBox = document.createElement("div"); cBox.className = "canvas-container";
+        const cv = document.createElement("canvas"); cv.width = 180; cv.height = 180;
+
+        cBox.appendChild(cv); wrap.appendChild(cBox); container.appendChild(wrap);
+        const ctx = cv.getContext("2d");
+        ctx.lineWidth = 6; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#1e293b";
+
+        const st = { char: word[i], cv, ctx, cBox, strokes: [], sx: [], sy: [], st: [], drawing: false, t0: 0 };
+        initCanvasEvents(st);
+        arenaCanvasInstances.push(st);
+      }
+    }
+
+    function clearArenaBoxes() {
+      for (let s of arenaCanvasInstances) {
+        s.ctx.clearRect(0, 0, 180, 180);
+        s.strokes = []; s.cBox.classList.remove("correct", "wrong");
+      }
+      document.getElementById("arena-result-msg").innerText = "";
+    }
+
+    async function checkArenaBoxes() {
+      const msg = document.getElementById("arena-result-msg");
+      msg.innerText = "Đang kiểm tra nét...";
+      let ok = true, empty = false;
+
+      for (let s of arenaCanvasInstances) {
+        if (s.strokes.length === 0) { s.cBox.classList.add("wrong"); empty = true; ok = false; continue; }
+        const p = {
+          app_version: 0.4, api_level: "537.36", device: "5.0", input_type: "0", options: "enable_pre_space",
+          requests: [{ writing_guide: { writing_area_width: 180, writing_area_height: 180 }, pre_context: "", max_num_results: 10, max_completions: 0, language: "zh-t-i0-handwrit", ink: s.strokes }]
+        };
+        try {
+          const res = await fetch("https://inputtools.google.com/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8", {
+            method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p)
+          });
+          const d = await res.json();
+          const cand = d[0] === "SUCCESS" ? d[1][0][1] : [];
+          if (cand.includes(s.char)) { s.cBox.classList.remove("wrong"); s.cBox.classList.add("correct"); }
+          else { s.cBox.classList.remove("correct"); s.cBox.classList.add("wrong"); ok = false; }
+        } catch(e) { ok = false; }
+      }
+
+      if (empty) { msg.className = "msg-wrong"; msg.innerText = "Chưa viết đủ ô!"; }
+      else if (ok) {
+        msg.className = "msg-correct"; msg.innerText = `+1 Điểm! (${arenaCurrentWord.hanzi})`;
+        arenaCurrentScore++;
+        document.getElementById("arenaCurrentScore").innerText = arenaCurrentScore;
+        setTimeout(loadNextArenaWord, 500);
+      } else {
+        msg.className = "msg-wrong"; msg.innerText = "Chưa đúng!";
+      }
+    }
+
+    /* ================= KẾT NỐI VERCEL PROXY ================= */
     const VERCEL_API_URL = "https://gemini-api-backend-rho.vercel.app/api/gemini";
     let currentAIExercise = { text: "", source: "", target: "" };
 
@@ -578,7 +725,7 @@
         prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Việt (2-3 câu ngắn, khoảng 30 từ) mang ngữ cảnh thực tế tự nhiên, lồng ghép ý nghĩa của các từ sau: [${vocabList}]. Chỉ trả về duy nhất nội dung đoạn văn tiếng Việt, không kèm bất kỳ giải thích nào.`;
       } else {
         currentAIExercise = { source: "Tiếng Trung", target: "Tiếng Việt" };
-        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 3-5) sử dụng các từ sau: [${vocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
+        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${vocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
       }
 
       try {
@@ -771,7 +918,6 @@ Hãy đánh giá chi tiết theo mẫu:
         if (!masteredWordsSet.has(cur.hanzi)) {
           masteredWordsSet.add(cur.hanzi);
           document.getElementById("myCorrectScore").innerText = masteredWordsSet.size;
-          syncScoreToFirebase();
         }
       } else {
         msg.className = "msg-wrong"; msg.innerText = "Có chữ chưa đúng!";
