@@ -22,8 +22,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
-  <!-- File CSS có gắn version để chống lưu cache cũ -->
-  <link rel="stylesheet" href="style.css?v=6.0">
+  <link rel="stylesheet" href="style.css?v=6.1">
 </head>
 <body>
 
@@ -72,7 +71,7 @@
             <span class="icon">🎙️</span>
             <div class="info">
               <span class="title">Phòng Luyện Phiên Dịch</span>
-              <span class="sub">AI Edge Neural TTS & Dịch Nói 12 bài</span>
+              <span class="sub">AI kịch bản diễn giả & Dịch Nói 12 bài</span>
             </div>
           </div>
 
@@ -200,43 +199,47 @@
       <div id="listen-result-msg"></div>
     </div>
 
-    <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (EDGE NEURAL TTS TÙY CHỌN) ================= -->
+  <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (THẺ BẤM CHỌN TRỰC QUAN) ================= -->
     <div id="tab-interpret" class="tab-content">
-      <div class="interpret-header-box">
-        <div class="filter-panel" style="margin-bottom: 0; background: transparent; border: none; padding: 0;">
-          <div class="filter-item">
-            <label>Chiều phiên dịch:</label>
-            <select id="interpretDirection">
-              <option value="zh_to_vi">Trung ➔ Việt (Nghe tiếng Trung, dịch tiếng Việt)</option>
-              <option value="vi_to_zh">Việt ➔ Trung (Nghe tiếng Việt, dịch tiếng Trung)</option>
-            </select>
-          </div>
-          <div class="filter-item">
-            <label>Chủ đề giáo trình:</label>
-            <select id="interpretCurriculumTopic"></select>
-          </div>
-          <div class="filter-item">
-            <label>Giọng diễn giả:</label>
-            <select id="interpretVoiceGender">
-              <option value="male" selected>👨 Giọng Nam (Trầm ấm, ngoại giao)</option>
-              <option value="female">👩 Giọng Nữ (Truyền cảm, phát thanh)</option>
-            </select>
-          </div>
-          <div class="filter-item">
-            <label>Tốc độ phát:</label>
-            <select id="interpretSpeechRate">
-              <option value="0.5">0.5x (Rất chậm)</option>
-              <option value="0.75">0.75x (Luyện tập)</option>
-              <option value="1.0" selected>1.0x (Chuẩn thực tế)</option>
-            </select>
-          </div>
-          <div class="filter-item" style="justify-content: flex-end;">
-            <button class="btn-create-scenario" onclick="generateAIInterpretationScenario()">✨ AI Tạo Tình Huống</button>
+      <div class="interpret-control-panel">
+        
+        <!-- 1. Chiều phiên dịch dạng nút bấm chọn -->
+        <div class="control-group">
+          <label class="group-label">Chiều phiên dịch:</label>
+          <div class="pill-group" id="dirPillGroup">
+            <button class="pill-btn active" data-val="zh_to_vi" onclick="selectInterpretDirection(this)">🇨🇳 Trung ➔ 🇻🇳 Việt</button>
+            <button class="pill-btn" data-val="vi_to_zh" onclick="selectInterpretDirection(this)">🇻🇳 Việt ➔ 🇨🇳 Trung</button>
           </div>
         </div>
+
+        <!-- 2. Tốc độ phát dạng nút bấm chọn -->
+        <div class="control-group">
+          <label class="group-label">Tốc độ diễn giả:</label>
+          <div class="pill-group" id="ratePillGroup">
+            <button class="pill-btn" data-val="0.5" onclick="selectInterpretRate(this)">0.5x (Chậm)</button>
+            <button class="pill-btn" data-val="0.75" onclick="selectInterpretRate(this)">0.75x</button>
+            <button class="pill-btn active" data-val="1.0" onclick="selectInterpretRate(this)">1.0x (Chuẩn)</button>
+          </div>
+        </div>
+
+        <!-- 3. Chủ đề 12 bài giáo trình dạng danh sách thẻ chọn cuộn ngang/lưới -->
+        <div class="control-group" style="width: 100%;">
+          <label class="group-label">Chủ đề bài học (Giáo trình Phiên Dịch 1):</label>
+          <div class="topic-chips-container" id="interpretTopicsContainer">
+            <!-- JavaScript sẽ tự động render 12 thẻ bài học vào đây -->
+          </div>
+        </div>
+
+        <!-- Nút tạo tình huống to nổi bật -->
+        <div style="width: 100%; margin-top: 10px;">
+          <button class="btn-create-scenario-big" onclick="generateAIInterpretationScenario()">
+            ✨ AI Tạo Tình Huống Mới
+          </button>
+        </div>
+
       </div>
 
-      <!-- Bục diễn giả phát biểu (CHE KÍN CHỮ, CHỈ NGHE TAI) -->
+      <!-- Bục diễn giả phát biểu (CHE KÍN CHỮ) -->
       <div class="speaker-card">
         <div class="speaker-title">
           <span id="speakerRoleTag">🎙️ DIỄN GIẢ PHÁT BIỂU</span>
@@ -361,8 +364,7 @@
 
   </div>
 
-  <!-- Nạp 2 file JS riêng biệt: script.js và interpret.js -->
-  <script src="script.js?v=6.0"></script>
-  <script src="interpret.js?v=2.0"></script>
+  <script src="script.js?v=6.1"></script>
+  <script src="interpret.js?v=3.0"></script>
 </body>
 </html>
