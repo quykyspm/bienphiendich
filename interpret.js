@@ -1,12 +1,13 @@
 /* ==========================================================================
    PHÂN HỆ PHÒNG LUYỆN PHIÊN DỊCH HỘI NGHỊ (INTERPRETATION LAB)
-   Hỗ trợ: Microsoft Edge Neural TTS + 12 bài giáo trình PHIÊN DỊCH 1
+   Giao diện: Nút thẻ chọn trực quan (Không dùng Dropdown)
    ========================================================================== */
 
 /* 1. KHO DỮ LIỆU 12 BÀI GIÁO TRÌNH PHIÊN DỊCH 1 */
 const curriculumTopics = [
   {
     id: "bai1",
+    shortTitle: "Bài 1: Khai mạc",
     title: "Bài 1: Khai mạc hội nghị (会议开幕)",
     roleZh: "Người chủ trì / Ban tổ chức hội nghị quốc tế",
     roleVi: "MC / Đại diện Ban Tổ chức phía Việt Nam",
@@ -16,6 +17,7 @@ const curriculumTopics = [
   },
   {
     id: "bai2",
+    shortTitle: "Bài 2: Chúc mừng & Tiệc",
     title: "Bài 2: Chúc mừng, cảm ơn & Tiệc (祝贺词, 感谢词)",
     roleZh: "Đại diện đối tác / Lãnh đạo phát biểu tại tiệc chiêu đãi",
     roleVi: "Trưởng đoàn đại biểu Việt Nam phát biểu cảm ơn & nâng ly",
@@ -25,6 +27,7 @@ const curriculumTopics = [
   },
   {
     id: "bai3",
+    shortTitle: "Bài 3: Bế mạc",
     title: "Bài 3: Bế mạc hội nghị (闭幕式)",
     roleZh: "Chủ tịch hội nghị quốc tế tổng kết và bế mạc",
     roleVi: "Đại diện ban tổ chức bế mạc diễn đàn hợp tác",
@@ -34,6 +37,7 @@ const curriculumTopics = [
   },
   {
     id: "bai4",
+    shortTitle: "Bài 4: Mua sắm & Ăn uống",
     title: "Bài 4: Mua sắm & Ăn uống (购物、餐饮)",
     roleZh: "Khách hàng / Nhân viên quầy chăm sóc khách hàng & nhà hàng",
     roleVi: "Phiên dịch viên hỗ trợ khách mua hàng, bảo hành đổi trả hoặc gọi món",
@@ -43,6 +47,7 @@ const curriculumTopics = [
   },
   {
     id: "bai5",
+    shortTitle: "Bài 5: Hội chợ triển lãm",
     title: "Bài 5: Hội chợ triển lãm (展览会)",
     roleZh: "Đại diện nhà cung cấp / Doanh nghiệp tham gia hội chợ",
     roleVi: "Doanh nghiệp xuất nhập khẩu đàm phán hợp đồng thương mại",
@@ -52,6 +57,7 @@ const curriculumTopics = [
   },
   {
     id: "bai6",
+    shortTitle: "Bài 6: Thể thao",
     title: "Bài 6: Thể thao (体育)",
     roleZh: "Phóng viên thể thao / Vận động viên phỏng vấn sau trận đấu",
     roleVi: "Bình luận viên / Huấn luyện viên chia sẻ về kết quả thi đấu",
@@ -61,6 +67,7 @@ const curriculumTopics = [
   },
   {
     id: "bai7",
+    shortTitle: "Bài 7: Địa danh du lịch",
     title: "Bài 7: Địa danh du lịch (旅游景点)",
     roleZh: "Hướng dẫn viên du lịch giới thiệu thắng cảnh",
     roleVi: "Du khách / Phiên dịch viên tư vấn tour du lịch",
@@ -70,6 +77,7 @@ const curriculumTopics = [
   },
   {
     id: "bai8",
+    shortTitle: "Bài 8: Báo chí truyền thông",
     title: "Bài 8: Tin tức báo chí (新闻报道)",
     roleZh: "Người phát ngôn / Phóng viên họp báo truyền thông",
     roleVi: "Nhà báo đưa tin sự kiện, xác minh tin đồn mạng xã hội",
@@ -79,6 +87,7 @@ const curriculumTopics = [
   },
   {
     id: "bai9",
+    shortTitle: "Bài 9: Khác biệt văn hóa",
     title: "Bài 9: Khác biệt văn hoá (文化差异)",
     roleZh: "Giám đốc nhân sự công ty công nghệ Trung Quốc",
     roleVi: "Đại diện doanh nghiệp Việt Nam trao đổi về văn hóa làm việc",
@@ -88,6 +97,7 @@ const curriculumTopics = [
   },
   {
     id: "bai10",
+    shortTitle: "Bài 10: Dự báo thời tiết",
     title: "Bài 10: Dự báo thời tiết (天气预报)",
     roleZh: "Chuyên viên khí tượng / Phát thanh viên dự báo thiên tai",
     roleVi: "Cán bộ phòng chống bão lũ / Hướng dẫn viên cảnh báo du khách",
@@ -97,6 +107,7 @@ const curriculumTopics = [
   },
   {
     id: "bai11",
+    shortTitle: "Bài 11: Quản lý thời gian",
     title: "Bài 11: Quản lý thời gian (时间管理)",
     roleZh: "Diễn giả / Chuyên gia đào tạo phương pháp học tập",
     roleVi: "Trưởng nhóm dự án phân công công việc và đốc thúc tiến độ",
@@ -106,6 +117,7 @@ const curriculumTopics = [
   },
   {
     id: "bai12",
+    shortTitle: "Bài 12: Dân số",
     title: "Bài 12: Dân số (人口)",
     roleZh: "Chuyên gia xã hội học / Nhà nghiên cứu chính sách dân số",
     roleVi: "Đại biểu hội nghị phân tích thách thức già hóa dân số",
@@ -115,7 +127,11 @@ const curriculumTopics = [
   }
 ];
 
-/* 2. BIẾN TRẠNG THÁI PHÒNG PHIÊN DỊCH */
+/* 2. BIẾN TRẠNG THÁI */
+let selectedDirection = "zh_to_vi";
+let selectedRate = 1.0;
+let selectedTopicId = "bai1";
+
 let currentInterpretScenario = {
   speechText: "",
   sourceLang: "zh-CN",
@@ -127,22 +143,46 @@ let isSpeechRevealed = false;
 let speechRecognizer = null;
 let isRecording = false;
 
-/* 3. KHỞI TẠO BỘ CHỌN 12 BÀI HỌC */
-function initCurriculumDropdown() {
-  const select = document.getElementById("interpretCurriculumTopic");
-  if (!select) return;
-  select.innerHTML = "";
-  curriculumTopics.forEach(t => {
-    select.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+/* 3. RENDER 12 THẺ BÀI HỌC DẠNG NÚT BẤM */
+function renderTopicChips() {
+  const container = document.getElementById("interpretTopicsContainer");
+  if (!container) return;
+  container.innerHTML = "";
+
+  curriculumTopics.forEach((t, idx) => {
+    const chip = document.createElement("button");
+    chip.className = `topic-chip ${t.id === selectedTopicId ? "active" : ""}`;
+    chip.innerText = t.shortTitle || t.title;
+    chip.onclick = () => selectTopic(t.id, chip);
+    container.appendChild(chip);
   });
 }
-window.addEventListener("DOMContentLoaded", initCurriculumDropdown);
 
-/* 4. AI TỰ ĐỘNG BIÊN SOẠN BÀI PHÁT BIỂU THEO CHỦ ĐỀ */
+function selectInterpretDirection(btn) {
+  document.querySelectorAll("#dirPillGroup .pill-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  selectedDirection = btn.getAttribute("data-val");
+}
+
+function selectInterpretRate(btn) {
+  document.querySelectorAll("#ratePillGroup .pill-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  selectedRate = parseFloat(btn.getAttribute("data-val")) || 1.0;
+}
+
+function selectTopic(topicId, chipEl) {
+  document.querySelectorAll(".topic-chip").forEach(c => c.classList.remove("active"));
+  chipEl.classList.add("active");
+  selectedTopicId = topicId;
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  renderTopicChips();
+});
+
+/* 4. AI TẠO TÌNH HUỐNG PHÁT BIỂU */
 async function generateAIInterpretationScenario() {
-  const dir = document.getElementById("interpretDirection").value;
-  const topicId = document.getElementById("interpretCurriculumTopic").value;
-  const topic = curriculumTopics.find(t => t.id === topicId) || curriculumTopics[0];
+  const topic = curriculumTopics.find(t => t.id === selectedTopicId) || curriculumTopics[0];
   currentInterpretScenario.topic = topic;
 
   const notice = document.getElementById("speechBlindNotice");
@@ -150,14 +190,14 @@ async function generateAIInterpretationScenario() {
   const resultBox = document.getElementById("interpretAIResult");
   const roleTag = document.getElementById("speakerRoleTag");
   
-  notice.innerHTML = `<span class="blind-icon">⏳</span> <span>AI đang biên soạn phát biểu [${topic.title}]...</span>`;
+  notice.innerHTML = `<span class="blind-icon">⏳</span> <span>AI đang biên soạn phát biểu [${topic.shortTitle}]...</span>`;
   revealedBox.style.display = "none";
   isSpeechRevealed = false;
   document.getElementById("interpretUserTranscript").value = "";
   resultBox.style.display = "none";
 
   let prompt = "";
-  if (dir === "zh_to_vi") {
+  if (selectedDirection === "zh_to_vi") {
     currentInterpretScenario.sourceLang = "zh-CN";
     currentInterpretScenario.targetLang = "vi-VN";
     currentInterpretScenario.dir = "zh_to_vi";
@@ -166,7 +206,7 @@ async function generateAIInterpretationScenario() {
     prompt = `Bạn là ${topic.roleZh}. Hãy đóng vai và phát biểu 1 đoạn ngắn bằng TIẾNG TRUNG (khoảng 2-3 câu ngắn gọn, tối đa 45 từ) thuộc ngữ cảnh: "${topic.context}".
 BẮT BUỘC có sử dụng một số từ vựng trọng tâm sau: [${topic.vocabZh}].
 QUY TẮC BẮT BUỘC:
-1. Trả về DUY NHẤT đoạn phát biểu bằng chữ Hán, đúng ngữ cảnh bối cảnh.
+1. Trả về DUY NHẤT đoạn phát biểu bằng chữ Hán.
 2. Tuyệt đối KHÔNG có pinyin, KHÔNG dịch tiếng Việt, KHÔNG có lời chào giải thích nào khác.`;
   } else {
     currentInterpretScenario.sourceLang = "vi-VN";
@@ -194,11 +234,10 @@ QUY TẮC BẮT BUỘC:
   }
 }
 
-/* 5. PHÁT ÂM DIỄN GIẢ (CỐ ĐỊNH GIỌNG NỮ TRUYỀN CẢM & RÕ TIẾNG) */
+/* 5. PHÁT ÂM DIỄN GIẢ (CỐ ĐỊNH GIỌNG NỮ TRUYỀN CẢM) */
 function playSpeakerAudio() {
   if (!currentInterpretScenario.speechText) return alert("Vui lòng bấm 'AI Tạo Tình Huống' trước!");
 
-  const speedRate = parseFloat(document.getElementById("interpretSpeechRate").value) || 1.0;
   const isZh = (currentInterpretScenario.sourceLang === "zh-CN");
 
   if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ phát âm thanh!");
@@ -206,14 +245,12 @@ function playSpeakerAudio() {
 
   const u = new SpeechSynthesisUtterance(currentInterpretScenario.speechText);
   u.lang = currentInterpretScenario.sourceLang;
-  u.rate = speedRate;
-  u.pitch = 1.05; // Cao độ trong trẻo, dễ nghe nhất
+  u.rate = selectedRate;
+  u.pitch = 1.05;
 
-  // Lấy danh sách voice trên thiết bị
   const voices = window.speechSynthesis.getVoices();
   const langVoices = voices.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(isZh ? "zh" : "vi"));
 
-  // Ưu tiên các giọng nữ chất lượng cao nhất (Xiaoxiao, Yaoyao, Huihui, Tingting, HoaiMy...)
   const bestFemaleVoice = langVoices.find(v => {
     const name = v.name.toLowerCase();
     return name.includes("xiaoxiao") || name.includes("yaoyao") || name.includes("huihui") || 
@@ -229,6 +266,22 @@ function playSpeakerAudio() {
 
   window.speechSynthesis.speak(u);
 }
+
+function toggleRevealSpeech() {
+  if (!currentInterpretScenario.speechText) return;
+  const revealedBox = document.getElementById("revealedSpeechText");
+  const blindNotice = document.getElementById("speechBlindNotice");
+
+  isSpeechRevealed = !isSpeechRevealed;
+  if (isSpeechRevealed) {
+    revealedBox.style.display = "block";
+    blindNotice.style.display = "none";
+  } else {
+    revealedBox.style.display = "none";
+    blindNotice.style.display = "flex";
+  }
+}
+
 /* 6. THU ÂM GIỌNG NÓI PHIÊN DỊCH */
 function toggleSpeechRecording() {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
