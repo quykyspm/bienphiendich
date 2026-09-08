@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><text x='50%' y='50%' font-size='62' font-family='sans-serif' font-weight='bold' fill='%23ffffff' dominant-baseline='central' text-anchor='middle'>译</text></svg>">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GN32J5JEQ6"></script>
   <script>
@@ -14,14 +13,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>biên phiên dịch by QuyKy</title>
+
+  <!-- Favicon chữ Dịch 译 sang trọng -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><text x='50%' y='50%' font-size='62' font-family='sans-serif' font-weight='bold' fill='%23ffffff' dominant-baseline='central' text-anchor='middle'>译</text></svg>">
   
   <!-- Thư viện ngoài -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
-  <!-- File CSS -->
-  <link rel="stylesheet" href="style.css">
+  <!-- File CSS có gắn version để chống lưu cache cũ -->
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
@@ -36,63 +38,75 @@
   </div>
 
   <div class="card">
-    <!-- THANH HEADER CHÍNH CÓ NÚT MENU TỔNG -->
-    <header class="app-header">
-      <div class="header-left">
-        <span class="app-brand">biên phiên dịch</span>
-        <span class="current-mode-badge" id="currentModeBadge">✍️ Luyện Viết</span>
-      </div>
-
-      <div class="menu-control-wrapper">
-        <button class="menu-toggle-btn" id="menuToggleBtn" onclick="toggleMainMenu(event)">
-          <span class="menu-icon">☰</span>
-          <span>Chức năng ▾</span>
+    
+    <!-- THANH MENU CHÍNH DUY NHẤT -->
+    <div class="nav-bar-container">
+      <div class="brand-title">biên phiên dịch by QuyKy</div>
+      
+      <div class="main-menu-wrapper">
+        <button class="main-menu-trigger" id="mainMenuTrigger" onclick="toggleMenuPopup(event)">
+          <span id="currentActiveTabLabel">✍️ Luyện Viết</span>
+          <span class="arrow-icon">▾</span>
         </button>
 
-        <!-- MENU POPUP HIỂN THỊ CÁC TAB KHI NHẤN VÀO -->
-        <div class="main-dropdown-menu" id="mainDropdownMenu">
-          <div class="menu-section-title">CHẾ ĐỘ HỌC TẬP</div>
-          <button class="menu-item active" onclick="selectTab('write', '✍️ Luyện Viết')">
-            <span class="item-icon">✍️</span>
-            <div class="item-text">
-              <strong>Luyện Viết Chữ Hán</strong>
-              <small>Tập viết theo ô mễ, nhận diện nét</small>
+        <!-- Menu thả xuống chọn chế độ -->
+        <div class="menu-dropdown-box" id="menuDropdownBox">
+          <div class="menu-group-label">CHẾ ĐỘ HỌC TẬP</div>
+          
+          <div class="menu-nav-option active" onclick="switchMode('write', '✍️ Luyện Viết')">
+            <span class="icon">✍️</span>
+            <div class="info">
+              <span class="title">Luyện Viết Chữ Hán</span>
+              <span class="sub">Tập viết theo ô mễ & nhận diện nét</span>
             </div>
-          </button>
-          <button class="menu-item" onclick="selectTab('listen', '🎧 Luyện Nghe')">
-            <span class="item-icon">🎧</span>
-            <div class="item-text">
-              <strong>Luyện Nghe Phát Âm</strong>
-              <small>Phát âm giọng đọc chuẩn zh-CN</small>
+          </div>
+
+          <div class="menu-nav-option" onclick="switchMode('listen', '🎧 Luyện Nghe')">
+            <span class="icon">🎧</span>
+            <div class="info">
+              <span class="title">Luyện Nghe Phát Âm</span>
+              <span class="sub">Luyện tai với giọng chuẩn Bắc Kinh zh-CN</span>
             </div>
-          </button>
-          <button class="menu-item" onclick="selectTab('ai', '🤖 AI Dịch Thuật')">
-            <span class="item-icon">🤖</span>
-            <div class="item-text">
-              <strong>AI Dịch Thuật & Chấm Điểm</strong>
-              <small>Tạo đề & thẩm định bản dịch</small>
+          </div>
+
+          <!-- TAB MỚI: PHIÊN DỊCH THỰC CHIẾN -->
+          <div class="menu-nav-option" onclick="switchMode('interpret', '🎙️ Luyện Phiên Dịch')">
+            <span class="icon">🎙️</span>
+            <div class="info">
+              <span class="title">Phòng Luyện Phiên Dịch</span>
+              <span class="sub">Dịch nối tiếp hội nghị bằng giọng nói & Mic</span>
             </div>
-          </button>
-          <button class="menu-item" onclick="selectTab('arena', '🏆 Đấu Trường')">
-            <span class="item-icon">🏆</span>
-            <div class="item-text">
-              <strong>Đấu Trường Solo 60s</strong>
-              <small>Tranh tài xếp hạng thời gian thực</small>
+          </div>
+
+          <div class="menu-nav-option" onclick="switchMode('ai', '🤖 AI Dịch Thuật')">
+            <span class="icon">🤖</span>
+            <div class="info">
+              <span class="title">AI Dịch Thuật</span>
+              <span class="sub">Tạo đề ngữ cảnh & AI thẩm định văn bản</span>
             </div>
-          </button>
+          </div>
+
+          <div class="menu-nav-option" onclick="switchMode('arena', '🏆 Đấu Trường')">
+            <span class="icon">🏆</span>
+            <div class="info">
+              <span class="title">Đấu Trường Solo (60s)</span>
+              <span class="sub">Đua top bảng xếp hạng thời gian thực</span>
+            </div>
+          </div>
 
           <div class="menu-divider"></div>
-          <div class="menu-section-title">MỞ RỘNG (TƯƠNG LAI)</div>
-          <button class="menu-item disabled-item" onclick="alert('Tính năng đang được phát triển!')">
-            <span class="item-icon">📚</span>
-            <div class="item-text">
-              <strong>Ngữ Pháp Chuyên Đề</strong>
-              <small>Sắp ra mắt</small>
+          <div class="menu-group-label">MỞ RỘNG (TƯƠNG LAI)</div>
+
+          <div class="menu-nav-option disabled" onclick="alert('Tính năng đang được biên soạn!')">
+            <span class="icon">📚</span>
+            <div class="info">
+              <span class="title">Ngữ Pháp & Mẫu Câu</span>
+              <span class="sub">Đang hoàn thiện...</span>
             </div>
-          </button>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
 
     <!-- Thanh Người chơi -->
     <div class="player-bar">
@@ -188,7 +202,62 @@
       <div id="listen-result-msg"></div>
     </div>
 
-    <!-- ================= TAB 3: AI DỊCH THUẬT ================= -->
+    <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (MỚI) ================= -->
+    <div id="tab-interpret" class="tab-content">
+      <div class="interpret-header-box">
+        <div class="filter-panel" style="margin-bottom: 0; background: transparent; border: none; padding: 0;">
+          <div class="filter-item">
+            <label>Chiều phiên dịch:</label>
+            <select id="interpretDirection" onchange="setupInterpretQuestion()">
+              <option value="zh_to_vi">Trung ➔ Việt (Nghe tiếng Trung, dịch tiếng Việt)</option>
+              <option value="vi_to_zh">Việt ➔ Trung (Nghe tiếng Việt, dịch tiếng Trung)</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>Bối cảnh diễn giả:</label>
+            <select id="interpretContextSelect" onchange="setupInterpretQuestion()">
+              <option value="bai1">Bài 1: Khai mạc & Phát biểu chào mừng</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bục diễn giả phát biểu -->
+      <div class="speaker-card">
+        <div class="speaker-title">
+          <span>🎙️ DIỄN GIẢ HỘI NGHỊ</span>
+          <button class="btn-repeat-speech" onclick="playSpeakerSpeech()">🔊 Nghe lại phát biểu</button>
+        </div>
+        <div class="speaker-speech-preview" id="speakerSpeechPreview">Bấm nút bên dưới để nghe diễn giả phát biểu...</div>
+      </div>
+
+      <!-- Khu vực cabin của phiên dịch viên -->
+      <div class="interpreter-desk">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <label style="font-size: 13px; font-weight: bold; color: #475569;">Bản dịch của bạn (Nói qua Mic hoặc Gõ tay):</label>
+          <span id="recordingStatusTag" class="status-tag idle">Đang chờ mic</span>
+        </div>
+
+        <div class="voice-controls-row">
+          <button class="mic-btn" id="btnToggleRecord" onclick="toggleSpeechRecording()">
+            <span class="mic-icon">🎤</span>
+            <span id="micBtnText">BẤM VÀO ĐỂ DỊCH (NÓI)</span>
+          </button>
+        </div>
+
+        <textarea id="interpretUserTranscript" class="transcript-textarea" placeholder="Nói vào Micro (hoặc gõ bài dịch trực tiếp vào đây nếu ở nơi ồn ào)..."></textarea>
+      </div>
+
+      <div class="button-group">
+        <button class="main-btn btn-clear-all" onclick="document.getElementById('interpretUserTranscript').value=''">Xóa câu dịch</button>
+        <button class="main-btn btn-check" id="btnSubmitInterpret" onclick="submitInterpretationToAI()">⚖️ AI Thẩm Định Phiên Dịch</button>
+        <button class="main-btn btn-next" onclick="nextInterpretQuestion()">Đoạn tiếp ➔</button>
+      </div>
+
+      <div id="interpretAIResult" class="interpret-eval-box"></div>
+    </div>
+
+    <!-- ================= TAB 4: AI DỊCH THUẬT (BIÊN DỊCH VIẾT) ================= -->
     <div id="tab-ai" class="tab-content">
       <div class="filter-panel" style="justify-content: flex-start; gap: 15px;">
         <div class="filter-item">
@@ -216,7 +285,7 @@
       <div id="aiEvaluationResult" class="ai-result-box"></div>
     </div>
 
-    <!-- ================= TAB 4: ĐẤU TRƯỜNG & BẢNG XẾP HẠNG ================= -->
+    <!-- ================= TAB 5: ĐẤU TRƯỜNG & BẢNG XẾP HẠNG ================= -->
     <div id="tab-arena" class="tab-content">
       <div class="arena-banner">
         <h2 style="margin: 0 0 6px 0;">⚔️ SOLO??</h2>
@@ -270,7 +339,7 @@
 
   </div>
 
-  <!-- File JavaScript -->
-  <script src="script.js"></script>
+  <!-- Nạp script có version mới chống cache -->
+  <script src="script.js?v=3.0"></script>
 </body>
 </html>
