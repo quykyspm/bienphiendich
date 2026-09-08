@@ -18,6 +18,128 @@ try {
   console.warn("Lỗi Firebase:", e);
 }
 
+/* ================= 12 CHỦ ĐỀ CHUẨN GIÁO TRÌNH PHIÊN DỊCH 1 ================= */
+const curriculumTopics = [
+  {
+    id: "bai1",
+    title: "Bài 1: Khai mạc hội nghị (会议开幕)",
+    roleZh: "Người chủ trì / Ban tổ chức hội nghị quốc tế",
+    roleVi: "MC / Đại diện Ban Tổ chức phía Việt Nam",
+    context: "Khai mạc hội nghị, đón tiếp khách mời, ổn định chỗ ngồi, giới thiệu đại biểu, tuyên bố khai mạc",
+    vocabZh: "即将, 礼堂, 就坐, 来宾, 主题, 学习交流, 致辞, 开幕词, 宣布, 组委会, 搭建平台, 旨在, 拨冗出席",
+    vocabVi: "hội trường, ổn định chỗ ngồi, khách mời, chủ đề, bài phát biểu khai mạc, tuyên bố, ban tổ chức, tạo dựng nền tảng, bớt chút thời gian quý báu"
+  },
+  {
+    id: "bai2",
+    title: "Bài 2: Chúc mừng, cảm ơn & Tiệc (祝贺词, 感谢词)",
+    roleZh: "Đại diện đối tác / Lãnh đạo phát biểu tại tiệc chiêu đãi",
+    roleVi: "Trưởng đoàn đại biểu Việt Nam phát biểu cảm ơn & nâng ly",
+    context: "Phát biểu tại tiệc chiêu đãi, gửi lời chúc mừng, tri ân giúp đỡ, nâng ly chúc tình hữu nghị, giữ liên lạc",
+    vocabZh: "庆祝, 友谊, 举杯, 干杯, 到来, 支持, 取得成绩, 保持联系, 欢聚一堂, 衷心祝愿, 合作顺利",
+    vocabVi: "chúc mừng, tình hữu nghị, nâng ly, cạn ly, sự hiện diện, ủng hộ, đạt thành tích, giữ liên lạc, chúc công tác thuận lợi"
+  },
+  {
+    id: "bai3",
+    title: "Bài 3: Bế mạc hội nghị (闭幕式)",
+    roleZh: "Chủ tịch hội nghị quốc tế tổng kết và bế mạc",
+    roleVi: "Đại diện ban tổ chức bế mạc diễn đàn hợp tác",
+    context: "Tổng kết thành quả hội nghị, đi đến nhận thức chung, cảm ơn đại biểu, đặt nền tảng hợp tác lâu dài, tuyên bố bế mạc",
+    vocabZh: "圆满结束, 丰硕成果, 达成共识, 闭幕, 大力支持, 奠定坚实基础, 推动, 议程, 期待再次相聚",
+    vocabVi: "kết thúc tốt đẹp, thành quả to lớn, nhận thức chung, bế mạc, ủng hộ to lớn, đặt nền tảng vững chắc, thúc đẩy, hẹn gặp lại"
+  },
+  {
+    id: "bai4",
+    title: "Bài 4: Mua sắm & Ăn uống (购物、餐饮)",
+    roleZh: "Khách hàng / Nhân viên quầy chăm sóc khách hàng & nhà hàng",
+    roleVi: "Phiên dịch viên hỗ trợ khách mua hàng, bảo hành đổi trả hoặc gọi món",
+    context: "Hỏi giá khuyến mãi, đổi trả hàng do lỗi kỹ thuật, bảo hành miễn phí, gọi món bò bít tết/tôm rang muối tiêu",
+    vocabZh: "羽绒服, 原价, 打折, 促销活动, 试穿, 质量问题, 免费修理, 更换, 保修卡, 顺便, 牛排, 全熟, 补偿",
+    vocabVi: "giá gốc, giảm giá, khuyến mãi, mặc thử, lỗi chất lượng, sửa chữa miễn phí, đổi mới, phiếu bảo hành, chín kỹ, bồi thường"
+  },
+  {
+    id: "bai5",
+    title: "Bài 5: Hội chợ triển lãm (展览会)",
+    roleZh: "Đại diện nhà cung cấp / Doanh nghiệp tham gia hội chợ",
+    roleVi: "Doanh nghiệp xuất nhập khẩu đàm phán hợp đồng thương mại",
+    context: "Giới thiệu sản phẩm mới tại gian hàng, chứng nhận ISO, đàm phán bảng báo giá, đơn hàng thử lô nhỏ, ký hợp đồng",
+    vocabZh: "展位, 经营, 农产品, 出口, 推出, 质量认证, 报价单, 最低订购数量, 小批量试单, 签署合同, 开拓市场",
+    vocabVi: "gian hàng, kinh doanh, nông sản, xuất khẩu, chứng nhận chất lượng, bảng báo giá, số lượng tối thiểu, đơn hàng thử, ký hợp đồng"
+  },
+  {
+    id: "bai6",
+    title: "Bài 6: Thể thao (体育)",
+    roleZh: "Phóng viên thể thao / Vận động viên phỏng vấn sau trận đấu",
+    roleVi: "Bình luận viên / Huấn luyện viên chia sẻ về kết quả thi đấu",
+    context: "Tường thuật trận chung kết bóng chuyền/bóng đá kịch tính, tỉ số hòa, ý chí kiên cường chạy marathon, chấn thương hồi phục",
+    vocabZh: "决赛, 对阵, 激烈, 打平, 团队合作, 比分, 战胜, 金牌, 马拉松, 坚持跑完全程, 成功晋级, 重返赛场",
+    vocabVi: "chung kết, đối đầu, quyết liệt, hòa điểm, phối hợp đồng đội, tỉ số, chiến thắng, huy chương vàng, chạy hết chặng, giành quyền đi tiếp"
+  },
+  {
+    id: "bai7",
+    title: "Bài 7: Địa danh du lịch (旅游景点)",
+    roleZh: "Hướng dẫn viên du lịch giới thiệu thắng cảnh",
+    roleVi: "Du khách / Phiên dịch viên tư vấn tour du lịch",
+    context: "Giới thiệu vị trí địa lý, danh lam thắng cảnh, di sản thế giới UNESCO, chèo thuyền kayak, đi cáp treo ngắm cảnh",
+    vocabZh: "古镇, 世界遗产, 悠久, 五彩缤纷, 灯笼, 名胜古迹, 故宫, 长城, 下龙湾, 石灰岩, 溶洞, 缆车",
+    vocabVi: "phố cổ, di sản thế giới, lâu đời, đèn lồng rực rỡ, danh lam thắng cảnh, Cố Cung, Vịnh Hạ Long, đảo đá vôi, hang động, cáp treo"
+  },
+  {
+    id: "bai8",
+    title: "Bài 8: Tin tức báo chí (新闻报道)",
+    roleZh: "Người phát ngôn / Phóng viên họp báo truyền thông",
+    roleVi: "Nhà báo đưa tin sự kiện, xác minh tin đồn mạng xã hội",
+    context: "Đưa tin họp báo phim, xu hướng tìm kiếm hot search, xác minh thông tin đời tư, khuyến cáo không lan truyền tin đồn thất thiệt",
+    vocabZh: "采访, 登上热搜, 据媒体报道, 发布会, 记者, 澄清, 不实传闻, 核实信息, 引起恐慌, 剧本, 角色",
+    vocabVi: "phỏng vấn, lọt xu hướng tìm kiếm, theo truyền thông đưa tin, họp báo, đính chính, tin đồn sai lệch, xác minh thông tin, gây hoang mang"
+  },
+  {
+    id: "bai9",
+    title: "Bài 9: Khác biệt văn hoá (文化差异)",
+    roleZh: "Giám đốc nhân sự công ty công nghệ Trung Quốc",
+    roleVi: "Đại diện doanh nghiệp Việt Nam trao đổi về văn hóa làm việc",
+    context: "So sánh chế độ làm việc '996' với thói quen nghỉ trưa và tan làm đúng giờ, cân bằng giữa công việc và gia đình, tránh hiểu lầm",
+    vocabZh: "科技企业, 996工作制, 加班, 工作与生活的平衡, 午休, 午睡, 恢复精力, 陪伴家人, 避免产生误会, 沟通习惯",
+    vocabVi: "doanh nghiệp công nghệ, chế độ làm việc 996, tăng ca, cân bằng công việc và cuộc sống, nghỉ trưa, ở bên gia đình, tránh hiểu lầm"
+  },
+  {
+    id: "bai10",
+    title: "Bài 10: Dự báo thời tiết (天气预报)",
+    roleZh: "Chuyên viên khí tượng / Phát thanh viên dự báo thiên tai",
+    roleVi: "Cán bộ phòng chống bão lũ / Hướng dẫn viên cảnh báo du khách",
+    context: "Bản tin dự báo nhiệt độ ngày đêm, cảnh báo bão ven biển gió giật mạnh, mưa lớn gây lũ quét sạt lở đất, biến đổi khí hậu",
+    vocabZh: "天气预报, 摄氏度, 台风, 沿海地区, 暴雨, 强风, 减少外出, 防风防雨, 气候变化, 山洪, 泥石流, 全球变暖",
+    vocabVi: "dự báo thời tiết, độ C, bão, ven biển, mưa lớn, gió mạnh, hạn chế ra ngoài, phòng chống gió mưa, lũ quét, sạt lở đất, nóng lên toàn cầu"
+  },
+  {
+    id: "bai11",
+    title: "Bài 11: Quản lý thời gian (时间管理)",
+    roleZh: "Diễn giả / Chuyên gia đào tạo phương pháp học tập",
+    roleVi: "Trưởng nhóm dự án phân công công việc và đốc thúc tiến độ",
+    context: "Lập danh sách nhiệm vụ ưu tiên khẩn cấp, phương pháp Pomodoro, tránh trì hoãn phút chót, thống nhất tiến độ nhóm, kết hợp nghỉ ngơi",
+    vocabZh: "制定计划, 任务清单, 轻重缓急, 优先处理, 番茄工作法, 恢复精力, 截止日期, 及时沟通, 劳逸结合, 拖延",
+    vocabVi: "lập kế hoạch, danh sách nhiệm vụ, khẩn cấp và quan trọng, ưu tiên xử lý, phương pháp Pomodoro, thời hạn deadline, tránh trì hoãn"
+  },
+  {
+    id: "bai12",
+    title: "Bài 12: Dân số (人口)",
+    roleZh: "Chuyên gia xã hội học / Nhà nghiên cứu chính sách dân số",
+    roleVi: "Đại biểu hội nghị phân tích thách thức già hóa dân số",
+    context: "Phân tích xu hướng già hóa dân số, tỷ lệ sinh giảm, di cư từ nông thôn lên thành phố, áp lực lên an sinh xã hội và chăm sóc người già",
+    vocabZh: "增长速度, 逐渐放缓, 城市化进程, 人口老龄化, 劳动力不足, 养老保障, 调整生育政策, 缩小地区差距, 长期照护",
+    vocabVi: "tốc độ tăng trưởng, dần chậm lại, đô thị hóa, già hóa dân số, thiếu hụt lao động, an sinh tuổi già, điều chỉnh chính sách sinh, thu hẹp khoảng cách"
+  }
+];
+
+function initCurriculumDropdown() {
+  const select = document.getElementById("interpretCurriculumTopic");
+  if (!select) return;
+  select.innerHTML = "";
+  curriculumTopics.forEach(t => {
+    select.innerHTML += `<option value="${t.id}">${t.title}</option>`;
+  });
+}
+window.addEventListener("DOMContentLoaded", initCurriculumDropdown);
+
 /* ================= XỬ LÝ MENU TỔNG ĐIỀU HƯỚNG ================= */
 function toggleMenuPopup(event) {
   event.stopPropagation();
@@ -47,10 +169,12 @@ function switchMode(tabKey, displayName) {
   if (dropdown) dropdown.classList.remove("show");
 
   if (tabKey === 'listen' && !currentListenWord) setupListenQuestion();
-  if (tabKey === 'interpret' && !currentInterpretItem) setupInterpretQuestion();
+  if (tabKey === 'interpret' && !currentInterpretScenario.speechText) {
+    generateAIInterpretationScenario();
+  }
 }
 
-/* ================= BỘ GIỌNG ĐỌC DIỄN GIẢ NGOẠI GIAO (SPEECH PROSODY) ================= */
+/* ================= BỘ GIỌNG ĐỌC DIỄN GIẢ ================= */
 let availableVoices = [];
 function initVoiceList() {
   if (!window.speechSynthesis) return;
@@ -61,20 +185,14 @@ if (window.speechSynthesis) {
 }
 
 function playDiplomaticSpeech(text, lang = 'zh-CN') {
-  if (!window.speechSynthesis) {
-    alert("Trình duyệt không hỗ trợ phát âm!");
-    return;
-  }
+  if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ phát âm!");
   window.speechSynthesis.cancel();
   
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
-  
-  // Tinh chỉnh nhịp ngắt trang trọng: tốc độ 0.9x, tông hơi trầm 0.95
   u.rate = 0.9;
   u.pitch = 0.95;
 
-  // Lọc giọng Natural / Neural của Microsoft/Google nếu có
   if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
   const matchedVoice = availableVoices.find(v => v.lang.startsWith(lang.split('-')[0]) && (v.name.includes("Natural") || v.name.includes("Neural")));
   if (matchedVoice) u.voice = matchedVoice;
@@ -82,92 +200,114 @@ function playDiplomaticSpeech(text, lang = 'zh-CN') {
   window.speechSynthesis.speak(u);
 }
 
-/* ================= PHÒNG LUYỆN PHIÊN DỊCH (INTERPRETATION LAB) ================= */
-// Kho dữ liệu đối ngoại Bài 1 trích xuất từ giáo trình
-const lesson1Speeches = {
-  zh_to_vi: [
-    {
-      speech: "尊敬的各位领导、各位专家、各位来宾，大家上午好！欢迎大家出席2026年中越教育合作论坛开幕式。",
-      targetLang: "vi-VN",
-      expectedRef: "Kính thưa quý vị lãnh đạo, quý vị chuyên gia và quý vị đại biểu, chúc mọi người một buổi sáng tốt lành! Nhiệt liệt chào mừng quý vị đến tham dự Lễ khai mạc Diễn đàn Hợp tác Giáo dục Việt - Trung năm 2026."
-    },
-    {
-      speech: "首先，请允许我代表主办方向各位嘉宾表示热烈欢迎，并感谢大家在百忙之中拨冗出席本次活动。",
-      targetLang: "vi-VN",
-      expectedRef: "Trước hết, xin phép tôi được thay mặt Ban Tổ chức gửi lời chào mừng nồng nhiệt tới quý vị đại biểu, và xin chân thành cảm ơn quý vị đã bớt chút thời gian quý báu để đến tham dự sự kiện lần này."
-    },
-    {
-      speech: "本次论坛将围绕人工智能与国际中文教育的发展展开深入交流，希望各位专家共同探讨未来合作的新方向。",
-      targetLang: "vi-VN",
-      expectedRef: "Diễn đàn lần này sẽ tiến hành trao đổi chuyên sâu xoay quanh sự phát triển của trí tuệ nhân tạo và giáo dục tiếng Trung quốc tế, hy vọng các chuyên gia sẽ cùng nhau thảo luận về những định hướng hợp tác mới trong tương lai."
-    },
-    {
-      speech: "下面，让我们以热烈的掌声欢迎李校长致开幕词。我宣布，本次论坛正式开幕！",
-      targetLang: "vi-VN",
-      expectedRef: "Sau đây, xin quý vị hãy dành một tràng pháo tay nồng nhiệt để chào đón Hiệu trưởng Lý lên phát biểu diễn văn khai mạc. Tôi xin tuyên bố, diễn đàn lần này chính thức khai mạc!"
-    }
-  ],
-  vi_to_zh: [
-    {
-      speech: "Kính thưa các vị giáo sư, quý học giả và các em sinh viên, xin chân thành cảm ơn quý vị đã đến tham dự Hội thảo học thuật quốc tế lần này.",
-      targetLang: "zh-CN",
-      expectedRef: "尊敬的各位教授、各位学者、各位同学，非常感谢大家参加本次国际学术研讨会。"
-    },
-    {
-      speech: "Hội thảo lần này đã mời các chuyên gia cùng nhau thảo luận về những cơ hội và thách thức mà công nghệ số mang lại cho giảng dạy ngôn ngữ.",
-      targetLang: "zh-CN",
-      expectedRef: "本次会议邀请了各位专家，共同探讨数字技术对语言教学带来的机遇与挑战。"
-    },
-    {
-      speech: "Quý vị không chỉ có cơ hội lắng nghe các báo cáo học thuật đặc sắc mà còn có thể trao đổi chuyên sâu với giảng viên các trường đại học.",
-      targetLang: "zh-CN",
-      expectedRef: "大家不仅可以聆听精彩的学术报告，还能够与各高校教师进行深入交流。"
-    },
-    {
-      speech: "Hy vọng hội thảo sẽ tiếp tục thúc đẩy hợp tác quốc tế. Bây giờ, tôi xin tuyên bố hội thảo chính thức bắt đầu!",
-      targetLang: "zh-CN",
-      expectedRef: "希望本次研讨会能够进一步促进国际合作。现在，我宣布研讨会正式开始！"
-    }
-  ]
-};
+/* ================= KẾT NỐI VERCEL PROXY ================= */
+const VERCEL_API_URL = "https://gemini-api-backend-rho.vercel.app/api/gemini";
 
-let currentInterpretIndex = 0;
-let currentInterpretItem = null;
+async function callGemini(promptText) {
+  const res = await fetch(VERCEL_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt: promptText })
+  });
+
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data.text;
+}
+
+/* ================= PHÒNG LUYỆN PHIÊN DỊCH THEO 12 CHỦ ĐỀ GIÁO TRÌNH ================= */
+let currentInterpretScenario = {
+  speechText: "",
+  sourceLang: "zh-CN",
+  targetLang: "vi-VN",
+  dir: "zh_to_vi",
+  topic: null
+};
+let isSpeechRevealed = false;
 let speechRecognizer = null;
 let isRecording = false;
 
-function setupInterpretQuestion() {
+// AI Tự động sinh kịch bản diễn giả dựa trên đúng bài giáo trình được chọn
+async function generateAIInterpretationScenario() {
   const dir = document.getElementById("interpretDirection").value;
-  const list = lesson1Speeches[dir] || [];
-  currentInterpretItem = list[currentInterpretIndex % list.length];
+  const topicId = document.getElementById("interpretCurriculumTopic").value;
+  const topic = curriculumTopics.find(t => t.id === topicId) || curriculumTopics[0];
+  currentInterpretScenario.topic = topic;
 
-  document.getElementById("speakerSpeechPreview").innerText = currentInterpretItem.speech;
-  document.getElementById("interpretUserTranscript").value = "";
-  document.getElementById("interpretAIResult").style.display = "none";
+  const notice = document.getElementById("speechBlindNotice");
+  const revealedBox = document.getElementById("revealedSpeechText");
+  const resultBox = document.getElementById("interpretAIResult");
+  const roleTag = document.getElementById("speakerRoleTag");
   
-  // Tự động phát âm thanh diễn giả khi chuyển câu
-  playSpeakerSpeech();
+  notice.innerHTML = `<span class="blind-icon">⏳</span> <span>AI đang biên soạn phát biểu [${topic.title}]...</span>`;
+  revealedBox.style.display = "none";
+  isSpeechRevealed = false;
+  document.getElementById("interpretUserTranscript").value = "";
+  resultBox.style.display = "none";
+
+  let prompt = "";
+  if (dir === "zh_to_vi") {
+    currentInterpretScenario.sourceLang = "zh-CN";
+    currentInterpretScenario.targetLang = "vi-VN";
+    currentInterpretScenario.dir = "zh_to_vi";
+    roleTag.innerText = `🎙️ ${topic.roleZh.toUpperCase()}`;
+
+    prompt = `Bạn là ${topic.roleZh}. Hãy đóng vai và phát biểu 1 đoạn ngắn bằng TIẾNG TRUNG (khoảng 2-3 câu ngắn gọn, tối đa 45 từ) thuộc ngữ cảnh: "${topic.context}".
+BẮT BUỘC có sử dụng một số từ vựng trọng tâm sau: [${topic.vocabZh}].
+QUY TẮC BẮT BUỘC:
+1. Trả về DUY NHẤT đoạn phát biểu bằng chữ Hán, văn phong tự nhiên đúng khẩu khí người bản xứ trong bối cảnh đó.
+2. Tuyệt đối KHÔNG có pinyin, KHÔNG dịch tiếng Việt, KHÔNG có lời chào giải thích nào khác.`;
+  } else {
+    currentInterpretScenario.sourceLang = "vi-VN";
+    currentInterpretScenario.targetLang = "zh-CN";
+    currentInterpretScenario.dir = "vi_to_zh";
+    roleTag.innerText = `🎙️ ${topic.roleVi.toUpperCase()}`;
+
+    prompt = `Bạn là ${topic.roleVi}. Hãy đóng vai và phát biểu 1 đoạn ngắn bằng TIẾNG VIỆT (khoảng 2-3 câu ngắn gọn, tối đa 45 từ) thuộc ngữ cảnh: "${topic.context}".
+BẮT BUỘC có sử dụng một số khái niệm/từ ngữ sau: [${topic.vocabVi}].
+QUY TẮC BẮT BUỘC:
+1. 100% bằng tiếng Việt thuần túy, đúng phong thái và chuẩn ngữ cảnh bối cảnh.
+2. Tuyệt đối KHÔNG chứa chữ Hán, Pinyin hay lời giải thích thừa, chỉ trả về nội dung phát biểu.`;
+  }
+
+  try {
+    const speech = await callGemini(prompt);
+    currentInterpretScenario.speechText = speech.trim();
+
+    revealedBox.innerText = currentInterpretScenario.speechText;
+    notice.innerHTML = '<span class="blind-icon">🔒</span> <span>Nội dung đã được che! Bắt đầu phát âm thanh diễn giả...</span>';
+
+    playSpeakerAudio();
+  } catch (err) {
+    notice.innerHTML = `<span class="blind-icon">❌</span> <span>Lỗi: ${err.message}</span>`;
+  }
 }
 
-function playSpeakerSpeech() {
-  if (!currentInterpretItem) return;
-  const dir = document.getElementById("interpretDirection").value;
-  const lang = (dir === "zh_to_vi") ? "zh-CN" : "vi-VN";
-  playDiplomaticSpeech(currentInterpretItem.speech, lang);
+function playSpeakerAudio() {
+  if (!currentInterpretScenario.speechText) return alert("Vui lòng bấm 'AI Tạo Tình Huống' trước!");
+  playDiplomaticSpeech(currentInterpretScenario.speechText, currentInterpretScenario.sourceLang);
 }
 
-function nextInterpretQuestion() {
-  const dir = document.getElementById("interpretDirection").value;
-  const list = lesson1Speeches[dir] || [];
-  currentInterpretIndex = (currentInterpretIndex + 1) % list.length;
-  setupInterpretQuestion();
+function toggleRevealSpeech() {
+  if (!currentInterpretScenario.speechText) return;
+  const revealedBox = document.getElementById("revealedSpeechText");
+  const blindNotice = document.getElementById("speechBlindNotice");
+
+  isSpeechRevealed = !isSpeechRevealed;
+  if (isSpeechRevealed) {
+    revealedBox.style.display = "block";
+    blindNotice.style.display = "none";
+  } else {
+    revealedBox.style.display = "none";
+    blindNotice.style.display = "flex";
+  }
 }
 
-// Xử lý Micro qua Web Speech Recognition API
+// Micro thu âm tiếng dịch của học viên
 function toggleSpeechRecording() {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRec) {
-    alert("Trình duyệt của bạn chưa hỗ trợ nhận diện giọng nói Web Speech. Hãy dùng Google Chrome hoặc Edge, hoặc gõ tay trực tiếp vào ô văn bản!");
+    alert("Trình duyệt chưa hỗ trợ Web Speech API. Vui lòng dùng Chrome/Edge hoặc gõ bài dịch trực tiếp vào ô văn bản!");
     return;
   }
 
@@ -176,7 +316,6 @@ function toggleSpeechRecording() {
   const txtArea = document.getElementById("interpretUserTranscript");
 
   if (isRecording) {
-    // Dừng thu
     if (speechRecognizer) speechRecognizer.stop();
     return;
   }
@@ -184,9 +323,7 @@ function toggleSpeechRecording() {
   speechRecognizer = new SpeechRec();
   speechRecognizer.continuous = true;
   speechRecognizer.interimResults = true;
-  
-  // Chiều dịch: Dịch sang ngôn ngữ đích nào thì nhận diện tiếng đó
-  speechRecognizer.lang = currentInterpretItem.targetLang;
+  speechRecognizer.lang = currentInterpretScenario.targetLang;
 
   speechRecognizer.onstart = () => {
     isRecording = true;
@@ -208,15 +345,8 @@ function toggleSpeechRecording() {
     }
   };
 
-  speechRecognizer.onerror = (event) => {
-    console.warn("Lỗi nhận diện giọng nói:", event.error);
-    stopRecordingUI();
-  };
-
-  speechRecognizer.onend = () => {
-    stopRecordingUI();
-  };
-
+  speechRecognizer.onerror = () => stopRecordingUI();
+  speechRecognizer.onend = () => stopRecordingUI();
   speechRecognizer.start();
 }
 
@@ -234,426 +364,53 @@ function stopRecordingUI() {
   }
 }
 
+// Gửi AI thẩm định bài phiên dịch
 async function submitInterpretationToAI() {
   const userSpeech = document.getElementById("interpretUserTranscript").value.trim();
-  if (!userSpeech) return alert("Vui lòng nói qua Micro hoặc gõ bản dịch của bạn vào ô!");
-  if (!currentInterpretItem) return;
+  if (!userSpeech) return alert("Vui lòng nói vào Micro hoặc gõ bài dịch vào ô!");
+  if (!currentInterpretScenario.speechText) return alert("Chưa có đề bài, hãy bấm 'AI Tạo Tình Huống' trước!");
 
   const btn = document.getElementById("btnSubmitInterpret");
   const resBox = document.getElementById("interpretAIResult");
   btn.innerText = "⏳ AI đang thẩm định nghiệp vụ...";
   btn.disabled = true;
 
-  const dir = document.getElementById("interpretDirection").value;
-  const sourceLangName = (dir === "zh_to_vi") ? "Tiếng Trung" : "Tiếng Việt";
-  const targetLangName = (dir === "zh_to_vi") ? "Tiếng Việt" : "Tiếng Trung";
+  const sourceLangName = (currentInterpretScenario.dir === "zh_to_vi") ? "Tiếng Trung" : "Tiếng Việt";
+  const targetLangName = (currentInterpretScenario.dir === "zh_to_vi") ? "Tiếng Việt" : "Tiếng Trung";
+  const topicTitle = currentInterpretScenario.topic ? currentInterpretScenario.topic.title : "";
 
-  const interpretEvalPrompt = `
-Bạn là chuyên gia thẩm định Phiên dịch viên Hội nghị Quốc tế (Conference Interpreter Evaluator).
-Bối cảnh: Dịch nối tiếp (Consecutive Interpreting) nghi thức ngoại giao / lễ khai mạc.
+  const evalPrompt = `
+Bạn là chuyên gia thẩm định Phiên dịch viên (Interpretation Evaluator).
+Chủ đề bài học: [${topicTitle}].
+Ngữ cảnh: Dịch nối tiếp (Consecutive Interpreting).
 
-Phát biểu gốc của diễn giả (${sourceLangName}):
-"${currentInterpretItem.speech}"
+Phát biểu gốc (${sourceLangName}):
+"${currentInterpretScenario.speechText}"
 
 Bản phiên dịch nói của học viên (${targetLangName} - thu qua Speech-to-Text):
 "${userSpeech}"
 
-Bản dịch tham khảo chuẩn:
-"${currentInterpretItem.expectedRef}"
-
-Hãy thẩm định chi tiết theo barem nghiệp vụ phiên dịch:
+Hãy thẩm định chi tiết theo mẫu:
 1. Điểm số: .../10
-2. Độ chính xác thông tin cốt lõi (Core Facts): Có dịch đúng đối tác, chức danh, sự kiện, con số không?
-3. Văn phong nghi thức ngoại giao (Register & Tone): Đã dùng đúng từ ngữ trang trọng của hội nghị chưa (ví dụ: nhiệt liệt chào mừng, dành thời gian quý báu...)? Hãy khen ưu điểm và chỉ rõ từ ngữ chưa chuẩn nếu có.
-4. Phiên bản phiên dịch chuẩn xác và gãy gọn nhất: Cung cấp câu dịch trôi chảy nhất để học viên học tập.
-(Chú ý: Do học viên dùng nhận diện giọng nói, hãy châm chước lỗi chữ đồng âm nhỏ, tập trung thẩm định khả năng phản xạ chuyển ngữ và độ trang trọng).
-`;
-
-  try {
-    const evaluation = await callGemini(interpretEvalPrompt);
-    resBox.innerText = evaluation;
-    resBox.style.display = "block";
-  } catch (err) {
-    alert("Lỗi thẩm định: " + err.message);
-  } finally {
-    btn.innerText = "⚖️ AI Thẩm Định Phiên Dịch";
-    btn.disabled = false;
-  }
-}
-
-/* ================= THÔNG TIN NGƯỜI DÙNG & REALTIME DATABASE ================= */
-const masteredWordsSet = new Set();
-let playerId = localStorage.getItem("chinese_player_id");
-let playerName = localStorage.getItem("chinese_player_name") || "";
-let myBestScore = parseInt(localStorage.getItem("chinese_arena_best") || "0", 10);
-
-if (!playerId) {
-  playerId = "user_" + Math.random().toString(36).substr(2, 9);
-  localStorage.setItem("chinese_player_id", playerId);
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("arenaHighScore").innerText = myBestScore;
-  if (!playerName) {
-    openNameModal();
-  } else {
-    document.getElementById("nameModal").classList.add("hidden");
-    document.getElementById("displayNameTag").innerText = playerName;
-  }
-});
-
-function openNameModal() {
-  document.getElementById("nameModal").classList.remove("hidden");
-  const input = document.getElementById("modalNameInput");
-  input.value = playerName;
-  setTimeout(() => input.focus(), 100);
-}
-
-function submitPlayerName() {
-  const input = document.getElementById("modalNameInput");
-  const val = input ? input.value.trim() : "";
-  if (!val) return alert("Vui lòng nhập tên!");
-  
-  playerName = val;
-  localStorage.setItem("chinese_player_name", playerName);
-  
-  const tag = document.getElementById("displayNameTag");
-  if (tag) tag.innerText = playerName;
-  
-  const modal = document.getElementById("nameModal");
-  if (modal) modal.classList.add("hidden");
-
-  syncScoreToFirebase(myBestScore);
-}
-
-function syncScoreToFirebase(scoreToSave) {
-  if (!db || !playerName) return;
-
-  const numScore = Number(scoreToSave) || 0;
-  if (numScore >= myBestScore) {
-    myBestScore = numScore;
-    localStorage.setItem("chinese_arena_best", myBestScore);
-  }
-  
-  const highEl = document.getElementById("arenaHighScore");
-  if (highEl) highEl.innerText = myBestScore;
-
-  db.ref("leaderboard/" + playerId).set({
-    name: playerName,
-    score: myBestScore,
-    updatedAt: Date.now()
-  }).catch(err => {
-    console.error("Firebase từ chối ghi dữ liệu (kiểm tra lại tab Rules):", err);
-  });
-}
-
-function listenLeaderboard() {
-  if (!db) return;
-  
-  db.ref("leaderboard").on("value", snapshot => {
-    const data = snapshot.val();
-    const tbody = document.getElementById("leaderboardBody");
-    tbody.innerHTML = "";
-
-    if (!data) {
-      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:16px;">Chưa có kỷ lục nào được ghi nhận!</td></tr>';
-      return;
-    }
-
-    const list = Object.values(data)
-      .sort((a, b) => (b.score || 0) - (a.score || 0))
-      .slice(0, 10);
-
-    list.forEach((p, idx) => {
-      let badge = `#${idx + 1}`;
-      if (idx === 0) badge = "🥇 1";
-      else if (idx === 1) badge = "🥈 2";
-      else if (idx === 2) badge = "🥉 3";
-
-      const isMe = (p.name === playerName) ? 'style="font-weight:bold; color:var(--primary);"' : '';
-      tbody.innerHTML += `
-        <tr ${isMe}>
-          <td style="font-weight:bold;">${badge}</td>
-          <td>${p.name || 'Vô danh'}</td>
-          <td style="text-align:right;font-weight:bold;color:#d97706;">${p.score || 0} từ</td>
-        </tr>
-      `;
-    });
-  }, err => {
-    console.error("Lỗi đọc Firebase:", err);
-  });
-}
-
-/* ================= LOGIC TAB LUYỆN NGHE ================= */
-let currentListenWord = null;
-
-function playAudio(text, rate = 1.0) {
-  if (!window.speechSynthesis) {
-    alert("Trình duyệt không hỗ trợ phát âm!");
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'zh-CN';
-  u.rate = parseFloat(rate) || 1.0;
-  window.speechSynthesis.speak(u);
-}
-
-function setupListenQuestion() {
-  const lesson = document.getElementById("listenLessonFilter").value;
-  let words = (lesson === "all") ? allWords : allWords.filter(w => String(w.lesson) === lesson);
-  if (words.length === 0) return;
-
-  currentListenWord = words[Math.floor(Math.random() * words.length)];
-  document.getElementById("listenInput").value = "";
-  document.getElementById("listen-result-msg").innerText = "";
-  document.getElementById("listenAnswerBox").style.display = "none";
-  playCurrentListenWord();
-}
-
-function playCurrentListenWord() {
-  if (!currentListenWord) return;
-  const rate = document.getElementById("listenRateSelect").value;
-  playAudio(currentListenWord.hanzi, rate);
-}
-
-function checkListenAnswer() {
-  if (!currentListenWord) return;
-  const userVal = document.getElementById("listenInput").value.trim().toLowerCase();
-  const msg = document.getElementById("listen-result-msg");
-  const targetHanzi = String(currentListenWord.hanzi).trim().toLowerCase();
-  const targetPinyin = String(currentListenWord.pinyin || '').trim().toLowerCase();
-
-  if (!userVal) {
-    msg.className = "msg-wrong";
-    msg.innerText = "Vui lòng nhập đáp án!";
-    return;
-  }
-
-  if (userVal === targetHanzi || userVal === targetPinyin) {
-    msg.className = "msg-correct";
-    msg.innerText = `Chính xác! 🎉 (${currentListenWord.hanzi} - ${currentListenWord.vn})`;
-  } else {
-    msg.className = "msg-wrong";
-    msg.innerText = "Chưa chính xác, hãy nghe lại!";
-  }
-}
-
-function toggleListenAnswer() {
-  if (!currentListenWord) return;
-  const box = document.getElementById("listenAnswerBox");
-  if (box.style.display === "none") {
-    box.innerHTML = `<strong>${currentListenWord.hanzi}</strong> [${currentListenWord.pinyin || ''}]: ${currentListenWord.vn}`;
-    box.style.display = "block";
-  } else {
-    box.style.display = "none";
-  }
-}
-
-function nextListenWord() {
-  setupListenQuestion();
-}
-
-/* ================= ĐẤU TRƯỜNG THI ĐẤU (60 GIÂY) ================= */
-let arenaTimer = null;
-let arenaTimeLeft = 60;
-let arenaCurrentScore = 0;
-let arenaCurrentWord = null;
-let arenaCanvasInstances = [];
-
-function startArenaMatch() {
-  if (allWords.length === 0) return alert("Chưa nạp xong từ vựng, vui lòng chờ!");
-  document.getElementById("arenaLobby").style.display = "none";
-  document.getElementById("arenaGameArea").style.display = "block";
-  document.getElementById("arenaLiveScoreTag").style.display = "block";
-  
-  arenaCurrentScore = 0;
-  arenaTimeLeft = 60;
-  document.getElementById("arenaCurrentScore").innerText = "0";
-  document.getElementById("arenaTimerDisplay").innerText = "60";
-  document.getElementById("arena-result-msg").innerText = "";
-
-  loadNextArenaWord();
-
-  clearInterval(arenaTimer);
-  arenaTimer = setInterval(() => {
-    arenaTimeLeft--;
-    document.getElementById("arenaTimerDisplay").innerText = arenaTimeLeft;
-    if (arenaTimeLeft <= 0) {
-      endArenaMatch();
-    }
-  }, 1000);
-}
-
-function endArenaMatch() {
-  clearInterval(arenaTimer);
-  document.getElementById("arenaLobby").style.display = "block";
-  document.getElementById("arenaGameArea").style.display = "none";
-  document.getElementById("arenaLiveScoreTag").style.display = "none";
-  
-  alert(`⏰ HẾT GIỜ!\nBạn hoàn thành: ${arenaCurrentScore} từ!`);
-  if (arenaCurrentScore > myBestScore) {
-    syncScoreToFirebase(arenaCurrentScore);
-  }
-}
-
-function loadNextArenaWord() {
-  const randomIndex = Math.floor(Math.random() * allWords.length);
-  arenaCurrentWord = allWords[randomIndex];
-  document.getElementById("arena-prompt-vn").innerText = `Viết: "${arenaCurrentWord.vn || ''}"`;
-  document.getElementById("arena-result-msg").innerText = "";
-  setupArenaCanvas(String(arenaCurrentWord.hanzi).trim());
-}
-
-function skipArenaWord() {
-  loadNextArenaWord();
-}
-
-function setupArenaCanvas(word) {
-  const container = document.getElementById("arenaBoxesContainer");
-  container.innerHTML = "";
-  arenaCanvasInstances = [];
-  for (let i = 0; i < word.length; i++) {
-    const wrap = document.createElement("div"); wrap.className = "box-wrapper";
-    const cBox = document.createElement("div"); cBox.className = "canvas-container";
-    const cv = document.createElement("canvas"); cv.width = 180; cv.height = 180;
-
-    cBox.appendChild(cv); wrap.appendChild(cBox); container.appendChild(wrap);
-    const ctx = cv.getContext("2d");
-    ctx.lineWidth = 6; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#1e293b";
-
-    const st = { char: word[i], cv, ctx, cBox, strokes: [], sx: [], sy: [], st: [], drawing: false, t0: 0 };
-    initCanvasEvents(st);
-    arenaCanvasInstances.push(st);
-  }
-}
-
-function clearArenaBoxes() {
-  for (let s of arenaCanvasInstances) {
-    s.ctx.clearRect(0, 0, 180, 180);
-    s.strokes = []; s.cBox.classList.remove("correct", "wrong");
-  }
-  document.getElementById("arena-result-msg").innerText = "";
-}
-
-async function checkArenaBoxes() {
-  const msg = document.getElementById("arena-result-msg");
-  msg.innerText = "Đang kiểm tra nét...";
-  let ok = true, empty = false;
-
-  for (let s of arenaCanvasInstances) {
-    if (s.strokes.length === 0) { s.cBox.classList.add("wrong"); empty = true; ok = false; continue; }
-    const p = {
-      app_version: 0.4, api_level: "537.36", device: "5.0", input_type: "0", options: "enable_pre_space",
-      requests: [{ writing_guide: { writing_area_width: 180, writing_area_height: 180 }, pre_context: "", max_num_results: 10, max_completions: 0, language: "zh-t-i0-handwrit", ink: s.strokes }]
-    };
-    try {
-      const res = await fetch("https://inputtools.google.com/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p)
-      });
-      const d = await res.json();
-      const cand = d[0] === "SUCCESS" ? d[1][0][1] : [];
-      if (cand.includes(s.char)) { s.cBox.classList.remove("wrong"); s.cBox.classList.add("correct"); }
-      else { s.cBox.classList.remove("correct"); s.cBox.classList.add("wrong"); ok = false; }
-    } catch(e) { ok = false; }
-  }
-
-  if (empty) { msg.className = "msg-wrong"; msg.innerText = "Chưa viết đủ ô!"; }
-  else if (ok) {
-    msg.className = "msg-correct"; msg.innerText = `+1 Điểm! (${arenaCurrentWord.hanzi})`;
-    arenaCurrentScore++;
-    document.getElementById("arenaCurrentScore").innerText = arenaCurrentScore;
-    setTimeout(loadNextArenaWord, 500);
-  } else {
-    msg.className = "msg-wrong"; msg.innerText = "Chưa đúng!";
-  }
-}
-
-/* ================= KẾT NỐI VERCEL PROXY ================= */
-const VERCEL_API_URL = "https://gemini-api-backend-rho.vercel.app/api/gemini";
-let currentAIExercise = { text: "", source: "", target: "" };
-
-async function callGemini(promptText) {
-  const res = await fetch(VERCEL_API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt: promptText })
-  });
-
-  const data = await res.json();
-  if (data.error) throw new Error(data.error);
-  return data.text;
-}
-
-async function requestAITask(mode) {
-  const selectedLesson = document.getElementById("aiLessonFilter").value;
-  let words = (selectedLesson === "all") ? allWords : allWords.filter(w => String(w.lesson) === selectedLesson);
-
-  if (words.length === 0) return alert("Không có từ vựng trong bài đã chọn!");
-
-  const sampleWords = [...words].sort(() => Math.random() - 0.5).slice(0, 5);
-
-  const promptDisplay = document.getElementById("aiPromptDisplay");
-  promptDisplay.innerText = "⏳ AI đang biên soạn nội dung theo từ vựng...";
-  document.getElementById("aiEvaluationResult").style.display = "none";
-  document.getElementById("aiUserInput").value = "";
-
-  let prompt = "";
-  if (mode === "vi_to_zh") {
-    currentAIExercise = { source: "Tiếng Việt", target: "Tiếng Trung" };
-    const vnVocabList = sampleWords.map(w => `"${w.vn}"`).join(", ");
-    prompt = `Bạn là giáo viên tiếng Trung. Hãy viết 1 đoạn văn ngắn hoàn toàn bằng TIẾNG VIỆT (khoảng 2-3 câu, tối đa 40 từ), ngữ cảnh tự nhiên, có sử dụng các khái niệm/từ ngữ sau: [${vnVocabList}]. 
-QUY TẮC BẮT BUỘC:
-1. 100% bằng tiếng Việt thuần túy.
-2. Tuyệt đối KHÔNG chứa bất kỳ chữ Hán, Pinyin hay ký tự Trung Quốc nào.
-3. Không thêm giải thích hay lời chào, chỉ trả về nội dung đoạn văn.`;
-  } else {
-    currentAIExercise = { source: "Tiếng Trung", target: "Tiếng Việt" };
-    const zhVocabList = sampleWords.map(w => w.hanzi).join(", ");
-    prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${zhVocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
-  }
-
-  try {
-    const result = await callGemini(prompt);
-    currentAIExercise.text = result.trim();
-    promptDisplay.innerText = currentAIExercise.text;
-  } catch (err) {
-    promptDisplay.innerText = "Lỗi: " + err.message;
-  }
-}
-
-async function submitTranslationToAI() {
-  const userText = document.getElementById("aiUserInput").value.trim();
-  if (!userText) return alert("Vui lòng nhập bài làm của bạn!");
-  if (!currentAIExercise.text) return alert("Chưa có đề bài, hãy bấm tạo đề trước!");
-
-  const btn = document.getElementById("btnSubmitAI");
-  const resultBox = document.getElementById("aiEvaluationResult");
-  btn.innerText = "⏳ AI đang chấm bài...";
-  btn.disabled = true;
-
-  const evalPrompt = `
-Bạn là chuyên gia thẩm định biên phiên dịch tiếng Trung.
-Đề bài (${currentAIExercise.source}):
-"${currentAIExercise.text}"
-
-Bản dịch của học viên (${currentAIExercise.target}):
-"${userText}"
-
-Hãy đánh giá chi tiết theo mẫu:
-- Điểm số: .../10
-- Nhận xét chi tiết: Khen ưu điểm, chỉ rõ lỗi sai về từ vựng, ngữ pháp, ngữ cảnh (nếu có).
-- Bản dịch tối ưu tham khảo: (cung cấp câu dịch tự nhiên và chuẩn xác nhất).
+2. Độ chính xác thông tin cốt lõi: Có bỏ sót ý chính, số liệu, tên sự vật, chức danh không?
+3. Văn phong & Thuật ngữ theo chủ đề [${topicTitle}]: Đã sử dụng đúng thuật ngữ chuyên ngành và cách nói chuẩn ngữ cảnh chưa? Khen ưu điểm và chỉ rõ lỗi dùng từ nếu có.
+4. Bản dịch tối ưu tham khảo: Cung cấp bản dịch gãy gọn, tự nhiên và chuyên nghiệp nhất để học viên học tập.
+(Chú ý: Do học viên dùng nhận diện giọng nói, hãy châm chước lỗi chữ đồng âm nhỏ, tập trung thẩm định khả năng phản xạ và chuẩn ngữ nghĩa).
 `;
 
   try {
     const evaluation = await callGemini(evalPrompt);
-    resultBox.innerText = evaluation;
-    resultBox.style.display = "block";
+    resBox.innerText = evaluation;
+    resBox.style.display = "block";
+
+    // Tự động mở bản gốc để học viên đối chiếu sau khi có kết quả
+    document.getElementById("revealedSpeechText").style.display = "block";
+    document.getElementById("speechBlindNotice").style.display = "none";
+    isSpeechRevealed = true;
   } catch (err) {
-    alert("Lỗi chấm bài: " + err.message);
+    alert("Lỗi thẩm định: " + err.message);
   } finally {
-    btn.innerText = "Gửi AI chấm bài";
+    btn.innerText = "⚖️ AI Thẩm Định Phiên Dịch";
     btn.disabled = false;
   }
 }
@@ -681,14 +438,16 @@ function setupLessonDropdown() {
   const s2 = document.getElementById("aiLessonFilter");
   const s3 = document.getElementById("listenLessonFilter");
 
-  s1.innerHTML = '<option value="all">Tất cả các bài</option>';
-  s2.innerHTML = '<option value="all">Tất cả các bài</option>';
-  if (s3) s3.innerHTML = '<option value="all">Tất cả các bài</option>';
+  const optionAll = '<option value="all">Tất cả các bài</option>';
+  s1.innerHTML = optionAll;
+  s2.innerHTML = optionAll;
+  if (s3) s3.innerHTML = optionAll;
 
   lessons.forEach(l => {
-    s1.innerHTML += `<option value="${l}">${l}</option>`;
-    s2.innerHTML += `<option value="${l}">${l}</option>`;
-    if (s3) s3.innerHTML += `<option value="${l}">${l}</option>`;
+    const opt = `<option value="${l}">${l}</option>`;
+    s1.innerHTML += opt;
+    s2.innerHTML += opt;
+    if (s3) s3.innerHTML += opt;
   });
 }
 
@@ -830,6 +589,364 @@ function nextWord() {
   if (activeWords.length === 0) return;
   currentIndex = (currentIndex + 1) % activeWords.length;
   loadWord(currentIndex);
+}
+
+/* ================= LOGIC TAB LUYỆN NGHE ================= */
+let currentListenWord = null;
+
+function playAudio(text, rate = 1.0) {
+  if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ phát âm!");
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = parseFloat(rate) || 1.0;
+  window.speechSynthesis.speak(u);
+}
+
+function setupListenQuestion() {
+  const lesson = document.getElementById("listenLessonFilter").value;
+  let words = (lesson === "all") ? allWords : allWords.filter(w => String(w.lesson) === lesson);
+  if (words.length === 0) return;
+
+  currentListenWord = words[Math.floor(Math.random() * words.length)];
+  document.getElementById("listenInput").value = "";
+  document.getElementById("listen-result-msg").innerText = "";
+  document.getElementById("listenAnswerBox").style.display = "none";
+  playCurrentListenWord();
+}
+
+function playCurrentListenWord() {
+  if (!currentListenWord) return;
+  const rate = document.getElementById("listenRateSelect").value;
+  playAudio(currentListenWord.hanzi, rate);
+}
+
+function checkListenAnswer() {
+  if (!currentListenWord) return;
+  const userVal = document.getElementById("listenInput").value.trim().toLowerCase();
+  const msg = document.getElementById("listen-result-msg");
+  const targetHanzi = String(currentListenWord.hanzi).trim().toLowerCase();
+  const targetPinyin = String(currentListenWord.pinyin || '').trim().toLowerCase();
+
+  if (!userVal) {
+    msg.className = "msg-wrong";
+    msg.innerText = "Vui lòng nhập đáp án!";
+    return;
+  }
+
+  if (userVal === targetHanzi || userVal === targetPinyin) {
+    msg.className = "msg-correct";
+    msg.innerText = `Chính xác! 🎉 (${currentListenWord.hanzi} - ${currentListenWord.vn})`;
+  } else {
+    msg.className = "msg-wrong";
+    msg.innerText = "Chưa chính xác, hãy nghe lại!";
+  }
+}
+
+function toggleListenAnswer() {
+  if (!currentListenWord) return;
+  const box = document.getElementById("listenAnswerBox");
+  if (box.style.display === "none") {
+    box.innerHTML = `<strong>${currentListenWord.hanzi}</strong> [${currentListenWord.pinyin || ''}]: ${currentListenWord.vn}`;
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+}
+
+function nextListenWord() {
+  setupListenQuestion();
+}
+
+/* ================= AI DỊCH THUẬT (BIÊN DỊCH VIẾT) ================= */
+let currentAIExercise = { text: "", source: "", target: "" };
+
+async function requestAITask(mode) {
+  const selectedLesson = document.getElementById("aiLessonFilter").value;
+  let words = (selectedLesson === "all") ? allWords : allWords.filter(w => String(w.lesson) === selectedLesson);
+
+  if (words.length === 0) return alert("Không có từ vựng trong bài đã chọn!");
+  const sampleWords = [...words].sort(() => Math.random() - 0.5).slice(0, 5);
+
+  const promptDisplay = document.getElementById("aiPromptDisplay");
+  promptDisplay.innerText = "⏳ AI đang biên soạn nội dung theo từ vựng...";
+  document.getElementById("aiEvaluationResult").style.display = "none";
+  document.getElementById("aiUserInput").value = "";
+
+  let prompt = "";
+  if (mode === "vi_to_zh") {
+    currentAIExercise = { source: "Tiếng Việt", target: "Tiếng Trung" };
+    const vnVocabList = sampleWords.map(w => `"${w.vn}"`).join(", ");
+    prompt = `Bạn là giáo viên tiếng Trung. Hãy viết 1 đoạn văn ngắn hoàn toàn bằng TIẾNG VIỆT (khoảng 2-3 câu, tối đa 40 từ), ngữ cảnh tự nhiên, có sử dụng các khái niệm/từ ngữ sau: [${vnVocabList}]. 
+QUY TẮC BẮT BUỘC:
+1. 100% bằng tiếng Việt thuần túy.
+2. Tuyệt đối KHÔNG chứa bất kỳ chữ Hán, Pinyin hay ký tự Trung Quốc nào.
+3. Không thêm giải thích hay lời chào, chỉ trả về nội dung đoạn văn.`;
+  } else {
+    currentAIExercise = { source: "Tiếng Trung", target: "Tiếng Việt" };
+    const zhVocabList = sampleWords.map(w => w.hanzi).join(", ");
+    prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${zhVocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
+  }
+
+  try {
+    const result = await callGemini(prompt);
+    currentAIExercise.text = result.trim();
+    promptDisplay.innerText = currentAIExercise.text;
+  } catch (err) {
+    promptDisplay.innerText = "Lỗi: " + err.message;
+  }
+}
+
+async function submitTranslationToAI() {
+  const userText = document.getElementById("aiUserInput").value.trim();
+  if (!userText) return alert("Vui lòng nhập bài làm của bạn!");
+  if (!currentAIExercise.text) return alert("Chưa có đề bài, hãy bấm tạo đề trước!");
+
+  const btn = document.getElementById("btnSubmitAI");
+  const resultBox = document.getElementById("aiEvaluationResult");
+  btn.innerText = "⏳ AI đang chấm bài...";
+  btn.disabled = true;
+
+  const evalPrompt = `
+Bạn là chuyên gia thẩm định biên phiên dịch tiếng Trung.
+Đề bài (${currentAIExercise.source}):
+"${currentAIExercise.text}"
+
+Bản dịch của học viên (${currentAIExercise.target}):
+"${userText}"
+
+Hãy đánh giá chi tiết theo mẫu:
+- Điểm số: .../10
+- Nhận xét chi tiết: Khen ưu điểm, chỉ rõ lỗi sai về từ vựng, ngữ pháp, ngữ cảnh (nếu có).
+- Bản dịch tối ưu tham khảo: (cung cấp câu dịch tự nhiên và chuẩn xác nhất).
+`;
+
+  try {
+    const evaluation = await callGemini(evalPrompt);
+    resultBox.innerText = evaluation;
+    resultBox.style.display = "block";
+  } catch (err) {
+    alert("Lỗi chấm bài: " + err.message);
+  } finally {
+    btn.innerText = "Gửi AI chấm bài";
+    btn.disabled = false;
+  }
+}
+
+/* ================= ĐẤU TRƯỜNG THI ĐẤU (60 GIÂY) ================= */
+let arenaTimer = null;
+let arenaTimeLeft = 60;
+let arenaCurrentScore = 0;
+let arenaCurrentWord = null;
+let arenaCanvasInstances = [];
+
+function startArenaMatch() {
+  if (allWords.length === 0) return alert("Chưa nạp xong từ vựng, vui lòng chờ!");
+  document.getElementById("arenaLobby").style.display = "none";
+  document.getElementById("arenaGameArea").style.display = "block";
+  document.getElementById("arenaLiveScoreTag").style.display = "block";
+  
+  arenaCurrentScore = 0;
+  arenaTimeLeft = 60;
+  document.getElementById("arenaCurrentScore").innerText = "0";
+  document.getElementById("arenaTimerDisplay").innerText = "60";
+  document.getElementById("arena-result-msg").innerText = "";
+
+  loadNextArenaWord();
+
+  clearInterval(arenaTimer);
+  arenaTimer = setInterval(() => {
+    arenaTimeLeft--;
+    document.getElementById("arenaTimerDisplay").innerText = arenaTimeLeft;
+    if (arenaTimeLeft <= 0) endArenaMatch();
+  }, 1000);
+}
+
+function endArenaMatch() {
+  clearInterval(arenaTimer);
+  document.getElementById("arenaLobby").style.display = "block";
+  document.getElementById("arenaGameArea").style.display = "none";
+  document.getElementById("arenaLiveScoreTag").style.display = "none";
+  
+  alert(`⏰ HẾT GIỜ!\nBạn hoàn thành: ${arenaCurrentScore} từ!`);
+  if (arenaCurrentScore > myBestScore) {
+    syncScoreToFirebase(arenaCurrentScore);
+  }
+}
+
+function loadNextArenaWord() {
+  const randomIndex = Math.floor(Math.random() * allWords.length);
+  arenaCurrentWord = allWords[randomIndex];
+  document.getElementById("arena-prompt-vn").innerText = `Viết: "${arenaCurrentWord.vn || ''}"`;
+  document.getElementById("arena-result-msg").innerText = "";
+  setupArenaCanvas(String(arenaCurrentWord.hanzi).trim());
+}
+
+function skipArenaWord() {
+  loadNextArenaWord();
+}
+
+function setupArenaCanvas(word) {
+  const container = document.getElementById("arenaBoxesContainer");
+  container.innerHTML = "";
+  arenaCanvasInstances = [];
+  for (let i = 0; i < word.length; i++) {
+    const wrap = document.createElement("div"); wrap.className = "box-wrapper";
+    const cBox = document.createElement("div"); cBox.className = "canvas-container";
+    const cv = document.createElement("canvas"); cv.width = 180; cv.height = 180;
+
+    cBox.appendChild(cv); wrap.appendChild(cBox); container.appendChild(wrap);
+    const ctx = cv.getContext("2d");
+    ctx.lineWidth = 6; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#1e293b";
+
+    const st = { char: word[i], cv, ctx, cBox, strokes: [], sx: [], sy: [], st: [], drawing: false, t0: 0 };
+    initCanvasEvents(st);
+    arenaCanvasInstances.push(st);
+  }
+}
+
+function clearArenaBoxes() {
+  for (let s of arenaCanvasInstances) {
+    s.ctx.clearRect(0, 0, 180, 180);
+    s.strokes = []; s.cBox.classList.remove("correct", "wrong");
+  }
+  document.getElementById("arena-result-msg").innerText = "";
+}
+
+async function checkArenaBoxes() {
+  const msg = document.getElementById("arena-result-msg");
+  msg.innerText = "Đang kiểm tra nét...";
+  let ok = true, empty = false;
+
+  for (let s of arenaCanvasInstances) {
+    if (s.strokes.length === 0) { s.cBox.classList.add("wrong"); empty = true; ok = false; continue; }
+    const p = {
+      app_version: 0.4, api_level: "537.36", device: "5.0", input_type: "0", options: "enable_pre_space",
+      requests: [{ writing_guide: { writing_area_width: 180, writing_area_height: 180 }, pre_context: "", max_num_results: 10, max_completions: 0, language: "zh-t-i0-handwrit", ink: s.strokes }]
+    };
+    try {
+      const res = await fetch("https://inputtools.google.com/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p)
+      });
+      const d = await res.json();
+      const cand = d[0] === "SUCCESS" ? d[1][0][1] : [];
+      if (cand.includes(s.char)) { s.cBox.classList.remove("wrong"); s.cBox.classList.add("correct"); }
+      else { s.cBox.classList.remove("correct"); s.cBox.classList.add("wrong"); ok = false; }
+    } catch(e) { ok = false; }
+  }
+
+  if (empty) { msg.className = "msg-wrong"; msg.innerText = "Chưa viết đủ ô!"; }
+  else if (ok) {
+    msg.className = "msg-correct"; msg.innerText = `+1 Điểm! (${arenaCurrentWord.hanzi})`;
+    arenaCurrentScore++;
+    document.getElementById("arenaCurrentScore").innerText = arenaCurrentScore;
+    setTimeout(loadNextArenaWord, 500);
+  } else {
+    msg.className = "msg-wrong"; msg.innerText = "Chưa đúng!";
+  }
+}
+
+/* ================= THÔNG TIN NGƯỜI DÙNG & REALTIME DATABASE ================= */
+const masteredWordsSet = new Set();
+let playerId = localStorage.getItem("chinese_player_id");
+let playerName = localStorage.getItem("chinese_player_name") || "";
+let myBestScore = parseInt(localStorage.getItem("chinese_arena_best") || "0", 10);
+
+if (!playerId) {
+  playerId = "user_" + Math.random().toString(36).substr(2, 9);
+  localStorage.setItem("chinese_player_id", playerId);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("arenaHighScore").innerText = myBestScore;
+  if (!playerName) {
+    openNameModal();
+  } else {
+    document.getElementById("nameModal").classList.add("hidden");
+    document.getElementById("displayNameTag").innerText = playerName;
+  }
+});
+
+function openNameModal() {
+  document.getElementById("nameModal").classList.remove("hidden");
+  const input = document.getElementById("modalNameInput");
+  input.value = playerName;
+  setTimeout(() => input.focus(), 100);
+}
+
+function submitPlayerName() {
+  const input = document.getElementById("modalNameInput");
+  const val = input ? input.value.trim() : "";
+  if (!val) return alert("Vui lòng nhập tên!");
+  
+  playerName = val;
+  localStorage.setItem("chinese_player_name", playerName);
+  
+  const tag = document.getElementById("displayNameTag");
+  if (tag) tag.innerText = playerName;
+  
+  const modal = document.getElementById("nameModal");
+  if (modal) modal.classList.add("hidden");
+
+  syncScoreToFirebase(myBestScore);
+}
+
+function syncScoreToFirebase(scoreToSave) {
+  if (!db || !playerName) return;
+
+  const numScore = Number(scoreToSave) || 0;
+  if (numScore >= myBestScore) {
+    myBestScore = numScore;
+    localStorage.setItem("chinese_arena_best", myBestScore);
+  }
+  
+  const highEl = document.getElementById("arenaHighScore");
+  if (highEl) highEl.innerText = myBestScore;
+
+  db.ref("leaderboard/" + playerId).set({
+    name: playerName,
+    score: myBestScore,
+    updatedAt: Date.now()
+  }).catch(err => {
+    console.error("Firebase từ chối ghi dữ liệu (kiểm tra lại tab Rules):", err);
+  });
+}
+
+function listenLeaderboard() {
+  if (!db) return;
+  
+  db.ref("leaderboard").on("value", snapshot => {
+    const data = snapshot.val();
+    const tbody = document.getElementById("leaderboardBody");
+    tbody.innerHTML = "";
+
+    if (!data) {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:16px;">Chưa có kỷ lục nào được ghi nhận!</td></tr>';
+      return;
+    }
+
+    const list = Object.values(data)
+      .sort((a, b) => (b.score || 0) - (a.score || 0))
+      .slice(0, 10);
+
+    list.forEach((p, idx) => {
+      let badge = `#${idx + 1}`;
+      if (idx === 0) badge = "🥇 1";
+      else if (idx === 1) badge = "🥈 2";
+      else if (idx === 2) badge = "🥉 3";
+
+      const isMe = (p.name === playerName) ? 'style="font-weight:bold; color:var(--primary);"' : '';
+      tbody.innerHTML += `
+        <tr ${isMe}>
+          <td style="font-weight:bold;">${badge}</td>
+          <td>${p.name || 'Vô danh'}</td>
+          <td style="text-align:right;font-weight:bold;color:#d97706;">${p.score || 0} từ</td>
+        </tr>
+      `;
+    });
+  }, err => {
+    console.error("Lỗi đọc Firebase:", err);
+  });
 }
 
 autoLoadExcel();
