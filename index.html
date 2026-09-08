@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>biên phiên dịch by QuyKy</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- Nạp thư viện Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
   <style>
     :root {
       --primary: #2563eb;
@@ -33,7 +38,35 @@
       box-sizing: border-box;
     }
 
-    /* Bộ lọc theo bài, thứ tự và số lượng */
+    /* Thanh nhập tên và điểm số */
+    .player-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .player-bar input {
+      padding: 6px 10px;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      outline: none;
+      flex: 1;
+      min-width: 140px;
+    }
+    .player-bar .score-tag {
+      font-weight: bold;
+      color: var(--primary);
+      font-size: 15px;
+    }
+
+    /* Bộ lọc */
     .filter-panel {
       display: flex;
       gap: 12px;
@@ -72,7 +105,6 @@
       margin-bottom: 8px;
     }
 
-    /* Pinyin toggle */
     .pinyin-container {
       margin-bottom: 20px;
       min-height: 28px;
@@ -98,7 +130,7 @@
       display: none;
     }
 
-    /* Canvas vẽ chữ Hán */
+    /* Canvas */
     .boxes-container {
       display: flex;
       flex-wrap: wrap;
@@ -138,18 +170,7 @@
       padding: 4px 8px;
       cursor: pointer;
     }
- const firebaseConfig = {
-  apiKey: "AIzaSyD0zd7k81GaRAHN4apend-4fzjZhKFtQxQ",
-  authDomain: "chinese-leaderboard.firebaseapp.com",
-  databaseURL: "https://chinese-leaderboard-default-rtdb.firebaseio.com",
-  projectId: "chinese-leaderboard",
-  storageBucket: "chinese-leaderboard.firebasestorage.app",
-  messagingSenderId: "896587858259",
-  appId: "1:896587858259:web:5aa9af795127d2c973a1a6",
-  measurementId: "G-GN32J5JEQ6"
-};
 
-    /* Nút bấm điều khiển */
     .button-group {
       display: flex;
       gap: 10px;
@@ -205,11 +226,55 @@
     .wrong-box .list-title { color: var(--error); }
     .word-item { padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.06); }
     .word-item:last-child { border-bottom: none; }
+
+    /* Bảng xếp hạng */
+    .leaderboard-card {
+      margin-top: 24px;
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-radius: 8px;
+      padding: 14px;
+      text-align: left;
+    }
+    .leaderboard-title {
+      font-weight: bold;
+      color: #b45309;
+      font-size: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .leaderboard-table th {
+      border-bottom: 1px solid #fde68a;
+      padding: 6px 8px;
+      color: #92400e;
+      text-align: left;
+    }
+    .leaderboard-table td {
+      padding: 6px 8px;
+      border-bottom: 1px dashed #fef3c7;
+      color: #451a03;
+    }
+    .rank-1 { font-weight: bold; color: #d97706; }
   </style>
 </head>
 <body>
 
   <div class="card">
+    <!-- Thanh nhập tên và điểm số -->
+    <div class="player-bar">
+      <div style="display: flex; align-items: center; gap: 6px; flex: 1;">
+        <label style="font-size: 13px; font-weight: bold; color: #1e40af;">Tên bạn:</label>
+        <input type="text" id="playerNameInput" placeholder="Nhập biệt danh của bạn..." onchange="savePlayerName()">
+      </div>
+      <div class="score-tag">Điểm đúng: <span id="myCorrectScore">0</span> từ</div>
+    </div>
+
     <!-- Bộ lọc bài học -->
     <div class="filter-panel">
       <div class="filter-item">
@@ -267,9 +332,51 @@
         <div id="wrong-list"></div>
       </div>
     </div>
+
+    <!-- Bảng xếp hạng trực tiếp -->
+    <div class="leaderboard-card">
+      <div class="leaderboard-title">
+        <span>🏆 Bảng Xếp Hạng Điểm Cao</span>
+        <span style="font-size: 12px; font-weight: normal; color: #78350f;">Cập nhật tự động</span>
+      </div>
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th style="width: 50px;">Hạng</th>
+            <th>Tên</th>
+            <th style="width: 100px; text-align: right;">Từ viết đúng</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <tr><td colspan="3" style="text-align: center; color: #92400e;">Đang tải xếp hạng...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
   <script>
+    /* ================= CẤU HÌNH FIREBASE ================= */
+    const firebaseConfig = {
+      apiKey: "AIzaSyD0zd7k81GaRAHN4apend-4fzjZhKFtQxQ",
+      authDomain: "chinese-leaderboard.firebaseapp.com",
+      databaseURL: "https://chinese-leaderboard-default-rtdb.firebaseio.com",
+      projectId: "chinese-leaderboard",
+      storageBucket: "chinese-leaderboard.firebasestorage.app",
+      messagingSenderId: "896587858259",
+      appId: "1:896587858259:web:5aa9af795127d2c973a1a6",
+      measurementId: "G-GN32J5JEQ6"
+    };
+
+    let db = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.database();
+    } catch(e) {
+      console.warn("Lỗi kết nối Firebase:", e);
+    }
+
+    /* ================= DỮ LIỆU & BẢNG XẾP HẠNG ================= */
     let allWords = [];
     let activeWords = [];
     let currentIndex = 0;
@@ -279,6 +386,69 @@
     const memorizedWords = new Map();
     const needReviewWords = new Map();
 
+    const masteredWordsSet = new Set();
+    let playerId = localStorage.getItem("chinese_player_id");
+    let playerName = localStorage.getItem("chinese_player_name") || "";
+
+    if (!playerId) {
+      playerId = "user_" + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem("chinese_player_id", playerId);
+    }
+    document.getElementById("playerNameInput").value = playerName;
+
+    function savePlayerName() {
+      const name = document.getElementById("playerNameInput").value.trim();
+      if (name) {
+        playerName = name;
+        localStorage.setItem("chinese_player_name", playerName);
+        syncScoreToFirebase();
+      }
+    }
+
+    function syncScoreToFirebase() {
+      if (!db) return;
+      const finalName = playerName.trim() || "Ẩn danh";
+      const score = masteredWordsSet.size;
+
+      db.ref("leaderboard/" + playerId).set({
+        name: finalName,
+        score: score,
+        updatedAt: Date.now()
+      });
+    }
+
+    function listenLeaderboard() {
+      if (!db) return;
+      db.ref("leaderboard").orderByChild("score").limitToLast(10).on("value", snapshot => {
+        const data = [];
+        snapshot.forEach(child => {
+          data.push(child.val());
+        });
+        data.reverse();
+
+        const tbody = document.getElementById("leaderboardBody");
+        tbody.innerHTML = "";
+
+        if (data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3" style="text-align: center;">Chưa có ai ghi điểm!</td></tr>';
+          return;
+        }
+
+        data.forEach((p, idx) => {
+          const rankIcon = idx === 0 ? "🥇 1" : idx === 1 ? "🥈 2" : idx === 2 ? "🥉 3" : `#${idx + 1}`;
+          const isTop = idx === 0 ? "rank-1" : "";
+          tbody.innerHTML += `
+            <tr class="${isTop}">
+              <td>${rankIcon}</td>
+              <td>${p.name}</td>
+              <td style="text-align: right; font-weight: bold;">${p.score} từ</td>
+            </tr>
+          `;
+        });
+      });
+    }
+
+    /* ================= ĐỌC DỮ LIỆU EXCEL ================= */
     async function autoLoadExcel() {
       try {
         const response = await fetch("words.xlsx?t=" + new Date().getTime());
@@ -302,7 +472,6 @@
       }
     }
 
-    // Tự động tìm các bài học có trong Excel đổ vào Dropdown
     function setupLessonDropdown() {
       const select = document.getElementById("lessonFilter");
       const lessons = [...new Set(allWords.map(w => w.lesson).filter(Boolean))];
@@ -313,7 +482,6 @@
       });
     }
 
-    // Áp dụng bộ lọc bài học / ngẫu nhiên / số lượng
     function applyFilters() {
       const selectedLesson = document.getElementById("lessonFilter").value;
       const selectedMode = document.getElementById("modeFilter").value;
@@ -533,6 +701,13 @@
         resultMsg.className = "msg-correct";
         resultMsg.innerText = `Chính xác! (${currentWord.hanzi})`;
         recordWord(currentWord, true);
+
+        // Lưu từ và cập nhật điểm lên Firebase
+        if (!masteredWordsSet.has(currentWord.hanzi)) {
+          masteredWordsSet.add(currentWord.hanzi);
+          document.getElementById("myCorrectScore").innerText = masteredWordsSet.size;
+          syncScoreToFirebase();
+        }
       } else {
         resultMsg.className = "msg-wrong";
         resultMsg.innerText = "Có chữ chưa đúng (ô viền đỏ). Bạn có thể xem gợi ý Pinyin!";
@@ -579,7 +754,9 @@
       loadWord(currentIndex);
     }
 
+    // Khởi chạy hệ thống
     autoLoadExcel();
+    listenLeaderboard();
   </script>
 </body>
 </html>
