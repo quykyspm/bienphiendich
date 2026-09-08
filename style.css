@@ -4,7 +4,7 @@
   --success: #16a34a;
   --error: #dc2626;
   --border: #cbd5e1;
-  --bg: #f8fafc;
+  --bg: #f1f5f9;
 }
 
 body {
@@ -21,150 +21,132 @@ body {
   background: white;
   padding: 24px;
   border-radius: 16px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-width: 680px;
   text-align: center;
   box-sizing: border-box;
 }
 
-/* ================= APP HEADER & NÚT CHỌN CHỨC NĂNG ================= */
-.app-header {
+/* ================= THANH MENU CHÍNH DUY NHẤT ================= */
+.nav-bar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 2px solid #e2e8f0;
   margin-bottom: 20px;
+  gap: 12px;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.app-brand {
+.brand-title {
   font-weight: 800;
-  font-size: 16px;
+  font-size: 17px;
   color: #0f172a;
-  letter-spacing: -0.5px;
+  text-align: left;
 }
 
-.current-mode-badge {
-  background: #eff6ff;
-  color: var(--primary);
-  font-size: 13px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid #bfdbfe;
-}
-
-.menu-control-wrapper {
+.main-menu-wrapper {
   position: relative;
 }
 
-.menu-toggle-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.main-menu-trigger {
   background: #0f172a;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
 }
 
-.menu-toggle-btn:hover {
+.main-menu-trigger:hover {
   background: #1e293b;
   transform: translateY(-1px);
 }
 
-.menu-icon {
-  font-size: 14px;
+.arrow-icon {
+  font-size: 12px;
+  opacity: 0.8;
 }
 
-/* Dropdown Menu Popup */
-.main-dropdown-menu {
+.menu-dropdown-box {
   display: none;
   position: absolute;
   right: 0;
   top: calc(100% + 8px);
-  background: white;
-  min-width: 260px;
+  background: #ffffff;
+  min-width: 280px;
   border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border: 1px solid #e2e8f0;
   z-index: 1000;
   padding: 8px;
   text-align: left;
 }
 
-.main-dropdown-menu.show {
+.menu-dropdown-box.show {
   display: block;
-  animation: menuFadeIn 0.15s ease-out;
+  animation: dropAnim 0.15s ease-out;
 }
 
-@keyframes menuFadeIn {
-  from { opacity: 0; transform: translateY(-8px); }
+@keyframes dropAnim {
+  from { opacity: 0; transform: translateY(-6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.menu-section-title {
+.menu-group-label {
   font-size: 11px;
   font-weight: 700;
   color: #94a3b8;
-  padding: 6px 10px 4px;
+  padding: 6px 12px 4px;
   letter-spacing: 0.5px;
 }
 
-.menu-item {
-  width: 100%;
+.menu-nav-option {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px;
-  background: none;
-  border: none;
+  padding: 10px 12px;
   border-radius: 8px;
   cursor: pointer;
-  text-align: left;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
 }
 
-.menu-item:hover {
+.menu-nav-option:hover {
   background: #f1f5f9;
 }
 
-.menu-item.active {
+.menu-nav-option.active {
   background: #eff6ff;
 }
 
-.menu-item.active .item-text strong {
+.menu-nav-option.active .title {
   color: var(--primary);
+  font-weight: bold;
 }
 
-.item-icon {
+.menu-nav-option .icon {
   font-size: 20px;
-  line-height: 1;
 }
 
-.item-text {
+.menu-nav-option .info {
   display: flex;
   flex-direction: column;
 }
 
-.item-text strong {
-  font-size: 13px;
+.menu-nav-option .title {
+  font-size: 13.5px;
   color: #1e293b;
 }
 
-.item-text small {
+.menu-nav-option .sub {
   font-size: 11px;
   color: #64748b;
   margin-top: 2px;
@@ -172,20 +154,146 @@ body {
 
 .menu-divider {
   height: 1px;
-  background: #f1f5f9;
+  background: #e2e8f0;
   margin: 6px 0;
 }
 
-.disabled-item {
-  opacity: 0.6;
-  cursor: pointer;
+.menu-nav-option.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-/* Các Tab nội dung */
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* ================= GIAO DIỆN CHUNG ================= */
+/* ================= PHÒNG LUYỆN PHIÊN DỊCH ================= */
+.interpret-header-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.speaker-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: white;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: left;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.speaker-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.btn-repeat-speech {
+  background: #334155;
+  color: #f8fafc;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-repeat-speech:hover { background: #475569; }
+
+.speaker-speech-preview {
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #f1f5f9;
+  min-height: 48px;
+}
+
+.interpreter-desk {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.status-tag {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+.status-tag.idle { background: #f1f5f9; color: #64748b; }
+.status-tag.recording { background: #fee2e2; color: #dc2626; animation: pulse 1s infinite; }
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.voice-controls-row {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.mic-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.35);
+  transition: transform 0.1s, background 0.2s;
+}
+.mic-btn.active {
+  background: #dc2626;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25);
+}
+.mic-btn:active { transform: scale(0.97); }
+
+.transcript-textarea {
+  width: 100%;
+  height: 90px;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+}
+.transcript-textarea:focus { border-color: var(--primary); }
+
+.interpret-eval-box {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 14.5px;
+  line-height: 1.6;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  display: none;
+  white-space: pre-wrap;
+}
+
+/* ================= MODAL & THÀNH PHẦN CHUNG ================= */
 .name-modal-overlay {
   position: fixed;
   inset: 0;
@@ -244,7 +352,8 @@ body {
 .filter-panel {
   display: flex;
   gap: 10px;
-  background: #f1f5f9;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -267,7 +376,7 @@ body {
   outline: none;
 }
 
-/* Khung ô mễ canvas */
+/* Ô Mễ Canvas Luyện Viết */
 .boxes-container {
   display: flex;
   flex-wrap: wrap;
