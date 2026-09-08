@@ -472,12 +472,12 @@
       });
     }
 
-    /* ================= KẾT NỐI QUA CLOUDFLARE WORKER ================= */
-    const WORKER_PROXY_URL = "https://gemini-proxy.thikthichiu321.workers.dev";
+/* ================= KẾT NỐI QUA VERCEL PROXY ================= */
+    const VERCEL_API_URL = "https://gemini-api-backend-rho.vercel.app/api/gemini";
     let currentAIExercise = { text: "", source: "", target: "" };
 
     async function callGemini(promptText) {
-      const res = await fetch(WORKER_PROXY_URL, {
+      const res = await fetch(VERCEL_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: promptText })
