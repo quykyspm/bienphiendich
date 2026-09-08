@@ -6,7 +6,7 @@
   <title>biên phiên dịch by QuyKy</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-  <!-- Nạp thư viện Firebase Web SDK -->
+  <!-- Firebase Web SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
@@ -27,6 +27,66 @@
       padding: 20px 10px;
       margin: 0;
     }
+
+    /* Màn hình popup nhập tên trước khi vào học */
+    .name-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 16px;
+    }
+    .name-modal-overlay.hidden {
+      display: none;
+    }
+    .name-modal-box {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .name-modal-box h2 {
+      margin-top: 0;
+      color: #1e293b;
+      font-size: 20px;
+    }
+    .name-modal-box p {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 18px;
+    }
+    .name-modal-box input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+      outline: none;
+      text-align: center;
+    }
+    .name-modal-box input:focus {
+      border-color: var(--primary);
+    }
+    .name-modal-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
     .card {
       background: white;
       padding: 24px;
@@ -38,7 +98,7 @@
       box-sizing: border-box;
     }
 
-    /* Thanh nhập tên và điểm số */
+    /* Thanh thông tin người chơi sau khi vào web */
     .player-bar {
       display: flex;
       align-items: center;
@@ -49,21 +109,28 @@
       border-radius: 8px;
       margin-bottom: 16px;
       gap: 10px;
-      flex-wrap: wrap;
     }
-    .player-bar input {
-      padding: 6px 10px;
+    .player-name-display {
+      font-weight: bold;
+      color: #1e40af;
       font-size: 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      outline: none;
-      flex: 1;
-      min-width: 140px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-edit-name {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 12px;
+      text-decoration: underline;
+      padding: 0;
     }
     .player-bar .score-tag {
       font-weight: bold;
       color: var(--primary);
-      font-size: 15px;
+      font-size: 14px;
     }
 
     /* Bộ lọc */
@@ -265,12 +332,22 @@
 </head>
 <body>
 
+  <!-- Popup yêu cầu nhập tên trước khi vào học -->
+  <div id="nameModal" class="name-modal-overlay">
+    <div class="name-modal-box">
+      <h2>你好，欢迎光临! 👋</h2>
+      <p>Vui lòng nhập tên hoặc biệt danh:</p>
+      <input type="text" id="modalNameInput" placeholder="Ví dụ: Tiểu Long, Lan Anh..." maxlength="20" onkeydown="if(event.key==='Enter') submitPlayerName()">
+      <button onclick="submitPlayerName()">Bắt đầu luyện tập ➔</button>
+    </div>
+  </div>
+
   <div class="card">
-    <!-- Nhập tên & Xem điểm số cá nhân -->
+    <!-- Hiển thị tên người học và số điểm -->
     <div class="player-bar">
-      <div style="display: flex; align-items: center; gap: 6px; flex: 1;">
-        <label style="font-size: 13px; font-weight: bold; color: #1e40af;">Tên bạn:</label>
-        <input type="text" id="playerNameInput" placeholder="Nhập biệt danh..." onchange="savePlayerName()">
+      <div class="player-name-display">
+        <span>👤 Người học: <strong id="displayNameTag">---</strong></span>
+        <button class="btn-edit-name" onclick="openNameModal()">(Đổi tên)</button>
       </div>
       <div class="score-tag">Điểm đúng: <span id="myCorrectScore">0</span> từ</div>
     </div>
@@ -376,7 +453,7 @@
       console.warn("Lỗi cấu hình Firebase:", e);
     }
 
-    /* ================= LOGIC BẢNG XẾP HẠNG ================= */
+    /* ================= QUẢN LÝ TÊN & BẢNG XẾP HẠNG ================= */
     const masteredWordsSet = new Set();
     let playerId = localStorage.getItem("chinese_player_id");
     let playerName = localStorage.getItem("chinese_player_name") || "";
@@ -385,24 +462,44 @@
       playerId = "user_" + Math.random().toString(36).substr(2, 9);
       localStorage.setItem("chinese_player_id", playerId);
     }
-    document.getElementById("playerNameInput").value = playerName;
 
-    function savePlayerName() {
-      const name = document.getElementById("playerNameInput").value.trim();
-      if (name) {
-        playerName = name;
-        localStorage.setItem("chinese_player_name", playerName);
-        syncScoreToFirebase();
+    // Kiểm tra tên khi tải trang
+    window.addEventListener("DOMContentLoaded", () => {
+      if (!playerName) {
+        openNameModal();
+      } else {
+        document.getElementById("nameModal").classList.add("hidden");
+        document.getElementById("displayNameTag").innerText = playerName;
       }
+    });
+
+    function openNameModal() {
+      document.getElementById("nameModal").classList.remove("hidden");
+      const input = document.getElementById("modalNameInput");
+      input.value = playerName;
+      setTimeout(() => input.focus(), 100);
+    }
+
+    function submitPlayerName() {
+      const input = document.getElementById("modalNameInput");
+      const trimmed = input.value.trim();
+      if (!trimmed) {
+        alert("Vui lòng nhập tên hoặc biệt danh!");
+        return;
+      }
+      playerName = trimmed;
+      localStorage.setItem("chinese_player_name", playerName);
+      document.getElementById("displayNameTag").innerText = playerName;
+      document.getElementById("nameModal").classList.add("hidden");
+      syncScoreToFirebase();
     }
 
     function syncScoreToFirebase() {
-      if (!db) return;
-      const finalName = playerName.trim() || "Ẩn danh";
+      if (!db || !playerName) return;
       const score = masteredWordsSet.size;
 
       db.ref("leaderboard/" + playerId).set({
-        name: finalName,
+        name: playerName,
         score: score,
         updatedAt: Date.now()
       });
@@ -705,7 +802,7 @@
         resultMsg.innerText = `Chính xác! (${currentWord.hanzi})`;
         recordWord(currentWord, true);
 
-        // Lưu điểm cá nhân và đẩy lên Realtime Database
+        // Lưu điểm cá nhân và đẩy lên Firebase
         if (!masteredWordsSet.has(currentWord.hanzi)) {
           masteredWordsSet.add(currentWord.hanzi);
           document.getElementById("myCorrectScore").innerText = masteredWordsSet.size;
