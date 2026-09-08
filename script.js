@@ -18,24 +18,42 @@ try {
   console.warn("Lỗi Firebase:", e);
 }
 
-/* ================= CHUYỂN ĐỔI TAB ================= */
-function switchTab(tab) {
-  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+/* ================= XỬ LÝ MENU TỔNG ĐIỀU HƯỚNG ================= */
+function toggleMainMenu(event) {
+  event.stopPropagation();
+  const menu = document.getElementById("mainDropdownMenu");
+  if (menu) menu.classList.toggle("show");
+}
+
+// Đóng menu khi click ra ngoài
+window.addEventListener("click", () => {
+  const menu = document.getElementById("mainDropdownMenu");
+  if (menu && menu.classList.contains("show")) {
+    menu.classList.remove("show");
+  }
+});
+
+function selectTab(tabName, displayName) {
+  // Cập nhật nhãn hiển thị chế độ trên Header
+  const badge = document.getElementById("currentModeBadge");
+  if (badge) badge.innerText = displayName;
+
+  // Cập nhật trạng thái active của menu items
+  document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+  if (event && event.currentTarget) event.currentTarget.classList.add("active");
+
+  // Chuyển tab
   document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-  
-  if (tab === 'write') {
-    document.querySelectorAll(".tab-btn")[0].classList.add("active");
-    document.getElementById("tab-write").classList.add("active");
-  } else if (tab === 'listen') {
-    document.querySelectorAll(".tab-btn")[1].classList.add("active");
-    document.getElementById("tab-listen").classList.add("active");
-    if (!currentListenWord) setupListenQuestion();
-  } else if (tab === 'ai') {
-    document.querySelectorAll(".tab-btn")[2].classList.add("active");
-    document.getElementById("tab-ai").classList.add("active");
-  } else if (tab === 'arena') {
-    document.querySelectorAll(".tab-btn")[3].classList.add("active");
-    document.getElementById("tab-arena").classList.add("active");
+  const targetTab = document.getElementById(`tab-${tabName}`);
+  if (targetTab) targetTab.classList.add("active");
+
+  // Đóng menu popup
+  const menu = document.getElementById("mainDropdownMenu");
+  if (menu) menu.classList.remove("show");
+
+  // Khởi tạo câu hỏi nếu sang tab nghe
+  if (tabName === 'listen' && !currentListenWord) {
+    setupListenQuestion();
   }
 }
 
