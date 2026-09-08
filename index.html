@@ -22,8 +22,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
-  <!-- File CSS có gắn version để chống lưu cache cũ -->
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <!-- File CSS có gắn version mới để chống lưu cache cũ -->
+  <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
 
@@ -69,20 +69,19 @@
             </div>
           </div>
 
-          <!-- TAB MỚI: PHIÊN DỊCH THỰC CHIẾN -->
           <div class="menu-nav-option" onclick="switchMode('interpret', '🎙️ Luyện Phiên Dịch')">
             <span class="icon">🎙️</span>
             <div class="info">
               <span class="title">Phòng Luyện Phiên Dịch</span>
-              <span class="sub">Dịch nối tiếp hội nghị bằng giọng nói & Mic</span>
+              <span class="sub">AI tạo kịch bản theo 12 bài giáo trình & Mic</span>
             </div>
           </div>
 
           <div class="menu-nav-option" onclick="switchMode('ai', '🤖 AI Dịch Thuật')">
             <span class="icon">🤖</span>
             <div class="info">
-              <span class="title">AI Dịch Thuật</span>
-              <span class="sub">Tạo đề ngữ cảnh & AI thẩm định văn bản</span>
+              <span class="title">AI Dịch Thuật (Viết)</span>
+              <span class="sub">Tạo đề đoạn văn & AI thẩm định điểm số</span>
             </div>
           </div>
 
@@ -202,39 +201,53 @@
       <div id="listen-result-msg"></div>
     </div>
 
-    <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (MỚI) ================= -->
+    <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (CHUẨN 12 BÀI GIÁO TRÌNH) ================= -->
     <div id="tab-interpret" class="tab-content">
       <div class="interpret-header-box">
         <div class="filter-panel" style="margin-bottom: 0; background: transparent; border: none; padding: 0;">
           <div class="filter-item">
             <label>Chiều phiên dịch:</label>
-            <select id="interpretDirection" onchange="setupInterpretQuestion()">
-              <option value="zh_to_vi">Trung ➔ Việt (Nghe tiếng Trung, dịch tiếng Việt)</option>
-              <option value="vi_to_zh">Việt ➔ Trung (Nghe tiếng Việt, dịch tiếng Trung)</option>
+            <select id="interpretDirection">
+              <option value="zh_to_vi">Trung ➔ Việt (Nghe diễn giả Trung, Dịch tiếng Việt)</option>
+              <option value="vi_to_zh">Việt ➔ Trung (Nghe đại biểu Việt, Dịch tiếng Trung)</option>
             </select>
           </div>
           <div class="filter-item">
-            <label>Bối cảnh diễn giả:</label>
-            <select id="interpretContextSelect" onchange="setupInterpretQuestion()">
-              <option value="bai1">Bài 1: Khai mạc & Phát biểu chào mừng</option>
+            <label>Chủ đề giáo trình:</label>
+            <select id="interpretCurriculumTopic">
+              <!-- Nạp danh sách 12 bài chuẩn từ giáo trình PHIÊN DỊCH 1 -->
             </select>
+          </div>
+          <div class="filter-item" style="justify-content: flex-end;">
+            <button class="btn-create-scenario" onclick="generateAIInterpretationScenario()">✨ AI Tạo Tình Huống</button>
           </div>
         </div>
       </div>
 
-      <!-- Bục diễn giả phát biểu -->
+      <!-- Bục diễn giả phát biểu (CHE KÍN CHỮ, CHỈ NGHE BẰNG TAI) -->
       <div class="speaker-card">
         <div class="speaker-title">
-          <span>🎙️ DIỄN GIẢ HỘI NGHỊ</span>
-          <button class="btn-repeat-speech" onclick="playSpeakerSpeech()">🔊 Nghe lại phát biểu</button>
+          <span id="speakerRoleTag">🎙️ DIỄN GIẢ PHÁT BIỂU</span>
+          <button class="btn-repeat-speech" onclick="playSpeakerAudio()">🔊 Nghe lại giọng phát biểu</button>
         </div>
-        <div class="speaker-speech-preview" id="speakerSpeechPreview">Bấm nút bên dưới để nghe diễn giả phát biểu...</div>
+        
+        <div class="blind-speech-box">
+          <div class="audio-wave-placeholder" id="speechBlindNotice">
+            <span class="blind-icon">🔒</span>
+            <span>Nội dung phát biểu đã được che để rèn phản xạ tai nghe!</span>
+          </div>
+          <div class="original-speech-text" id="revealedSpeechText" style="display: none;"></div>
+        </div>
+        
+        <div style="text-align: right; margin-top: 8px;">
+          <button class="btn-peek-text" onclick="toggleRevealSpeech()">👁️ Mở/Đóng xem bản gốc</button>
+        </div>
       </div>
 
-      <!-- Khu vực cabin của phiên dịch viên -->
+      <!-- Cabin của phiên dịch viên -->
       <div class="interpreter-desk">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <label style="font-size: 13px; font-weight: bold; color: #475569;">Bản dịch của bạn (Nói qua Mic hoặc Gõ tay):</label>
+          <label style="font-size: 13px; font-weight: bold; color: #475569;">Bản dịch của bạn (Nói vào Micro hoặc Gõ tay):</label>
           <span id="recordingStatusTag" class="status-tag idle">Đang chờ mic</span>
         </div>
 
@@ -245,13 +258,12 @@
           </button>
         </div>
 
-        <textarea id="interpretUserTranscript" class="transcript-textarea" placeholder="Nói vào Micro (hoặc gõ bài dịch trực tiếp vào đây nếu ở nơi ồn ào)..."></textarea>
+        <textarea id="interpretUserTranscript" class="transcript-textarea" placeholder="Bấm micro để nói (hoặc gõ bài dịch trực tiếp vào đây nếu ở nơi ồn ào)..."></textarea>
       </div>
 
       <div class="button-group">
         <button class="main-btn btn-clear-all" onclick="document.getElementById('interpretUserTranscript').value=''">Xóa câu dịch</button>
         <button class="main-btn btn-check" id="btnSubmitInterpret" onclick="submitInterpretationToAI()">⚖️ AI Thẩm Định Phiên Dịch</button>
-        <button class="main-btn btn-next" onclick="nextInterpretQuestion()">Đoạn tiếp ➔</button>
       </div>
 
       <div id="interpretAIResult" class="interpret-eval-box"></div>
@@ -340,6 +352,6 @@
   </div>
 
   <!-- Nạp script có version mới chống cache -->
-  <script src="script.js?v=3.0"></script>
+  <script src="script.js?v=5.0"></script>
 </body>
 </html>
