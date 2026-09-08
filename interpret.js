@@ -1,6 +1,6 @@
 /* ==========================================================================
    PHÂN HỆ PHÒNG LUYỆN PHIÊN DỊCH HỘI NGHỊ (INTERPRETATION LAB)
-   Nguồn học liệu: Giáo trình PHIÊN DỊCH 1 (12 bài thực chiến)
+   Hỗ trợ: Microsoft Edge Neural TTS + 12 bài giáo trình PHIÊN DỊCH 1
    ========================================================================== */
 
 /* 1. KHO DỮ LIỆU 12 BÀI GIÁO TRÌNH PHIÊN DỊCH 1 */
@@ -166,7 +166,7 @@ async function generateAIInterpretationScenario() {
     prompt = `Bạn là ${topic.roleZh}. Hãy đóng vai và phát biểu 1 đoạn ngắn bằng TIẾNG TRUNG (khoảng 2-3 câu ngắn gọn, tối đa 45 từ) thuộc ngữ cảnh: "${topic.context}".
 BẮT BUỘC có sử dụng một số từ vựng trọng tâm sau: [${topic.vocabZh}].
 QUY TẮC BẮT BUỘC:
-1. Trả về DUY NHẤT đoạn phát biểu bằng chữ Hán, văn phong tự nhiên đúng khẩu khí người bản xứ trong bối cảnh đó.
+1. Trả về DUY NHẤT đoạn phát biểu bằng chữ Hán, đúng ngữ cảnh bối cảnh.
 2. Tuyệt đối KHÔNG có pinyin, KHÔNG dịch tiếng Việt, KHÔNG có lời chào giải thích nào khác.`;
   } else {
     currentInterpretScenario.sourceLang = "vi-VN";
@@ -177,7 +177,7 @@ QUY TẮC BẮT BUỘC:
     prompt = `Bạn là ${topic.roleVi}. Hãy đóng vai và phát biểu 1 đoạn ngắn bằng TIẾNG VIỆT (khoảng 2-3 câu ngắn gọn, tối đa 45 từ) thuộc ngữ cảnh: "${topic.context}".
 BẮT BUỘC có sử dụng một số khái niệm/từ ngữ sau: [${topic.vocabVi}].
 QUY TẮC BẮT BUỘC:
-1. 100% bằng tiếng Việt thuần túy, đúng phong thái và chuẩn ngữ cảnh bối cảnh.
+1. 100% bằng tiếng Việt thuần túy, đúng phong thái và chuẩn ngữ cảnh.
 2. Tuyệt đối KHÔNG chứa chữ Hán, Pinyin hay lời giải thích thừa, chỉ trả về nội dung phát biểu.`;
   }
 
@@ -186,7 +186,7 @@ QUY TẮC BẮT BUỘC:
     currentInterpretScenario.speechText = speech.trim();
 
     revealedBox.innerText = currentInterpretScenario.speechText;
-    notice.innerHTML = '<span class="blind-icon">🔒</span> <span>Nội dung đã được che! Bắt đầu phát âm thanh diễn giả...</span>';
+    notice.innerHTML = '<span class="blind-icon">🔒</span> <span>Nội dung đã được che! Đang phát âm thanh diễn giả...</span>';
 
     playSpeakerAudio();
   } catch (err) {
@@ -194,10 +194,48 @@ QUY TẮC BẮT BUỘC:
   }
 }
 
-/* 5. ĐIỀU KHIỂN PHÁT ÂM & XEM BẢN GỐC */
+/* 5. PHÁT ÂM DIỄN GIẢ (MICROSOFT EDGE NEURAL TTS + TÙY CHỌN TỐC ĐỘ / GIỚI TÍNH) */
 function playSpeakerAudio() {
   if (!currentInterpretScenario.speechText) return alert("Vui lòng bấm 'AI Tạo Tình Huống' trước!");
-  playDiplomaticSpeech(currentInterpretScenario.speechText, currentInterpretScenario.sourceLang);
+
+  const gender = document.getElementById("interpretVoiceGender").value; // 'male' | 'female'
+  const speedRate = parseFloat(document.getElementById("interpretSpeechRate").value) || 1.0;
+  const isZh = (currentInterpretScenario.sourceLang === "zh-CN");
+
+  // Bản đồ giọng Microsoft Edge Neural
+  // Tiếng Trung: Yunxi (Nam), Xiaoxiao (Nữ)
+  // Tiếng Việt: NamMinh (Nam), HoaiMy (Nữ)
+  let voiceTargetName = "";
+  if (isZh) {
+    voiceTargetName = (gender === "male") ? "zh-CN-YunxiNeural" : "zh-CN-XiaoxiaoNeural";
+  } else {
+    voiceTargetName = (gender === "male") ? "vi-VN-NamMinhNeural" : "vi-VN-HoaiMyNeural";
+  }
+
+  if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ phát âm thanh!");
+  window.speechSynthesis.cancel();
+
+  const u = new SpeechSynthesisUtterance(currentInterpretScenario.speechText);
+  u.lang = currentInterpretScenario.sourceLang;
+  u.rate = speedRate;
+  u.pitch = (gender === "male") ? 0.9 : 1.05; // Nam hơi trầm, nữ thanh thoát
+
+  // Ưu tiên chọn giọng Edge Neural nếu có trên máy
+  const voices = window.speechSynthesis.getVoices();
+  const matchedVoice = voices.find(v => 
+    v.name.includes(voiceTargetName) || 
+    (v.lang.startsWith(isZh ? "zh" : "vi") && (gender === "male" ? (v.name.includes("Yunxi") || v.name.includes("Male")) : (v.name.includes("Xiaoxiao") || v.name.includes("Female"))))
+  );
+
+  if (matchedVoice) {
+    u.voice = matchedVoice;
+  } else {
+    // Fallback sang giọng ngôn ngữ tương ứng
+    const generalVoice = voices.find(v => v.lang.startsWith(isZh ? "zh" : "vi"));
+    if (generalVoice) u.voice = generalVoice;
+  }
+
+  window.speechSynthesis.speak(u);
 }
 
 function toggleRevealSpeech() {
@@ -215,7 +253,7 @@ function toggleRevealSpeech() {
   }
 }
 
-/* 6. THU ÂM GIỌNG NÓI PHIÊN DỊCH (WEB SPEECH RECOGNITION) */
+/* 6. THU ÂM GIỌNG NÓI PHIÊN DỊCH */
 function toggleSpeechRecording() {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRec) {
@@ -276,7 +314,7 @@ function stopRecordingUI() {
   }
 }
 
-/* 7. GỬI GEMINI THẨM ĐỊNH NGHIỆP VỤ PHIÊN DỊCH */
+/* 7. GỬI GEMINI THẨM ĐỊNH NGHIỆP VỤ */
 async function submitInterpretationToAI() {
   const userSpeech = document.getElementById("interpretUserTranscript").value.trim();
   if (!userSpeech) return alert("Vui lòng nói vào Micro hoặc gõ bài dịch vào ô!");
