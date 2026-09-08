@@ -35,12 +35,25 @@
   </div>
 
   <div class="card">
-    <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchTab('write')">✍️ Luyện Viết</button>
-      <button class="tab-btn" onclick="switchTab('listen')">🎧 Luyện Nghe</button>
-      <button class="tab-btn" onclick="switchTab('ai')">🤖 AI Dịch Thuật</button>
-      <button class="tab-btn" onclick="switchTab('arena')">🏆 Đấu Trường</button>
-    </div>
+    <!-- THANH MENU ĐIỀU HƯỚNG TỔNG (Có sẵn chỗ mở rộng tab tương lai) -->
+    <nav class="nav-menu">
+      <div class="tab-list">
+        <button class="tab-btn active" onclick="switchTab('write')">✍️ Luyện Viết</button>
+        <button class="tab-btn" onclick="switchTab('listen')">🎧 Luyện Nghe</button>
+        <button class="tab-btn" onclick="switchTab('ai')">🤖 AI Dịch Thuật</button>
+        <button class="tab-btn" onclick="switchTab('arena')">🏆 Đấu Trường</button>
+      </div>
+
+      <!-- Menu thả xuống cho các tính năng / tab tương lai -->
+      <div class="menu-dropdown" id="menuDropdown">
+        <button class="dropdown-btn" onclick="toggleDropdown(event)">Tính năng khác ▾</button>
+        <div class="dropdown-content">
+          <a href="javascript:void(0)" onclick="alert('Tính năng đang được phát triển!')">📚 Ngữ Pháp Chuyên Đề</a>
+          <a href="javascript:void(0)" onclick="alert('Tính năng đang được phát triển!')">📊 Sổ Tay Tiến Độ</a>
+          <!-- Thêm các tab tương lai vào đây -->
+        </div>
+      </div>
+    </nav>
 
     <!-- Người chơi -->
     <div class="player-bar">
