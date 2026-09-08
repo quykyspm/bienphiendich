@@ -28,7 +28,7 @@ body {
   box-sizing: border-box;
 }
 
-/* ================= THANH MENU CHÍNH DUY NHẤT ================= */
+/* ================= THANH MENU CHÍNH ================= */
 .nav-bar-container {
   display: flex;
   justify-content: space-between;
@@ -175,6 +175,19 @@ body {
   margin-bottom: 16px;
 }
 
+.btn-create-scenario {
+  background: #0284c7;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-create-scenario:hover { background: #0369a1; }
+
 .speaker-card {
   background: linear-gradient(135deg, #1e293b, #0f172a);
   color: white;
@@ -200,7 +213,7 @@ body {
   background: #334155;
   color: #f8fafc;
   border: none;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 6px;
   font-size: 12px;
   cursor: pointer;
@@ -208,13 +221,44 @@ body {
 }
 .btn-repeat-speech:hover { background: #475569; }
 
-.speaker-speech-preview {
-  font-size: 16px;
-  line-height: 1.6;
-  font-weight: 500;
-  color: #f1f5f9;
-  min-height: 48px;
+.blind-speech-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px dashed #475569;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.audio-wave-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #93c5fd;
+  font-size: 14px;
+  font-weight: 500;
+}
+.blind-icon { font-size: 18px; }
+
+.original-speech-text {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: #f8fafc;
+  text-align: left;
+  width: 100%;
+}
+
+.btn-peek-text {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.btn-peek-text:hover { color: #f1f5f9; }
 
 .interpreter-desk {
   background: #ffffff;
@@ -376,7 +420,7 @@ body {
   outline: none;
 }
 
-/* Ô Mễ Canvas Luyện Viết */
+/* Ô Mễ Canvas */
 .boxes-container {
   display: flex;
   flex-wrap: wrap;
