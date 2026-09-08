@@ -527,18 +527,24 @@
       syncScoreToFirebase(myBestScore);
     }
 
-    function syncScoreToFirebase(scoreToSave) {
+   function syncScoreToFirebase(scoreToSave) {
       if (!db || !playerName) return;
-      if (scoreToSave > myBestScore) {
+
+      // Cập nhật kỷ lục nếu điểm mới lớn hơn hoặc bằng
+      if (scoreToSave !== undefined && scoreToSave >= myBestScore) {
         myBestScore = scoreToSave;
         localStorage.setItem("chinese_arena_best", myBestScore);
       }
-      document.getElementById("arenaHighScore").innerText = myBestScore;
       
+      document.getElementById("arenaHighScore").innerText = myBestScore;
+
+      // Đẩy trực tiếp lên Firebase và bắt lỗi nếu bị chặn quyền ghi
       db.ref("leaderboard/" + playerId).set({
         name: playerName,
         score: myBestScore,
         updatedAt: Date.now()
+      }).catch(err => {
+        console.error("Firebase từ chối ghi dữ liệu (kiểm tra lại tab Rules):", err);
       });
     }
 
