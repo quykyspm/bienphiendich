@@ -19,7 +19,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
-  <!-- Liên kết file CSS ngoài -->
+  <!-- File CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -35,27 +35,65 @@
   </div>
 
   <div class="card">
-    <!-- THANH MENU ĐIỀU HƯỚNG TỔNG (Có sẵn chỗ mở rộng tab tương lai) -->
-    <nav class="nav-menu">
-      <div class="tab-list">
-        <button class="tab-btn active" onclick="switchTab('write')">✍️ Luyện Viết</button>
-        <button class="tab-btn" onclick="switchTab('listen')">🎧 Luyện Nghe</button>
-        <button class="tab-btn" onclick="switchTab('ai')">🤖 AI Dịch Thuật</button>
-        <button class="tab-btn" onclick="switchTab('arena')">🏆 Đấu Trường</button>
+    <!-- THANH HEADER CHÍNH CÓ NÚT MENU TỔNG -->
+    <header class="app-header">
+      <div class="header-left">
+        <span class="app-brand">biên phiên dịch</span>
+        <span class="current-mode-badge" id="currentModeBadge">✍️ Luyện Viết</span>
       </div>
 
-      <!-- Menu thả xuống cho các tính năng / tab tương lai -->
-      <div class="menu-dropdown" id="menuDropdown">
-        <button class="dropdown-btn" onclick="toggleDropdown(event)">Tính năng khác ▾</button>
-        <div class="dropdown-content">
-          <a href="javascript:void(0)" onclick="alert('Tính năng đang được phát triển!')">📚 Ngữ Pháp Chuyên Đề</a>
-          <a href="javascript:void(0)" onclick="alert('Tính năng đang được phát triển!')">📊 Sổ Tay Tiến Độ</a>
-          <!-- Thêm các tab tương lai vào đây -->
+      <div class="menu-control-wrapper">
+        <button class="menu-toggle-btn" id="menuToggleBtn" onclick="toggleMainMenu(event)">
+          <span class="menu-icon">☰</span>
+          <span>Chức năng ▾</span>
+        </button>
+
+        <!-- MENU POPUP HIỂN THỊ CÁC TAB KHI NHẤN VÀO -->
+        <div class="main-dropdown-menu" id="mainDropdownMenu">
+          <div class="menu-section-title">CHẾ ĐỘ HỌC TẬP</div>
+          <button class="menu-item active" onclick="selectTab('write', '✍️ Luyện Viết')">
+            <span class="item-icon">✍️</span>
+            <div class="item-text">
+              <strong>Luyện Viết Chữ Hán</strong>
+              <small>Tập viết theo ô mễ, nhận diện nét</small>
+            </div>
+          </button>
+          <button class="menu-item" onclick="selectTab('listen', '🎧 Luyện Nghe')">
+            <span class="item-icon">🎧</span>
+            <div class="item-text">
+              <strong>Luyện Nghe Phát Âm</strong>
+              <small>Phát âm giọng đọc chuẩn zh-CN</small>
+            </div>
+          </button>
+          <button class="menu-item" onclick="selectTab('ai', '🤖 AI Dịch Thuật')">
+            <span class="item-icon">🤖</span>
+            <div class="item-text">
+              <strong>AI Dịch Thuật & Chấm Điểm</strong>
+              <small>Tạo đề & thẩm định bản dịch</small>
+            </div>
+          </button>
+          <button class="menu-item" onclick="selectTab('arena', '🏆 Đấu Trường')">
+            <span class="item-icon">🏆</span>
+            <div class="item-text">
+              <strong>Đấu Trường Solo 60s</strong>
+              <small>Tranh tài xếp hạng thời gian thực</small>
+            </div>
+          </button>
+
+          <div class="menu-divider"></div>
+          <div class="menu-section-title">MỞ RỘNG (TƯƠNG LAI)</div>
+          <button class="menu-item disabled-item" onclick="alert('Tính năng đang được phát triển!')">
+            <span class="item-icon">📚</span>
+            <div class="item-text">
+              <strong>Ngữ Pháp Chuyên Đề</strong>
+              <small>Sắp ra mắt</small>
+            </div>
+          </button>
         </div>
       </div>
-    </nav>
+    </header>
 
-    <!-- Người chơi -->
+    <!-- Thanh Người chơi -->
     <div class="player-bar">
       <div style="display: flex; align-items: center; gap: 6px;">
         <span>👤: <strong id="displayNameTag">---</strong></span>
@@ -231,7 +269,7 @@
 
   </div>
 
-  <!-- Nạp file JavaScript ngoài -->
+  <!-- File JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
