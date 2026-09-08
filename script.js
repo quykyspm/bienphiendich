@@ -19,41 +19,265 @@ try {
 }
 
 /* ================= XỬ LÝ MENU TỔNG ĐIỀU HƯỚNG ================= */
-function toggleMainMenu(event) {
+function toggleMenuPopup(event) {
   event.stopPropagation();
-  const menu = document.getElementById("mainDropdownMenu");
-  if (menu) menu.classList.toggle("show");
+  const dropdown = document.getElementById("menuDropdownBox");
+  if (dropdown) dropdown.classList.toggle("show");
 }
 
-// Đóng menu khi click ra ngoài
 window.addEventListener("click", () => {
-  const menu = document.getElementById("mainDropdownMenu");
-  if (menu && menu.classList.contains("show")) {
-    menu.classList.remove("show");
+  const dropdown = document.getElementById("menuDropdownBox");
+  if (dropdown && dropdown.classList.contains("show")) {
+    dropdown.classList.remove("show");
   }
 });
 
-function selectTab(tabName, displayName) {
-  // Cập nhật nhãn hiển thị chế độ trên Header
-  const badge = document.getElementById("currentModeBadge");
-  if (badge) badge.innerText = displayName;
+function switchMode(tabKey, displayName) {
+  const label = document.getElementById("currentActiveTabLabel");
+  if (label) label.innerText = displayName;
 
-  // Cập nhật trạng thái active của menu items
-  document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+  document.querySelectorAll(".menu-nav-option").forEach(opt => opt.classList.remove("active"));
   if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-  // Chuyển tab
-  document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-  const targetTab = document.getElementById(`tab-${tabName}`);
-  if (targetTab) targetTab.classList.add("active");
+  document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
+  const activeTabEl = document.getElementById(`tab-${tabKey}`);
+  if (activeTabEl) activeTabEl.classList.add("active");
 
-  // Đóng menu popup
-  const menu = document.getElementById("mainDropdownMenu");
-  if (menu) menu.classList.remove("show");
+  const dropdown = document.getElementById("menuDropdownBox");
+  if (dropdown) dropdown.classList.remove("show");
 
-  // Khởi tạo câu hỏi nếu sang tab nghe
-  if (tabName === 'listen' && !currentListenWord) {
-    setupListenQuestion();
+  if (tabKey === 'listen' && !currentListenWord) setupListenQuestion();
+  if (tabKey === 'interpret' && !currentInterpretItem) setupInterpretQuestion();
+}
+
+/* ================= BỘ GIỌNG ĐỌC DIỄN GIẢ NGOẠI GIAO (SPEECH PROSODY) ================= */
+let availableVoices = [];
+function initVoiceList() {
+  if (!window.speechSynthesis) return;
+  availableVoices = window.speechSynthesis.getVoices();
+}
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = initVoiceList;
+}
+
+function playDiplomaticSpeech(text, lang = 'zh-CN') {
+  if (!window.speechSynthesis) {
+    alert("Trình duyệt không hỗ trợ phát âm!");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  
+  // Tinh chỉnh nhịp ngắt trang trọng: tốc độ 0.9x, tông hơi trầm 0.95
+  u.rate = 0.9;
+  u.pitch = 0.95;
+
+  // Lọc giọng Natural / Neural của Microsoft/Google nếu có
+  if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
+  const matchedVoice = availableVoices.find(v => v.lang.startsWith(lang.split('-')[0]) && (v.name.includes("Natural") || v.name.includes("Neural")));
+  if (matchedVoice) u.voice = matchedVoice;
+
+  window.speechSynthesis.speak(u);
+}
+
+/* ================= PHÒNG LUYỆN PHIÊN DỊCH (INTERPRETATION LAB) ================= */
+// Kho dữ liệu đối ngoại Bài 1 trích xuất từ giáo trình
+const lesson1Speeches = {
+  zh_to_vi: [
+    {
+      speech: "尊敬的各位领导、各位专家、各位来宾，大家上午好！欢迎大家出席2026年中越教育合作论坛开幕式。",
+      targetLang: "vi-VN",
+      expectedRef: "Kính thưa quý vị lãnh đạo, quý vị chuyên gia và quý vị đại biểu, chúc mọi người một buổi sáng tốt lành! Nhiệt liệt chào mừng quý vị đến tham dự Lễ khai mạc Diễn đàn Hợp tác Giáo dục Việt - Trung năm 2026."
+    },
+    {
+      speech: "首先，请允许我代表主办方向各位嘉宾表示热烈欢迎，并感谢大家在百忙之中拨冗出席本次活动。",
+      targetLang: "vi-VN",
+      expectedRef: "Trước hết, xin phép tôi được thay mặt Ban Tổ chức gửi lời chào mừng nồng nhiệt tới quý vị đại biểu, và xin chân thành cảm ơn quý vị đã bớt chút thời gian quý báu để đến tham dự sự kiện lần này."
+    },
+    {
+      speech: "本次论坛将围绕人工智能与国际中文教育的发展展开深入交流，希望各位专家共同探讨未来合作的新方向。",
+      targetLang: "vi-VN",
+      expectedRef: "Diễn đàn lần này sẽ tiến hành trao đổi chuyên sâu xoay quanh sự phát triển của trí tuệ nhân tạo và giáo dục tiếng Trung quốc tế, hy vọng các chuyên gia sẽ cùng nhau thảo luận về những định hướng hợp tác mới trong tương lai."
+    },
+    {
+      speech: "下面，让我们以热烈的掌声欢迎李校长致开幕词。我宣布，本次论坛正式开幕！",
+      targetLang: "vi-VN",
+      expectedRef: "Sau đây, xin quý vị hãy dành một tràng pháo tay nồng nhiệt để chào đón Hiệu trưởng Lý lên phát biểu diễn văn khai mạc. Tôi xin tuyên bố, diễn đàn lần này chính thức khai mạc!"
+    }
+  ],
+  vi_to_zh: [
+    {
+      speech: "Kính thưa các vị giáo sư, quý học giả và các em sinh viên, xin chân thành cảm ơn quý vị đã đến tham dự Hội thảo học thuật quốc tế lần này.",
+      targetLang: "zh-CN",
+      expectedRef: "尊敬的各位教授、各位学者、各位同学，非常感谢大家参加本次国际学术研讨会。"
+    },
+    {
+      speech: "Hội thảo lần này đã mời các chuyên gia cùng nhau thảo luận về những cơ hội và thách thức mà công nghệ số mang lại cho giảng dạy ngôn ngữ.",
+      targetLang: "zh-CN",
+      expectedRef: "本次会议邀请了各位专家，共同探讨数字技术对语言教学带来的机遇与挑战。"
+    },
+    {
+      speech: "Quý vị không chỉ có cơ hội lắng nghe các báo cáo học thuật đặc sắc mà còn có thể trao đổi chuyên sâu với giảng viên các trường đại học.",
+      targetLang: "zh-CN",
+      expectedRef: "大家不仅可以聆听精彩的学术报告，还能够与各高校教师进行深入交流。"
+    },
+    {
+      speech: "Hy vọng hội thảo sẽ tiếp tục thúc đẩy hợp tác quốc tế. Bây giờ, tôi xin tuyên bố hội thảo chính thức bắt đầu!",
+      targetLang: "zh-CN",
+      expectedRef: "希望本次研讨会能够进一步促进国际合作。现在，我宣布研讨会正式开始！"
+    }
+  ]
+};
+
+let currentInterpretIndex = 0;
+let currentInterpretItem = null;
+let speechRecognizer = null;
+let isRecording = false;
+
+function setupInterpretQuestion() {
+  const dir = document.getElementById("interpretDirection").value;
+  const list = lesson1Speeches[dir] || [];
+  currentInterpretItem = list[currentInterpretIndex % list.length];
+
+  document.getElementById("speakerSpeechPreview").innerText = currentInterpretItem.speech;
+  document.getElementById("interpretUserTranscript").value = "";
+  document.getElementById("interpretAIResult").style.display = "none";
+  
+  // Tự động phát âm thanh diễn giả khi chuyển câu
+  playSpeakerSpeech();
+}
+
+function playSpeakerSpeech() {
+  if (!currentInterpretItem) return;
+  const dir = document.getElementById("interpretDirection").value;
+  const lang = (dir === "zh_to_vi") ? "zh-CN" : "vi-VN";
+  playDiplomaticSpeech(currentInterpretItem.speech, lang);
+}
+
+function nextInterpretQuestion() {
+  const dir = document.getElementById("interpretDirection").value;
+  const list = lesson1Speeches[dir] || [];
+  currentInterpretIndex = (currentInterpretIndex + 1) % list.length;
+  setupInterpretQuestion();
+}
+
+// Xử lý Micro qua Web Speech Recognition API
+function toggleSpeechRecording() {
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRec) {
+    alert("Trình duyệt của bạn chưa hỗ trợ nhận diện giọng nói Web Speech. Hãy dùng Google Chrome hoặc Edge, hoặc gõ tay trực tiếp vào ô văn bản!");
+    return;
+  }
+
+  const btn = document.getElementById("btnToggleRecord");
+  const tag = document.getElementById("recordingStatusTag");
+  const txtArea = document.getElementById("interpretUserTranscript");
+
+  if (isRecording) {
+    // Dừng thu
+    if (speechRecognizer) speechRecognizer.stop();
+    return;
+  }
+
+  speechRecognizer = new SpeechRec();
+  speechRecognizer.continuous = true;
+  speechRecognizer.interimResults = true;
+  
+  // Chiều dịch: Dịch sang ngôn ngữ đích nào thì nhận diện tiếng đó
+  speechRecognizer.lang = currentInterpretItem.targetLang;
+
+  speechRecognizer.onstart = () => {
+    isRecording = true;
+    btn.classList.add("active");
+    document.getElementById("micBtnText").innerText = "ĐANG THU ÂM... (BẤM ĐỂ DỪNG)";
+    tag.className = "status-tag recording";
+    tag.innerText = "● Đang lắng nghe bạn dịch...";
+  };
+
+  speechRecognizer.onresult = (event) => {
+    let finalTranscript = "";
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      }
+    }
+    if (finalTranscript) {
+      txtArea.value = (txtArea.value + " " + finalTranscript).trim();
+    }
+  };
+
+  speechRecognizer.onerror = (event) => {
+    console.warn("Lỗi nhận diện giọng nói:", event.error);
+    stopRecordingUI();
+  };
+
+  speechRecognizer.onend = () => {
+    stopRecordingUI();
+  };
+
+  speechRecognizer.start();
+}
+
+function stopRecordingUI() {
+  isRecording = false;
+  const btn = document.getElementById("btnToggleRecord");
+  const tag = document.getElementById("recordingStatusTag");
+  if (btn) {
+    btn.classList.remove("active");
+    document.getElementById("micBtnText").innerText = "BẤM VÀO ĐỂ DỊCH (NÓI)";
+  }
+  if (tag) {
+    tag.className = "status-tag idle";
+    tag.innerText = "Đã dừng mic (có thể sửa tay)";
+  }
+}
+
+async function submitInterpretationToAI() {
+  const userSpeech = document.getElementById("interpretUserTranscript").value.trim();
+  if (!userSpeech) return alert("Vui lòng nói qua Micro hoặc gõ bản dịch của bạn vào ô!");
+  if (!currentInterpretItem) return;
+
+  const btn = document.getElementById("btnSubmitInterpret");
+  const resBox = document.getElementById("interpretAIResult");
+  btn.innerText = "⏳ AI đang thẩm định nghiệp vụ...";
+  btn.disabled = true;
+
+  const dir = document.getElementById("interpretDirection").value;
+  const sourceLangName = (dir === "zh_to_vi") ? "Tiếng Trung" : "Tiếng Việt";
+  const targetLangName = (dir === "zh_to_vi") ? "Tiếng Việt" : "Tiếng Trung";
+
+  const interpretEvalPrompt = `
+Bạn là chuyên gia thẩm định Phiên dịch viên Hội nghị Quốc tế (Conference Interpreter Evaluator).
+Bối cảnh: Dịch nối tiếp (Consecutive Interpreting) nghi thức ngoại giao / lễ khai mạc.
+
+Phát biểu gốc của diễn giả (${sourceLangName}):
+"${currentInterpretItem.speech}"
+
+Bản phiên dịch nói của học viên (${targetLangName} - thu qua Speech-to-Text):
+"${userSpeech}"
+
+Bản dịch tham khảo chuẩn:
+"${currentInterpretItem.expectedRef}"
+
+Hãy thẩm định chi tiết theo barem nghiệp vụ phiên dịch:
+1. Điểm số: .../10
+2. Độ chính xác thông tin cốt lõi (Core Facts): Có dịch đúng đối tác, chức danh, sự kiện, con số không?
+3. Văn phong nghi thức ngoại giao (Register & Tone): Đã dùng đúng từ ngữ trang trọng của hội nghị chưa (ví dụ: nhiệt liệt chào mừng, dành thời gian quý báu...)? Hãy khen ưu điểm và chỉ rõ từ ngữ chưa chuẩn nếu có.
+4. Phiên bản phiên dịch chuẩn xác và gãy gọn nhất: Cung cấp câu dịch trôi chảy nhất để học viên học tập.
+(Chú ý: Do học viên dùng nhận diện giọng nói, hãy châm chước lỗi chữ đồng âm nhỏ, tập trung thẩm định khả năng phản xạ chuyển ngữ và độ trang trọng).
+`;
+
+  try {
+    const evaluation = await callGemini(interpretEvalPrompt);
+    resBox.innerText = evaluation;
+    resBox.style.display = "block";
+  } catch (err) {
+    alert("Lỗi thẩm định: " + err.message);
+  } finally {
+    btn.innerText = "⚖️ AI Thẩm Định Phiên Dịch";
+    btn.disabled = false;
   }
 }
 
