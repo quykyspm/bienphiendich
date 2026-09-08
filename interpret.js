@@ -194,23 +194,12 @@ QUY TẮC BẮT BUỘC:
   }
 }
 
-/* 5. PHÁT ÂM DIỄN GIẢ (MICROSOFT EDGE NEURAL TTS + TÙY CHỌN TỐC ĐỘ / GIỚI TÍNH) */
+/* 5. PHÁT ÂM DIỄN GIẢ (CỐ ĐỊNH GIỌNG NỮ TRUYỀN CẢM & RÕ TIẾNG) */
 function playSpeakerAudio() {
   if (!currentInterpretScenario.speechText) return alert("Vui lòng bấm 'AI Tạo Tình Huống' trước!");
 
-  const gender = document.getElementById("interpretVoiceGender").value; // 'male' | 'female'
   const speedRate = parseFloat(document.getElementById("interpretSpeechRate").value) || 1.0;
   const isZh = (currentInterpretScenario.sourceLang === "zh-CN");
-
-  // Bản đồ giọng Microsoft Edge Neural
-  // Tiếng Trung: Yunxi (Nam), Xiaoxiao (Nữ)
-  // Tiếng Việt: NamMinh (Nam), HoaiMy (Nữ)
-  let voiceTargetName = "";
-  if (isZh) {
-    voiceTargetName = (gender === "male") ? "zh-CN-YunxiNeural" : "zh-CN-XiaoxiaoNeural";
-  } else {
-    voiceTargetName = (gender === "male") ? "vi-VN-NamMinhNeural" : "vi-VN-HoaiMyNeural";
-  }
 
   if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ phát âm thanh!");
   window.speechSynthesis.cancel();
@@ -218,41 +207,28 @@ function playSpeakerAudio() {
   const u = new SpeechSynthesisUtterance(currentInterpretScenario.speechText);
   u.lang = currentInterpretScenario.sourceLang;
   u.rate = speedRate;
-  u.pitch = (gender === "male") ? 0.9 : 1.05; // Nam hơi trầm, nữ thanh thoát
+  u.pitch = 1.05; // Cao độ trong trẻo, dễ nghe nhất
 
-  // Ưu tiên chọn giọng Edge Neural nếu có trên máy
+  // Lấy danh sách voice trên thiết bị
   const voices = window.speechSynthesis.getVoices();
-  const matchedVoice = voices.find(v => 
-    v.name.includes(voiceTargetName) || 
-    (v.lang.startsWith(isZh ? "zh" : "vi") && (gender === "male" ? (v.name.includes("Yunxi") || v.name.includes("Male")) : (v.name.includes("Xiaoxiao") || v.name.includes("Female"))))
-  );
+  const langVoices = voices.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(isZh ? "zh" : "vi"));
 
-  if (matchedVoice) {
-    u.voice = matchedVoice;
-  } else {
-    // Fallback sang giọng ngôn ngữ tương ứng
-    const generalVoice = voices.find(v => v.lang.startsWith(isZh ? "zh" : "vi"));
-    if (generalVoice) u.voice = generalVoice;
+  // Ưu tiên các giọng nữ chất lượng cao nhất (Xiaoxiao, Yaoyao, Huihui, Tingting, HoaiMy...)
+  const bestFemaleVoice = langVoices.find(v => {
+    const name = v.name.toLowerCase();
+    return name.includes("xiaoxiao") || name.includes("yaoyao") || name.includes("huihui") || 
+           name.includes("tingting") || name.includes("female") || name.includes("hoaimy") ||
+           name.includes("natural") || name.includes("neural") || name.includes("google");
+  });
+
+  if (bestFemaleVoice) {
+    u.voice = bestFemaleVoice;
+  } else if (langVoices.length > 0) {
+    u.voice = langVoices[0];
   }
 
   window.speechSynthesis.speak(u);
 }
-
-function toggleRevealSpeech() {
-  if (!currentInterpretScenario.speechText) return;
-  const revealedBox = document.getElementById("revealedSpeechText");
-  const blindNotice = document.getElementById("speechBlindNotice");
-
-  isSpeechRevealed = !isSpeechRevealed;
-  if (isSpeechRevealed) {
-    revealedBox.style.display = "block";
-    blindNotice.style.display = "none";
-  } else {
-    revealedBox.style.display = "none";
-    blindNotice.style.display = "flex";
-  }
-}
-
 /* 6. THU ÂM GIỌNG NÓI PHIÊN DỊCH */
 function toggleSpeechRecording() {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
