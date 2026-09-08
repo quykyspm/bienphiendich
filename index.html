@@ -22,8 +22,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
-  <!-- File CSS có gắn version mới để chống lưu cache cũ -->
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <!-- File CSS có gắn version để chống lưu cache cũ -->
+  <link rel="stylesheet" href="style.css?v=6.0">
 </head>
 <body>
 
@@ -49,7 +49,6 @@
           <span class="arrow-icon">▾</span>
         </button>
 
-        <!-- Menu thả xuống chọn chế độ -->
         <div class="menu-dropdown-box" id="menuDropdownBox">
           <div class="menu-group-label">CHẾ ĐỘ HỌC TẬP</div>
           
@@ -73,7 +72,7 @@
             <span class="icon">🎙️</span>
             <div class="info">
               <span class="title">Phòng Luyện Phiên Dịch</span>
-              <span class="sub">AI tạo kịch bản theo 12 bài giáo trình & Mic</span>
+              <span class="sub">AI Edge Neural TTS & Dịch Nói 12 bài</span>
             </div>
           </div>
 
@@ -201,21 +200,34 @@
       <div id="listen-result-msg"></div>
     </div>
 
-    <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (CHUẨN 12 BÀI GIÁO TRÌNH) ================= -->
+    <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (EDGE NEURAL TTS TÙY CHỌN) ================= -->
     <div id="tab-interpret" class="tab-content">
       <div class="interpret-header-box">
         <div class="filter-panel" style="margin-bottom: 0; background: transparent; border: none; padding: 0;">
           <div class="filter-item">
             <label>Chiều phiên dịch:</label>
             <select id="interpretDirection">
-              <option value="zh_to_vi">Trung ➔ Việt (Nghe diễn giả Trung, Dịch tiếng Việt)</option>
-              <option value="vi_to_zh">Việt ➔ Trung (Nghe đại biểu Việt, Dịch tiếng Trung)</option>
+              <option value="zh_to_vi">Trung ➔ Việt (Nghe tiếng Trung, dịch tiếng Việt)</option>
+              <option value="vi_to_zh">Việt ➔ Trung (Nghe tiếng Việt, dịch tiếng Trung)</option>
             </select>
           </div>
           <div class="filter-item">
             <label>Chủ đề giáo trình:</label>
-            <select id="interpretCurriculumTopic">
-              <!-- Nạp danh sách 12 bài chuẩn từ giáo trình PHIÊN DỊCH 1 -->
+            <select id="interpretCurriculumTopic"></select>
+          </div>
+          <div class="filter-item">
+            <label>Giọng diễn giả:</label>
+            <select id="interpretVoiceGender">
+              <option value="male" selected>👨 Giọng Nam (Trầm ấm, ngoại giao)</option>
+              <option value="female">👩 Giọng Nữ (Truyền cảm, phát thanh)</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>Tốc độ phát:</label>
+            <select id="interpretSpeechRate">
+              <option value="0.5">0.5x (Rất chậm)</option>
+              <option value="0.75">0.75x (Luyện tập)</option>
+              <option value="1.0" selected>1.0x (Chuẩn thực tế)</option>
             </select>
           </div>
           <div class="filter-item" style="justify-content: flex-end;">
@@ -224,11 +236,11 @@
         </div>
       </div>
 
-      <!-- Bục diễn giả phát biểu (CHE KÍN CHỮ, CHỈ NGHE BẰNG TAI) -->
+      <!-- Bục diễn giả phát biểu (CHE KÍN CHỮ, CHỈ NGHE TAI) -->
       <div class="speaker-card">
         <div class="speaker-title">
           <span id="speakerRoleTag">🎙️ DIỄN GIẢ PHÁT BIỂU</span>
-          <button class="btn-repeat-speech" onclick="playSpeakerAudio()">🔊 Nghe lại giọng phát biểu</button>
+          <button class="btn-repeat-speech" onclick="playSpeakerAudio()">🔊 Nghe lại diễn giả</button>
         </div>
         
         <div class="blind-speech-box">
@@ -269,7 +281,7 @@
       <div id="interpretAIResult" class="interpret-eval-box"></div>
     </div>
 
-    <!-- ================= TAB 4: AI DỊCH THUẬT (BIÊN DỊCH VIẾT) ================= -->
+    <!-- ================= TAB 4: AI DỊCH THUẬT ================= -->
     <div id="tab-ai" class="tab-content">
       <div class="filter-panel" style="justify-content: flex-start; gap: 15px;">
         <div class="filter-item">
@@ -297,7 +309,7 @@
       <div id="aiEvaluationResult" class="ai-result-box"></div>
     </div>
 
-    <!-- ================= TAB 5: ĐẤU TRƯỜNG & BẢNG XẾP HẠNG ================= -->
+    <!-- ================= TAB 5: ĐẤU TRƯỜNG ================= -->
     <div id="tab-arena" class="tab-content">
       <div class="arena-banner">
         <h2 style="margin: 0 0 6px 0;">⚔️ SOLO??</h2>
@@ -309,12 +321,10 @@
         <div id="arenaLiveScoreTag" style="display:none; color:#2563eb;">Điểm hiệp này: <span id="arenaCurrentScore" style="font-size: 18px;">0</span></div>
       </div>
 
-      <!-- Màn hình chờ bắt đầu -->
       <div id="arenaLobby">
         <button class="main-btn" style="background:#d97706; color:white; font-size:18px; padding:15px;" onclick="startArenaMatch()">🚀 BẮT ĐẦU SOLO (60s)</button>
       </div>
 
-      <!-- Khu vực thi đấu -->
       <div id="arenaGameArea" style="display: none; margin-top: 15px;">
         <div class="arena-timer">⏱ Thời gian còn lại: <span id="arenaTimerDisplay">60</span>s</div>
         <div style="font-size: 22px; font-weight: bold; margin-bottom: 12px;" id="arena-prompt-vn">Đang tạo đề...</div>
@@ -351,7 +361,8 @@
 
   </div>
 
-  <!-- Nạp script có version mới chống cache -->
-  <script src="script.js?v=5.0"></script>
+  <!-- Nạp 2 file JS riêng biệt: script.js và interpret.js -->
+  <script src="script.js?v=6.0"></script>
+  <script src="interpret.js?v=2.0"></script>
 </body>
 </html>
