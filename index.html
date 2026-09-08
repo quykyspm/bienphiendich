@@ -6,7 +6,7 @@
   <title>biên phiên dịch by QuyKy</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
-  <!-- Nạp thư viện Firebase SDK -->
+  <!-- Nạp thư viện Firebase Web SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
@@ -130,7 +130,7 @@
       display: none;
     }
 
-    /* Canvas */
+    /* Canvas vẽ chữ Hán */
     .boxes-container {
       display: flex;
       flex-wrap: wrap;
@@ -227,7 +227,7 @@
     .word-item { padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.06); }
     .word-item:last-child { border-bottom: none; }
 
-    /* Bảng xếp hạng */
+    /* Khung bảng xếp hạng */
     .leaderboard-card {
       margin-top: 24px;
       background: #fffbeb;
@@ -266,11 +266,11 @@
 <body>
 
   <div class="card">
-    <!-- Thanh nhập tên và điểm số -->
+    <!-- Nhập tên & Xem điểm số cá nhân -->
     <div class="player-bar">
       <div style="display: flex; align-items: center; gap: 6px; flex: 1;">
         <label style="font-size: 13px; font-weight: bold; color: #1e40af;">Tên bạn:</label>
-        <input type="text" id="playerNameInput" placeholder="Nhập biệt danh của bạn..." onchange="savePlayerName()">
+        <input type="text" id="playerNameInput" placeholder="Nhập biệt danh..." onchange="savePlayerName()">
       </div>
       <div class="score-tag">Điểm đúng: <span id="myCorrectScore">0</span> từ</div>
     </div>
@@ -320,7 +320,7 @@
 
     <div id="result-msg"></div>
 
-    <!-- Bảng phân loại Đúng / Sai -->
+    <!-- Phân loại Đã thuộc / Cần ôn lại -->
     <div class="lists-container">
       <div class="list-box correct-box">
         <div class="list-title"><span>Đã thuộc</span><span id="correct-count">0</span></div>
@@ -344,11 +344,11 @@
           <tr>
             <th style="width: 50px;">Hạng</th>
             <th>Tên</th>
-            <th style="width: 100px; text-align: right;">Từ viết đúng</th>
+            <th style="width: 100px; text-align: right;">Từ đúng</th>
           </tr>
         </thead>
         <tbody id="leaderboardBody">
-          <tr><td colspan="3" style="text-align: center; color: #92400e;">Đang tải xếp hạng...</td></tr>
+          <tr><td colspan="3" style="text-align: center; color: #92400e;">Đang nạp dữ liệu xếp hạng...</td></tr>
         </tbody>
       </table>
     </div>
@@ -373,19 +373,10 @@
       firebase.initializeApp(firebaseConfig);
       db = firebase.database();
     } catch(e) {
-      console.warn("Lỗi kết nối Firebase:", e);
+      console.warn("Lỗi cấu hình Firebase:", e);
     }
 
-    /* ================= DỮ LIỆU & BẢNG XẾP HẠNG ================= */
-    let allWords = [];
-    let activeWords = [];
-    let currentIndex = 0;
-    let canvasInstances = [];
-    let isPinyinVisible = false;
-
-    const memorizedWords = new Map();
-    const needReviewWords = new Map();
-
+    /* ================= LOGIC BẢNG XẾP HẠNG ================= */
     const masteredWordsSet = new Set();
     let playerId = localStorage.getItem("chinese_player_id");
     let playerName = localStorage.getItem("chinese_player_name") || "";
@@ -445,10 +436,21 @@
             </tr>
           `;
         });
+      }, err => {
+        console.error("Firebase Database Error:", err);
       });
     }
 
-    /* ================= ĐỌC DỮ LIỆU EXCEL ================= */
+    /* ================= LOGIC ĐỌC EXCEL ================= */
+    let allWords = [];
+    let activeWords = [];
+    let currentIndex = 0;
+    let canvasInstances = [];
+    let isPinyinVisible = false;
+
+    const memorizedWords = new Map();
+    const needReviewWords = new Map();
+
     async function autoLoadExcel() {
       try {
         const response = await fetch("words.xlsx?t=" + new Date().getTime());
@@ -538,6 +540,7 @@
       toggleBtn.innerText = isPinyinVisible ? "🙈 Ẩn Pinyin" : "👁 Xem gợi ý Pinyin";
     }
 
+    /* ================= CANVAS VẼ & NHẬN DIỆN ================= */
     function setupCanvasBoxes(hanziWord) {
       const container = document.getElementById("boxesContainer");
       container.innerHTML = "";
@@ -702,7 +705,7 @@
         resultMsg.innerText = `Chính xác! (${currentWord.hanzi})`;
         recordWord(currentWord, true);
 
-        // Lưu từ và cập nhật điểm lên Firebase
+        // Lưu điểm cá nhân và đẩy lên Realtime Database
         if (!masteredWordsSet.has(currentWord.hanzi)) {
           masteredWordsSet.add(currentWord.hanzi);
           document.getElementById("myCorrectScore").innerText = masteredWordsSet.size;
@@ -754,7 +757,7 @@
       loadWord(currentIndex);
     }
 
-    // Khởi chạy hệ thống
+    // Khởi chạy ứng dụng
     autoLoadExcel();
     listenLeaderboard();
   </script>
