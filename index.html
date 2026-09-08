@@ -50,14 +50,14 @@
       display: flex;
       border-bottom: 2px solid #e2e8f0;
       margin-bottom: 20px;
-      gap: 10px;
+      gap: 6px;
     }
     .tab-btn {
       flex: 1;
-      padding: 10px;
+      padding: 10px 4px;
       background: none;
       border: none;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       color: #64748b;
       cursor: pointer;
@@ -196,7 +196,7 @@
     .btn-clear-all { background: #e2e8f0; color: #334155; }
     .btn-next { background: #0f172a; color: white; }
     
-    #result-msg, #arena-result-msg { margin-top: 16px; font-size: 16px; font-weight: bold; min-height: 24px; }
+    #result-msg, #arena-result-msg, #listen-result-msg { margin-top: 16px; font-size: 16px; font-weight: bold; min-height: 24px; }
     .msg-correct { color: var(--success); }
     .msg-wrong { color: var(--error); }
 
@@ -208,6 +208,50 @@
     }
     .correct-box { background: #f0fdf4; border-color: #bbf7d0; }
     .wrong-box { background: #fef2f2; border-color: #fecaca; }
+
+    /* Giao diện Tab Luyện Nghe */
+    .listen-box {
+      padding: 24px 16px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+    .audio-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+      transition: transform 0.1s;
+    }
+    .audio-btn:active { transform: scale(0.97); }
+    .listen-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      box-sizing: border-box;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .listen-input:focus { border-color: var(--primary); }
+    .listen-answer {
+      margin-top: 12px;
+      padding: 10px;
+      background: #eff6ff;
+      border-radius: 6px;
+      display: none;
+    }
 
     /* Giao diện AI Dịch Thuật */
     .ai-prompt-box {
@@ -305,6 +349,7 @@
   <div class="card">
     <div class="tab-bar">
       <button class="tab-btn active" onclick="switchTab('write')">✍️ Luyện Viết</button>
+      <button class="tab-btn" onclick="switchTab('listen')">🎧 Luyện Nghe</button>
       <button class="tab-btn" onclick="switchTab('ai')">🤖 AI Dịch Thuật</button>
       <button class="tab-btn" onclick="switchTab('arena')">🏆 Đấu Trường</button>
     </div>
@@ -370,7 +415,40 @@
       </div>
     </div>
 
-    <!-- ================= TAB 2: AI DỊCH THUẬT ================= -->
+    <!-- ================= TAB 2: LUYỆN NGHE ================= -->
+    <div id="tab-listen" class="tab-content">
+      <div class="filter-panel">
+        <div class="filter-item">
+          <label>Chọn bài:</label>
+          <select id="listenLessonFilter" onchange="setupListenQuestion()"><option value="all">Tất cả các bài</option></select>
+        </div>
+        <div class="filter-item">
+          <label>Tốc độ đọc:</label>
+          <select id="listenRateSelect">
+            <option value="0.8">Chậm (0.8x)</option>
+            <option value="1.0" selected>Bình thường (1.0x)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="listen-box">
+        <button class="audio-btn" onclick="playCurrentListenWord()">🔊 Phát âm thanh</button>
+        <p style="color: #64748b; font-size: 14px; margin-top: 10px;">Lắng nghe và nhập lại Chữ Hán hoặc Pinyin tương ứng:</p>
+        
+        <input type="text" id="listenInput" class="listen-input" placeholder="Gõ chữ Hán hoặc Pinyin..." onkeydown="if(event.key==='Enter') checkListenAnswer()">
+        
+        <div id="listenAnswerBox" class="listen-answer"></div>
+      </div>
+
+      <div class="button-group">
+        <button class="main-btn btn-clear-all" onclick="toggleListenAnswer()">👁 Xem đáp án</button>
+        <button class="main-btn btn-check" onclick="checkListenAnswer()">Kiểm tra</button>
+        <button class="main-btn btn-next" onclick="nextListenWord()">Từ tiếp theo ➔</button>
+      </div>
+      <div id="listen-result-msg"></div>
+    </div>
+
+    <!-- ================= TAB 3: AI DỊCH THUẬT ================= -->
     <div id="tab-ai" class="tab-content">
       <div class="filter-panel" style="justify-content: flex-start; gap: 15px;">
         <div class="filter-item">
@@ -398,7 +476,7 @@
       <div id="aiEvaluationResult" class="ai-result-box"></div>
     </div>
 
-    <!-- ================= TAB 3: ĐẤU TRƯỜNG & BẢNG XẾP HẠNG ================= -->
+    <!-- ================= TAB 4: ĐẤU TRƯỜNG & BẢNG XẾP HẠNG ================= -->
     <div id="tab-arena" class="tab-content">
       <div class="arena-banner">
         <h2 style="margin: 0 0 6px 0;">⚔️ SOLO??</h2>
@@ -481,11 +559,15 @@
       if (tab === 'write') {
         document.querySelectorAll(".tab-btn")[0].classList.add("active");
         document.getElementById("tab-write").classList.add("active");
-      } else if (tab === 'ai') {
+      } else if (tab === 'listen') {
         document.querySelectorAll(".tab-btn")[1].classList.add("active");
+        document.getElementById("tab-listen").classList.add("active");
+        if (!currentListenWord) setupListenQuestion();
+      } else if (tab === 'ai') {
+        document.querySelectorAll(".tab-btn")[2].classList.add("active");
         document.getElementById("tab-ai").classList.add("active");
       } else if (tab === 'arena') {
-        document.querySelectorAll(".tab-btn")[2].classList.add("active");
+        document.querySelectorAll(".tab-btn")[3].classList.add("active");
         document.getElementById("tab-arena").classList.add("active");
       }
     }
@@ -591,6 +673,76 @@
       }, err => {
         console.error("Lỗi đọc Firebase:", err);
       });
+    }
+
+    /* ================= LOGIC TAB LUYỆN NGHE ================= */
+    let currentListenWord = null;
+
+    function playAudio(text, rate = 1.0) {
+      if (!window.speechSynthesis) {
+        alert("Trình duyệt không hỗ trợ phát âm!");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN';
+      u.rate = parseFloat(rate) || 1.0;
+      window.speechSynthesis.speak(u);
+    }
+
+    function setupListenQuestion() {
+      const lesson = document.getElementById("listenLessonFilter").value;
+      let words = (lesson === "all") ? allWords : allWords.filter(w => String(w.lesson) === lesson);
+      if (words.length === 0) return;
+
+      currentListenWord = words[Math.floor(Math.random() * words.length)];
+      document.getElementById("listenInput").value = "";
+      document.getElementById("listen-result-msg").innerText = "";
+      document.getElementById("listenAnswerBox").style.display = "none";
+      playCurrentListenWord();
+    }
+
+    function playCurrentListenWord() {
+      if (!currentListenWord) return;
+      const rate = document.getElementById("listenRateSelect").value;
+      playAudio(currentListenWord.hanzi, rate);
+    }
+
+    function checkListenAnswer() {
+      if (!currentListenWord) return;
+      const userVal = document.getElementById("listenInput").value.trim().toLowerCase();
+      const msg = document.getElementById("listen-result-msg");
+      const targetHanzi = String(currentListenWord.hanzi).trim().toLowerCase();
+      const targetPinyin = String(currentListenWord.pinyin || '').trim().toLowerCase();
+
+      if (!userVal) {
+        msg.className = "msg-wrong";
+        msg.innerText = "Vui lòng nhập đáp án!";
+        return;
+      }
+
+      if (userVal === targetHanzi || userVal === targetPinyin) {
+        msg.className = "msg-correct";
+        msg.innerText = `Chính xác! 🎉 (${currentListenWord.hanzi} - ${currentListenWord.vn})`;
+      } else {
+        msg.className = "msg-wrong";
+        msg.innerText = "Chưa chính xác, hãy nghe lại!";
+      }
+    }
+
+    function toggleListenAnswer() {
+      if (!currentListenWord) return;
+      const box = document.getElementById("listenAnswerBox");
+      if (box.style.display === "none") {
+        box.innerHTML = `<strong>${currentListenWord.hanzi}</strong> [${currentListenWord.pinyin || ''}]: ${currentListenWord.vn}`;
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";
+      }
+    }
+
+    function nextListenWord() {
+      setupListenQuestion();
     }
 
     /* ================= ĐẤU TRƯỜNG THI ĐẤU (60 GIÂY) ================= */
@@ -731,7 +883,6 @@
       if (words.length === 0) return alert("Không có từ vựng trong bài đã chọn!");
 
       const sampleWords = [...words].sort(() => Math.random() - 0.5).slice(0, 5);
-      const vocabList = sampleWords.map(w => `${w.hanzi} (${w.vn})`).join(", ");
 
       const promptDisplay = document.getElementById("aiPromptDisplay");
       promptDisplay.innerText = "⏳ AI đang biên soạn nội dung theo từ vựng...";
@@ -741,10 +892,16 @@
       let prompt = "";
       if (mode === "vi_to_zh") {
         currentAIExercise = { source: "Tiếng Việt", target: "Tiếng Trung" };
-        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Việt (2-3 câu ngắn, khoảng 30 từ) mang ngữ cảnh thực tế tự nhiên, lồng ghép ý nghĩa của các từ sau: [${vocabList}]. Chỉ trả về duy nhất nội dung đoạn văn tiếng Việt, không kèm bất kỳ giải thích nào.`;
+        const vnVocabList = sampleWords.map(w => `"${w.vn}"`).join(", ");
+        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết 1 đoạn văn ngắn hoàn toàn bằng TIẾNG VIỆT (khoảng 2-3 câu, tối đa 40 từ), ngữ cảnh tự nhiên, có sử dụng các khái niệm/từ ngữ sau: [${vnVocabList}]. 
+QUY TẮC BẮT BUỘC:
+1. 100% bằng tiếng Việt thuần túy.
+2. Tuyệt đối KHÔNG chứa bất kỳ chữ Hán, Pinyin hay ký tự Trung Quốc nào.
+3. Không thêm giải thích hay lời chào, chỉ trả về nội dung đoạn văn.`;
       } else {
         currentAIExercise = { source: "Tiếng Trung", target: "Tiếng Việt" };
-        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${vocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
+        const zhVocabList = sampleWords.map(w => w.hanzi).join(", ");
+        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${zhVocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
       }
 
       try {
@@ -813,11 +970,16 @@ Hãy đánh giá chi tiết theo mẫu:
       const lessons = [...new Set(allWords.map(w => w.lesson).filter(Boolean))];
       const s1 = document.getElementById("lessonFilter");
       const s2 = document.getElementById("aiLessonFilter");
+      const s3 = document.getElementById("listenLessonFilter");
+
       s1.innerHTML = '<option value="all">Tất cả các bài</option>';
       s2.innerHTML = '<option value="all">Tất cả các bài</option>';
+      if (s3) s3.innerHTML = '<option value="all">Tất cả các bài</option>';
+
       lessons.forEach(l => {
         s1.innerHTML += `<option value="${l}">${l}</option>`;
         s2.innerHTML += `<option value="${l}">${l}</option>`;
+        if (s3) s3.innerHTML += `<option value="${l}">${l}</option>`;
       });
     }
 
