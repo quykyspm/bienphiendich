@@ -518,7 +518,7 @@
         prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Việt (2-3 câu ngắn, khoảng 30 từ) mang ngữ cảnh thực tế tự nhiên, lồng ghép ý nghĩa của các từ sau: [${vocabList}]. Chỉ trả về duy nhất nội dung đoạn văn tiếng Việt, không kèm bất kỳ giải thích nào.`;
       } else {
         currentAIExercise = { source: "Tiếng Trung", target: "Tiếng Việt" };
-        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${vocabList}]. Chỉ trả về duy nhất chữ Hán (kèm Pinyin dưới từng câu), không thêm lời chào hay giải thích nào.`;
+        prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${vocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
       }
 
       try {
