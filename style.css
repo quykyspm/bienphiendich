@@ -1,10 +1,12 @@
 :root {
   --primary: #2563eb;
+  --primary-hover: #1d4ed8;
   --success: #16a34a;
   --error: #dc2626;
   --border: #cbd5e1;
   --bg: #f8fafc;
 }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: var(--bg);
@@ -14,45 +16,176 @@ body {
   padding: 20px 10px;
   margin: 0;
 }
+
 .card {
   background: white;
   padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
   width: 100%;
   max-width: 680px;
   text-align: center;
   box-sizing: border-box;
 }
 
-/* Tabs */
-.tab-bar {
+/* ================= APP HEADER & NÚT CHỌN CHỨC NĂNG ================= */
+.app-header {
   display: flex;
-  border-bottom: 2px solid #e2e8f0;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
   margin-bottom: 20px;
-  gap: 6px;
 }
-.tab-btn {
-  flex: 1;
-  padding: 10px 4px;
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-brand {
+  font-weight: 800;
+  font-size: 16px;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+.current-mode-badge {
+  background: #eff6ff;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #bfdbfe;
+}
+
+.menu-control-wrapper {
+  position: relative;
+}
+
+.menu-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0f172a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu-toggle-btn:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+.menu-icon {
+  font-size: 14px;
+}
+
+/* Dropdown Menu Popup */
+.main-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: white;
+  min-width: 260px;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  z-index: 1000;
+  padding: 8px;
+  text-align: left;
+}
+
+.main-dropdown-menu.show {
+  display: block;
+  animation: menuFadeIn 0.15s ease-out;
+}
+
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  padding: 6px 10px 4px;
+  letter-spacing: 0.5px;
+}
+
+.menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
   background: none;
   border: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: #64748b;
+  border-radius: 8px;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  transition: all 0.2s;
+  text-align: left;
+  transition: background 0.15s ease;
 }
-.tab-btn.active {
+
+.menu-item:hover {
+  background: #f1f5f9;
+}
+
+.menu-item.active {
+  background: #eff6ff;
+}
+
+.menu-item.active .item-text strong {
   color: var(--primary);
-  border-bottom-color: var(--primary);
 }
+
+.item-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.item-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-text strong {
+  font-size: 13px;
+  color: #1e293b;
+}
+
+.item-text small {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.menu-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 6px 0;
+}
+
+.disabled-item {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+/* Các Tab nội dung */
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Modal nhập tên */
+/* ================= GIAO DIỆN CHUNG ================= */
 .name-modal-overlay {
   position: fixed;
   inset: 0;
@@ -96,7 +229,6 @@ body {
   cursor: pointer;
 }
 
-/* Player Bar */
 .player-bar {
   display: flex;
   align-items: center;
@@ -109,7 +241,6 @@ body {
   gap: 10px;
 }
 
-/* Filter Panel */
 .filter-panel {
   display: flex;
   gap: 10px;
@@ -136,7 +267,7 @@ body {
   outline: none;
 }
 
-/* Canvas Boxes */
+/* Khung ô mễ canvas */
 .boxes-container {
   display: flex;
   flex-wrap: wrap;
@@ -166,7 +297,6 @@ canvas { width: 100%; height: 100%; cursor: crosshair; }
   font-size: 12px; color: #475569; padding: 4px 8px; cursor: pointer;
 }
 
-/* Button & Result */
 .button-group { display: flex; gap: 10px; margin-top: 10px; }
 button.main-btn {
   flex: 1; padding: 12px 0; border: none; border-radius: 6px;
@@ -180,7 +310,6 @@ button.main-btn {
 .msg-correct { color: var(--success); }
 .msg-wrong { color: var(--error); }
 
-/* Stats Lists */
 .lists-container { display: flex; gap: 16px; margin-top: 24px; text-align: left; }
 .list-box {
   flex: 1; border-radius: 8px; padding: 12px; font-size: 14px;
