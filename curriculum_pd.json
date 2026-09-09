@@ -1,0 +1,920 @@
+{
+  "bai1": {
+    "lessonNumber": 1,
+    "lessonTitle": "Bài 1: Khai mạc hội nghị (第一课 会议开幕)",
+    "objectives": "Nắm vững, ghi nhớ và sử dụng được từ vựng - thuật ngữ trọng tâm đến chủ đề khai mạc hội nghị. Thực hành phiên dịch Việt - Trung và Trung - Việt các nội dung liên quan đến lễ khai mạc, hội nghị.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "会议即将在学校礼堂开始，请各位老师尽快就座。\n尊敬的各位来宾，大家晚上好，欢迎大家参加本次会议。\n本次会议的主题是：学习交流。\n现在，有请王校长致开幕词。\n下面，我们以热烈的掌声欢迎李女士上台致辞。\n最后，我宣布本次会议正式开幕，谢谢大家。",
+        "vocabulary": [
+          { "zh": "即将", "pinyin": "jíjiāng", "vi": "sắp, sắp sửa" },
+          { "zh": "礼堂", "pinyin": "lǐtáng", "vi": "hội trường" },
+          { "zh": "尽快", "pinyin": "jǐnkuài", "vi": "nhanh chóng, sớm nhất" },
+          { "zh": "就座", "pinyin": "jiùzuò", "vi": "vào chỗ ngồi" },
+          { "zh": "来宾", "pinyin": "láibīn", "vi": "khách mời" },
+          { "zh": "欢迎", "pinyin": "huānyíng", "vi": "chào mừng" },
+          { "zh": "主题", "pinyin": "zhǔtí", "vi": "chủ đề" },
+          { "zh": "学习交流", "pinyin": "xuéxí jiāoliú", "vi": "giao lưu học tập" },
+          { "zh": "掌声", "pinyin": "zhǎngshēng", "vi": "tiếng vỗ tay" },
+          { "zh": "致辞", "pinyin": "zhìcí", "vi": "phát biểu" },
+          { "zh": "开幕词", "pinyin": "kāimùcí", "vi": "bài phát biểu khai mạc" },
+          { "zh": "宣布", "pinyin": "xuānbù", "vi": "tuyên bố" }
+        ],
+        "patterns": [
+          { "structure": "会议即将在\(^+\)地点\(^+\)开始，请....尽快\(^+\)动词", "meaning": "Hội nghị sắp bắt đầu tại..., kính mời... nhanh chóng..." },
+          { "structure": "尊敬的各位......，大家......好！", "meaning": "Kính thưa..., xin chào..." },
+          { "structure": "本次会议的主题是......", "meaning": "Chủ đề của hội nghị lần này là..." },
+          { "structure": "现在，有请......致开幕词", "meaning": "Trân trọng kính mời... phát biểu khai mạc" },
+          { "structure": "让我们以热烈的掌声欢迎......", "meaning": "Xin nhiệt liệt vỗ tay chào đón..." },
+          { "structure": "我宣布......正式开幕", "meaning": "Tôi xin tuyên bố... chính thức khai mạc" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "各位来宾，大家上午好，我是今天的主持人王丽。\n非常感谢大家在百忙之中参加今天的开幕式。\n首先，请允许我介绍两家公司的贵宾。\n让我们以热烈的掌声欢迎来自A公司的张经理以及他们的团队，来自B公司的阮经理以及他的团队。\n现在，我宣布会议正式开始。",
+        "vocabulary": [
+          { "zh": "来宾", "pinyin": "láibīn", "vi": "khách mời" },
+          { "zh": "主持人", "pinyin": "zhǔchírén", "vi": "người dẫn chương trình (MC)" },
+          { "zh": "感谢", "pinyin": "gǎnxiè", "vi": "cảm ơn" },
+          { "zh": "百忙之中", "pinyin": "bǎimáng zhī zhōng", "vi": "trong lúc bận rộn" },
+          { "zh": "开幕式", "pinyin": "kāimùshì", "vi": "lễ khai mạc" },
+          { "zh": "贵宾", "pinyin": "guìbīn", "vi": "quý khách, khách quý" },
+          { "zh": "公司", "pinyin": "gōngsī", "vi": "công ty" },
+          { "zh": "团队", "pinyin": "tuánduì", "vi": "đội ngũ, nhóm" },
+          { "zh": "热烈", "pinyin": "rèliè", "vi": "nhiệt liệt" },
+          { "zh": "掌声", "pinyin": "zhǎngshēng", "vi": "tiếng vỗ tay" },
+          { "zh": "欢迎", "pinyin": "huānyíng", "vi": "chào mừng, hoan nghênh" }
+        ],
+        "patterns": [
+          { "structure": "非常感谢......", "meaning": "Chân thành cảm ơn..." },
+          { "structure": "在......之中", "meaning": "Trong lúc / giữa..." },
+          { "structure": "让我们以......欢迎......", "meaning": "Xin chúng ta hãy dùng... để chào đón..." },
+          { "structure": "我宣布......正式开始", "meaning": "Tôi xin tuyên bố... chính thức bắt đầu" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "Hôm nay, Diễn đàn Giáo dục lần thứ năm chính thức khai mạc.\nDiễn đàn là dịp để các nhà quản lý, chuyên gia và giáo viên cùng trao đổi kinh nghiệm, chia sẻ những sáng kiến nhằm nâng cao chất lượng giáo dục và thúc đẩy đổi mới phương pháp giảng dạy.\nThay mặt ban tổ chức, tôi xin nhiệt liệt chào mừng và trân trọng cảm ơn sự hiện diện của quý vị đại biểu.\nKính chúc diễn đàn thành công tốt đẹp!",
+        "vocabulary": [
+          { "zh": "论坛", "pinyin": "lùntán", "vi": "Diễn đàn" },
+          { "zh": "教育", "pinyin": "jiàoyù", "vi": "Giáo dục" },
+          { "zh": "开幕", "pinyin": "kāimù", "vi": "Khai mạc" },
+          { "zh": "专家", "pinyin": "zhuānjiā", "vi": "Chuyên gia" },
+          { "zh": "交流", "pinyin": "jiāoliú", "vi": "Trao đổi" },
+          { "zh": "分享", "pinyin": "fēnxiǎng", "vi": "Chia sẻ" },
+          { "zh": "提高", "pinyin": "tígāo", "vi": "Nâng cao" },
+          { "zh": "质量", "pinyin": "zhìliàng", "vi": "Chất lượng" },
+          { "zh": "组委会", "pinyin": "zǔwěihuì", "vi": "Ban tổ chức" },
+          { "zh": "代表", "pinyin": "dàibiǎo", "vi": "Đại biểu" }
+        ],
+        "patterns": [
+          { "structure": "今天，...正式开幕。", "meaning": "Hôm nay, ... chính thức khai mạc." },
+          { "structure": "本次....为....搭建了....平台。", "meaning": "Lan ... nay đã tạo dựng một nền tảng/cơ hội cho..." },
+          { "structure": "旨在共同探讨....", "meaning": "Nhằm cùng nhau thảo luận / nghiên cứu..." },
+          { "structure": "我谨代表....对....表示热烈欢迎。", "meaning": "Tôi xin thay mặt... nhiệt liệt chào mừng..." },
+          { "structure": "预祝......取得圆满成功！", "meaning": "Kính chúc... thành công tốt đẹp!" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "Hôm nay, Triển lãm Khoa học - Công nghệ chính thức khai mạc.\nNhiều chuyên gia, sinh viên và đại diện doanh nghiệp đã tham dự hoạt động.\nMọi người giới thiệu những thành tựu khoa học mới và trao đổi nhiều kinh nghiệm.\nHy vọng khoa học công nghệ sẽ ngày càng phát triển.",
+        "vocabulary": [
+          { "zh": "展览会", "pinyin": "zhǎnlǎnhuì", "vi": "Triển lãm" },
+          { "zh": "科技", "pinyin": "kējì", "vi": "Khoa học - Công nghệ" },
+          { "zh": "开幕", "pinyin": "kāimù", "vi": "Khai mạc" },
+          { "zh": "专家", "pinyin": "zhuānjiā", "vi": "Chuyên gia" },
+          { "zh": "大学生", "pinyin": "dàxuéshēng", "vi": "Sinh viên" },
+          { "zh": "企业", "pinyin": "qǐyè", "vi": "Doanh nghiệp" },
+          { "zh": "成果", "pinyin": "chéngguǒ", "vi": "Thành tựu" },
+          { "zh": "交流", "pinyin": "jiāoliú", "vi": "Trao đổi" },
+          { "zh": "经验", "pinyin": "jīngyàn", "vi": "Kinh nghiệm" },
+          { "zh": "发展", "pinyin": "fāzhǎn", "vi": "Phát triển" }
+        ],
+        "patterns": [
+          { "structure": "今天，...正式开幕。", "meaning": "Hôm nay,...chính thức khai mạc." },
+          { "structure": "越来越……", "meaning": "Hy vọng… ngày càng…" }
+        ]
+      }
+    ]
+  },
+  "bai2": {
+    "lessonNumber": 2,
+    "lessonTitle": "Bài 2: Lời chúc mừng, lời cảm ơn (第二课 祝贺词，感谢词)",
+    "objectives": "Nắm vững, ghi nhớ và sử dụng được các từ vựng, thành ngữ và thuật ngữ thường dùng trong các bài phát biểu chúc mừng, cảm ơn và tiệc chiêu đãi. Hiểu ý nghĩa và cách sử dụng các mẫu câu cố định thường gặp trong hoạt động đối ngoại và giao tiếp trang trọng.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "尊敬的各位来宾，各位老师，亲爱的同学们，大家好，今天是特别的日子。\n我代表我们学院，欢迎各位来宾，也感谢一直关心和帮助我们的老师和同学们。\n今天，大家在这里一起庆祝这个美好的时刻。\n祝各位老师工作顺利，祝同学们学习进步，未来越来越好，祝各位来宾身体健康，工作顺利，也祝今天的活动成功。\n希望我们的友谊越来越深。\n现在，请大家一起举杯，为我们的友谊干杯，让我们一起祝愿今后的合作越来越好。",
+        "vocabulary": [
+          { "zh": "来宾", "pinyin": "láibīn", "vi": "khách mời" },
+          { "zh": "学院", "pinyin": "xuéyuàn", "vi": "học viện" },
+          { "zh": "欢迎", "pinyin": "huānyíng", "vi": "chào mừng" },
+          { "zh": "感谢", "pinyin": "gǎnxiè", "vi": "cảm ơn" },
+          { "zh": "庆祝", "pinyin": "qìngzhù", "vi": "chúc mừng, kỷ niệm" },
+          { "zh": "活动", "pinyin": "huódòng", "vi": "hoạt động" },
+          { "zh": "友谊", "pinyin": "yǒuyì", "vi": "tình hữu nghị" },
+          { "zh": "举杯", "pinyin": "jǔbēi", "vi": "nâng ly" },
+          { "zh": "合作", "pinyin": "hézuò", "vi": "hợp tác" },
+          { "zh": "干杯", "pinyin": "gānbēi", "vi": "cạn ly" }
+        ],
+        "patterns": [
+          { "structure": "尊敬的各位......，大家......好！", "meaning": "Kính thưa..., xin chào tất cả quý vị!" },
+          { "structure": "我代表......，欢迎......，也感谢......", "meaning": "Tôi xin thay mặt... chào mừng... và cảm ơn..." },
+          { "structure": "祝......", "meaning": "Chúc..." },
+          { "structure": "希望......越来越......", "meaning": "Hy vọng... ngày càng..." },
+          { "structure": "请大家一起举杯，为......干杯！", "meaning": "Xin mời mọi người cùng nâng ly, chúc cho..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "尊敬的各位来宾，各位下午好，今天的活动快要结束了。\n我代表我们公司，感谢各位来宾今天的到来，也感谢大家一直以来对我们的支持。\n今天，大家一起交流、学习，我们学到了很多，也认识了很多新朋友。\n希望以后我们还有机会再次见面，一起学习，一起进步。\n最后，祝大家身体健康，工作顺利，谢谢大家。",
+        "vocabulary": [
+          { "zh": "活动", "pinyin": "huódòng", "vi": "hoạt động" },
+          { "zh": "公司", "pinyin": "gōngsī", "vi": "công ty" },
+          { "zh": "到来", "pinyin": "dàolái", "vi": "đến, có mặt" },
+          { "zh": "支持", "pinyin": "zhīchí", "vi": "ủng hộ, hỗ trợ" },
+          { "zh": "交流", "pinyin": "jiāoliú", "vi": "giao lưu, trao đổi" },
+          { "zh": "学习", "pinyin": "xuéxí", "vi": "học tập" },
+          { "zh": "机会", "pinyin": "jīhuì", "vi": "cơ hội" },
+          { "zh": "见面", "pinyin": "jiànmiàn", "vi": "gặp mặt" },
+          { "zh": "进步", "pinyin": "jìnbù", "vi": "tiến bộ" },
+          { "zh": "身体健康", "pinyin": "shēntǐ jiànkāng", "vi": "sức khỏe dồi dào" },
+          { "zh": "工作顺利", "pinyin": "gōngzuò shùnlì", "vi": "công việc thuận lợi" }
+        ],
+        "patterns": [
+          { "structure": "我代表......", "meaning": "Thay mặt..." },
+          { "structure": "希望以后......", "meaning": "Hy vọng sau này..." },
+          { "structure": "祝......", "meaning": "Chúc..." }
+        ]
+      },
+     {
+  "id": "text3",
+  "direction": "vi_to_zh",
+  "title": "课文三",
+  "titleVi": "Bài khóa 3",
+  "originalText": "Kính thưa quý vị đại biểu,\n\nCuộc thi hôm nay đã kết thúc thành công tốt đẹp.\n\nXin chân thành cảm ơn các thầy cô, các em học sinh và toàn thể quý vị đã nhiệt tình tham gia và ủng hộ cuộc thi.\n\nThông qua cuộc thi này, chúng ta không chỉ học được nhiều kiến thức mới mà còn có cơ hội giao lưu và học hỏi lẫn nhau.\n\nHi vọng trong tương lai, mọi người sẽ tiếp tục cố gắng và đạt được nhiều thành tích tốt hơn.\n\nCuối cùng, kính chúc quý thầy cô luôn mạnh khỏe, chúc các em học sinh học tập tiến bộ và chúc tất cả mọi người mọi việc thuận lợi.\n\nXin trân trọng cảm ơn.",
+  "vocabulary": [
+    { "zh": "比赛", "pinyin": "bǐsài", "vi": "Cuộc thi" },
+    { "zh": "圆满结束", "pinyin": "yuánmǎn jiéshù", "vi": "Kết thúc thành công tốt đẹp" },
+    { "zh": "积极", "pinyin": "jījí", "vi": "Tích cực, nhiệt tình" },
+    { "zh": "参加", "pinyin": "cānjiā", "vi": "Tham gia" },
+    { "zh": "支持", "pinyin": "zhīchí", "vi": "Ủng hộ, hỗ trợ" },
+    { "zh": "通过", "pinyin": "tōngguò", "vi": "Thông qua, qua" },
+    { "zh": "知识", "pinyin": "zhīshi", "vi": "Kiến thức" },
+    { "zh": "交流", "pinyin": "jiāoliú", "vi": "Giao lưu, trao đổi" },
+    { "zh": "互相", "pinyin": "hùxiāng", "vi": "Lẫn nhau" },
+    { "zh": "努力", "pinyin": "nǔlì", "vi": "Cố gắng" },
+    { "zh": "成绩", "pinyin": "chéngjì", "vi": "Thành tích, kết quả" },
+    { "zh": "一切顺利", "pinyin": "yīqiè shùnlì", "vi": "Mọi việc thuận lợi" }
+  ],
+  "patterns": [
+    { "structure": "非常感谢……", "meaning": "Xin chân thành cảm ơn…" },
+    { "structure": "通过……不仅……还……", "meaning": "Thông qua… không chỉ… mà còn…" },
+    { "structure": "希望……继续……", "meaning": "Hy vọng… tiếp tục…" },
+    { "structure": "取得……", "meaning": "Đạt được…" }
+  ]
+},
+{
+  "id": "text4",
+  "direction": "vi_to_zh",
+  "title": "课文四",
+  "titleVi": "Bài khóa 4",
+  "originalText": "Thời gian qua đi, hôm nay khóa học của chúng tôi đã kết thúc.\n\nTrong suốt thời gian học tập, các thầy cô đã luôn tận tình giảng dạy và giúp đỡ chúng tôi.\n\nChúng tôi xin gửi lời cảm ơn chân thành đến tất cả các thầy cô và các bạn.\n\nHy vọng sau khóa học này, chúng tôi sẽ tiếp tục giữ liên lạc, cùng nhau học tập và cùng nhau tiến bộ.\n\nCuối cùng, kính chúc các thầy cô luôn mạnh khỏe, công tác thuận lợi và chúc các bạn đạt được nhiều thành công trong học tập.\n\nXin chân thành cảm ơn.",
+  "vocabulary": [
+    { "zh": "时间", "pinyin": "shíjiān", "vi": "Thời gian" },
+    { "zh": "课程", "pinyin": "kèchéng", "vi": "Khóa học, môn học" },
+    { "zh": "结束", "pinyin": "jiéshù", "vi": "Kết thúc" },
+    { "zh": "学习期间", "pinyin": "xuéxí qījiān", "vi": "Trong thời gian học tập" },
+    { "zh": "认真", "pinyin": "rènzhēn", "vi": "Nghiêm túc, tận tình" },
+    { "zh": "教学", "pinyin": "jiàoxué", "vi": "Giảng dạy" },
+    { "zh": "表示感谢", "pinyin": "biǎoshì gǎnxiè", "vi": "Bày tỏ lời cảm ơn" },
+    { "zh": "保持联系", "pinyin": "bǎochí liánxì", "vi": "Giữ liên lạc" },
+    { "zh": "进步", "pinyin": "jìnbù", "vi": "Tiến bộ" },
+    { "zh": "取得", "pinyin": "qǔdé", "vi": "Đạt được" },
+    { "zh": "成绩", "pinyin": "chéngjì", "vi": "Thành tích, kết quả" },
+    { "zh": "工作顺利", "pinyin": "gōngzuò shùnlì", "vi": "Công tác thuận lợi" }
+  ],
+  "patterns": [
+    { "structure": "在……期间", "meaning": "Trong suốt thời gian…" },
+    { "structure": "向……表示衷心的感谢", "meaning": "Gửi lời cảm ơn chân thành đến…" },
+    { "structure": "希望……继续……", "meaning": "Hy vọng… tiếp tục…" }
+  ]
+}
+    ]
+  },
+  "bai3": {
+    "lessonNumber": 3,
+    "lessonTitle": "Bài 3: Bế mạc hội nghị (第三课 闭幕开幕)",
+    "objectives": "Nắm vững, ghi nhớ và sử dụng được các từ vựng, thuật ngữ trọng tâm liên quan đến chủ đề bế mạc hội nghị. Hiểu và vận dụng được các mẫu câu thường dùng trong bài phát biểu bế mạc, lời cảm ơn và tuyên bố kết thúc hội nghị.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "经过几天的紧张讨论，本次会议即将圆满结束。\n在此，我仅代表我们公司向各位表示衷心的感谢。\n感谢各位代表的积极参与和宝贵意见。\n本次会议取得了丰硕的成果，我们达成了多项重要共识。\n现在我宣布，本次会议圆满闭幕。",
+        "vocabulary": [
+          { "zh": "讨论", "pinyin": "tǎolùn", "vi": "thảo luận" },
+          { "zh": "圆满结束", "pinyin": "yuánmǎn jiéshù", "vi": "kết thúc tốt đẹp" },
+          { "zh": "衷心", "pinyin": "zhōngxīn", "vi": "chân thành" },
+          { "zh": "参与", "pinyin": "cānyù", "vi": "tham gia" },
+          { "zh": "宝贵", "pinyin": "bǎoguì", "vi": "quý báu" },
+          { "zh": "丰硕", "pinyin": "fēngshuò", "vi": "to lớn, phong phú" },
+          { "zh": "成果", "pinyin": "chéngguǒ", "vi": "thành quả" },
+          { "zh": "达成", "pinyin": "dáchéng", "vi": "đạt được, đi đến" },
+          { "zh": "共识", "pinyin": "gòngshí", "vi": "nhận thức chung" },
+          { "zh": "闭幕", "pinyin": "bìmù", "vi": "bế mạc" }
+        ],
+        "patterns": [
+          { "structure": "即将......", "meaning": "Sắp, sắp sửa..." },
+          { "structure": "取得....成果", "meaning": "Đạt được... thành quả" },
+          { "structure": "达成....共识", "meaning": "Đạt được/Đi đến..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "尊敬的各位领导，各位来宾，今天的会议即将圆满结束。\n经过两天的交流与讨论，我们取得了许多宝贵的成果。\n在这里，我要衷心感谢各位代表的积极参与和大力支持。\n本次会议不仅加深了双方的了解，也为今后的合作奠定了坚实的基础。\n我们真诚希望双方继续保持密切联系，共同推动教育与文化的发展。",
+        "vocabulary": [
+          { "zh": "领导", "pinyin": "lǐngdǎo", "vi": "lãnh đạo" },
+          { "zh": "交流", "pinyin": "jiāoliú", "vi": "trao đổi, giao lưu" },
+          { "zh": "大力支持", "pinyin": "dàlì zhīchí", "vi": "ủng hộ to lớn" },
+          { "zh": "加深", "pinyin": "jiāshēn", "vi": "tăng cường, làm sâu sắc" },
+          { "zh": "了解", "pinyin": "liǎojiě", "vi": "hiểu biết" },
+          { "zh": "奠定", "pinyin": "diàndìng", "vi": "đặt (nền móng)" },
+          { "zh": "坚实", "pinyin": "jiānshí", "vi": "vững chắc" },
+          { "zh": "基础", "pinyin": "jīchǔ", "vi": "nền tảng" },
+          { "zh": "密切联系", "pinyin": "mìqiè liánxì", "vi": "liên hệ chặt chẽ" },
+          { "zh": "推动", "pinyin": "tuīdòng", "vi": "thúc đẩy" }
+        ],
+        "patterns": [
+          { "structure": "不仅...也...", "meaning": "Không những/Không chỉ... mà còn..." },
+          { "structure": "为...奠定基础", "meaning": "Đặt nền tảng cho..." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "Kính thưa quý vị đại biểu,\nSau 3 ngày làm việc, Diễn đàn Thanh niên Quốc tế đã hoàn thành toàn bộ chương trình và bế mạc thành công tốt đẹp.\nTrong thời gian diễn ra diễn đàn, các đại biểu trẻ đã tích cực trao đổi kinh nghiệm, chia sẻ sáng kiến và thảo luận nhiều giải pháp thúc đẩy hợp tác quốc tế.\nChúng tôi tin rằng những kết quả đạt được hôm nay sẽ góp phần tăng cường tình hữu nghị giữa thanh niên các nước.\nXin chân thành cảm ơn sự tham gia của quý vị.",
+        "vocabulary": [
+          { "zh": "青年", "pinyin": "qīngnián", "vi": "Thanh niên" },
+          { "zh": "论坛", "pinyin": "lùntán", "vi": "Diễn đàn" },
+          { "zh": "热烈", "pinyin": "rèliè", "vi": "Sôi nổi, nhiệt liệt" },
+          { "zh": "议程", "pinyin": "yìchéng", "vi": "Chương trình (nghị sự)" },
+          { "zh": "倡议", "pinyin": "chàngyì", "vi": "Sáng kiến" },
+          { "zh": "促进", "pinyin": "cùjìn", "vi": "Thúc đẩy" },
+          { "zh": "解决方案", "pinyin": "jiějué fāng'àn", "vi": "Giải pháp" },
+          { "zh": "友谊", "pinyin": "yǒuyì", "vi": "Tình hữu nghị" },
+          { "zh": "增进", "pinyin": "zēngjìn", "vi": "Tăng cường" },
+          { "zh": "衷心", "pinyin": "zhōngxīn", "vi": "Chân thành" }
+        ],
+        "patterns": [
+          { "structure": "促进 + [Danh từ]", "meaning": "Thúc đẩy..." },
+          { "structure": "有助于 + [Động từ/Cụm động từ]", "meaning": "Góp phần / Có ích cho việc..." }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "Kính thưa quý vị đại biểu,\nLiên hoan Văn hóa - Du lịch Quốc tế năm nay đã khép lại thành công tốt đẹp.\nTrong những ngày qua, các đoàn nghệ thuật và đại biểu đến từ nhiều quốc gia đã giới thiệu những nét văn hóa đặc sắc, góp phần tăng cường giao lưu và hiểu biết giữa các dân tộc.\nChúng tôi xin chân thành cảm ơn sự đồng hành của các đơn vị tham gia và toàn thể quý vị.\nHẹn gặp lại quý vị trong kỳ liên hoan tiếp theo.",
+        "vocabulary": [
+          { "zh": "文化", "pinyin": "wénhuà", "vi": "Văn hóa" },
+          { "zh": "旅游", "pinyin": "lǚyóu", "vi": "Du lịch" },
+          { "zh": "艺术节", "pinyin": "yìshùjié", "vi": "Liên hoan nghệ thuật / lễ hội" },
+          { "zh": "落幕", "pinyin": "luòmù", "vi": "Khép lại, bế mạc" },
+          { "zh": "艺术团", "pinyin": "yìshùtuán", "vi": "Đoàn nghệ thuật" },
+          { "zh": "独具特色", "pinyin": "dújù tèsè", "vi": "Đặc sắc, độc đáo" },
+          { "zh": "民族", "pinyin": "mínzú", "vi": "Dân tộc" },
+          { "zh": "贡献", "pinyin": "gòngxiàn", "vi": "Cống hiến, góp phần" },
+          { "zh": "陪伴", "pinyin": "péibàn", "vi": "Đồng hành, bầu bạn" },
+          { "zh": "届", "pinyin": "jiè", "vi": "Kỳ, khoá" }
+        ],
+        "patterns": [
+          { "structure": "为.....做出贡献", "meaning": "Góp phần vào việc gì đó / Cống hiến cho..." },
+          { "structure": "期待在下一届\(^+\)[Sự kiện]\(^+\)与各位再次相聚", "meaning": "Hẹn gặp lại quý vị trong kỳ... tiếp theo / Mong chờ kỳ... tiếp theo lại được gặp gỡ quý vị." }
+        ]
+      }
+    ]
+  },
+  "bai4": {
+    "lessonNumber": 4,
+    "lessonTitle": "Bài 4: Mua sắm, ăn uống (第四课 购物、餐饮)",
+    "objectives": "Nắm vững, ghi nhớ và sử dụng được các từ vựng, thuật ngữ trọng tâm liên quan đến chủ đề mua sắm, siêu thị và ăn uống. Hiểu và vận dụng được các cấu trúc cố định thường dùng để giới thiệu giá cả, chính sách khuyến mãi, dịch vụ bảo hành và giao hàng.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "顾客：你好，请问这件羽绒服多少钱？\n服务员：你好，这件衣服原价800块，现在500块。\n顾客：打折以后便宜了不少啊！\n服务员：是的，这是我们店这星期的促销活动。\n顾客：可以试一下吗？\n服务员：当然可以，请到这边试衣间。\n顾客：穿起来挺舒服的，还有别的颜色吗？\n服务员：有黑色和灰色，两个颜色都很受欢迎。\n顾客：那我买这件黑色的。\n服务员：好的，我马上给您结账。",
+        "vocabulary": [
+          { "zh": "羽绒服", "pinyin": "yǔróngfú", "vi": "áo lông vũ" },
+          { "zh": "原价", "pinyin": "yuánjià", "vi": "giá gốc" },
+          { "zh": "打折", "pinyin": "dǎzhé", "vi": "giảm giá" },
+          { "zh": "便宜", "pinyin": "piányi", "vi": "rẻ" },
+          { "zh": "促销活动", "pinyin": "cùxiāo huódòng", "vi": "chương trình khuyến mãi" },
+          { "zh": "试穿", "pinyin": "shìchuān", "vi": "mặc thử" },
+          { "zh": "试衣间", "pinyin": "shìyījiān", "vi": "phòng thử đồ" },
+          { "zh": "颜色", "pinyin": "yánsè", "vi": "màu sắc" },
+          { "zh": "受欢迎", "pinyin": "shòu huānyíng", "vi": "được yêu thích, được ưa chuộng" },
+          { "zh": "结账", "pinyin": "jiézhàng", "vi": "thanh toán" }
+        ],
+        "patterns": [
+          { "structure": "原价...现在...", "meaning": "Giá gốc là... hiện nay là..." },
+          { "structure": "还有别的...吗？", "meaning": "Còn... khác không?" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "顾客：你好，我昨天在这里买了一台电饭锅。\n售货员：你好，请问有什么需要帮助的吗？\n顾客：今天使用的时候，发现出了点问题。\n售货员：请问是什么问题？\n顾客：煮饭的时候声音很大，而且不能正常工作。\n售货员：很抱歉。如果出现任何质量问题，我们都可以免费修理或者更换。\n顾客：我带了保修卡，可以直接换吗？\n售货员：可以，请您稍等一下。\n顾客：谢谢，你们的服务很好。\n售货员：不客气，欢迎您下次光临。",
+        "vocabulary": [
+          { "zh": "电饭锅", "pinyin": "diànfànguō", "vi": "nồi cơm điện" },
+          { "zh": "帮助", "pinyin": "bāngzhù", "vi": "giúp đỡ" },
+          { "zh": "问题", "pinyin": "wèntí", "vi": "vấn đề, sự cố" },
+          { "zh": "正常", "pinyin": "zhèngcháng", "vi": "bình thường" },
+          { "zh": "工作", "pinyin": "gōngzuò", "vi": "hoạt động" },
+          { "zh": "质量", "pinyin": "zhìliàng", "vi": "chất lượng" },
+          { "zh": "免费", "pinyin": "miǎnfèi", "vi": "miễn phí" },
+          { "zh": "修理", "pinyin": "xiūlǐ", "vi": "sửa chữa" },
+          { "zh": "更换", "pinyin": "gēnghuàn", "vi": "đổi, thay thế" },
+          { "zh": "保修卡", "pinyin": "bǎoxiūkǎ", "vi": "phiếu bảo hành" }
+        ],
+        "patterns": [
+          { "structure": "如果出现......，我们可以......", "meaning": "Nếu xảy ra..., chúng tôi có thể..." },
+          { "structure": "的时候发现......", "meaning": "Khi... thì phát hiện..." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "Tiểu Lý: Mất lát nữa mình sẽ đi siêu thị mua ít đồ.\nTiểu Vương: Thế thì tốt quá. Tiện thể mua giúp mình ít sữa nhé, được không?\nTiểu Lý: Không vấn đề. Còn cần mua gì nữa không?\nTiểu Vương: Mua thêm vài quả trứng nữa nhé.\nTiểu Lý: Được.\nTiểu Vương: Sau khi mua đồ xong, chúng ta cùng đi ăn nhé?\nTiểu Lý: Được thôi. Cậu muốn ăn gì?\nTiểu Vương: Mình muốn ăn bún bò, rồi gọi thêm một đĩa tôm rang muối tiêu.\nNhân viên phục vụ: Ít tép quý khách muốn chín kỹ hay tái?\nTiểu Lý: Cho chín kỹ nhé, cảm ơn.",
+        "vocabulary": [
+          { "zh": "超市", "pinyin": "chāoshì", "vi": "Siêu thị" },
+          { "zh": "顺便", "pinyin": "shùnbiàn", "vi": "Tiện thể" },
+          { "zh": "牛奶", "pinyin": "niúnǎi", "vi": "Sữa" },
+          { "zh": "鸡蛋", "pinyin": "jīdàn", "vi": "Trứng gà" },
+          { "zh": "买完", "pinyin": "mǎiwán", "vi": "Mua xong" },
+          { "zh": "牛肉粉", "pinyin": "niúròufěn", "vi": "Bún bò" },
+          { "zh": "椒盐虾", "pinyin": "jiāoyánxiā", "vi": "Tôm rang muối tiêu" },
+          { "zh": "牛排", "pinyin": "niúpái", "vi": "Bò bít tết" },
+          { "zh": "全熟", "pinyin": "quánshú", "vi": "Chín kỹ" },
+          { "zh": "半生", "pinyin": "bànshēng", "vi": "Tái" }
+        ],
+        "patterns": [
+          { "structure": "顺便帮我......好吗？", "meaning": "Tiện thể...giúp tôi, được không?" },
+          { "structure": "......以后，我们一起......", "meaning": "Sau khi..., chúng ta cùng..." },
+          { "structure": "我想吃......，再点一份......", "meaning": "Tôi muốn ăn..., và gọi thêm một phần..." },
+          { "structure": "......还是......？", "meaning": "... hay là...?" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "Khách hàng: Xin chào, tôi muốn mua một chiếc tủ lạnh.\nNhân viên bán hàng: Quý khách xem mẫu này đi ạ, hiện nay mẫu này bán rất chạy.\nKhách hàng: Nhà tôi ở khá xa, có thể giao hàng được không?\nNhân viên bán hàng: Quý khách cứ yên tâm. Chỉ cần là đồ điện gia dụng mua tại cửa hàng chúng tôi, bất kể nhà quý khách ở xa đến đâu, chúng tôi đều cung cấp dịch vụ giao hàng tận nơi.\nKhách hàng: Tốt quá. Có cần trả thêm phí giao hàng không?\nNhân viên bán hàng: Không cần ạ, dịch vụ giao hàng hoàn toàn miễn phí.\nKhách hàng: Còn lắp đặt thì có mất phí không?\nNhân viên bán hàng: Lắp đặt miễn phí và được bảo hành miễn phí trong vòng một năm.\nKhách hàng: Nếu sau này máy bị hỏng thì phải làm sao?\nNhân viên bán hàng: Quý khách cứ yên tâm. Nếu xảy ra bất kỳ vấn đề nào về chất lượng, chúng tôi sẽ sửa chữa kịp thời, nếu là lỗi từ chính sản phẩm, chúng tôi cũng sẽ có chính sách bồi thường tương ứng.\nKhách hàng: Được, vậy tôi sẽ mua chiếc này.",
+        "vocabulary": [
+          { "zh": "冰箱", "pinyin": "bīngxiāng", "vi": "Tủ lạnh" },
+          { "zh": "电器", "pinyin": "diànqì", "vi": "Thiết bị điện gia dụng" },
+          { "zh": "送货", "pinyin": "sònghuò", "vi": "Giao hàng" },
+          { "zh": "免费", "pinyin": "miǎnfèi", "vi": "Miễn phí" },
+          { "zh": "安装", "pinyin": "ānzhuāng", "vi": "Lắp đặt" },
+          { "zh": "保修", "pinyin": "bǎoxiū", "vi": "Bảo hành" },
+          { "zh": "机器", "pinyin": "jīqì", "vi": "Máy móc, thiết bị" },
+          { "zh": "质量", "pinyin": "zhìliàng", "vi": "Chất lượng" },
+          { "zh": "修理", "pinyin": "xiūlǐ", "vi": "Sửa chữa" },
+          { "zh": "补偿", "pinyin": "bǔcháng", "vi": "Bồi thường" }
+        ],
+        "patterns": [
+          { "structure": "只要...，不管...，都...", "meaning": "Chỉ cần... thì dù... cũng..." }
+        ]
+      }
+    ]
+  },
+  "bai5": {
+    "lessonNumber": 5,
+    "lessonTitle": "Bài 5: Hội chợ triển lãm (第五课 展览会)",
+    "objectives": "Nắm vững, ghi nhớ và có thể vận dụng chính xác các từ vựng trọng tâm và thuật ngữ chuyên dùng liên quan đến hoạt động tham gia hội chợ, giới thiệu doanh nghiệp, quảng bá sản phẩm và đàm phán thương mại.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "公司成立于2026年，总部设在河内，主要经营咖啡、茶叶和其他农产品。\n近年来，我们的产品已经出口到中国、日本和韩国。\n为了寻找新的合作伙伴，我们参加了本次交易会。\n欢迎大家到我们的展位参观，并了解公司的主要产品。",
+        "vocabulary": [
+          { "zh": "成立", "pinyin": "chénglì", "vi": "thành lập" },
+          { "zh": "总部", "pinyin": "zǒngbù", "vi": "trụ sở chính" },
+          { "zh": "经营", "pinyin": "jīngyíng", "vi": "kinh doanh" },
+          { "zh": "农产品", "pinyin": "nóngchǎnpǐn", "vi": "nông sản" },
+          { "zh": "出口", "pinyin": "chūkǒu", "vi": "xuất khẩu" },
+          { "zh": "合作伙伴", "pinyin": "hézuò huǒbàn", "vi": "đối tác hợp tác" },
+          { "zh": "交易会", "pinyin": "jiāoyìhuì", "vi": "hội chợ thương mại" },
+          { "zh": "展位", "pinyin": "zhǎnwèi", "vi": "gian hàng, quầy triển lãm" },
+          { "zh": "参观", "pinyin": "cānguān", "vi": "tham quan" },
+          { "zh": "主要产品", "pinyin": "zhǔyào chǎnpǐn", "vi": "sản phẩm chủ yếu, sản phẩm chính" }
+        ],
+        "patterns": [
+          { "structure": "...成立于.....时间", "meaning": "Được thành lập vào thời gian..." },
+          { "structure": "总部设在.....地点", "meaning": "Trụ sở chính được đặt tại..." },
+          { "structure": "主要经营+产品/业务", "meaning": "Chủ yếu kinh doanh sản phẩm hoặc lĩnh vực..." },
+          { "structure": ".....已经出口到+国家/地区", "meaning": "...đã được xuất khẩu sang quốc gia hoặc khu vực..." },
+          { "structure": "为了+目的，主语+动词.....", "meaning": "Để đạt được mục đích nào đó, chủ ngữ thực hiện một hành động..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "这是我们公司今年推出的新产品，特点是轻便、耐用，而且价格合理。\n产品已经通过ISO质量认证，在东南亚市场很受欢迎。\n我们可以根据客户的需求提供不同的包装。\n订购数量较大时，公司还可以提供一定的优惠。",
+        "vocabulary": [
+          { "zh": "推出", "pinyin": "tuīchū", "vi": "cho ra mắt, đưa ra thị trường" },
+          { "zh": "新产品", "pinyin": "xīn chǎnpǐn", "vi": "sản phẩm mới" },
+          { "zh": "特点", "pinyin": "tèdiǎn", "vi": "đặc điểm" },
+          { "zh": "轻便", "pinyin": "qīngbiàn", "vi": "nhẹ, tiện lợi" },
+          { "zh": "耐用", "pinyin": "nàiyòng", "vi": "bền, sử dụng được lâu" },
+          { "zh": "价格合理", "pinyin": "jiàgé hélǐ", "vi": "giá cả hợp lý" },
+          { "zh": "质量认证", "pinyin": "zhìliàng rènzhèng", "vi": "chứng nhận chất lượng" },
+          { "zh": "市场", "pinyin": "shìchǎng", "vi": "thị trường" },
+          { "zh": "包装", "pinyin": "bāozhuāng", "vi": "bao bì, đóng gói" },
+          { "zh": "订购", "pinyin": "dìnggòu", "vi": "đặt mua, đặt hàng" },
+          { "zh": "数量", "pinyin": "shùliàng", "vi": "số lượng" },
+          { "zh": "优惠", "pinyin": "yōuhuì", "vi": "ưu đãi, giảm giá" }
+        ],
+        "patterns": [
+          { "structure": "这是 \(^+\) 主体 \(^+\) 推出的 \(^+\) 产品", "meaning": "Đây là sản phẩm do một công ty hoặc đơn vị nào đó cho ra mắt." },
+          { "structure": "特点是……", "meaning": "Đặc điểm của... là..." },
+          { "structure": "已经通过……认证", "meaning": "Đã đạt được thông qua một loại chứng nhận nào đó." },
+          { "structure": "在……很受欢迎", "meaning": "Rất được ưa chuộng tại thị trường của một quốc gia hoặc khu vực nào đó." },
+          { "structure": "根据……提供……", "meaning": "Cung cấp sản phẩm hoặc dịch vụ căn cứ theo nhu cầu của một đối tượng nào đó." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "Sau khi tham quan gian hàng, khách hàng rất quan tâm đến sản phẩm của chúng tôi và hỏi về giá cả cũng như số lượng đặt hàng thấp nhất.\nChúng tôi đã giới thiệu bảng báo giá cho khách hàng và giải thích rằng khách hàng có thể đặt thử một đơn hàng với số lượng nhỏ.\nNếu sản phẩm đáp ứng yêu cầu, khách hàng có thể tăng số lượng đặt hàng trong tương lai.\nHai bên cũng hẹn sẽ tiếp tục đàm phán về thời gian giao hàng và phương thức thanh toán vào tuần sau.",
+        "vocabulary": [
+          { "zh": "客户", "pinyin": "kèhù", "vi": "Khách hàng" },
+          { "zh": "感兴趣", "pinyin": "gǎn xìngqù", "vi": "Cảm thấy hứng thú, quan tâm" },
+          { "zh": "询问", "pinyin": "xúnwèn", "vi": "Hỏi, tìm hiểu" },
+          { "zh": "最低订购数量", "pinyin": "zuìdī dìnggòu shùliàng", "vi": "Số lượng đặt hàng tối thiểu" },
+          { "zh": "报价单", "pinyin": "bào jiàdān", "vi": "Bảng báo giá" },
+          { "zh": "小批量", "pinyin": "xiǎo pīliàng", "vi": "Số lượng nhỏ, lô nhỏ" },
+          { "zh": "试单", "pinyin": "shìdān", "vi": "Đơn hàng thử" },
+          { "zh": "符合要求", "pinyin": "fúhé yāoqiú", "vi": "Đáp ứng, phù hợp với yêu cầu" },
+          { "zh": "增加订单", "pinyin": "zēngjiā dìngdān", "vi": "Tăng đơn hàng, tăng số lượng đặt hàng" },
+          { "zh": "交货时间", "pinyin": "jiāohuò shíjiān", "vi": "Thời gian giao hàng" },
+          { "zh": "付款方式", "pinyin": "fùkuǎn fāngshì", "vi": "Phương thức thanh toán" }
+        ],
+        "patterns": [
+          { "structure": "……后，主语 + 动词……", "meaning": "Sau khi thực hiện một hành động nào đó, chủ thể tiếp tục thực hiện hành động khác." },
+          { "structure": "对……人/事物……很感兴趣", "meaning": "Rất quan tâm hoặc cảm thấy hứng thú với một người, sự việc hay sản phẩm nào đó." },
+          { "structure": "询问……内容", "meaning": "Hỏi hoặc tìm hiểu về một vấn đề nào đó." },
+          { "structure": "向……对象……介绍/说明……", "meaning": "Giới thiệu hoặc giải thích một nội dung nào đó cho một đối tượng." },
+          { "structure": "如果……，……可以……", "meaning": "Nếu... thì... có thể..." }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "Thông qua triển lãm lần này, chúng tôi đã làm quen với nhiều đại diện doanh nghiệp đến từ các quốc gia khác nhau.\nMọi người đã trao đổi danh thiếp, đồng thời thảo luận về tiềm năng thị trường và kế hoạch hợp tác trong tương lai.\nSau khi đàm phán thêm, hai bên quyết định thiết lập quan hệ hợp tác lâu dài.\nChúng tôi hi vọng có thể sớm ký kết hợp đồng và cùng nhau khai thác các thị trường mới.",
+        "vocabulary": [
+          { "zh": "通过", "pinyin": "tōngguò", "vi": "Thông qua" },
+          { "zh": "展览会", "pinyin": "zhǎnlǎnhuì", "vi": "Triển lãm" },
+          { "zh": "企业代表", "pinyin": "qǐyè dàibiǎo", "vi": "Đại diện doanh nghiệp" },
+          { "zh": "交换名片", "pinyin": "jiāohuàn míngpiàn", "vi": "Trao đổi danh thiếp" },
+          { "zh": "讨论", "pinyin": "tǎolùn", "vi": "Thảo luận" },
+          { "zh": "市场潜力", "pinyin": "shìchǎng qiánlì", "vi": "Tiềm năng thị trường" },
+          { "zh": "合作计划", "pinyin": "hézuò jìhuà", "vi": "Kế hoạch hợp tác" },
+          { "zh": "进一步商谈", "pinyin": "jìnyībù shāngtán", "vi": "Đàm phán thêm, trao đổi sâu hơn" },
+          { "zh": "双方", "pinyin": "shuāngfāng", "vi": "Hai bên" },
+          { "zh": "长期合作关系", "pinyin": "chángqī hézuò guānxì", "vi": "Quan hệ hợp tác lâu dài" },
+          { "zh": "签署合同", "pinyin": "qiānshǔ hétong", "vi": "Ký kết hợp đồng" },
+          { "zh": "开拓市场", "pinyin": "kāituò shìchǎng", "vi": "Khai thác thị trường" }
+        ],
+        "patterns": [
+          { "structure": "通过....事情/活动，主语+动词....", "meaning": "Thông qua một sự việc hoặc hoạt động nào đó, chủ ngữ thực hiện hoặc đạt được điều gì." },
+          { "structure": "不少来自+地点 \(^+\) 的 \(^+\) 人/单位", "meaning": "Nhiều người hoặc đơn vị đến từ một địa điểm nào đó." },
+          { "structure": "......，并......", "meaning": "...đồng thời/cùng..." },
+          { "structure": "经过 \(^+\) 过程/活动，主语 \(^+\) 动词....", "meaning": "Sau khi trải qua một quá trình hoặc hoạt động nào đó, chủ thể đưa ra quyết định hoặc đạt được kết quả." },
+          { "structure": "建立 \(^+\) 关系/制度/机制", "meaning": "Thiết lập, xây dựng một mối quan hệ, chế độ hoặc cơ chế nào đó." }
+        ]
+      }
+    ]
+  },
+  "bai6": {
+    "lessonNumber": 6,
+    "lessonTitle": "Bài 6: Thể thao (第六课：体育)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng liên quan đến các môn thể thao, kết quả thi đấu, tỉ số, quá trình tập luyện, rèn luyện thể chất, chấn thương và sự trở lại sân đấu của vận động viên. Nâng cao kỹ năng phiên dịch Trung - Việt và Việt - Trung trong các tình huống thể thao; có khả năng truyền đạt chính xác những thông tin quan trọng như thời gian, địa điểm, đội tham gia, tỉ số, kết quả và biểu hiện của vận động viên.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "在一场女子排球决赛中，中国女排对阵实力强大的美国队。\n比赛进行的十分激烈，双方多次打平。\n中国队凭借稳定的发挥和出色的团队合作，最终以3比2战胜对手，成功获得金牌。\n这场精彩的比赛让现场观众不断欢呼，也给广大球迷留下了深刻印象。",
+        "vocabulary": [
+          { "zh": "女排", "pinyin": "nǚpái", "vi": "Đội bóng chuyền nữ" },
+          { "zh": "决赛", "pinyin": "juésài", "vi": "Trận chung kết" },
+          { "zh": "对阵", "pinyin": "duìzhèn", "vi": "Thi đấu với, đối đầu với" },
+          { "zh": "实力强大", "pinyin": "shílì qiángdà", "vi": "Có thực lực mạnh" },
+          { "zh": "进行得十分激烈", "pinyin": "jìnxíng de shífēn jīliè", "vi": "Diễn ra vô cùng quyết liệt" },
+          { "zh": "多次打平", "pinyin": "duōcì dǎpíng", "vi": "Hòa điểm nhiều lần" },
+          { "zh": "稳定发挥", "pinyin": "wěndìng fāhuī", "vi": "Phong độ ổn định" },
+          { "zh": "团队合作", "pinyin": "tuánduì hézuò", "vi": "Hợp tác đồng đội" },
+          { "zh": "比分", "pinyin": "bǐfēn", "vi": "Tỉ số" },
+          { "zh": "战胜对手", "pinyin": "zhànshèng duìshǒu", "vi": "Chiến thắng đối thủ" },
+          { "zh": "获得金牌", "pinyin": "huòdé jīnpái", "vi": "Giành được huy chương vàng" },
+          { "zh": "现场观众", "pinyin": "xiànchǎng guānzhòng", "vi": "Khán giả tại sân đấu" }
+        ],
+        "patterns": [
+          { "structure": "在......中，A对阵B", "meaning": "Trong... A thi đấu với B." },
+          { "structure": "进行得十分……", "meaning": "... diễn ra vô cùng..." },
+          { "structure": "双方多次……", "meaning": "Hai bên nhiều lần..." },
+          { "structure": "凭借……，最终……", "meaning": "Nhờ vào... cuối cùng..." },
+          { "structure": "A以 \(^+\) 比分 \(^+\) 战胜B", "meaning": "A chiến thắng B với tỉ số..." },
+          { "structure": "给......留下深刻印象", "meaning": "Để lại ấn tượng sâu sắc cho..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "运动不仅能增强体质，而且能够帮助人们减轻学习和工作的压力。\n近年来，越来越多的人开始参加马拉松比赛。\n本次国际马拉松吸引了来自20多个国家的选手报名参加。\n虽然比赛过程十分辛苦，但是大多数选手都坚持跑完全程，表现出了坚强的意志。",
+        "vocabulary": [
+          { "zh": "体育锻炼", "pinyin": "tǐyù duànliàn", "vi": "Rèn luyện thể thao" },
+          { "zh": "增强体质", "pinyin": "zēngqiáng tǐzhì", "vi": "Tăng cường thể chất" },
+          { "zh": "减轻压力", "pinyin": "jiǎnqīng yālì", "vi": "Giảm bớt áp lực" },
+          { "zh": "近年来", "pinyin": "jìnniánlái", "vi": "Những năm gần đây" },
+          { "zh": "马拉松比赛", "pinyin": "mǎlāsōng bǐsài", "vi": "Giải chạy ma-ra-tông" },
+          { "zh": "吸引", "pinyin": "xīyǐn", "vi": "Thu hút" },
+          { "zh": "报名参加", "pinyin": "bàomíng cānjiā", "vi": "Đăng ký tham gia" },
+          { "zh": "选手", "pinyin": "xuǎnshǒu", "vi": "Vận động viên, tuyển thủ" },
+          { "zh": "辛苦", "pinyin": "xīnkǔ", "vi": "Vất vả" },
+          { "zh": "坚持", "pinyin": "jiānchí", "vi": "Kiên trì" },
+          { "zh": "坚强的意志", "pinyin": "jiānqiáng de yìzhì", "vi": "Ý chí kiên cường" }
+        ],
+        "patterns": [
+          { "structure": "不仅......而且......", "meaning": "Không những... mà còn..." },
+          { "structure": "越来越多的+人/事物", "meaning": "Ngày càng có nhiều người hoặc sự vật..." },
+          { "structure": "......吸引了来自......的......", "meaning": "... đã thu hút... đến từ..." },
+          { "structure": "虽然......但是......", "meaning": "Tuy...nhưng..." },
+          { "structure": "坚持+动词/动词短语", "meaning": "Kiên trì thực hiện một hành động nào đó." },
+          { "structure": "表现出......", "meaning": "Thể hiện..." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "Trong vòng bảng cúp châu Á, đội tuyển U23 Việt Nam phải đối mặt với nhiều đội bóng mạnh.\nNhờ tinh thần đoàn kết và sự nỗ lực hết mình, các cầu thủ đã phối hợp rất ăn ý và thi đấu ngày càng tốt hơn.\nDưới sự dẫn dắt của huấn luyện viên, đội tuyển đã áp dụng chiến thuật phù hợp và thành công giành quyền vào trận chung kết.\nThành tích này khiến người hâm mộ trên cả nước vô cùng tự hào.",
+        "vocabulary": [
+          { "zh": "亚洲杯", "pinyin": "Yàzhōu Bēi", "vi": "Cúp châu Á" },
+          { "zh": "小组赛", "pinyin": "xiǎozǔsài", "vi": "Vòng bảng" },
+          { "zh": "U23国家队", "pinyin": "U23 guójiāduì", "vi": "Đội tuyển U23 quốc gia" },
+          { "zh": "强队", "pinyin": "qiángduì", "vi": "Đội bóng mạnh" },
+          { "zh": "团结精神", "pinyin": "tuánjié jīngshén", "vi": "Tinh thần đoàn kết" },
+          { "zh": "全力以赴", "pinyin": "quánlì yǐfù", "vi": "Nỗ lực hết mình" },
+          { "zh": "配合默契", "pinyin": "pèihé mòqì", "vi": "Phối hợp ăn ý" },
+          { "zh": "教练", "pinyin": "jiàoliàn", "vi": "Huấn luyện viên" },
+          { "zh": "在......的带领下", "pinyin": "zài... de dàilǐng xià", "vi": "Dưới sự dẫn dắt của..." },
+          { "zh": "采用战术", "pinyin": "cǎiyòng zhànshù", "vi": "Áp dụng chiến thuật" },
+          { "zh": "成功晋级", "pinyin": "chénggōng jìnjí", "vi": "Thành công giành quyền đi tiếp" },
+          { "zh": "无比自豪", "pinyin": "wúbǐ zìháo", "vi": "Vô cùng tự hào" }
+        ],
+        "patterns": [
+          { "structure": "需要面对……", "meaning": "Cần, phải đối mặt với..." },
+          { "structure": "由于……，主语 + 动词……", "meaning": "Do, nhờ... nên chủ ngữ..." },
+          { "structure": "表现得越来越……", "meaning": "Thể hiện, thi đấu ngày càng..." },
+          { "structure": "在 + 人 + 的带领下……", "meaning": "Dưới sự dẫn dắt của..." },
+          { "structure": "采用 + 方法 / 战术", "meaning": "Áp dụng một phương pháp hoặc chiến thuật nào đó." },
+          { "structure": "成功晋级……", "meaning": "Thành công giành quyền vào..." }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "Do bị chấn thương nghiêm trọng ở chân, vận động viên này buộc phải nghỉ ngơi và tiếp tục điều trị trong nửa năm.\nSau khi sức khỏe dần hồi phục, mãi đến gần đây anh mới có thể trở lại sân thi đấu.\nHiện nay, anh đang khôi phục việc tập luyện và tiếp tục chuẩn bị cho kỳ thế vận hội tiếp theo.\nMặc dù phải đối mặt với nhiều khó khăn, anh vẫn không từ bỏ mục tiêu giành huy chương và tiếp tục phát triển sự nghiệp thể thao của mình.",
+        "vocabulary": [
+          { "zh": "腿部严重受伤", "pinyin": "tuǐbù yánzhòng shòushāng", "vi": "Bị chấn thương nghiêm trọng ở chân" },
+          { "zh": "不得不", "pinyin": "bùdébù", "vi": "Buộc phải" },
+          { "zh": "休养", "pinyin": "xiūyǎng", "vi": "Nghỉ ngơi, dưỡng bệnh" },
+          { "zh": "接受治疗", "pinyin": "jiēshòu zhìliáo", "vi": "Tiếp nhận điều trị" },
+          { "zh": "逐渐康复", "pinyin": "zhújiàn kāngfù", "vi": "Dần dần hồi phục" },
+          { "zh": "重返赛场", "pinyin": "chóngfǎn sàichǎng", "vi": "Trở lại sân thi đấu" },
+          { "zh": "恢复训练", "pinyin": "huīfù xùnliàn", "vi": "Khôi phục việc tập luyện" },
+          { "zh": "下一届奥运会", "pinyin": "xià yī jiè Àoyùnhuì", "vi": "Kỳ Thế vận hội tiếp theo" },
+          { "zh": "积极准备", "pinyin": "jījí zhǔnbèi", "vi": "Tích cực chuẩn bị" },
+          { "zh": "面临困难", "pinyin": "miànlín kùnnan", "vi": "Đối mặt với khó khăn" },
+          { "zh": "不放弃目标", "pinyin": "bù fàngqì mùbiāo", "vi": "Không từ bỏ mục tiêu" },
+          { "zh": "体育生涯", "pinyin": "tǐyù shēngyá", "vi": "Sự nghiệp thể thao" }
+        ],
+        "patterns": [
+          { "structure": "由于……，不得不……", "meaning": "Do… nên buộc phải…" },
+          { "structure": "Sau khi... mới...", "meaning": "Sau khi... mới..." },
+          { "structure": "Hiện nay, ... đang...", "meaning": "Hiện nay, ... đang thực hiện một hành động nào đó." },
+          { "structure": "Chuẩn bị cho...", "meaning": "Chuẩn bị cho..." },
+          { "structure": "Mặc dù... nhưng vẫn...", "meaning": "Mặc dù... nhưng vẫn..." },
+          { "structure": "Mục tiêu của... là...", "meaning": "Mục tiêu của... là..." }
+        ]
+      }
+    ]
+  },
+  "bai7": {
+    "lessonNumber": 7,
+    "lessonTitle": "Bài 7: Địa danh du lịch (第七课：旅游景点)",
+    "objectives": "Nắm vững các từ vựng thường dùng liên quan đến địa danh du lịch, phong cảnh thiên nhiên, lịch sử văn hóa, di sản thế giới, mùa du lịch và hoạt động tham quan. Nắm vững các cách diễn đạt thường dùng như “nằm tại...”, “nổi tiếng với...”, “là một trong những...” và “thời điểm nào thích hợp nhất để...”. Nâng cao kỹ năng phiên dịch Trung - Việt và Việt - Trung trong các tình huống du lịch; có khả năng giới thiệu vị trí, đặc điểm, lịch sử và hoạt động tại các điểm tham quan.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      }
+    ]
+  },
+  "bai8": {
+    "lessonNumber": 8,
+    "lessonTitle": "Bài 8: Tin tức báo chí (第八课：新闻报道)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng liên quan đến đưa tin, phỏng vấn truyền thông, xu hướng tìm kiếm, họp báo, sự quan tâm của công chúng và xác minh thông tin. Nâng cao kỹ năng phiên dịch Trung - Việt và Việt - Trung trong bối cảnh báo chí; có khả năng truyền đạt chính xác nguồn tin, diễn biến sự kiện, phản ứng của công chúng và quan điểm của nhân vật.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      }
+    ]
+  },
+  "bai9": {
+    "lessonNumber": 9,
+    "lessonTitle": "Bài 9: Khác biệt văn hóa (第九课：文化差异)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng liên quan đến chế độ làm việc, tăng ca, nghỉ trưa, làm việc từ xa, cân bằng giữa công việc và cuộc sống, cùng sự khác biệt trong văn hóa doanh nghiệp. Hiểu và vận dụng được các mẫu câu thường dùng để giới thiệu cách bố trí công việc, so sánh văn hóa doanh nghiệp và trình bày những vấn đề trong hợp tác liên văn hóa.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      }
+    ]
+  },
+  "bai10": {
+    "lessonNumber": 10,
+    "lessonTitle": "Bài 10: Dự báo thời tiết (第十课：天气预报)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng liên quan đến dự báo thời tiết hàng ngày, biến động nhiệt độ, cảnh báo bão, xu hướng lượng mưa và sự nóng lên toàn cầu. Nâng cao kỹ năng phiên dịch Trung - Việt và Việt - Trung trong các tình huống thời tiết và thiên tai; có khả năng truyền đạt chính xác nhiệt độ, mưa, gió, ảnh hưởng của thiên tai và khuyến cáo an toàn.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      }
+    ]
+  },
+  "bai11": {
+    "lessonNumber": 11,
+    "lessonTitle": "Bài 11: Quản lý thời gian (第十一课：时间管理)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng liên quan đến lập kế hoạch, sắp xếp nhiệm vụ, tập trung chú ý, tránh trì hoãn, quản lý tiến độ nhóm và kết hợp hợp lý giữa làm việc với nghỉ ngơi. Nâng cao kỹ năng phiên dịch Trung - Việt và Việt - Trung trong các tình huống quản lý thời gian; có khả năng truyền đạt chính xác thứ tự nhiệm vụ, thời hạn, tiến độ, vấn đề về hiệu suất và các đề xuất cải thiện.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      }
+    ]
+  },
+  "bai12": {
+    "lessonNumber": 12,
+    "lessonTitle": "Bài 12: Dân số (第十二课：人口)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng liên quan đến quy mô dân số, tăng trưởng dân số, đô thị hóa, di cư dân số, tỷ lệ sinh, già hóa và chính sách dân số. Nâng cao kỹ năng phiên dịch Trung - Việt và Việt - Trung về chủ đề dân số; có khả năng truyền đạt chính xác số liệu, xu hướng thay đổi, nguyên nhân, ảnh hưởng và biện pháp ứng phó.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一",
+        "titleVi": "Bài khóa 1",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二",
+        "titleVi": "Bài khóa 2",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "",
+        "vocabulary": [],
+        "patterns": []
+      }
+    ]
+  }
+}
