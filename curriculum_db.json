@@ -1,0 +1,1436 @@
+{
+  "translation": {
+    "bai1": {
+      "lessonNumber": 1,
+      "lessonTitle": "Bài 1: Phát biểu chào mừng (第一课：致欢迎词)",
+      "objectives": "Nắm vững từ vựng và cách diễn đạt trong chủ trì hội nghị, phát biểu chào mừng, giới thiệu đại biểu và tuyên bố khai mạc.",
+      "texts": [
+        {
+          "id": "text1",
+          "direction": "zh_to_vi",
+          "title": "课文一：中越教育合作论坛开幕式",
+          "titleVi": "Bài khóa 1: Lễ khai mạc Diễn đàn hợp tác giáo dục Việt - Trung",
+          "originalText": "尊敬的各位领导、各位专家、各位来宾，大家上午好！欢迎大家出席2026年中越教育合作论坛开幕式。首先，请允许我代表主办方向各位嘉宾表示热烈欢迎，并感谢大家在百忙之中拨冗出席本次活动。本次论坛将围绕人工智能与国际中文教育的发展展开深入交流，希望各位专家积极分享经验，共同探讨未来合作的新方向。下面，让我们以热烈的掌声欢迎李校长致开幕词。我宣布，本次论坛正式开幕！",
+          "vocabulary": [
+            { "zh": "教育合作论坛", "pinyin": "jiàoyù hézuò lùntán", "vi": "Diễn đàn hợp tác giáo dục" },
+            { "zh": "开幕式", "pinyin": "kāimùshì", "vi": "Lễ khai mạc" },
+            { "zh": "主办方", "pinyin": "zhǔbànfāng", "vi": "Ban tổ chức" },
+            { "zh": "嘉宾", "pinyin": "jiābīn", "vi": "Khách quý, đại biểu" },
+            { "zh": "拨冗出席", "pinyin": "bōrǒng chūxí", "vi": "Dành thời gian quý báu đến tham dự" },
+            { "zh": "人工智能", "pinyin": "réngōng zhìnéng", "vi": "Trí tuệ nhân tạo (AI)" },
+            { "zh": "国际中文教育", "pinyin": "guójì zhōngwén jiàoyù", "vi": "Giáo dục tiếng Trung Quốc tế" },
+            { "zh": "深入交流", "pinyin": "shēnrù jiāoliú", "vi": "Trao đổi chuyên sâu" },
+            { "zh": "分享经验", "pinyin": "fēnxiǎng jīngyàn", "vi": "Chia sẻ kinh nghiệm" },
+            { "zh": "探讨", "pinyin": "tàntǎo", "vi": "Thảo luận, nghiên cứu" },
+            { "zh": "开幕词", "pinyin": "kāimùcí", "vi": "Diễn văn khai mạc" },
+            { "zh": "热烈欢迎", "pinyin": "rèliè huānyíng", "vi": "Nhiệt liệt chào mừng" },
+            { "zh": "热烈的掌声", "pinyin": "rèliè de zhǎngshēng", "vi": "Tràng pháo tay nhiệt liệt" },
+            { "zh": "正式开幕", "pinyin": "zhèngshì kāimù", "vi": "Chính thức khai mạc" },
+            { "zh": "新方向", "pinyin": "xīn fāngxiàng", "vi": "Hướng phát triển mới" }
+          ],
+          "patterns": [
+            { "structure": "欢迎大家出席……", "meaning": "Hoan nghênh/Chào mừng mọi người đến tham dự…" },
+            { "structure": "请允许我代表……向……表示……", "meaning": "Xin phép tôi thay mặt… gửi lời/chân thành bày tỏ… tới…" },
+            { "structure": "……将围绕……展开深入交流", "meaning": "… sẽ tiến hành trao đổi chuyên sâu xoay quanh/về…" },
+            { "structure": "希望……共同探讨……", "meaning": "Hy vọng… cùng nhau thảo luận/nghiên cứu…" },
+            { "structure": "让我们以热烈的掌声欢迎……", "meaning": "Xin hãy dành một tràng pháo tay nhiệt liệt để chào đón…" },
+            { "structure": "我宣布……正式开幕", "meaning": "Tôi xin tuyên bố… chính thức khai mạc" }
+          ]
+        },
+        {
+          "id": "text2",
+          "direction": "zh_to_vi",
+          "title": "课文二：战略合作签约仪式",
+          "titleVi": "Bài khóa 2: Lễ ký kết hợp tác chiến lược",
+          "originalText": "尊敬的各位嘉宾、各位合作伙伴，欢迎大家参加今天的战略合作签约仪式。近年来，两家公司始终保持着良好的合作关系，并在多个领域取得了令人满意的成果。今天的签约不仅标志着双方合作进入新的阶段，也为未来实现资源共享、优势互补奠定了坚实基础。现在，请大家以热烈的掌声欢迎双方代表上台签署合作协议。最后，我宣布本次签约仪式正式开始。",
+          "vocabulary": [
+            { "zh": "战略合作", "pinyin": "zhànlüè hézuò", "vi": "Hợp tác chiến lược" },
+            { "zh": "签约仪式", "pinyin": "qiānyuē yíshì", "vi": "Lễ ký kết" },
+            { "zh": "合作伙伴", "pinyin": "hézuò huǒbàn", "vi": "Đối tác hợp tác" },
+            { "zh": "保持", "pinyin": "bǎochí", "vi": "Duy trì" },
+            { "zh": "合作关系", "pinyin": "hézuò guānxì", "vi": "Quan hệ hợp tác" },
+            { "zh": "多个领域", "pinyin": "duō gè lǐngyù", "vi": "Nhiều lĩnh vực" },
+            { "zh": "令人满意", "pinyin": "lìngrén mǎnyì", "vi": "Đáng hài lòng" },
+            { "zh": "标志着", "pinyin": "biāozhìzhe", "vi": "Đánh dấu" },
+            { "zh": "资源共享", "pinyin": "zīyuán gòngxiǎng", "vi": "Chia sẻ nguồn lực" },
+            { "zh": "优势互补", "pinyin": "yōushì hùbǔ", "vi": "Bổ sung thế mạnh cho nhau" },
+            { "zh": "奠定基础", "pinyin": "diàndìng jīchǔ", "vi": "Đặt nền tảng" },
+            { "zh": "签署", "pinyin": "qiānshǔ", "vi": "Ký kết (văn bản, hiệp định...)" },
+            { "zh": "合作协议", "pinyin": "hézuò xiéyì", "vi": "Thỏa thuận hợp tác" },
+            { "zh": "双方代表", "pinyin": "shuāngfāng dàibiǎo", "vi": "Đại diện hai bên" },
+            { "zh": "圆满", "pinyin": "yuánmǎn", "vi": "Tốt đẹp, viên mãn" }
+          ],
+          "patterns": [
+            { "structure": "欢迎大家参加……", "meaning": "Chào mừng mọi người đến tham dự…" },
+            { "structure": "……始终保持着……关系", "meaning": "… luôn duy trì mối quan hệ…" },
+            { "structure": "……不仅……也……", "meaning": "Không những… mà còn…" },
+            { "structure": "为……奠定……基础", "meaning": "Đặt nền tảng… cho…" },
+            { "structure": "请大家以热烈的掌声欢迎……", "meaning": "Xin quý vị hãy dành một tràng pháo tay nồng nhiệt để chào đón…" }
+          ]
+        },
+        {
+          "id": "text3",
+          "direction": "vi_to_zh",
+          "title": "Bài khóa 1 (Dịch sang Hán): Lễ khai mạc Hội thảo học thuật quốc tế",
+          "titleVi": "Lễ khai mạc Hội thảo học thuật quốc tế",
+          "originalText": "Kính thưa Quý giáo sư, quý học giả và các em sinh viên! Xin kính chào quý vị! Xin chân thành cảm ơn quý vị đã đến tham dự Hội thảo học thuật quốc tế lần này. Hội thảo đã mời các chuyên gia đến từ nhiều quốc gia và vùng lãnh thổ cùng nhau thảo luận về những cơ hội và thách thức mà công nghệ số mang lại cho hoạt động giảng dạy ngôn ngữ. Trong thời gian diễn ra hội thảo, quý vị không chỉ có cơ hội lắng nghe những báo cáo học thuật đặc sắc mà còn có thể trao đổi chuyên sâu với các giảng viên đến từ nhiều trường đại học khác nhau. Hy vọng hội thảo lần này sẽ góp phần thúc đẩy hơn nữa sự hợp tác quốc tế và đổi mới trong nghiên cứu học thuật. Sau đây, tôi xin tuyên bố Hội thảo học thuật quốc tế chính thức khai mạc!",
+          "vocabulary": [
+            { "zh": "国际学术研讨会", "pinyin": "guójì xuéshù yántǎohuì", "vi": "Hội thảo học thuật quốc tế" },
+            { "zh": "学者", "pinyin": "xuézhě", "vi": "Học giả" },
+            { "zh": "数字技术", "pinyin": "shùzì jìshù", "vi": "Công nghệ số" },
+            { "zh": "语言教学", "pinyin": "yǔyán jiàoxué", "vi": "Giảng dạy ngôn ngữ" },
+            { "zh": "机遇", "pinyin": "jīyù", "vi": "Cơ hội" },
+            { "zh": "挑战", "pinyin": "tiǎozhàn", "vi": "Thách thức" },
+            { "zh": "聆听", "pinyin": "língtīng", "vi": "Lắng nghe (trang trọng)" },
+            { "zh": "学术报告", "pinyin": "xuéshù bàogào", "vi": "Báo cáo học thuật" },
+            { "zh": "高校", "pinyin": "gāoxiào", "vi": "Trường đại học" },
+            { "zh": "促进", "pinyin": "cùjìn", "vi": "Thúc đẩy" },
+            { "zh": "学术创新", "pinyin": "xuéshù chuàngxīn", "vi": "Đổi mới học thuật" }
+          ],
+          "patterns": [
+            { "structure": "非常感谢大家参加……", "meaning": "Xin chân thành cảm ơn mọi người đã tham dự…" },
+            { "structure": "本次会议邀请了……共同探讨……", "meaning": "Hội nghị lần này đã mời… cùng nhau thảo luận về…" },
+            { "structure": "不仅可以……还能够……", "meaning": "Không những có thể… mà còn có thể…" },
+            { "structure": "希望……能够进一步促进……", "meaning": "Hy vọng… sẽ tiếp tục thúc đẩy…" },
+            { "structure": "我宣布……正式开始", "meaning": "Tôi xin tuyên bố… chính thức bắt đầu" }
+          ]
+        },
+        {
+          "id": "text4",
+          "direction": "vi_to_zh",
+          "title": "Bài khóa 2 (Dịch sang Hán): Lễ khai mạc cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên",
+          "titleVi": "Lễ khai mạc Cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên",
+          "originalText": "Kính thưa quý vị lãnh đạo, quý vị thành viên Ban giám khảo và các thí sinh thân mến! Xin kính chào quý vị! Nhiệt liệt chào mừng quý vị đến tham dự Lễ khai mạc Cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên. Cuộc thi năm nay đã thu hút hơn một trăm đội dự thi đến từ nhiều địa phương trên cả nước. Trong hai ngày tới, các đội sẽ giới thiệu những thành quả đổi mới sáng tạo của mình, đồng thời có cơ hội gặp gỡ, trao đổi trực tiếp với đại diện các doanh nghiệp. Hy vọng tất cả các thí sinh sẽ phát huy tối đa năng lực và thế mạnh chuyên môn, mạnh dạn đổi mới sáng tạo, tích cực hợp tác và đạt được những thành tích xuất sắc. Cuối cùng, xin quý vị hãy dành một tràng pháo tay thật nồng nhiệt để chúc Cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên thành công tốt đẹp. Sau đây, tôi xin tuyên bố Cuộc thi chính thức bắt đầu!",
+          "vocabulary": [
+            { "zh": "创新创业", "pinyin": "chuàngxīn chuàngyè", "vi": "Đổi mới sáng tạo và khởi nghiệp" },
+            { "zh": "大赛", "pinyin": "dàsài", "vi": "Cuộc thi" },
+            { "zh": "评委", "pinyin": "píngwěi", "vi": "Ban giám khảo" },
+            { "zh": "参赛选手", "pinyin": "cānsài xuǎnshǒu", "vi": "Thí sinh" },
+            { "zh": "参赛队伍", "pinyin": "cānsài duìwǔ", "vi": "Đội dự thi" },
+            { "zh": "创新成果", "pinyin": "chuàngxīn chéngguǒ", "vi": "Thành quả đổi mới sáng tạo" },
+            { "zh": "企业代表", "pinyin": "qǐyè dàibiǎo", "vi": "Đại diện doanh nghiệp" },
+            { "zh": "面对面交流", "pinyin": "miànduìmiàn jiāoliú", "vi": "Giao lưu trực tiếp" },
+            { "zh": "充分发挥", "pinyin": "chōngfèn fāhuī", "vi": "Phát huy đầy đủ" },
+            { "zh": "专业优势", "pinyin": "zhuānyè yōushì", "vi": "Thế mạnh chuyên môn" },
+            { "zh": "勇于创新", "pinyin": "yǒngyú chuàngxīn", "vi": "Dũng cảm đổi mới sáng tạo" },
+            { "zh": "积极合作", "pinyin": "jījí hézuò", "vi": "Tích cực hợp tác" },
+            { "zh": "取得优异成绩", "pinyin": "qǔdé yōuyì chéngjì", "vi": "Đạt thành tích xuất sắc" },
+            { "zh": "圆满成功", "pinyin": "yuánmǎn chénggōng", "vi": "Thành công tốt đẹp" },
+            { "zh": "正式开始", "pinyin": "zhèngshì kāishǐ", "vi": "Chính thức bắt đầu" }
+          ],
+          "patterns": [
+            { "structure": "本次……吸引了来自……的……", "meaning": "Lần… này đã thu hút… đến từ…" },
+            { "structure": "将在……展示……并与……交流", "meaning": "Sẽ… giới thiệu/trưng bày… và giao lưu với…" },
+            { "structure": "希望……能够充分发挥……", "meaning": "Hy vọng… có thể phát huy tối đa…" },
+            { "structure": "勇于……，积极……，取得……", "meaning": "Mạnh dạn…; tích cực…; đạt được…" },
+            { "structure": "预祝……圆满成功", "meaning": "Xin chúc trước… thành công tốt đẹp" }
+          ]
+        }
+      ]
+  },
+
+
+
+  "bai2": {
+    "lessonNumber": 2,
+    "lessonTitle": "Bài 2: Lễ trao giải và phát biểu cảm ơn (第二课：颁奖典礼与答谢致辞)",
+    "objectives": "Nắm vững từ vựng, cách diễn đạt cố định và mẫu câu thường dùng trong các tình huống chúc mừng, cảm ơn, phát biểu đáp từ và trao giải; nâng cao kỹ năng biên dịch các bài phát biểu trang trọng.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：中越教育合作项目成果庆祝会",
+        "titleVi": "Bài khóa 1: Lễ mừng thành quả Dự án hợp tác giáo dục Việt - Trung",
+        "originalText": "尊敬的各位领导、各位专家、各位来宾，大家下午好！今天，我们很高兴与大家共同庆祝中越教育合作项目取得的重要成果。在过去一年里，双方围绕人才培养、教师交流和中文教育等方面开展了多项合作，并取得了令人满意的成绩。在这个特别的日子里，我谨代表学校，向所有关心和支持项目发展的单位及个人表示衷心的感谢。希望双方今后继续加强交流与合作，为两国教育事业的发展作出新的贡献。最后，祝愿大家工作顺利、身体健康，也祝我们的合作前程似锦！",
+        "vocabulary": [
+          { "zh": "培养", "pinyin": "péiyǎng", "vi": "Đào tạo, bồi dưỡng" },
+          { "zh": "交流", "pinyin": "jiāoliú", "vi": "Trao đổi, giao lưu" },
+          { "zh": "开展", "pinyin": "kāizhǎn", "vi": "Triển khai, tiến hành" },
+          { "zh": "谨代表", "pinyin": "jǐn dàibiǎo", "vi": "Trân trọng thay mặt" },
+          { "zh": "贡献", "pinyin": "gòngxiàn", "vi": "Cống hiến, đóng góp" },
+          { "zh": "事业", "pinyin": "shìyè", "vi": "Sự nghiệp" },
+          { "zh": "祝愿", "pinyin": "zhùyuàn", "vi": "Chúc, chúc nguyện" },
+          { "zh": "前程", "pinyin": "qiánchéng", "vi": "Tiền đồ, tương lai" },
+          { "zh": "似锦", "pinyin": "sìjǐn", "vi": "Tươi sáng, rực rỡ" }
+        ],
+        "patterns": [
+          { "structure": "围绕……开展……", "meaning": "Triển khai/tiến hành các hoạt động xoay quanh…" },
+          { "structure": "向……表示……的感谢", "meaning": "Bày tỏ/gửi lời cảm ơn… tới…" },
+          { "structure": "为……的发展作出……贡献", "meaning": "Có những đóng góp… cho sự phát triển của…" },
+          { "structure": "祝愿……前程似锦", "meaning": "Chúc… có tương lai tươi sáng, ngày càng phát triển" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：企业合作签约庆祝活动",
+        "titleVi": "Bài khóa 2: Hoạt động kỷ niệm ký kết hợp tác doanh nghiệp",
+        "originalText": "各位领导、各位合作伙伴，大家好！今天，我们相聚在这里，共同庆祝两家公司正式建立合作关系。近年来，双方在技术交流、产品开发和市场推广等方面进行了积极合作，为今天的签约打下了良好基础。我们非常欣喜地看到，双方能够充分发挥各自优势，共同寻找新的发展机会。借此机会，我谨向所有为本次合作付出努力的工作人员表示诚挚的感谢，并向双方的成功签约表示热烈祝贺。让我们共同举杯，祝愿两家公司合作顺利、事业发展，共创更加美好的未来！",
+        "vocabulary": [
+          { "zh": "签约", "pinyin": "qiānyuē", "vi": "Ký kết" },
+          { "zh": "合作", "pinyin": "hézuò", "vi": "Hợp tác" },
+          { "zh": "建立", "pinyin": "jiànlì", "vi": "Thiết lập, xây dựng" },
+          { "zh": "技术", "pinyin": "jìshù", "vi": "Kỹ thuật, công nghệ" },
+          { "zh": "开发", "pinyin": "kāifā", "vi": "Phát triển, khai thác" },
+          { "zh": "推广", "pinyin": "tuīguǎng", "vi": "Quảng bá, xúc tiến" },
+          { "zh": "积极", "pinyin": "jījí", "vi": "Tích cực" },
+          { "zh": "发挥", "pinyin": "fāhuī", "vi": "Phát huy" },
+          { "zh": "优势", "pinyin": "yōushì", "vi": "Thế mạnh, ưu thế" },
+          { "zh": "机会", "pinyin": "jīhuì", "vi": "Cơ hội" },
+          { "zh": "付出", "pinyin": "fùchū", "vi": "Bỏ ra, cống hiến" },
+          { "zh": "共创", "pinyin": "gòngchuàng", "vi": "Cùng kiến tạo, cùng tạo dựng" }
+        ],
+        "patterns": [
+          { "structure": "为……打下良好基础", "meaning": "Tạo/đặt nền tảng tốt cho…" },
+          { "structure": "充分发挥……优势", "meaning": "Phát huy đầy đủ/tối đa thế mạnh của…" },
+          { "structure": "向……表示诚挚的感谢", "meaning": "Gửi/bày tỏ lời cảm ơn chân thành tới…" },
+          { "structure": "共同……，共创……", "meaning": "Cùng nhau… và cùng kiến tạo…" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 1 (Dịch sang Hán): Lễ tuyên dương và tri ân nhân viên xuất sắc",
+        "titleVi": "Lễ tuyên dương và tri ân nhân viên xuất sắc",
+        "originalText": "Kính thưa quý vị lãnh đạo, quý đồng nghiệp, xin kính chào quý vị! Hôm nay, chúng ta tổ chức Lễ tuyên dương và tri ân nhân viên xuất sắc. Trước tiên, xin nhiệt liệt chúc mừng các đồng nghiệp được tuyên dương! Trong một năm qua, mỗi thành tích mà công ty đạt được đều không thể thiếu sự nỗ lực và ủng hộ của toàn thể nhân viên. Đặc biệt, khi đối mặt với những khó khăn và thách thức, mọi người đã đoàn kết hợp tác, làm việc nghiêm túc và có trách nhiệm, đóng góp tích cực cho sự phát triển của công ty. Nhân dịp này, tôi xin thay mặt công ty gửi lời cảm ơn chân thành tới toàn thể nhân viên đã luôn tận tụy với công việc trong suốt thời gian qua. Hy vọng mọi người tiếp tục phát huy thế mạnh của mình và đạt được những thành tích tốt hơn trong công việc sau này. Cuối cùng, kính chúc mọi người gia đình hạnh phúc, công việc thuận lợi, tiền đồ rộng mở!",
+        "vocabulary": [
+          { "zh": "表彰", "pinyin": "biǎozhāng", "vi": "Tuyên dương, biểu dương" },
+          { "zh": "答谢", "pinyin": "dáxiè", "vi": "Cảm ơn, đáp lễ" },
+          { "zh": "获得", "pinyin": "huòdé", "vi": "Nhận được, đạt được" },
+          { "zh": "成绩", "pinyin": "chéngjì", "vi": "Thành tích, kết quả" },
+          { "zh": "全体", "pinyin": "quántǐ", "vi": "Toàn thể" },
+          { "zh": "辛勤", "pinyin": "xīnqín", "vi": "Cần cù, tận tụy" },
+          { "zh": "团结", "pinyin": "tuánjié", "vi": "Đoàn kết" },
+          { "zh": "负责", "pinyin": "fùzé", "vi": "Có trách nhiệm, chịu trách nhiệm" },
+          { "zh": "贡献", "pinyin": "gòngxiàn", "vi": "Cống hiến, đóng góp" },
+          { "zh": "优势", "pinyin": "yōushì", "vi": "Thế mạnh, ưu thế" },
+          { "zh": "挑战", "pinyin": "tiǎozhàn", "vi": "Thách thức" },
+          { "zh": "前程", "pinyin": "qiánchéng", "vi": "Tiền đồ, tương lai" }
+        ],
+        "patterns": [
+          { "structure": "向……表示热烈祝贺", "meaning": "Gửi lời chúc mừng nồng nhiệt tới…" },
+          { "structure": "……离不开……", "meaning": "Không thể thiếu / không thể tách rời khỏi…" },
+          { "structure": "在面对……的时候，……", "meaning": "Khi đối mặt với…, …" },
+          { "structure": "为……作出积极贡献", "meaning": "Có những đóng góp tích cực cho…" },
+          { "structure": "在今后的……中……", "meaning": "Trong… thời gian/công việc sau này…" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 2 (Dịch sang Hán): Tiệc chào mừng và cảm ơn hoạt động giao lưu quốc tế",
+        "titleVi": "Tiệc chào mừng và cảm ơn hoạt động giao lưu quốc tế",
+        "originalText": "Kính thưa quý vị đại biểu, quý vị khách quý! Chúng tôi rất vinh dự được gặp gỡ quý vị tại đây, cùng tham dự buổi tiệc chào mừng và cảm ơn tối nay. Trước tiên, tôi xin thay mặt Ban Tổ chức nhiệt liệt chào mừng sự có mặt của quý vị đại biểu. Cảm ơn tất cả mọi người đã luôn ủng hộ hoạt động giao lưu của chúng tôi. Trong thời gian qua, chúng ta thông qua một loạt hoạt động giao lưu đã tăng cường sự hiểu biết lẫn nhau, đồng thời xây dựng tình hữu nghị tốt đẹp. Tối nay, chúng tôi không chỉ muốn cảm ơn sự tham gia tích cực của mọi người mà còn hy vọng trong thời gian tới có thể tiếp tục tăng cường giao lưu và mở rộng hợp tác. Bây giờ, xin mời mọi người cùng nâng ly, chúc cho tình hữu nghị của chúng ta và một tương lai tươi đẹp! Chúc quý vị dồi dào sức khỏe, công việc thuận lợi và vạn sự như ý!",
+        "vocabulary": [
+          { "zh": "荣幸", "pinyin": "róngxìng", "vi": "Vinh dự, hân hạnh" },
+          { "zh": "相聚", "pinyin": "xiāngjù", "vi": "Gặp gỡ, hội ngộ" },
+          { "zh": "答谢", "pinyin": "dáxiè", "vi": "Tiệc cảm ơn, tiệc đáp lễ" },
+          { "zh": "到来", "pinyin": "dàolái", "vi": "Đến, sự có mặt" },
+          { "zh": "支持", "pinyin": "zhīchí", "vi": "Ủng hộ" },
+          { "zh": "一系列", "pinyin": "yí xìliè", "vi": "Một loạt, một loạt các" },
+          { "zh": "了解", "pinyin": "liǎojiě", "vi": "Tìm hiểu, hiểu biết" },
+          { "zh": "友谊", "pinyin": "yǒuyì", "vi": "Tình hữu nghị" },
+          { "zh": "参与", "pinyin": "cānyù", "vi": "Tham gia" },
+          { "zh": "创造", "pinyin": "chuàngzào", "vi": "Tạo ra, tạo dựng" },
+          { "zh": "机会", "pinyin": "jīhuì", "vi": "Cơ hội" },
+          { "zh": "未来", "pinyin": "wèilái", "vi": "Tương lai" }
+        ],
+        "patterns": [
+          { "structure": "非常荣幸能够……", "meaning": "Rất vinh dự/hân hạnh được…" },
+          { "structure": "对……的到来表示热烈欢迎", "meaning": "Nhiệt liệt chào mừng sự có mặt của…" },
+          { "structure": "通过……加深……", "meaning": "Thông qua… làm sâu sắc thêm…" },
+          { "structure": "不仅……也……", "meaning": "Không chỉ… mà còn…" },
+          { "structure": "为……干杯", "meaning": "Nâng ly chúc mừng/vì…" }
+        ]
+      }
+    ]
+  },
+
+
+  "bai3": {
+    "lessonNumber": 3,
+    "lessonTitle": "Bài 3: Hoạt động tổng kết và bế mạc sự kiện (第三课：活动总结与闭幕式)",
+    "objectives": "Nắm vững từ vựng, mẫu câu cố định và ngôn ngữ nghi thức thường dùng trong bế mạc hội nghị, phát biểu tổng kết, trao giải và phát biểu cảm ơn; nâng cao kỹ năng dịch chính xác các bài phát biểu tổng kết và lời chúc.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：中越教育合作论坛闭幕式",
+        "titleVi": "Bài khóa 1: Lễ bế mạc Diễn đàn Hợp tác Giáo dục Việt Nam – Trung Quốc",
+        "originalText": "尊敬的各位领导、各位专家、各位来宾，大家下午好！为期两天的中越教育合作论坛即将圆满结束。会议期间，与会代表围绕国际中文教育、人工智能和人才培养等议题进行了深入交流，并取得了丰硕成果。借此机会，我谨代表主办方向各位专家和来宾表示衷心的感谢。希望双方今后继续加强合作，共同推动教育事业的发展。最后，祝大家身体健康、工作顺利。我宣布，本次论坛正式闭幕！",
+        "vocabulary": [
+          { "zh": "为期两天", "pinyin": "wéiqī liǎng tiān", "vi": "Kéo dài trong hai ngày" },
+          { "zh": "圆满结束", "pinyin": "yuánmǎn jiéshù", "vi": "Kết thúc tốt đẹp" },
+          { "zh": "与会代表", "pinyin": "yùhuì dàibiǎo", "vi": "Đại biểu tham dự hội nghị" },
+          { "zh": "人才培养", "pinyin": "réncái péiyǎng", "vi": "Đào tạo nhân lực" },
+          { "zh": "议题", "pinyin": "yìtí", "vi": "Chủ đề thảo luận" },
+          { "zh": "丰硕成果", "pinyin": "fēngshuò chéngguǒ", "vi": "Thành quả to lớn, kết quả phong phú" },
+          { "zh": "借此机会", "pinyin": "jiè cǐ jīhuì", "vi": "Nhân dịp này" },
+          { "zh": "谨代表", "pinyin": "jǐn dàibiǎo", "vi": "Trân trọng thay mặt" },
+          { "zh": "衷心的感谢", "pinyin": "zhōngxīn de gǎnxiè", "vi": "Lời cảm ơn chân thành" },
+          { "zh": "教育事业", "pinyin": "jiàoyù shìyè", "vi": "Sự nghiệp giáo dục" },
+          { "zh": "工作顺利", "pinyin": "gōngzuò shùnlì", "vi": "Công việc thuận lợi" },
+          { "zh": "正式闭幕", "pinyin": "zhèngshì bìmù", "vi": "Chính thức bế mạc" }
+        ],
+        "patterns": [
+          { "structure": "为期……的……即将圆满结束", "meaning": "Sự kiện kéo dài… sắp kết thúc tốt đẹp." },
+          { "structure": "围绕……进行了……", "meaning": "Tiến hành… xoay quanh/chung quanh…" },
+          { "structure": "……并取得了丰硕成果", "meaning": "… và đã đạt được nhiều thành quả to lớn" },
+          { "structure": "借此机会，我谨代表……向……表示……", "meaning": "Nhân dịp này, tôi xin trân trọng thay mặt… gửi tới… lời…" },
+          { "structure": "希望……继续……共同……", "meaning": "Hy vọng… tiếp tục… cùng nhau…" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：国际学术研讨会闭幕式",
+        "titleVi": "Bài khóa 2: Lễ bế mạc Hội thảo học thuật quốc tế",
+        "originalText": "各位教授、各位学者、各位同学，大家下午好！经过两天紧张而充实的交流，本次国际学术研讨会即将圆满结束。来自不同国家和地区的专家分享了最新研究成果，并围绕数字技术与语言教育的发展进行了广泛讨论。本次会议不仅促进了学术交流，也进一步增进了各高校之间的合作关系。感谢各位专家和工作人员的辛勤付出。最后，祝大家一路平安，期待我们明年再次相聚。我宣布，本次研讨会正式闭幕！",
+        "vocabulary": [
+          { "zh": "紧张而充实", "pinyin": "jǐnzhāng ér chōngshí", "vi": "Khẩn trương và bổ ích" },
+          { "zh": "研究成果", "pinyin": "yánjiū chéngguǒ", "vi": "Kết quả nghiên cứu" },
+          { "zh": "广泛讨论", "pinyin": "guǎngfàn tǎolùn", "vi": "Thảo luận sâu rộng" },
+          { "zh": "数字技术", "pinyin": "shùzì jìshù", "vi": "Công nghệ số" },
+          { "zh": "语言教育", "pinyin": "yǔyán jiàoyù", "vi": "Giáo dục ngôn ngữ" },
+          { "zh": "学术交流", "pinyin": "xuéshù jiāoliú", "vi": "Giao lưu học thuật" },
+          { "zh": "增进", "pinyin": "zēngjìn", "vi": "Tăng cường, thúc đẩy" },
+          { "zh": "合作关系", "pinyin": "hézuò guānxì", "vi": "Quan hệ hợp tác" },
+          { "zh": "辛勤付出", "pinyin": "xīnqín fùchū", "vi": "Cống hiến, nỗ lực hết mình" },
+          { "zh": "一路平安", "pinyin": "yílù píng'ān", "vi": "Thượng lộ bình an" },
+          { "zh": "再次相聚", "pinyin": "zàicì xiāngjù", "vi": "Gặp lại" },
+          { "zh": "正式闭幕", "pinyin": "zhèngshì bìmù", "vi": "Chính thức bế mạc" }
+        ],
+        "patterns": [
+          { "structure": "经过……的……", "meaning": "Sau quá trình…" },
+          { "structure": "来自……的……分享了……", "meaning": "… đến từ… đã chia sẻ…" },
+          { "structure": "不仅……也进一步……", "meaning": "Không những… mà còn tiếp tục…" },
+          { "structure": "感谢……的辛勤付出", "meaning": "Xin cảm ơn… vì những nỗ lực và cống hiến." },
+          { "structure": "期待……再次相聚", "meaning": "Mong chờ… gặp lại…" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 1 (Dịch sang Hán): Lễ bế mạc Cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên",
+        "titleVi": "Lễ bế mạc Cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên",
+        "originalText": "Kính thưa quý vị lãnh đạo, quý vị thành viên Ban giám khảo và các thí sinh thân mến! Xin kính chào quý vị! Sau hai ngày thi đấu sôi nổi và đầy quyết tâm, Cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên lần này đã hoàn thành tốt đẹp toàn bộ chương trình đề ra. Các đội dự thi đã giới thiệu nhiều thành quả đổi mới sáng tạo, đồng thời có cơ hội trao đổi trực tiếp với đại diện các doanh nghiệp. Những hoạt động này đã thể hiện rõ khả năng sáng tạo, tinh thần hợp tác và làm việc nhóm của các bạn sinh viên. Xin chân thành cảm ơn các thành viên Ban giám khảo, các giảng viên hướng dẫn cùng toàn thể cán bộ, nhân viên đã tận tâm đóng góp cho thành công của cuộc thi. Hy vọng các thí sinh sẽ tiếp tục nỗ lực, không ngừng nâng cao năng lực đổi mới sáng tạo và đóng góp tích cực vào sự phát triển của xã hội. Sau đây, tôi xin tuyên bố Cuộc thi Đổi mới sáng tạo và Khởi nghiệp Thanh niên lần này chính thức bế mạc!",
+        "vocabulary": [
+          { "zh": "激烈", "pinyin": "jīliè", "vi": "Gay cấn, quyết liệt" },
+          { "zh": "本届", "pinyin": "běnjiè", "vi": "Kỳ/lần tổ chức này" },
+          { "zh": "各项议程", "pinyin": "gèxiàng yìchéng", "vi": "Các nội dung chương trình" },
+          { "zh": "参赛团队", "pinyin": "cānsài tuánduì", "vi": "Đội dự thi" },
+          { "zh": "创造力", "pinyin": "chuàngzàolì", "vi": "Khả năng sáng tạo" },
+          { "zh": "团队精神", "pinyin": "tuánduì jīngshén", "vi": "Tinh thần làm việc nhóm" },
+          { "zh": "指导教师", "pinyin": "zhǐdǎo jiàoshī", "vi": "Giảng viên hướng dẫn" },
+          { "zh": "继续努力", "pinyin": "jìxù nǔlì", "vi": "Tiếp tục nỗ lực" },
+          { "zh": "提升", "pinyin": "tíshēng", "vi": "Nâng cao" },
+          { "zh": "创新能力", "pinyin": "chuàngxīn nénglì", "vi": "Năng lực đổi mới sáng tạo" },
+          { "zh": "青年学生", "pinyin": "qīngnián xuéshēng", "vi": "Sinh viên, thanh niên" }
+        ],
+        "patterns": [
+          { "structure": "充分体现了……", "meaning": "Thể hiện đầy đủ…, phản ánh rõ…" },
+          { "structure": "希望……继续努力，不断提升……", "meaning": "Hy vọng… tiếp tục nỗ lực, không ngừng nâng cao…" },
+          { "structure": "为……贡献力量", "meaning": "Đóng góp cho…" },
+          { "structure": "充分展现了……", "meaning": "Thể hiện, cho thấy…" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 2 (Dịch sang Hán): Lễ tổng kết Dự án hợp tác chiến lược giữa các doanh nghiệp",
+        "titleVi": "Lễ tổng kết Dự án hợp tác chiến lược giữa các doanh nghiệp",
+        "originalText": "Kính thưa quý vị đại biểu và quý đối tác! Xin kính chào quý vị! Hôm nay, chúng ta cùng tham dự Hội nghị tổng kết Dự án Hợp tác Chiến lược giữa các doanh nghiệp. Trong một năm qua, hai bên đã triển khai nhiều hoạt động hợp tác thiết thực trong các lĩnh vực như nghiên cứu và phát triển công nghệ, đào tạo nguồn nhân lực và xúc tiến thị trường, đồng thời đạt được những kết quả và hiệu quả đáng ghi nhận. Hội nghị tổng kết lần này không chỉ nhìn lại những thành quả hợp tác đã đạt được mà còn xác định phương hướng phát triển cho giai đoạn tiếp theo. Xin chân thành cảm ơn các đối tác đã luôn tin tưởng và đồng hành cùng chúng tôi trong suốt thời gian qua. Hy vọng hai bên sẽ tiếp tục làm sâu sắc hơn quan hệ hợp tác, cùng hướng tới mục tiêu cùng có lợi, cùng phát triển. Cuối cùng, kính chúc quý vị dồi dào sức khỏe, sự nghiệp ngày càng phát triển. Xin trân trọng cảm ơn!",
+        "vocabulary": [
+          { "zh": "战略合作项目", "pinyin": "zhànlüè hézuò xiàngmù", "vi": "Dự án hợp tác chiến lược" },
+          { "zh": "总结会", "pinyin": "zǒngjiéhuì", "vi": "Hội nghị tổng kết" },
+          { "zh": "技术研发", "pinyin": "jìshù yánfā", "vi": "Nghiên cứu và phát triển công nghệ" },
+          { "zh": "市场推广", "pinyin": "shìchǎng tuīguǎng", "vi": "Xúc tiến thị trường" },
+          { "zh": "务实合作", "pinyin": "wùshí hézuò", "vi": "Hợp tác thiết thực" },
+          { "zh": "取得显著成效", "pinyin": "qǔdé xiǎnzhù chéngxiào", "vi": "Đạt hiệu quả rõ rệt" },
+          { "zh": "回顾", "pinyin": "huígù", "vi": "Nhìn lại, tổng kết" },
+          { "zh": "明确方向", "pinyin": "míngquè fāngxiàng", "vi": "Xác định phương hướng" },
+          { "zh": "深化", "pinyin": "shēnhuà", "vi": "Làm sâu sắc hơn" },
+          { "zh": "互利共赢", "pinyin": "hùlì gòngyíng", "vi": "Cùng có lợi, cùng thắng" },
+          { "zh": "事业进步", "pinyin": "shìyè jìnbù", "vi": "Sự nghiệp phát triển" }
+        ],
+        "patterns": [
+          { "structure": "在……方面开展务实合作", "meaning": "Triển khai hợp tác thiết thực trong lĩnh vực…" },
+          { "structure": "……并取得了显著成效", "meaning": "… và đạt được hiệu quả rõ rệt" },
+          { "structure": "不仅回顾了……，也为……明确了方向", "meaning": "Không chỉ nhìn lại… mà còn xác định phương hướng cho…" },
+          { "structure": "希望双方继续深化合作，实现互利共赢", "meaning": "Hy vọng hai bên tiếp tục làm sâu sắc hợp tác để cùng có lợi" },
+          { "structure": "衷心感谢……一直以来的信任与支持", "meaning": "Chân thành cảm ơn… vì sự tin tưởng và ủng hộ trong suốt thời gian qua" }
+        ]
+      }
+    ]
+  },
+
+
+
+  "bai4": {
+    "lessonNumber": 4,
+    "lessonTitle": "Bài 4: Tiêu dùng và dịch vụ (第四课：消费与服务)",
+    "objectives": "Nắm vững từ vựng, thuật ngữ và các cách diễn đạt thường dùng liên quan đến chủ đề mua sắm, mua sắm trực tuyến, ăn uống lành mạnh và tiêu dùng xanh; nâng cao kỹ năng biên dịch Trung - Việt và Việt - Trung trong các tình huống mua sắm, tiêu dùng và ăn uống.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：现代购物方式",
+        "titleVi": "Bài khóa 1: Phương thức mua sắm hiện đại",
+        "originalText": "随着生活水平不断提高，人们的购物方式也发生了很大的变化。除了到超市购买生活用品以外，越来越多的消费者开始选择网上购物，因为这样既方便又节省时间。很多大型商场还推出了会员积分、电子优惠券和扫码支付等服务，为顾客提供更加舒适的购物体验。消费者在购买商品时，不仅要关注价格，还应该重视产品质量和售后服务，这样才能真正做到科学消费。",
+        "vocabulary": [
+          { "zh": "会员积分", "pinyin": "huìyuán jīfēn", "vi": "Tích điểm thành viên" },
+          { "zh": "电子优惠券", "pinyin": "diànzǐ yōuhuìquàn", "vi": "Phiếu giảm giá điện tử" },
+          { "zh": "扫码支付", "pinyin": "sǎomǎ zhīfù", "vi": "Thanh toán bằng quét mã" },
+          { "zh": "购物体验", "pinyin": "gòuwù tǐyàn", "vi": "Trải nghiệm mua sắm" },
+          { "zh": "产品质量", "pinyin": "chǎnpǐn zhìliàng", "vi": "Chất lượng sản phẩm" },
+          { "zh": "售后服务", "pinyin": "shòuhòu fúwù", "vi": "Dịch vụ hậu mãi" },
+          { "zh": "科学消费", "pinyin": "kēxué xiāofèi", "vi": "Tiêu dùng hợp lý (khoa học)" }
+        ],
+        "patterns": [
+          { "structure": "除了……以外，还……", "meaning": "Ngoài... ra, còn..." },
+          { "structure": "……为……提供……", "meaning": "… Cung cấp... cho..." },
+          { "structure": "不仅……还……", "meaning": "Không những... mà còn..." },
+          { "structure": "在……时……", "meaning": "Khi..." },
+          { "structure": "只有……才……", "meaning": "Chỉ khi... mới..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：网上购物与售后服务",
+        "titleVi": "Bài khóa 2: Mua sắm trực tuyến và dịch vụ hậu mãi",
+        "originalText": "近年来，随着互联网技术的发展，越来越多的人选择在网上购物。消费者只要通过手机或者电脑浏览商品信息，就可以轻松完成下单和付款。一般情况下，两三天内快递公司就会把商品送到家里。如果收到的商品与介绍不符，或者出现质量问题，消费者可以申请退货、换货或者免费维修。完善的物流系统和售后服务不仅提高了消费者的满意度，也促进了电子商务行业的快速发展。",
+        "vocabulary": [
+          { "zh": "网上购物", "pinyin": "wǎngshàng gòuwù", "vi": "Mua sắm trực tuyến" },
+          { "zh": "浏览商品信息", "pinyin": "liúlǎn shāngpǐn xìnxī", "vi": "Xem thông tin sản phẩm" },
+          { "zh": "下单", "pinyin": "xiàdān", "vi": "Đặt hàng" },
+          { "zh": "与……不符", "pinyin": "yǔ……bùfú", "vi": "Không phù hợp với…" },
+          { "zh": "退货", "pinyin": "tuìhuò", "vi": "Trả hàng" },
+          { "zh": "换货", "pinyin": "huànhuò", "vi": "Đổi hàng" },
+          { "zh": "免费维修", "pinyin": "miǎnfèi wéixiū", "vi": "Sửa chữa miễn phí" },
+          { "zh": "物流系统", "pinyin": "wùliú xìtǒng", "vi": "Hệ thống logistics/ vận chuyển" },
+          { "zh": "电子商务", "pinyin": "diànzǐ shāngwù", "vi": "Thương mại điện tử" }
+        ],
+        "patterns": [
+          { "structure": "通过……进行……", "meaning": "Thông qua… để…" },
+          { "structure": "根据……选择……", "meaning": "Lựa chọn dựa trên…" },
+          { "structure": "……不仅……也……", "meaning": "Không những… mà còn…" },
+          { "structure": "如果……可以……", "meaning": "Nếu… thì có thể…" },
+          { "structure": "有助于……", "meaning": "Có ích cho… / góp phần…" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 3 (Dịch sang Hán): Ăn uống lành mạnh",
+        "titleVi": "Ăn uống lành mạnh",
+        "originalText": "Ngày nay, ngày càng có nhiều người thích cùng gia đình hoặc bạn bè đến nhà hàng dùng bữa. Khi gọi món, mọi người thường lựa chọn các món ăn khác nhau dựa theo khẩu vị và nhu cầu dinh dưỡng của mình, đồng thời cũng quan tâm đến vấn đề an toàn thực phẩm và điều kiện vệ sinh. Ngoài việc thưởng thức các món ăn ngon, mọi người còn có thời gian giao lưu nói chuyện với nhau nhiều hơn và gắn kết tình cảm với nhau nhiều hơn thông qua những bữa ăn chung. Thói quen ăn uống hợp lý không chỉ có lợi cho sức khỏe mà còn góp phần nâng cao chất lượng cuộc sống, vì vậy điều này ngày càng được nhiều người coi trọng.",
+        "vocabulary": [
+          { "zh": "用餐/就餐", "pinyin": "yòngcān/jiùcān", "vi": "Dùng bữa" },
+          { "zh": "营养需求", "pinyin": "yíngyǎng xūqiú", "vi": "Nhu cầu dinh dưỡng" },
+          { "zh": "菜品", "pinyin": "càipǐn", "vi": "Món ăn" },
+          { "zh": "食品安全", "pinyin": "shípǐn ānquán", "vi": "An toàn thực phẩm" },
+          { "zh": "品尝美食", "pinyin": "pǐncháng měishí", "vi": "Thưởng thức món ăn ngon" },
+          { "zh": "增进交流", "pinyin": "zēngjìn jiāoliú", "vi": "Tăng cường giao lưu" },
+          { "zh": "增进感情", "pinyin": "zēngjìn gǎnqíng", "vi": "Gắn kết tình cảm" },
+          { "zh": "饮食习惯", "pinyin": "yǐnshí xíguàn", "vi": "Thói quen ăn uống" }
+        ],
+        "patterns": [
+          { "structure": "通过……增进……", "meaning": "Tăng cường … thông qua …" },
+          { "structure": "越来越受到……的重视", "meaning": "Ngày càng được… coi trọng" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 4 (Dịch sang Hán): Quan niệm mới về tiêu dùng xanh",
+        "titleVi": "Quan niệm mới về tiêu dùng xanh",
+        "originalText": "Cùng với ý thức bảo vệ môi trường không ngừng được nâng cao, tiêu dùng xanh đã trở thành một lối sống mới. Khi mua sắm, nhiều người tiêu dùng không chỉ quan tâm đến giá cả và chất lượng sản phẩm, mà còn cân nhắc liệu bao bì sản phẩm có thân thiện với môi trường hay không, nguồn tài nguyên có thể được tái sử dụng hay không, cũng như doanh nghiệp có thực hiện trách nhiệm xã hội hay không. Đồng thời, ngày càng nhiều doanh nghiệp tích cực khuyến khích sử dụng túi mua sắm thân thiện với môi trường, hóa đơn điện tử và các sản phẩm tiết kiệm năng lượng, nhằm định hướng người tiêu dùng xây dựng quan niệm tiêu dùng khoa học, văn minh và tiết kiệm, cùng chung tay xây dựng một xã hội xanh.",
+        "vocabulary": [
+          { "zh": "绿色消费", "pinyin": "lǜsè xiāofèi", "vi": "Tiêu dùng xanh" },
+          { "zh": "环保包装", "pinyin": "huánbǎo bāozhuāng", "vi": "Bao bì thân thiện với môi trường" },
+          { "zh": "循环利用", "pinyin": "xúnhuán lìyòng", "vi": "Tái sử dụng" },
+          { "zh": "环保购物袋", "pinyin": "huánbǎo gòuwùdài", "vi": "Túi mua sắm thân thiện môi trường" },
+          { "zh": "电子发票", "pinyin": "diànzǐ fāpiào", "vi": "Hóa đơn điện tử" },
+          { "zh": "节能产品", "pinyin": "jiénéng chǎnpǐn", "vi": "Sản phẩm tiết kiệm năng lượng" },
+          { "zh": "文明消费", "pinyin": "wénmíng xiāofèi", "vi": "Tiêu dùng văn minh" }
+        ],
+        "patterns": [
+          { "structure": "是否……", "meaning": "Có... hay không …" },
+          { "structure": "引导……树立……", "meaning": "Định hướng... xây dựng..." }
+        ]
+      }
+    ]
+  },
+
+
+  "bai5": {
+    "lessonNumber": 5,
+    "lessonTitle": "Bài 5: Triển lãm sản phẩm và xúc tiến thương mại (第五课：产品展览与贸易推广)",
+    "objectives": "Nắm vững từ vựng, thuật ngữ, mẫu câu và cách diễn đạt thường dùng trong chủ đề hội chợ triển lãm quốc tế, giới thiệu sản phẩm, xúc tiến thương mại và hợp tác thương mại quốc tế; nâng cao kỹ năng biên dịch Trung-Việt trong các tình huống giới thiệu sản phẩm, quảng bá doanh nghiệp và thương mại quốc tế; đồng thời rèn luyện kỹ năng dịch các văn bản thương mại.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：国际商品展览会",
+        "titleVi": "Bài khóa 1: Hội chợ triển lãm hàng hóa quốc tế",
+        "originalText": "欢迎各位光临本届国际商品展览会。本公司成立于2012年，主要生产环保家居用品和智能生活产品。本次展会，我们推出了多款新产品，它们不仅设计美观，而且轻便、耐用，已经通过了ISO9001质量认证。目前，我们的产品出口到东南亚、欧洲等多个国家和地区，在海外市场受到广大消费者的欢迎。希望通过本次展会与更多合作伙伴建立长期合作关系，共同开拓国际市场，实现互利共赢。",
+        "vocabulary": [
+          { "zh": "环保家居用品", "pinyin": "huánbǎo jiājū yòngpǐn", "vi": "Đồ gia dụng thân thiện với môi trường" },
+          { "zh": "智能生活产品", "pinyin": "zhìnéng shēnghuó chǎnpǐn", "vi": "Sản phẩm gia dụng thông minh" },
+          { "zh": "推出新产品", "pinyin": "tuīchū xīn chǎnpǐn", "vi": "Ra mắt sản phẩm mới" },
+          { "zh": "轻便", "pinyin": "qīngbiàn", "vi": "Nhẹ, tiện lợi" },
+          { "zh": "耐用", "pinyin": "nàiyòng", "vi": "Bền" },
+          { "zh": "质量认证", "pinyin": "zhìliàng rènzhèng", "vi": "Chứng nhận chất lượng" },
+          { "zh": "开拓", "pinyin": "kāituò", "vi": "Mở rộng, khai thác (thị trường)" },
+          { "zh": "互利共赢", "pinyin": "hùlì gòngyíng", "vi": "Cùng có lợi, cùng thắng" }
+        ],
+        "patterns": [
+          { "structure": "希望通过……与……建立……", "meaning": "Hy vọng thông qua... thiết lập... với..." },
+          { "structure": "在……受到……的欢迎", "meaning": "Được... đón nhận tại..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：绿色产品推广会",
+        "titleVi": "Bài khóa 2: Hội nghị quảng bá sản phẩm xanh",
+        "originalText": "近年来，随着人们环保意识的不断增强，绿色消费理念日益受到人们的重视，越来越多的企业开始投入研发环保产品。本次推广会上，我们重点展示了可循环利用的包装材料、节能设备以及绿色办公用品等系列新产品。这些产品不仅质量可靠、性能稳定，而且完全符合国际环保标准，已经获得相关质量认证。目前，已有不少国内外客户对我们的产品表现出浓厚兴趣，认为这类产品具有广阔的市场潜力，并希望进一步了解合作项目。我们相信，绿色产品必将成为未来国际贸易发展的重要方向。",
+        "vocabulary": [
+          { "zh": "投入研发", "pinyin": "tóurù yánfā", "vi": "Đầu tư nghiên cứu và phát triển" },
+          { "zh": "可循环利用", "pinyin": "kě xúnhuán lìyòng", "vi": "Có thể tái chế, tái sử dụng" },
+          { "zh": "包装材料", "pinyin": "bāozhuāng cáiliào", "vi": "Vật liệu bao bì" },
+          { "zh": "节能设备", "pinyin": "jiénéng shèbèi", "vi": "Thiết bị tiết kiệm năng lượng" },
+          { "zh": "绿色办公用品", "pinyin": "lǜsè bàngōng yòngpǐn", "vi": "Đồ dùng văn phòng thân thiện với môi trường" },
+          { "zh": "市场潜力", "pinyin": "shìchǎng qiánlì", "vi": "Tiềm năng thị trường" },
+          { "zh": "重要方向", "pinyin": "zhòngyào fāngxiàng", "vi": "Định hướng quan trọng" }
+        ],
+        "patterns": [
+          { "structure": "对……表现出浓厚兴趣", "meaning": "Tỏ ra rất quan tâm đến..." },
+          { "structure": "成为……的重要方向", "meaning": "Trở thành định hướng quan trọng của..." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 3 (Dịch sang Hán): Lợi ích của hội chợ triển lãm đối với các doanh nghiệp xuất khẩu",
+        "titleVi": "Lợi ích của hội chợ triển lãm đối với các doanh nghiệp xuất khẩu",
+        "originalText": "Đối với các doanh nghiệp xuất khẩu, hội chợ triển lãm Quốc tế mang lại rất nhiều lợi ích. Đây không chỉ là nơi để trưng bày sản phẩm, mà còn là cơ hội để tìm kiếm đối tác phân phối tại thị trường nước ngoài. Nhiều doanh nghiệp đã ký được hợp đồng xuất khẩu ngay tại hội chợ nhờ vào việc gặp mặt trực tiếp và trao đổi thẳng thắn với khách hàng. Bên cạnh đó, thông qua hội chợ triển lãm, các doanh nghiệp còn có thể quan sát được xu hướng tiêu dùng, tìm hiểu chiến lược của đối thủ cạnh tranh và học hỏi kinh nghiệm quản lý từ các nước phát triển. Nhiều sản phẩm sau khi được giới thiệu tại hội chợ đã nhanh chóng chiếm được lòng tin của khách hàng quốc tế, mở ra cơ hội hợp tác lâu dài. Có thể nói, hội chợ triển lãm chính là cầu nối giúp doanh nghiệp Việt Nam vươn ra thế giới, khẳng định vị thế trên thị trường toàn cầu.",
+        "vocabulary": [
+          { "zh": "国际贸易展览会", "pinyin": "guójì màoyì zhǎnlǎnhuì", "vi": "Hội chợ triển lãm quốc tế" },
+          { "zh": "展示产品", "pinyin": "zhǎnshì chǎnpǐn", "vi": "Trưng bày sản phẩm" },
+          { "zh": "经销合作伙伴", "pinyin": "jīngxiāo hézuò huǒbàn", "vi": "Đối tác phân phối" },
+          { "zh": "面对面沟通", "pinyin": "miànduìmiàn gōutōng", "vi": "Giao tiếp trực tiếp" },
+          { "zh": "消费趋势", "pinyin": "xiāofèi qūshì", "vi": "Xu hướng tiêu dùng" },
+          { "zh": "竞争对手", "pinyin": "jìngzhēng duìshǒu", "vi": "Đối thủ cạnh tranh" },
+          { "zh": "赢得……的信任", "pinyin": "yíngdé……de xìnrèn", "vi": "Giành được lòng tin" },
+          { "zh": "确立地位", "pinyin": "quèlì dìwèi", "vi": "Khẳng định vị thế" }
+        ],
+        "patterns": [
+          { "structure": "不仅……，也……", "meaning": "Không chỉ... mà còn..." },
+          { "structure": "通过……/借助……", "meaning": "Nhờ vào…" },
+          { "structure": "帮助……走向……", "meaning": "Giúp… vươn ra…" },
+          { "structure": "为……打开……", "meaning": "Mở ra (cơ hội) cho..." }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 4 (Dịch sang Hán): Giao lưu hợp tác thương mại quốc tế",
+        "titleVi": "Giao lưu hợp tác thương mại quốc tế",
+        "originalText": "Trong hoạt động giao lưu thương mại quốc tế lần này, đại diện của nhiều doanh nghiệp đến từ các quốc gia và vùng lãnh thổ khác nhau đã tiến hành những buổi trao đổi và thảo luận chuyên sâu. Thông qua các hoạt động như trưng bày sản phẩm, đàm phán thương mại và chia sẻ kinh nghiệm, nhiều doanh nghiệp đã hiểu rõ hơn về nhu cầu phát triển của các thị trường khác nhau. Một số doanh nghiệp đã trao đổi danh thiếp ngay tại sự kiện và đạt được những ý định hợp tác ban đầu, điều này đã tạo nền tảng tốt đẹp cho những hợp tác sau này. Ban tổ chức cho biết, họ hy vọng thông qua triển lãm lần này có thể tăng cường trao đổi thông tin giữa các doanh nghiệp, thúc đẩy xuất khẩu sản phẩm, hợp tác công nghệ và đầu tư quốc tế, qua đó thực hiện mục tiêu chung cùng phát triển.",
+        "vocabulary": [
+          { "zh": "国际贸易交流活动", "pinyin": "guójì màoyì jiāoliú huódòng", "vi": "Hoạt động giao lưu thương mại quốc tế" },
+          { "zh": "深入交流", "pinyin": "shēnrù jiāoliú", "vi": "Trao đổi chuyên sâu" },
+          { "zh": "展示", "pinyin": "zhǎnshì", "vi": "Trưng bày" },
+          { "zh": "商务洽谈", "pinyin": "shāngwù qiàtán", "vi": "Đàm phán thương mại" },
+          { "zh": "经验分享", "pinyin": "jīngyàn fēnxiǎng", "vi": "Chia sẻ kinh nghiệm" },
+          { "zh": "交换名片", "pinyin": "jiāohuàn míngpiàn", "vi": "Trao đổi danh thiếp" },
+          { "zh": "达成初步合作意向", "pinyin": "dáchéng chūbù hézuò yìxiàng", "vi": "Đạt được ý định hợp tác ban đầu" },
+          { "zh": "奠定基础", "pinyin": "diàndìng jīchǔ", "vi": "Đặt nền tảng" },
+          { "zh": "信息交流", "pinyin": "xìnxī jiāoliú", "vi": "Trao đổi thông tin" },
+          { "zh": "共同发展", "pinyin": "gòngtóng fāzhǎn", "vi": "Cùng phát triển" }
+        ],
+        "patterns": [
+          { "structure": "通过……进一步了解……", "meaning": "Thông qua... hiểu rõ hơn..." },
+          { "structure": "为……奠定基础", "meaning": "Tạo nền tảng cho..." },
+          { "structure": "希望借助……，加强……", "meaning": "Hy vọng thông qua... tăng cường..." }
+        ]
+      }
+    ]
+  },
+  "bai6": {
+    "lessonNumber": 6,
+    "lessonTitle": "Bài 6: Âm nhạc và đời sống (第六课：音乐与生活)",
+    "objectives": "Nắm vững từ vựng, thuật ngữ, mẫu câu và cách diễn đạt thường dùng trong chủ đề các thể loại âm nhạc, hoạt động âm nhạc, biểu diễn nghệ thuật và mối liên hệ giữa âm nhạc với đời sống tinh thần, cảm xúc con người; nâng cao kỹ năng biên dịch Trung-Việt trong các tình huống giới thiệu văn hóa âm nhạc, đưa tin về hoạt động nghệ thuật và các văn bản mang tính cảm xúc, đời sống; đồng thời rèn luyện kỹ năng dịch các văn bản mang tính văn học – nghệ thuật.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：数字时代的音乐变迁",
+        "titleVi": "Bài khóa 1: Sự biến đổi của âm nhạc trong thời đại số",
+        "originalText": "如今，年轻人获取音乐的方式和过去大不相同。他们不再只依赖收音机或专辑，而是通过短视频平台发现新歌、跟着热门音乐拍摄自己的视频。打开手机刷上几分钟，耳朵里就已经循环播放着好几首陌生却朗朗上口的旋律。一首歌能否走红，往往取决于它是否能在几秒钟内抓住听众的注意力——开头一旦平淡，用户很可能立刻划走，这首歌也就失去了被记住的机会。这种变化让音乐创作也在悄悄改变。旋律更简单、节奏更抓耳的歌曲，反而更容易在年轻人中流行起来；歌词也趋向直白、口语化，方便大家跟唱模仿。可以说，短视频平台不仅改变了年轻人听歌的习惯，更从根本上重塑了整个音乐产业的创作逻辑。",
+        "vocabulary": [
+          { "zh": "依赖", "pinyin": "yīlài", "vi": "phụ thuộc, dựa vào" },
+          { "zh": "专辑", "pinyin": "zhuānjí", "vi": "album" },
+          { "zh": "短视频平台", "pinyin": "duǎn shìpín píngtái", "vi": "nền tảng video ngắn" },
+          { "zh": "循环播放", "pinyin": "xúnhuán bōfàng", "vi": "phát lặp lại" },
+          { "zh": "朗朗上口", "pinyin": "lǎnglǎng shàngkǒu", "vi": "dễ nhớ, dễ hát theo" },
+          { "zh": "走红", "pinyin": "zǒuhóng", "vi": "trở nên nổi tiếng, nổi lên" },
+          { "zh": "抓住注意力", "pinyin": "zhuāzhù zhùyìlì", "vi": "thu hút sự chú ý" },
+          { "zh": "悄悄", "pinyin": "qiāoqiāo", "vi": "lặng lẽ, âm thầm" },
+          { "zh": "抓耳", "pinyin": "zhuā'ěr", "vi": "bắt tai, dễ gây chú ý" },
+          { "zh": "口语化", "pinyin": "kǒuyǔhuà", "vi": "mang tính khẩu ngữ, văn nói" },
+          { "zh": "重塑", "pinyin": "chóngsù", "vi": "tái định hình, định hình lại" },
+          { "zh": "创作逻辑", "pinyin": "chuàngzuò luójí", "vi": "logic sáng tác" }
+        ],
+        "patterns": [
+          { "structure": "能否……，取决于……", "meaning": "Có... hay không, phụ thuộc vào…" },
+          { "structure": "不再……，而是……", "meaning": "Không còn… mà thay vào đó là…" },
+          { "structure": "一旦……，就……", "meaning": "Một khi… thì…" },
+          { "structure": "从根本上……", "meaning": "Về căn bản, từ căn bản" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：音乐的治愈力量",
+        "titleVi": "Bài khóa 2: Sức mạnh chữa lành của âm nhạc",
+        "originalText": "心理学家认为，音乐对人的情绪有着神奇的影响力。悲伤时，一首合适的歌曲能让人感到被理解，仿佛歌词写出了自己说不出口的心事；疲惫时，轻柔的旋律又能帮助身心得到放松，让紧绷的神经慢慢松懈下来。很多人在压力大的时候，会选择戴上耳机，让音乐带自己暂时远离烦恼，哪怕只是通勤路上的十几分钟，也仿佛拥有了一片只属于自己的安静角落。有时候，一首歌甚至比一段对话更能触动人心，因为它不需要言语，却能精准地击中情绪最柔软的地方。可以说，音乐不仅是一种艺术，更是一种陪伴，用无声的方式治愈着无数人的心。",
+        "vocabulary": [
+          { "zh": "心理学家", "pinyin": "xīnlǐxuéjiā", "vi": "nhà tâm lý học" },
+          { "zh": "情绪", "pinyin": "qíngxù", "vi": "cảm xúc, tâm trạng" },
+          { "zh": "影响力", "pinyin": "yǐngxiǎnglì", "vi": "sức ảnh hưởng, khả năng tác động" },
+          { "zh": "悲伤", "pinyin": "bēishāng", "vi": "buồn bã, đau buồn" },
+          { "zh": "被理解", "pinyin": "bèi lǐjiě", "vi": "được thấu hiểu" },
+          { "zh": "说不出口", "pinyin": "shuō bù chūkǒu", "vi": "không thể nói thành lời" },
+          { "zh": "身心", "pinyin": "shēnxīn", "vi": "thể chất và tinh thần" },
+          { "zh": "紧绷", "pinyin": "jǐnbēng", "vi": "căng thẳng, căng cứng" },
+          { "zh": "松懈", "pinyin": "sōngxiè", "vi": "thả lỏng, thư giãn" },
+          { "zh": "暂时", "pinyin": "zànshí", "vi": "tạm thời" },
+          { "zh": "触动人心", "pinyin": "chùdòng rénxīn", "vi": "lay động lòng người" },
+          { "zh": "治愈", "pinyin": "zhìyù", "vi": "chữa lành, xoa dịu" }
+        ],
+        "patterns": [
+          { "structure": "……时，……", "meaning": "Khi…… thì……" },
+          { "structure": "仿佛……", "meaning": "Như thể…, dường như…" },
+          { "structure": "哪怕……，也……", "meaning": "Dù cho…, thì cũng… / Cho dù… cũng…" },
+          { "structure": "比……更……", "meaning": "So với…… thì…… hơn" },
+          { "structure": "让……慢慢……", "meaning": "Khiến… dần dần…" },
+          { "structure": "可以说，……", "meaning": "Có thể nói rằng…" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 3 (Dịch sang Hán): Âm nhạc Việt vươn ra thế giới",
+        "titleVi": "Âm nhạc Việt vươn ra thế giới",
+        "originalText": "Những năm gần đây, ngày càng có nhiều bài hát Việt Nam được khán giả quốc tế biết đến. Nhiều ca sĩ trẻ không chỉ chú trọng đến độ bắt tai của giai điệu, mà còn khéo léo đưa các yếu tố văn hóa dân tộc vào trong tác phẩm âm nhạc, để truyền thống và hiện đại hòa quyện tự nhiên trong từng nốt nhạc. Nhờ mạng xã hội và các nền tảng nghe nhạc trực tuyến, một bài hát tiếng Việt cũng có thể dễ dàng chạm đến khán giả ở nhiều quốc gia khác nhau, thậm chí ngay cả khi chưa có lời dịch, vẫn có thể lay động người nghe nước ngoài nhờ giai điệu và cảm xúc riêng biệt. Đây chắc chắn là một tín hiệu đáng mừng cho sự phát triển của âm nhạc trong nước. Đồng thời, điều này cũng mở ra những khả năng mới để nhiều nghệ sĩ Việt Nam hơn nữa có thể bước ra sân khấu thế giới.",
+        "vocabulary": [
+          { "zh": "抓耳度", "pinyin": "zhuā'ěrdù", "vi": "Độ bắt tai" },
+          { "zh": "民族文化元素", "pinyin": "mínzú wénhuà yuánsù", "vi": "Yếu tố văn hóa dân tộc" },
+          { "zh": "自然交融", "pinyin": "zìrán jiāoróng", "vi": "Hòa quyện tự nhiên" },
+          { "zh": "触及听众", "pinyin": "chùjí tīngzhòng", "vi": "Tiếp cận khán giả" },
+          { "zh": "打动", "pinyin": "dǎdòng", "vi": "Lay động" },
+          { "zh": "令人欣喜的信号", "pinyin": "lìngrén xīnxǐ de xìnhào", "vi": "Tín hiệu đáng mừng" },
+          { "zh": "提供新的可能", "pinyin": "tígōng xīn de kěnéng", "vi": "Mở ra những khả năng mới" },
+          { "zh": "走向世界舞台", "pinyin": "zǒuxiàng shìjiè wǔtái", "vi": "Bước ra sân khấu thế giới" }
+        ],
+        "patterns": [
+          { "structure": "……被……所熟知", "meaning": "... được ... biết đến" },
+          { "structure": "将 A 融入 B（之）中", "meaning": "Đưa A vào B" },
+          { "structure": "借助……", "meaning": "Nhờ ...." }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 4 (Dịch sang Hán): Sự kế thừa và phát triển của âm nhạc truyền thống",
+        "titleVi": "Sự kế thừa và phát triển của âm nhạc truyền thống",
+        "originalText": "Dù nhạc hiện đại ngày càng đa dạng, âm nhạc truyền thống vẫn giữ một vị trí đặc biệt trong lòng nhiều người. Những giai điệu dân gian không chỉ mang giá trị nghệ thuật, mà còn lưu giữ ký ức và bản sắc văn hoá của mỗi dân tộc. Nhiều nhạc sĩ trẻ hiện nay đang cố gắng kết hợp âm nhạc truyền thống với phong cách hiện đại, để thế hệ trẻ có thể tiếp cận gần hơn với di sản văn hoá của dân tộc mình. Nhờ những nỗ lực ấy, âm nhạc truyền thống dần tìm lại được vị trí trong đời sống âm nhạc hiện đại. Điều này cũng cho chúng ta thấy, dù thời đại thay đổi ra sao, âm nhạc truyền thống vẫn đáng được tiếp tục giữ gìn và truyền lại.",
+        "vocabulary": [
+          { "zh": "多样化", "pinyin": "duōyànghuà", "vi": "Đa dạng" },
+          { "zh": "承载", "pinyin": "chéngzài", "vi": "Lưu giữ, mang (giá trị)" },
+          { "zh": "文化特色", "pinyin": "wénhuà tèsè", "vi": "Bản sắc văn hoá" },
+          { "zh": "年轻一代", "pinyin": "niánqīng yīdài", "vi": "Thế hệ trẻ" },
+          { "zh": "文化遗产", "pinyin": "wénhuà yíchǎn", "vi": "Di sản văn hoá" }
+        ],
+        "patterns": [
+          { "structure": "尽管……依然……", "meaning": "Dù ... vẫn ..." },
+          { "structure": "将 A 与 B 相结合", "meaning": "Kết hợp A với B" }
+        ]
+      }
+    ]
+  },
+  "bai7": {
+    "lessonNumber": 7,
+    "lessonTitle": "Bài 7: Sự kiện thể thao và sức khỏe cộng đồng (第七课：体育赛事与全民健康)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng trong các chủ đề rèn luyện thể thao, tường thuật thi đấu, thành tích đội tuyển và chấn thương thể thao; nâng cao năng lực biên dịch Trung-Việt và Việt-Trung đối với văn bản thể thao; có thể xử lý chính xác thông tin về kết quả, diễn biến thi đấu và quan hệ nguyên nhân - kết quả.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：体育锻炼与健康",
+        "titleVi": "Bài khóa 1: Rèn luyện thể thao và sức khỏe",
+        "originalText": "如今，越来越多的人开始重视体育锻炼，因为运动与身体健康有着密切关系。长期坚持跑步、游泳或打球，不仅可以增强体质，提高免疫力，还能帮助人们减轻学习和工作的压力。对大学生来说，每周安排三到四次运动，也有利于改善睡眠和保持良好的精神状态。不过，锻炼时应该选择适合自己的项目，并注意运动时间和强度。只有科学运动、长期坚持，才能真正达到强身健体的目的。",
+        "vocabulary": [
+          { "zh": "体育锻炼", "pinyin": "tǐyù duànliàn", "vi": "Rèn luyện thể thao" },
+          { "zh": "重视", "pinyin": "zhòngshì", "vi": "Coi trọng" },
+          { "zh": "密切关系", "pinyin": "mìqiè guānxì", "vi": "Quan hệ mật thiết" },
+          { "zh": "长期坚持", "pinyin": "chángqī jiānchí", "vi": "Kiên trì lâu dài" },
+          { "zh": "增强体质", "pinyin": "zēngqiáng tǐzhì", "vi": "Tăng cường thể chất" },
+          { "zh": "提高免疫力", "pinyin": "tígāo miǎnyìlì", "vi": "Nâng cao sức đề kháng" },
+          { "zh": "减轻压力", "pinyin": "jiǎnqīng yālì", "vi": "Giảm áp lực" },
+          { "zh": "改善睡眠", "pinyin": "gǎishàn shuìmián", "vi": "Cải thiện giấc ngủ" },
+          { "zh": "精神状态", "pinyin": "jīngshén zhuàngtài", "vi": "Trạng thái tinh thần" },
+          { "zh": "适合", "pinyin": "shìhé", "vi": "Phù hợp" },
+          { "zh": "运动项目", "pinyin": "yùndòng xiàngmù", "vi": "Môn/hạng mục thể thao" },
+          { "zh": "运动强度", "pinyin": "yùndòng qiángdù", "vi": "Cường độ vận động" },
+          { "zh": "科学运动", "pinyin": "kēxué yùndòng", "vi": "Tập luyện khoa học" },
+          { "zh": "强身健体", "pinyin": "qiángshēn jiàntǐ", "vi": "Tăng cường sức khỏe" },
+          { "zh": "达到目的", "pinyin": "dádào mùdì", "vi": "Đạt được mục đích" }
+        ],
+        "patterns": [
+          { "structure": "越来越多的……开始重视……", "meaning": "Ngày càng nhiều... bắt đầu coi trọng..." },
+          { "structure": "与……有着密切关系", "meaning": "... có quan hệ mật thiết với..." },
+          { "structure": "长期坚持……不仅可以……还能够……", "meaning": "Kiên trì... trong thời gian dài không chỉ có thể... mà còn có thể..." },
+          { "structure": "对……来说，……有利于……", "meaning": "Đối với...... có lợi cho..." },
+          { "structure": "只有……，才能……", "meaning": "Chỉ khi… thì mới có thể…" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：河内国际马拉松比赛",
+        "titleVi": "Bài khóa 2: Giải marathon quốc tế Hà Nội",
+        "originalText": "上周，一场国际马拉松比赛在河内市中心举行，吸引了来自二十多个国家和地区的选手报名参加。比赛当天，虽然天气比较热，但是运动员们仍然全力以赴，坚持跑完全程。道路两旁站着很多热情的观众，他们不断为选手加油，还主动提供饮用水。最后，一名年轻的越南选手取得了很好的成绩，赢得了大家的掌声。这次活动不仅推广了马拉松运动，也加强了各国运动员之间的交流与友谊。",
+        "vocabulary": [
+          { "zh": "国际马拉松比赛", "pinyin": "guójì mǎlāsōng bǐsài", "vi": "Giải marathon quốc tế" },
+          { "zh": "河内市中心", "pinyin": "Hénèi shì zhōngxīn", "vi": "Trung tâm thành phố Hà Nội" },
+          { "zh": "国家和地区", "pinyin": "guójiā hé dìqū", "vi": "Quốc gia và khu vực" },
+          { "zh": "报名参加", "pinyin": "bàomíng cānjiā", "vi": "Đăng ký tham gia" },
+          { "zh": "比赛当天", "pinyin": "bǐsài dàngtiān", "vi": "Ngày diễn ra cuộc thi" },
+          { "zh": "全力以赴", "pinyin": "quánlì yǐfù", "vi": "Nỗ lực hết mình" },
+          { "zh": "跑完全程", "pinyin": "pǎowán quánchéng", "vi": "Hoàn thành toàn bộ chặng đường" },
+          { "zh": "道路两旁", "pinyin": "dàolù liǎngpáng", "vi": "Hai bên đường" },
+          { "zh": "热情的观众", "pinyin": "rèqíng de guānzhòng", "vi": "Khán giả nhiệt tình" },
+          { "zh": "为……加油", "pinyin": "wèi……jiāyóu", "vi": "Cổ vũ cho..." },
+          { "zh": "主动提供", "pinyin": "zhǔdòng tígōng", "vi": "Chủ động cung cấp" },
+          { "zh": "饮用水", "pinyin": "yǐnyòngshuǐ", "vi": "Nước uống" },
+          { "zh": "取得成绩", "pinyin": "qǔdé chéngjì", "vi": "Đạt thành tích" },
+          { "zh": "推广", "pinyin": "tuīguǎng", "vi": "Quảng bá" },
+          { "zh": "交流与友谊", "pinyin": "jiāoliú yǔ yǒuyì", "vi": "Giao lưu và hữu nghị" }
+        ],
+        "patterns": [
+          { "structure": "一场……在……举行", "meaning": "Một... được tổ chức tại..." },
+          { "structure": "……吸引了来自……的……报名参加", "meaning": "... đã thu hút... đến từ... đăng ký tham gia" },
+          { "structure": "虽然……，但是……仍然……", "meaning": "Tuy...nhưng...vẫn..." },
+          { "structure": "……不断为……加油，还主动……", "meaning": "...không ngừng cổ vũ cho... và còn chủ động..." },
+          { "structure": "……取得了……，赢得了……", "meaning": "……đã đạt được… và nhận được…" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 3 (Dịch sang Hán): Đội tuyển Việt Nam tại Cúp châu Á",
+        "titleVi": "Đội tuyển Việt Nam tại Cúp châu Á",
+        "originalText": "Trong vòng bảng của Cúp châu Á lần này, đội tuyển Việt Nam lần lượt đối đầu với một số đội bóng có thực lực khá mạnh, khiến diễn biến các trận đấu vô cùng căng thẳng. Trước áp lực từ khán giả và truyền thông, các cầu thủ không hề bỏ cuộc mà tuân theo chiến thuật do huấn luyện viên sắp xếp, phối hợp nghiêm túc và tích cực phòng ngự. Nhờ tinh thần kiên cường và sự hợp tác đồng đội, họ đã đánh bại đối thủ ở trận đấu cuối cùng và thuận lợi bước vào vòng tiếp theo. Thành tích này khiến người hâm mộ cả nước vô cùng tự hào, đồng thời chứng minh bóng đá Việt Nam đang không ngừng tiến bộ. Các cầu thủ cho biết sau này sẽ tiếp tục nỗ lực tập luyện để giành thành tích tốt hơn.",
+        "vocabulary": [
+          { "zh": "小组赛", "pinyin": "xiǎozǔ sài", "vi": "Vòng bảng" },
+          { "zh": "亚洲杯", "pinyin": "Yàzhōu bēi", "vi": "Cúp châu Á" },
+          { "zh": "先后对阵", "pinyin": "xiānhòu duìzhèn", "vi": "Lần lượt đối đầu" },
+          { "zh": "实力较强的球队", "pinyin": "shílì jiàoqiáng de qiúduì", "vi": "Đội bóng có thực lực khá mạnh" },
+          { "zh": "没有放弃", "pinyin": "méiyǒu fàngqì", "vi": "Không bỏ cuộc" },
+          { "zh": "按照教练安排的战术", "pinyin": "ànzhào jiàoliàn ānpái de zhànshù", "vi": "Theo chiến thuật do huấn luyện viên sắp xếp" },
+          { "zh": "认真配合", "pinyin": "rènzhēn pèihé", "vi": "Phối hợp nghiêm túc" },
+          { "zh": "积极防守", "pinyin": "jījí fángshǒu", "vi": "Tích cực phòng ngự" },
+          { "zh": "顽强的精神", "pinyin": "wánqiáng de jīngshén", "vi": "Tinh thần kiên cường" },
+          { "zh": "团队合作", "pinyin": "tuánduì hézuò", "vi": "Hợp tác đồng đội" },
+          { "zh": "战胜对手", "pinyin": "zhànshèng duìshǒu", "vi": "Đánh bại đối thủ" },
+          { "zh": "进入下一轮", "pinyin": "jìnrù xià yī lún", "vi": "Bước vào vòng tiếp theo" },
+          { "zh": "全国球迷", "pinyin": "quánguó qiúmí", "vi": "Người hâm mộ cả nước" },
+          { "zh": "不断进步", "pinyin": "bùduàn jìnbù", "vi": "Không ngừng tiến bộ" },
+          { "zh": "努力训练", "pinyin": "nǔlì xùnliàn", "vi": "Nỗ lực tập luyện" }
+        ],
+        "patterns": [
+          { "structure": "在……中，……先后对阵……", "meaning": "Trong..., ... lần lượt đối đầu với..." },
+          { "structure": "面对……，……没有……，而是……", "meaning": "Trước..., ... không... mà..." },
+          { "structure": "按照……，……认真……、积极……", "meaning": "Theo..., ... nghiêm túc... và tích cực..." },
+          { "structure": "凭借……，……顺利进入……", "meaning": "Nhờ..., ... thuận lợi bước vào..." },
+          { "structure": "……让……感到……，也证明……", "meaning": "... khiến... cảm thấy... và cũng chứng minh..." }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 4 (Dịch sang Hán): Trở lại sân đấu sau chấn thương",
+        "titleVi": "Trở lại sân đấu sau chấn thương",
+        "originalText": "Một cầu thủ trẻ bị chấn thương nghiêm trọng ở chân trong trận đấu năm ngoái nên buộc phải rời sân để điều trị. Trong thời gian nghỉ dưỡng, mỗi ngày anh đều tiến hành tập phục hồi theo chỉ định của bác sĩ, đồng thời nghiêm túc xem lại video thi đấu để học các kỹ thuật và chiến thuật mới. Sau hơn nửa năm nỗ lực, tình trạng cơ thể của anh dần chuyển biến tốt và gần đây cuối cùng đã trở lại tập luyện cùng đội. Khi lần đầu trở lại sân đấu, tuy có phần căng thẳng nhưng anh vẫn thể hiện rất xuất sắc. Đối với anh, lần trở lại này là một khởi đầu mới trong sự nghiệp thi đấu, đồng thời cho thấy chỉ cần kiên trì nỗ lực thì sẽ có cơ hội vượt qua khó khăn.",
+        "vocabulary": [
+          { "zh": "严重受伤", "pinyin": "yánzhòng shòushāng", "vi": "Chấn thương nghiêm trọng" },
+          { "zh": "离开赛场", "pinyin": "líkāi sàichǎng", "vi": "Rời sân đấu" },
+          { "zh": "接受治疗", "pinyin": "jiēshòu zhìliáo", "vi": "Tiếp nhận điều trị" },
+          { "zh": "休养期间", "pinyin": "xiūyǎng qījiān", "vi": "Trong thời gian nghỉ dưỡng" },
+          { "zh": "康复训练", "pinyin": "kāngfù xùnliàn", "vi": "Tập phục hồi" },
+          { "zh": "遵照医嘱", "pinyin": "zūnzhào yīzhǔ", "vi": "Tuân theo chỉ định của bác sĩ" },
+          { "zh": "观看比赛录像", "pinyin": "guānkàn bǐsài lùxiàng", "vi": "Xem lại video thi đấu" },
+          { "zh": "身体情况", "pinyin": "shēntǐ qíngkuàng", "vi": "Tình trạng cơ thể" },
+          { "zh": "逐渐好转", "pinyin": "zhújiàn hǎozhuǎn", "vi": "Dần chuyển biến tốt" },
+          { "zh": "重新参加球队训练", "pinyin": "chóngxīn cānjiā qiúduì xùnliàn", "vi": "Trở lại tập luyện cùng đội" },
+          { "zh": "首次重返赛场", "pinyin": "shǒucì chóngfǎn sàichǎng", "vi": "Lần đầu trở lại sân đấu" },
+          { "zh": "发挥得非常出色", "pinyin": "fāhuī de fēicháng chūsè", "vi": "Thể hiện xuất sắc" },
+          { "zh": "复出", "pinyin": "fùchū", "vi": "Trở lại thi đấu" },
+          { "zh": "职业生涯", "pinyin": "zhíyè shēngyá", "vi": "Sự nghiệp thi đấu" },
+          { "zh": "克服困难", "pinyin": "kèfú kùnnan", "vi": "Vượt qua khó khăn" }
+        ],
+        "patterns": [
+          { "structure": "在……中……，不得不……", "meaning": "Trong......, ... buộc phải..." },
+          { "structure": "……期间，每天……，同时……", "meaning": "Trong thời gian... mỗi ngày... đồng thời..." },
+          { "structure": "经过……的努力，……逐渐……", "meaning": "Sau... nỗ lực,... dần..." },
+          { "structure": "第一次回到……时，……发挥得……", "meaning": "Khi lần đầu trở lại..., ... đã thể hiện..." },
+          { "structure": "只要……，就有机会……", "meaning": "Chỉ cần... thì sẽ có cơ hội..." }
+        ]
+      }
+    ]
+  },
+  "bai8": {
+    "lessonNumber": 8,
+    "lessonTitle": "Bài 8: Khí hậu và cảnh báo thiên tai (第八课：气候与灾害预警)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng trong các chủ đề dự báo thời tiết, biến đổi khí hậu, cảnh báo thiên tai và chuẩn bị phòng tránh thiên tai; nâng cao năng lực biên dịch Trung-Việt và Việt-Trung đối với văn bản về khí hậu và thiên tai; xử lý chính xác thông tin về xu thế thời tiết, mức độ rủi ro, yêu cầu cảnh báo và khuyến cáo an toàn.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：沿海地区台风灾害预警",
+        "titleVi": "Bài khóa 1: Cảnh báo thiên tai bão ở vùng ven biển",
+        "originalText": "气象部门发布消息，受今年第六号台风影响，越南中部沿海地区从今晚起将出现大到暴雨，并伴有强风和雷电。部分海域可能出现高浪，山区也存在山洪和泥石流风险。有关部门已要求渔船尽快回港避风，并提醒居民关好门窗，准备饮用水和必要药品。市民应及时关注最新预警，减少不必要的外出，避免经过低洼路段和危险桥梁，以确保生命与财产安全。",
+        "vocabulary": [
+          { "zh": "气象部门", "pinyin": "qìxiàng bùmén", "vi": "Cơ quan khí tượng" },
+          { "zh": "发布消息", "pinyin": "fābù xiāoxi", "vi": "Công bố thông tin" },
+          { "zh": "第六号台风", "pinyin": "dì liù hào táifēng", "vi": "Cơn bão số 6" },
+          { "zh": "中部沿海地区", "pinyin": "zhōngbù yánhǎi dìqū", "vi": "Khu vực ven biển miền Trung" },
+          { "zh": "暴雨", "pinyin": "bàoyǔ", "vi": "Mưa to" },
+          { "zh": "伴有", "pinyin": "bànyǒu", "vi": "Kèm theo" },
+          { "zh": "强风和雷电", "pinyin": "qiángfēng hé léidiàn", "vi": "Gió mạnh và sấm sét" },
+          { "zh": "海域", "pinyin": "hǎiyù", "vi": "Vùng biển" },
+          { "zh": "高浪", "pinyin": "gāolàng", "vi": "Sóng lớn" },
+          { "zh": "泥石流", "pinyin": "níshíliú", "vi": "Sạt lở" },
+          { "zh": "渔船", "pinyin": "yúchuán", "vi": "Tàu thuyền đánh cá" },
+          { "zh": "回港避风", "pinyin": "huí gǎng bìfēng", "vi": "Trở về cảng tránh gió bão" },
+          { "zh": "必要药品", "pinyin": "bìyào yàopǐn", "vi": "Thuốc men cần thiết" },
+          { "zh": "低洼路段", "pinyin": "dīwā lùduàn", "vi": "Đoạn đường trũng thấp" },
+          { "zh": "生命与财产安全", "pinyin": "shēngmìng yǔ cáichǎn ānquán", "vi": "An toàn tính mạng và tài sản" }
+        ],
+        "patterns": [
+          { "structure": "受……影响，……将出现……", "meaning": "Do ảnh hưởng của..., ... sẽ xuất hiện..." },
+          { "structure": "并伴有……", "meaning": "...và kèm theo..." },
+          { "structure": "可能出现……，……也存在……风险", "meaning": "...có thể xuất hiện..., ... cũng có nguy cơ..." },
+          { "structure": "已要求……尽快……，并提醒……", "meaning": "Đã yêu cầu... nhanh chóng..., đồng thời nhắc nhở..." },
+          { "structure": "应及时……，避免……，以确保……", "meaning": "Cần kịp thời..., tránh..., nhằm bảo đảm..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：气候变化与极端天气",
+        "titleVi": "Bài khóa 2: Biến đổi khí hậu và thời tiết cực đoan",
+        "originalText": "近年来，全球变暖使东南亚的气候出现明显变化，极端高温、长期干旱和强降雨发生得更加频繁。一些地区的雨季比往年推迟，降雨却常常集中在短时间内，给农业生产和城市排水带来很大压力。专家指出，气候变化不仅影响粮食安全和居民健康，也增加了洪涝灾害的风险。因此，各国需要加强气象监测，完善预警机制，同时推动节能减排，提高社会应对气候灾害的能力。",
+        "vocabulary": [
+          { "zh": "全球变暖", "pinyin": "quánqiú biànnuǎn", "vi": "Sự nóng lên toàn cầu" },
+          { "zh": "气候变化", "pinyin": "qìhòu biànhuà", "vi": "Biến đổi khí hậu" },
+          { "zh": "极端高温", "pinyin": "jíduān gāowēn", "vi": "Nắng nóng cực đoan" },
+          { "zh": "长期干旱", "pinyin": "chángqī gānhàn", "vi": "Hạn hán kéo dài" },
+          { "zh": "强降雨", "pinyin": "qiáng jiàngyǔ", "vi": "Mưa lớn, mưa cường độ mạnh" },
+          { "zh": "发生频繁", "pinyin": "fāshēng pínfán", "vi": "Xảy ra thường xuyên" },
+          { "zh": "雨季推迟", "pinyin": "yǔjì tuīchí", "vi": "Mùa mưa đến muộn" },
+          { "zh": "短时间内", "pinyin": "duǎn shíjiān nèi", "vi": "Trong thời gian ngắn" },
+          { "zh": "农业生产", "pinyin": "nóngyè shēngchǎn", "vi": "Sản xuất nông nghiệp" },
+          { "zh": "城市排水", "pinyin": "chéngshì páishuǐ", "vi": "Thoát nước đô thị" },
+          { "zh": "粮食安全", "pinyin": "liángshí ānquán", "vi": "An ninh lương thực" },
+          { "zh": "居民健康", "pinyin": "jūmín jiànkāng", "vi": "Sức khỏe người dân" },
+          { "zh": "气象监测", "pinyin": "qìxiàng jiāncè", "vi": "Quan trắc khí tượng" },
+          { "zh": "完善预警机制", "pinyin": "wánshàn yùjǐng jīzhì", "vi": "Hoàn thiện cơ chế cảnh báo" },
+          { "zh": "节能减排", "pinyin": "jiénéng jiǎnpái", "vi": "Tiết kiệm năng lượng, giảm phát thải" }
+        ],
+        "patterns": [
+          { "structure": "近年来，……使……出现明显变化", "meaning": "Trong những năm gần đây...khiến...xuất hiện những thay đổi rõ rệt" },
+          { "structure": "……发生得更加频繁", "meaning": "...xảy ra thường xuyên hơn" },
+          { "structure": "……比往年……，却常常……", "meaning": "...so với mọi năm..., nhưng lại thường..." },
+          { "structure": "……不仅影响……，也增加了……的风险", "meaning": "...không chỉ ảnh hưởng đến...mà còn làm tăng nguy cơ..." },
+          { "structure": "因此，……需要……，同时……", "meaning": "Vì vậy...cần..., đồng thời..." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 3 (Dịch sang Hán): Cảnh báo mưa lớn, lũ quét và sạt lở đất",
+        "titleVi": "Cảnh báo mưa lớn, lũ quét và sạt lở đất",
+        "originalText": "Theo dự báo khí tượng, do ảnh hưởng chung của không khí lạnh và gió mùa, từ đêm nay khu vực miền núi phía Bắc Việt Nam sẽ có mưa vừa đến mưa to, một số nơi có thể mưa rất to. Một vài địa phương có nguy cơ cao xảy ra lũ quét, sạt lở đất và ngập úng cục bộ. Chính quyền địa phương đã yêu cầu người dân sống gần sông suối hoặc dưới chân núi kịp thời theo dõi thông tin cảnh báo và chủ động di chuyển đến nơi an toàn khi cần thiết. Người dân không nên đi qua cầu tạm, những con đường ngập sâu hoặc khu vực có dòng nước chảy xiết. Các trường học cũng cần căn cứ tình hình thực tế để kịp thời điều chỉnh lịch học.",
+        "vocabulary": [
+          { "zh": "冷空气", "pinyin": "lěng kōngqì", "vi": "Không khí lạnh" },
+          { "zh": "季风", "pinyin": "jìfēng", "vi": "Gió mùa" },
+          { "zh": "共同影响", "pinyin": "gòngtóng yǐngxiǎng", "vi": "Ảnh hưởng chung" },
+          { "zh": "中到大雨", "pinyin": "zhōng dào dàyǔ", "vi": "Mưa vừa đến mưa to" },
+          { "zh": "山洪", "pinyin": "shānhóng", "vi": "Lũ quét" },
+          { "zh": "山体滑坡", "pinyin": "shāntǐ huápō", "vi": "Sạt lở đất" },
+          { "zh": "局部积水", "pinyin": "júbù jīshuǐ", "vi": "Ngập úng cục bộ" },
+          { "zh": "风险较高", "pinyin": "fēngxiǎn jiàogāo", "vi": "Nguy cơ cao" },
+          { "zh": "当地政府", "pinyin": "dāngdì zhèngfǔ", "vi": "Chính quyền địa phương" },
+          { "zh": "河流附近", "pinyin": "héliú fùjìn", "vi": "Gần sông suối" },
+          { "zh": "山脚下", "pinyin": "shānjiǎoxià", "vi": "Dưới chân núi" },
+          { "zh": "主动转移", "pinyin": "zhǔdòng zhuǎnyí", "vi": "Chủ động di chuyển" },
+          { "zh": "安全地点", "pinyin": "ānquán dìdiǎn", "vi": "Nơi an toàn" },
+          { "zh": "临时桥梁", "pinyin": "línshí qiáoliáng", "vi": "Cầu tạm" },
+          { "zh": "调整上课安排", "pinyin": "tiáozhěng shàngkè ānpái", "vi": "Điều chỉnh lịch học" }
+        ],
+        "patterns": [
+          { "structure": "据……，受……和……共同影响", "meaning": "Theo..., do ảnh hưởng kết hợp của... và..." },
+          { "structure": "个别地方发生……的风险较高", "meaning": "Một vài nơi có nguy cơ cao xảy ra..." },
+          { "structure": "……已要求……及时……，必要时……", "meaning": "...đã yêu cầu... kịp thời..., khi cần thiết..." },
+          { "structure": "不要经过……或……", "meaning": "Không nên đi qua... hoặc..." },
+          { "structure": "……也应根据……及时调整……", "meaning": "...cũng cần căn cứ... để kịp thời điều chỉnh..." }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 4 (Dịch sang Hán): Nâng cao kỹ năng phòng tránh thiên tai trong cộng đồng",
+        "titleVi": "Nâng cao kỹ năng phòng tránh thiên tai trong cộng đồng",
+        "originalText": "Trước diễn biến ngày càng phức tạp của thiên tai, việc nâng cao năng lực phòng tránh trong cộng đồng trở nên vô cùng cần thiết. Mỗi gia đình nên chuẩn bị một túi khẩn cấp gồm nước uống, thực phẩm khô, đèn pin, thuốc thường dùng và giấy tờ quan trọng. Khi nhận được cảnh báo, người dân cần giữ bình tĩnh, kiểm tra nguồn điện, khóa gas và làm theo hướng dẫn của cơ quan chức năng. Các địa phương nên tổ chức diễn tập sơ tán định kỳ, đặc biệt tại trường học và khu dân cư có nguy cơ cao. Sự chuẩn bị đầy đủ và phối hợp kịp thời có thể giảm thiểu thiệt hại về người và tài sản do thiên tai gây ra.",
+        "vocabulary": [
+          { "zh": "灾害形势复杂", "pinyin": "zāihài xíngshì fùzá", "vi": "Diễn biến thiên tai phức tạp" },
+          { "zh": "防灾能力", "pinyin": "fángzāi nénglì", "vi": "Năng lực phòng tránh thiên tai" },
+          { "zh": "应急包", "pinyin": "yìngjí bāo", "vi": "Túi khẩn cấp" },
+          { "zh": "干粮", "pinyin": "gānliáng", "vi": "Thực phẩm khô" },
+          { "zh": "手电筒", "pinyin": "shǒudiàntǒng", "vi": "Đèn pin" },
+          { "zh": "常用药品", "pinyin": "chángyòng yàopǐn", "vi": "Thuốc thường dùng" },
+          { "zh": "重要证件", "pinyin": "zhòngyào zhèngjiàn", "vi": "Giấy tờ quan trọng" },
+          { "zh": "保持冷静", "pinyin": "bǎochí lěngjìng", "vi": "Giữ bình tĩnh" },
+          { "zh": "检查电源", "pinyin": "jiǎnchá diànyuán", "vi": "Kiểm tra nguồn điện" },
+          { "zh": "关闭燃气", "pinyin": "guānbì ránqì", "vi": "Khóa gas" },
+          { "zh": "有关部门", "pinyin": "yǒuguān bùmén", "vi": "Cơ quan chức năng" },
+          { "zh": "疏散", "pinyin": "shūsàn", "vi": "Sơ tán" },
+          { "zh": "定期演练", "pinyin": "dìngqī yǎnliàn", "vi": "Diễn tập định kỳ" },
+          { "zh": "高风险居民区", "pinyin": "gāo fēngxiǎn jūmínqū", "vi": "Khu dân cư có nguy cơ cao" },
+          { "zh": "减少损失", "pinyin": "jiǎnshǎo sǔnshī", "vi": "Giảm thiểu thiệt hại" }
+        ],
+        "patterns": [
+          { "structure": "面对……，提高……十分必要", "meaning": "Trước..., việc nâng cao... là vô cùng cần thiết" },
+          { "structure": "每个……都应该准备……，里面包括……", "meaning": "Mỗi... đều nên chuẩn bị..., bên trong gồm..." },
+          { "structure": "收到……后，……要……，并按照……", "meaning": "Sau khi nhận được..., ...cần..., đồng thời làm theo..." },
+          { "structure": "应定期组织……，特别是在……", "meaning": "Nên định kỳ tổ chức..., đặc biệt tại..." },
+          { "structure": "充分的……和及时的……能够有效……", "meaning": "Sự... đầy đủ và... kịp thời có thể... một cách hiệu quả" }
+        ]
+      }
+    ]
+  },
+  "bai9": {
+    "lessonNumber": 9,
+    "lessonTitle": "Bài 9: Du lịch văn hóa và di sản thế giới (第九课：文化旅游与世界遗产)",
+    "objectives": "Nắm vững từ vựng và cách diễn đạt thường dùng trong các chủ đề du lịch văn hóa, danh lam thắng cảnh, giá trị di sản thế giới, bảo tồn di sản và phát triển bền vững; nâng cao năng lực biên dịch Trung-Việt và Việt-Trung đối với văn bản du lịch văn hóa; xử lý chính xác thông tin về vị trí địa lý, bối cảnh lịch sử, giá trị văn hóa, trải nghiệm du lịch và biện pháp bảo tồn.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：会安古城与文化旅游",
+        "titleVi": "Bài khóa 1: Phố cổ Hội An và du lịch văn hóa",
+        "originalText": "会安位于越南中部广南省，曾经是东南亚重要而繁华的商港。古城内保存着许多古老的房屋、会馆和寺庙，建筑风格体现了越南、中国和日本文化的交流。1999年，会安古城被联合国教科文组织列入世界文化遗产名录。每到夜晚，街道上挂满五彩缤纷的灯笼，吸引成千上万的游客前来参观。游客不仅可以了解当地历史，还能体验传统手工艺和特色美食。",
+        "vocabulary": [
+          { "zh": "会安古镇", "pinyin": "Huì'ān Gǔzhèn", "vi": "Phố cổ Hội An" },
+          { "zh": "越南中部", "pinyin": "Yuènán zhōngbù", "vi": "Miền Trung Việt Nam" },
+          { "zh": "广南省", "pinyin": "Guǎngnán shěng", "vi": "Tỉnh Quảng Nam" },
+          { "zh": "繁华商港", "pinyin": "fánhuá shānggǎng", "vi": "Cảng thương mại sầm uất" },
+          { "zh": "保存完好", "pinyin": "bǎocún wánhǎo", "vi": "Được bảo tồn nguyên vẹn" },
+          { "zh": "会馆", "pinyin": "huìguǎn", "vi": "Hội quán" },
+          { "zh": "建筑风格", "pinyin": "jiànzhú fēnggé", "vi": "Phong cách kiến trúc" },
+          { "zh": "文化交流", "pinyin": "wénhuà jiāoliú", "vi": "Giao lưu văn hóa" },
+          { "zh": "列入", "pinyin": "lièrù", "vi": "Đưa vào, ghi vào" },
+          { "zh": "世界文化遗产名录", "pinyin": "shìjiè wénhuà yíchǎn mínglù", "vi": "Danh sách Di sản Văn hóa Thế giới" },
+          { "zh": "五彩缤纷", "pinyin": "wǔcǎi bīnfēn", "vi": "Rực rỡ sắc màu" },
+          { "zh": "挂满", "pinyin": "guàmǎn", "vi": "Treo đầy" },
+          { "zh": "成千上万", "pinyin": "chéng qiān shàng wàn", "vi": "Hàng nghìn, hàng vạn" },
+          { "zh": "传统手工艺", "pinyin": "chuántǒng shǒugōngyì", "vi": "Nghề thủ công truyền thống" },
+          { "zh": "特色美食", "pinyin": "tèsè měishí", "vi": "Ẩm thực đặc sắc" }
+        ],
+        "patterns": [
+          { "structure": "……位于……，曾经是……", "meaning": "...nằm ở..., từng là..." },
+          { "structure": "……保存着许多……", "meaning": "...còn lưu giữ nhiều..." },
+          { "structure": "……体现了……之间的交流", "meaning": "...thể hiện sự giao lưu giữa..." },
+          { "structure": "……被……列入……名录", "meaning": "...được...đưa vào danh sách..." },
+          { "structure": "每到……便……，吸引……", "meaning": "Mỗi khi đến..., ...lại..., thu hút..." }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：下龙湾的自然遗产价值",
+        "titleVi": "Bài khóa 2: Giá trị di sản thiên nhiên của Vịnh Hạ Long",
+        "originalText": "下龙湾是越南著名的旅游景点，以独特的石灰岩岛屿和海上风光而闻名。海湾内分布着大大小小的岛屿和溶洞，游客可以乘船游览，也可以划皮划艇近距离欣赏自然景观。下龙湾被列为世界自然遗产后，越来越多的国内外游客来到这里。旅游业的发展带来了就业机会，但也给生态环境造成一定压力。因此，景区需要控制游客数量，减少塑料垃圾，并加强对海洋资源的保护。",
+        "vocabulary": [
+          { "zh": "下龙湾", "pinyin": "Xiàlóngwān", "vi": "Vịnh Hạ Long" },
+          { "zh": "石灰岩岛屿", "pinyin": "shíhuīyán dǎoyǔ", "vi": "Các đảo đá vôi" },
+          { "zh": "海上风光", "pinyin": "hǎishàng fēngguāng", "vi": "Phong cảnh trên biển" },
+          { "zh": "分布", "pinyin": "fēnbù", "vi": "Phân bố" },
+          { "zh": "溶洞", "pinyin": "róngdòng", "vi": "Hang động đá vôi" },
+          { "zh": "乘船游览", "pinyin": "chéngchuán yóulǎn", "vi": "Tham quan bằng thuyền" },
+          { "zh": "皮划艇", "pinyin": "píhuátǐng", "vi": "Thuyền kayak" },
+          { "zh": "近距离", "pinyin": "jìnjùlí", "vi": "Ở khoảng cách gần" },
+          { "zh": "自然景观", "pinyin": "zìrán jǐngguān", "vi": "Cảnh quan thiên nhiên" },
+          { "zh": "国内外游客", "pinyin": "guónèiwài yóukè", "vi": "Du khách trong và ngoài nước" },
+          { "zh": "就业机会", "pinyin": "jiùyè jīhuì", "vi": "Cơ hội việc làm" },
+          { "zh": "生态环境", "pinyin": "shēngtài huánjìng", "vi": "Môi trường sinh thái" },
+          { "zh": "游客数量", "pinyin": "yóukè shùliàng", "vi": "Số lượng du khách" },
+          { "zh": "塑料垃圾", "pinyin": "sùliào lājī", "vi": "Rác thải nhựa" },
+          { "zh": "海洋资源", "pinyin": "hǎiyáng zīyuán", "vi": "Tài nguyên biển" }
+        ],
+        "patterns": [
+          { "structure": "……以……而闻名", "meaning": "...nổi tiếng/được biết đến với..." },
+          { "structure": "……分布着大大小小的……", "meaning": "...phân bố nhiều... lớn nhỏ" },
+          { "structure": "游客可以……，也可以……", "meaning": "Du khách có thể... cũng có thể..." },
+          { "structure": "……带来了……，但也给……造成……", "meaning": "...mang lại... nhưng cũng gây... cho..." },
+          { "structure": "为了……，……需要……，并……", "meaning": "Để... cần..., đồng thời..." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 3 (Dịch sang Hán): Bảo tồn Quần thể di tích Cố đô Huế",
+        "titleVi": "Bảo tồn Quần thể di tích Cố đô Huế",
+        "originalText": "Quần thể di tích Cố đô Huế nằm ở miền Trung Việt Nam, từng là trung tâm chính trị và văn hóa quan trọng của triều Nguyễn. Nơi đây bao gồm Hoàng thành, lăng tẩm, chùa chiền và nhiều công trình cổ có giá trị lịch sử. Sau khi được UNESCO công nhận là Di sản Văn hóa Thế giới, Huế ngày càng thu hút nhiều du khách trong và ngoài nước. Tuy nhiên, khí hậu khắc nghiệt và lượng khách tăng nhanh cũng gây ảnh hưởng đến một số di tích. Vì vậy, địa phương đang trùng tu lại các công trình xuống cấp, đào tạo hướng dẫn viên và nâng cao ý thức bảo vệ di sản cho cộng đồng.",
+        "vocabulary": [
+          { "zh": "顺化古都遗迹群", "pinyin": "Shùnhuà gǔdū yíjìqún", "vi": "Quần thể di tích Cố đô Huế" },
+          { "zh": "阮朝", "pinyin": "Ruǎncháo", "vi": "Triều Nguyễn" },
+          { "zh": "政治中心", "pinyin": "zhèngzhì zhōngxīn", "vi": "Trung tâm chính trị" },
+          { "zh": "皇城", "pinyin": "huángchéng", "vi": "Hoàng thành" },
+          { "zh": "陵墓", "pinyin": "língmù", "vi": "Lăng tẩm" },
+          { "zh": "寺庙", "pinyin": "sìmiào", "vi": "Chùa chiền" },
+          { "zh": "古建筑", "pinyin": "gǔ jiànzhù", "vi": "Công trình cổ" },
+          { "zh": "历史价值", "pinyin": "lìshǐ jiàzhí", "vi": "Giá trị lịch sử" },
+          { "zh": "被认定为", "pinyin": "bèi rèndìng wéi", "vi": "Được công nhận là" },
+          { "zh": "恶劣气候", "pinyin": "èliè qìhòu", "vi": "Khí hậu khắc nghiệt" },
+          { "zh": "遗迹", "pinyin": "yíjì", "vi": "Di tích" },
+          { "zh": "修复", "pinyin": "xiūfù", "vi": "Sửa chữa, trùng tu" },
+          { "zh": "受损建筑", "pinyin": "shòusǔn jiànzhù", "vi": "Công trình xuống cấp" },
+          { "zh": "培训导游", "pinyin": "péixùn dǎoyóu", "vi": "Đào tạo hướng dẫn viên" },
+          { "zh": "遗产保护意识", "pinyin": "yíchǎn bǎohù yìshí", "vi": "Ý thức bảo vệ di sản" }
+        ],
+        "patterns": [
+          { "structure": "……曾在……中发挥重要作用", "meaning": "... từng giữ vai trò quan trọng trong..." },
+          { "structure": "这里包括……以及许多……", "meaning": "Nơi đây bao gồm… cùng nhiều…" },
+          { "structure": "被……认定为……以后，……日益……", "meaning": "Sau khi được… công nhận là…, … ngày càng…" },
+          { "structure": "然而，……也对……产生了影响", "meaning": "Tuy nhiên,… cũng gây ảnh hưởng đến…" },
+          { "structure": "因此，当地正在……，同时……", "meaning": "Vì vậy, địa phương đang…, đồng thời…" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 4 (Dịch sang Hán): Trải nghiệm du lịch văn hóa tại Bắc Kinh",
+        "titleVi": "Trải nghiệm du lịch văn hóa tại Bắc Kinh",
+        "originalText": "Bắc Kinh có lịch sử lâu đời và tập trung nhiều danh lam thắng cảnh nổi tiếng như Cố Cung, Thiên Đàn và Vạn Lý Trường Thành. Khi tham quan Cố Cung, du khách có thể tìm hiểu đời sống cung đình xưa và đặc điểm của kiến trúc truyền thống Trung Quốc. Ngoài việc tham quan di tích, nhiều người còn lựa chọn xem Kinh kịch, thưởng thức các món ăn địa phương và đi dạo trong các ngõ cổ. Vào mùa cao điểm, một số điểm tham quan thường rất đông nên du khách cần đặt vé trước và tuân thủ quy định. Một chuyến đi có trách nhiệm vừa mang lại trải nghiệm đáng nhớ, vừa góp phần bảo vệ giá trị văn hóa của di sản.",
+        "vocabulary": [
+          { "zh": "历史悠久", "pinyin": "lìshǐ yōujiǔ", "vi": "Lịch sử lâu đời" },
+          { "zh": "集中许多", "pinyin": "jízhōng xǔduō", "vi": "Tập trung nhiều" },
+          { "zh": "名胜古迹", "pinyin": "míngshèng gǔjì", "vi": "Danh lam thắng cảnh" },
+          { "zh": "故宫", "pinyin": "Gùgōng", "vi": "Cố Cung" },
+          { "zh": "天坛", "pinyin": "Tiāntán", "vi": "Thiên Đàn" },
+          { "zh": "万里长城", "pinyin": "Wànlǐ Chángchéng", "vi": "Vạn Lý Trường Thành" },
+          { "zh": "宫廷生活", "pinyin": "gōngtíng shēnghuó", "vi": "Đời sống cung đình" },
+          { "zh": "传统建筑", "pinyin": "chuántǒng jiànzhù", "vi": "Kiến trúc truyền thống" },
+          { "zh": "京剧", "pinyin": "jīngjù", "vi": "Kinh kịch" },
+          { "zh": "当地美食", "pinyin": "dāngdì měishí", "vi": "Món ăn địa phương" },
+          { "zh": "老胡同", "pinyin": "lǎo hútòng", "vi": "Ngõ cổ" },
+          { "zh": "旅游旺季", "pinyin": "lǚyóu wàngjì", "vi": "Mùa cao điểm" },
+          { "zh": "提前订票", "pinyin": "tíqián dìngpiào", "vi": "Đặt vé trước" },
+          { "zh": "遵守规定", "pinyin": "zūnshǒu guīdìng", "vi": "Tuân thủ quy định" },
+          { "zh": "负责任的旅行", "pinyin": "fù zérèn de lǚxíng", "vi": "Chuyến đi có trách nhiệm" }
+        ],
+        "patterns": [
+          { "structure": "……历史悠久，集中了许多……", "meaning": "... có lịch sử lâu đời và tập trung nhiều..." },
+          { "structure": "参观……时，游客可以……", "meaning": "Khi tham quan..., du khách có thể..." },
+          { "structure": "除了……以外，许多人还会选择……", "meaning": "Ngoài..., nhiều người còn lựa chọn..." },
+          { "structure": "旅游旺季时，……，因此……", "meaning": "Vào mùa cao điểm,... nên..." },
+          { "structure": "……既能……，又有助于……", "meaning": "... vừa..., vừa góp phần..." }
+        ]
+      }
+    ]
+  },
+  "bai10": {
+    "lessonNumber": 10,
+    "lessonTitle": "Bài 10: Văn hóa doanh nghiệp (第十课：企业文化)",
+    "objectives": "Nắm vững từ vựng, thuật ngữ chuyên ngành và cách diễn đạt thường dùng trong các chủ đề văn hóa doanh nghiệp, giá trị doanh nghiệp, hợp tác nhóm, phát triển nhân viên và trách nhiệm xã hội; nâng cao năng lực biên dịch Trung-Việt và Việt-Trung đối với văn bản về văn hóa doanh nghiệp; có thể xử lý chính xác các thông tin về triết lý doanh nghiệp, phương thức quản lý, quan hệ nhân viên và trách nhiệm doanh nghiệp.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：企业文化与企业发展",
+        "titleVi": "Bài khóa 1: Văn hóa doanh nghiệp và phát triển doanh nghiệp",
+        "originalText": "企业文化是企业在长期发展过程中形成的价值观、行为规范和工作理念。良好的企业文化不仅能够增强员工的归属感和责任感，也有助于提高团队合作效率。企业应该通过明确的发展目标、公开透明的管理方式和良好的沟通机制，为员工创造积极、健康的工作环境。只有让员工认同企业的价值观，并积极参与企业发展，企业才能形成稳定的团队，提高自身的竞争力。",
+        "vocabulary": [
+          { "zh": "企业文化", "pinyin": "qǐyè wénhuà", "vi": "Văn hóa doanh nghiệp" },
+          { "zh": "企业发展", "pinyin": "qǐyè fāzhǎn", "vi": "Phát triển doanh nghiệp" },
+          { "zh": "价值观", "pinyin": "jiàzhíguān", "vi": "Giá trị quan / hệ giá trị" },
+          { "zh": "行为规范", "pinyin": "xíngwéi guīfàn", "vi": "Chuẩn mực hành vi" },
+          { "zh": "工作理念", "pinyin": "gōngzuò lǐniàn", "vi": "Quan niệm/triết lý làm việc" },
+          { "zh": "长期发展", "pinyin": "chángqī fāzhǎn", "vi": "Phát triển lâu dài" },
+          { "zh": "归属感", "pinyin": "guīshǔgǎn", "vi": "Cảm giác thuộc về" },
+          { "zh": "责任感", "pinyin": "zérèngǎn", "vi": "Tinh thần trách nhiệm" },
+          { "zh": "团队合作", "pinyin": "tuánduì hézuò", "vi": "Hợp tác nhóm" },
+          { "zh": "工作效率", "pinyin": "gōngzuò xiàolǜ", "vi": "Hiệu suất công việc" },
+          { "zh": "发展目标", "pinyin": "fāzhǎn mùbiāo", "vi": "Mục tiêu phát triển" },
+          { "zh": "管理方式", "pinyin": "guǎnlǐ fāngshì", "vi": "Phương thức quản lý" },
+          { "zh": "公开透明", "pinyin": "gōngkāi tòumíng", "vi": "Công khai, minh bạch" },
+          { "zh": "沟通机制", "pinyin": "gōutōng jīzhì", "vi": "Cơ chế giao tiếp" },
+          { "zh": "竞争力", "pinyin": "jìngzhēnglì", "vi": "Năng lực cạnh tranh" }
+        ],
+        "patterns": [
+          { "structure": "……是在……过程中形成的", "meaning": "… được hình thành trong quá trình…" },
+          { "structure": "不仅能够……，也有助于……", "meaning": "Không những có thể…, mà còn góp phần…" },
+          { "structure": "通过……，为……创造……", "meaning": "Thông qua…, tạo… cho…" },
+          { "structure": "提高…… / 增强…… / 形成……", "meaning": "Nâng cao (hiệu suất) / Tăng cường (trách nhiệm) / Xây dựng (đội ngũ)" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：企业价值观与员工成长",
+        "titleVi": "Bài khóa 2: Giá trị doanh nghiệp và sự phát triển của nhân viên",
+        "originalText": "随着企业不断发展，员工对工作环境、职业发展和个人价值实现的要求也越来越高。因此，企业文化不能只停留在口号上，而应该落实到日常管理和员工工作中。企业需要尊重员工的意见，为员工提供学习和培训机会，并建立公平、合理的评价制度。良好的企业文化能够帮助员工明确自己的发展方向，同时也能够增强员工对企业的信任。员工得到成长，企业也能够获得持续发展的动力。",
+        "vocabulary": [
+          { "zh": "企业价值观", "pinyin": "qǐyè jiàzhíguān", "vi": "Giá trị doanh nghiệp" },
+          { "zh": "员工成长", "pinyin": "yuángōng chéngzhǎng", "vi": "Sự phát triển của nhân viên" },
+          { "zh": "工作环境", "pinyin": "gōngzuò huánjìng", "vi": "Môi trường làm việc" },
+          { "zh": "职业发展", "pinyin": "zhíyè fāzhǎn", "vi": "Phát triển nghề nghiệp" },
+          { "zh": "个人价值", "pinyin": "gèrén jiàzhí", "vi": "Giá trị cá nhân" },
+          { "zh": "实现", "pinyin": "shíxiàn", "vi": "Thực hiện, hiện thực hóa" },
+          { "zh": "停留在", "pinyin": "tíngliú zài", "vi": "Dừng lại ở" },
+          { "zh": "日常管理", "pinyin": "rìcháng guǎnlǐ", "vi": "Quản lý hằng ngày" },
+          { "zh": "尊重意见", "pinyin": "zūnzhòng yìjiàn", "vi": "Tôn trọng ý kiến" },
+          { "zh": "培训机会", "pinyin": "péixùn jīhuì", "vi": "Cơ hội đào tạo" },
+          { "zh": "评价制度", "pinyin": "píngjià zhìdù", "vi": "Chế độ đánh giá" },
+          { "zh": "公平合理", "pinyin": "gōngpíng hélǐ", "vi": "Công bằng, hợp lý" },
+          { "zh": "发展方向", "pinyin": "fāzhǎn fāngxiàng", "vi": "Định hướng phát triển" },
+          { "zh": "信任", "pinyin": "xìnrèn", "vi": "Tin tưởng" },
+          { "zh": "持续发展", "pinyin": "chíxù fāzhǎn", "vi": "Phát triển bền vững/liên tục" }
+        ],
+        "patterns": [
+          { "structure": "随着……不断……，……也越来越……", "meaning": "Cùng với việc... không ngừng..., ... cũng ngày càng..." },
+          { "structure": "不能只停留在……，而应该……", "meaning": "Không thể chỉ dừng lại ở..., mà cần phải..." },
+          { "structure": "为……提供……", "meaning": "Cung cấp... cho..." },
+          { "structure": "帮助……明确……", "meaning": "Giúp... xác định rõ..." },
+          { "structure": "……得到……，……也能够……", "meaning": "Khi... được..., ... cũng có thể..." }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 3 (Dịch sang Hán): Xây dựng môi trường làm việc tích cực",
+        "titleVi": "Xây dựng môi trường làm việc tích cực",
+        "originalText": "Một môi trường làm việc tích cực có vai trò quan trọng đối với sự phát triển của doanh nghiệp. Doanh nghiệp cần xây dựng mối quan hệ hợp tác tốt giữa các bộ phận, khuyến khích nhân viên trao đổi ý kiến và cùng nhau giải quyết vấn đề. Trong công việc, người quản lý không chỉ cần quan tâm đến kết quả mà còn cần chú ý đến quá trình làm việc và sự phát triển của nhân viên. Khi nhân viên cảm thấy được tôn trọng và có cơ hội phát triển, họ sẽ có động lực và trách nhiệm cao hơn đối với công việc.",
+        "vocabulary": [
+          { "zh": "工作环境", "pinyin": "gōngzuò huánjìng", "vi": "Môi trường làm việc" },
+          { "zh": "积极", "pinyin": "jījí", "vi": "Tích cực" },
+          { "zh": "重要作用", "pinyin": "zhòngyào zuòyòng", "vi": "Vai trò quan trọng" },
+          { "zh": "合作关系", "pinyin": "hézuò guānxì", "vi": "Mối quan hệ hợp tác" },
+          { "zh": "各部门", "pinyin": "gè bùmén", "vi": "Các bộ phận" },
+          { "zh": "鼓励", "pinyin": "gǔlì", "vi": "Khuyến khích" },
+          { "zh": "交流意见", "pinyin": "jiāoliú yìjiàn", "vi": "Trao đổi ý kiến" },
+          { "zh": "解决问题", "pinyin": "jiějué wèntí", "vi": "Giải quyết vấn đề" },
+          { "zh": "管理人员", "pinyin": "guǎnlǐ rényuán", "vi": "Người quản lý" },
+          { "zh": "工作成果", "pinyin": "gōngzuò chéngguǒ", "vi": "Kết quả công việc" },
+          { "zh": "工作过程", "pinyin": "gōngzuò guòchéng", "vi": "Quá trình làm việc" },
+          { "zh": "得到尊重", "pinyin": "dédào zūnzhòng", "vi": "Được tôn trọng" },
+          { "zh": "发展机会", "pinyin": "fāzhǎn jīhuì", "vi": "Cơ hội phát triển" },
+          { "zh": "动力", "pinyin": "dònglì", "vi": "Động lực" },
+          { "zh": "责任", "pinyin": "zérèn", "vi": "Trách nhiệm" }
+        ],
+        "patterns": [
+          { "structure": "……对……具有重要作用", "meaning": "…… có vai trò quan trọng đối với……" },
+          { "structure": "不仅……还……", "meaning": "Không chỉ…… mà còn……" },
+          { "structure": "鼓励……并……", "meaning": "Khuyến khích…… và……" },
+          { "structure": "……会有更高的……", "meaning": "…… sẽ có…… cao hơn" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 4 (Dịch sang Hán): Văn hóa doanh nghiệp và trách nhiệm xã hội",
+        "titleVi": "Văn hóa doanh nghiệp và trách nhiệm xã hội",
+        "originalText": "Trong bối cảnh cạnh tranh ngày càng gay gắt, doanh nghiệp không chỉ cần nâng cao hiệu quả kinh doanh mà còn phải quan tâm đến trách nhiệm xã hội. Một doanh nghiệp có văn hóa tốt cần tôn trọng người lao động, bảo vệ môi trường và tích cực tham gia các hoạt động cộng đồng. Thực hiện trách nhiệm xã hội không chỉ giúp doanh nghiệp xây dựng hình ảnh tích cực mà còn góp phần nâng cao niềm tin của khách hàng và đối tác. Vì vậy, trách nhiệm xã hội nên trở thành một bộ phận quan trọng trong chiến lược phát triển lâu dài của doanh nghiệp.",
+        "vocabulary": [
+          { "zh": "激烈竞争", "pinyin": "jīliè jìngzhēng", "vi": "Cạnh tranh gay gắt" },
+          { "zh": "经营效益", "pinyin": "jīngyíng xiàoyì", "vi": "Hiệu quả kinh doanh" },
+          { "zh": "社会责任", "pinyin": "shèhuì zérèn", "vi": "Trách nhiệm xã hội" },
+          { "zh": "劳动者", "pinyin": "láodòngzhě", "vi": "Người lao động" },
+          { "zh": "保护环境", "pinyin": "bǎohù huánjìng", "vi": "Bảo vệ môi trường" },
+          { "zh": "社区活动", "pinyin": "shèqū huódòng", "vi": "Hoạt động cộng đồng" },
+          { "zh": "履行责任", "pinyin": "lǚxíng zérèn", "vi": "Thực hiện trách nhiệm" },
+          { "zh": "企业形象", "pinyin": "qǐyè xíngxiàng", "vi": "Hình ảnh doanh nghiệp" },
+          { "zh": "信任", "pinyin": "xìnrèn", "vi": "Niềm tin" },
+          { "zh": "客户", "pinyin": "kèhù", "vi": "Khách hàng" },
+          { "zh": "合作伙伴", "pinyin": "hézuò huǒbàn", "vi": "Đối tác" },
+          { "zh": "发展战略", "pinyin": "fāzhǎn zhànlüè", "vi": "Chiến lược phát triển" },
+          { "zh": "长期发展", "pinyin": "chángqī fāzhǎn", "vi": "Phát triển lâu dài" },
+          { "zh": "重要组成部分", "pinyin": "zhòngyào zǔchéng bùfen", "vi": "Bộ phận quan trọng" },
+          { "zh": "提高", "pinyin": "tígāo", "vi": "Nâng cao" }
+        ],
+        "patterns": [
+          { "structure": "在……背景下，……", "meaning": "Trong bối cảnh……, ……" },
+          { "structure": "不仅要……，还要……", "meaning": "Không chỉ cần…… mà còn phải……" },
+          { "structure": "不仅有助于……，还能够……", "meaning": "Không chỉ góp phần…… mà còn có thể……" },
+          { "structure": "因此，……应该成为……", "meaning": "Vì vậy, …… nên trở thành……" }
+        ]
+      }
+    ]
+  },
+  "bai11": {
+    "lessonNumber": 11,
+    "lessonTitle": "Bài 11: Truyền thông và báo chí hiện đại (第十一课：新闻传媒与大众传播)",
+    "objectives": "Nắm vững từ vựng, thuật ngữ chuyên ngành và cách diễn đạt thường dùng trong các chủ đề báo chí và truyền thông, truyền thông truyền thống, truyền thông mới, video ngắn, mạng xã hội, trí tuệ nhân tạo và kiểm chứng thông tin; nâng cao năng lực biên dịch Trung – Việt và Việt – Trung đối với văn bản báo chí – truyền thông; có khả năng xử lý chính xác các nội dung liên quan đến thông tin báo chí, truyền thông, nền tảng mạng xã hội và trí tuệ nhân tạo.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：新闻传媒与社会生活",
+        "titleVi": "Bài khóa 1: Báo chí truyền thông và đời sống xã hội",
+        "originalText": "随着互联网和移动技术的发展，人们获取新闻的方式发生了明显变化。除了报纸、电视和广播，越来越多的人通过新闻网站、社交媒体和短视频平台了解社会热点。新媒体传播速度快、互动性强，但也容易出现信息不完整、来源不清等问题。因此，新闻媒体在提高传播效率的同时，更应该重视新闻的真实性。",
+        "vocabulary": [
+          { "zh": "新闻传媒", "pinyin": "xīnwén chuánméi", "vi": "Báo chí và truyền thông" },
+          { "zh": "社会生活", "pinyin": "shèhuì shēnghuó", "vi": "Đời sống xã hội" },
+          { "zh": "互联网", "pinyin": "hùliánwǎng", "vi": "Internet" },
+          { "zh": "移动技术", "pinyin": "yídòng jìshù", "vi": "Công nghệ di động" },
+          { "zh": "获取新闻", "pinyin": "huòqǔ xīnwén", "vi": "Tiếp nhận tin tức" },
+          { "zh": "新闻网站", "pinyin": "xīnwén wǎngzhàn", "vi": "Trang web tin tức" },
+          { "zh": "社交媒体", "pinyin": "shèjiāo méitǐ", "vi": "Mạng xã hội" },
+          { "zh": "短视频平台", "pinyin": "duǎn shìpín píngtái", "vi": "Nền tảng video ngắn" },
+          { "zh": "社会热点", "pinyin": "shèhuì rèdiǎn", "vi": "Vấn đề xã hội nổi bật" },
+          { "zh": "传播速度", "pinyin": "chuánbō sùdù", "vi": "Tốc độ truyền tải" },
+          { "zh": "互动性", "pinyin": "hùdòngxìng", "vi": "Tính tương tác" },
+          { "zh": "信息来源", "pinyin": "xìnxī láiyuán", "vi": "Nguồn thông tin" },
+          { "zh": "传播效率", "pinyin": "chuánbō xiàolǜ", "vi": "Hiệu quả truyền thông" },
+          { "zh": "新闻真实性", "pinyin": "xīnwén zhēnshíxìng", "vi": "Tính xác thực của tin tức" },
+          { "zh": "信息不完整", "pinyin": "xìnxī bù wánzhěng", "vi": "Thông tin không đầy đủ" }
+        ],
+        "patterns": [
+          { "structure": "随着……的发展，……也……", "meaning": "Cùng với sự phát triển của…, … cũng…" },
+          { "structure": "除了……，还……", "meaning": "Ngoài…, còn…" },
+          { "structure": "……具有……特点", "meaning": "… có đặc điểm…" },
+          { "structure": "在……的同时，更应该……", "meaning": "Bên cạnh việc…, càng cần coi trọng…" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：短视频与新闻传播",
+        "titleVi": "Bài khóa 2: Video ngắn và truyền thông tin tức",
+        "originalText": "近年来，短视频已经成为年轻人获取新闻的重要渠道。与传统新闻报道相比，短视频内容更加直观，传播速度也更快。新闻机构可以通过图片、字幕和现场画面帮助观众快速了解事件。但是，为了吸引流量，一些内容可能过分强调冲突和情绪。因此，新闻工作者不仅要提高传播效率，还要保证新闻内容准确、完整。",
+        "vocabulary": [
+          { "zh": "短视频", "pinyin": "duǎn shìpín", "vi": "Video ngắn" },
+          { "zh": "新闻传播", "pinyin": "xīnwén chuánbō", "vi": "Truyền thông tin tức" },
+          { "zh": "年轻人", "pinyin": "niánqīngrén", "vi": "Người trẻ" },
+          { "zh": "重要渠道", "pinyin": "zhòngyào qúdào", "vi": "Kênh quan trọng" },
+          { "zh": "传统新闻报道", "pinyin": "chuántǒng xīnwén bàodào", "vi": "Tin tức truyền thống" },
+          { "zh": "直观", "pinyin": "zhíguān", "vi": "Trực quan" },
+          { "zh": "新闻机构", "pinyin": "xīnwén jīgòu", "vi": "Cơ quan báo chí" },
+          { "zh": "图片", "pinyin": "túpiàn", "vi": "Hình ảnh" },
+          { "zh": "字幕", "pinyin": "zìmù", "vi": "Phụ đề" },
+          { "zh": "现场画面", "pinyin": "xiànchǎng huàmiàn", "vi": "Hình ảnh tại hiện trường" },
+          { "zh": "流量", "pinyin": "liúliàng", "vi": "Lượt truy cập/lượt xem" },
+          { "zh": "冲突", "pinyin": "chōngtū", "vi": "Xung đột" },
+          { "zh": "情绪", "pinyin": "qíngxù", "vi": "Cảm xúc" },
+          { "zh": "新闻工作者", "pinyin": "xīnwén gōngzuòzhě", "vi": "Người làm báo" },
+          { "zh": "准确、完整", "pinyin": "zhǔnquè、wánzhěng", "vi": "Chính xác, đầy đủ" }
+        ],
+        "patterns": [
+          { "structure": "……已经成为……的重要渠道", "meaning": "… đã trở thành kênh quan trọng để…" },
+          { "structure": "与……相比，……更加……", "meaning": "So với…, … càng…" },
+          { "structure": "为了……，……可能……", "meaning": "Để…, … có thể…" },
+          { "structure": "不仅要……，还要……", "meaning": "Không chỉ cần…, mà còn phải…" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 1 (Dịch sang Hán): Mạng xã hội và thông tin",
+        "titleVi": "Mạng xã hội và truyền thông thông tin",
+        "originalText": "Mạng xã hội đã trở thành một trong những kênh quan trọng để mọi người tiếp nhận tin tức. Một thông tin có thể nhanh chóng được chia sẻ và thu hút sự chú ý của hàng nghìn người. Tuy nhiên, tốc độ lan truyền nhanh cũng khiến tin giả và thông tin chưa được kiểm chứng dễ dàng xuất hiện. Vì vậy, người dùng cần kiểm tra nguồn tin và đối chiếu thông tin trước khi chia sẻ.",
+        "vocabulary": [
+          { "zh": "社交媒体", "pinyin": "shèjiāo méitǐ", "vi": "Mạng xã hội" },
+          { "zh": "重要渠道", "pinyin": "zhòngyào qúdào", "vi": "Kênh quan trọng" },
+          { "zh": "获取新闻", "pinyin": "huòqǔ xīnwén", "vi": "Tiếp nhận tin tức" },
+          { "zh": "分享", "pinyin": "fēnxiǎng", "vi": "Chia sẻ" },
+          { "zh": "引起关注", "pinyin": "yǐnqǐ guānzhù", "vi": "Thu hút sự chú ý" },
+          { "zh": "成千上万的人", "pinyin": "chéngqiān shàngwàn de rén", "vi": "Hàng nghìn người" },
+          { "zh": "假新闻", "pinyin": "jiǎ xīnwén", "vi": "Tin giả" },
+          { "zh": "未经核实的信息", "pinyin": "wèijīng héshí de xìnxī", "vi": "Thông tin chưa được kiểm chứng" },
+          { "zh": "传播", "pinyin": "chuánbō", "vi": "Lan truyền" },
+          { "zh": "信息来源", "pinyin": "xìnxī láiyuán", "vi": "Nguồn tin" },
+          { "zh": "核查", "pinyin": "héchá", "vi": "Kiểm tra" },
+          { "zh": "核对", "pinyin": "héduì", "vi": "Đối chiếu" },
+          { "zh": "用户", "pinyin": "yònghù", "vi": "Người dùng" },
+          { "zh": "在分享之前", "pinyin": "zài fēnxiǎng zhīqián", "vi": "Trước khi chia sẻ" },
+          { "zh": "信息", "pinyin": "xìnxī", "vi": "Thông tin" }
+        ],
+        "patterns": [
+          { "structure": "……已经成为……之一", "meaning": "… đã trở thành một trong những…" },
+          { "structure": "……可以迅速……", "meaning": "… có thể nhanh chóng…" },
+          { "structure": "……也使……容易……", "meaning": "… cũng khiến… dễ…" },
+          { "structure": "在……之前，需要……", "meaning": "Trước khi…, cần…" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 2 (Dịch sang Hán): Trí tuệ nhân tạo và công tác báo chí",
+        "titleVi": "Trí tuệ nhân tạo và công tác báo chí",
+        "originalText": "Trí tuệ nhân tạo đang được sử dụng ngày càng nhiều trong hoạt động báo chí. AI có thể hỗ trợ phóng viên tìm kiếm thông tin, xử lý dữ liệu, dịch tài liệu và tạo nội dung. Tuy nhiên, AI không thể hoàn toàn thay thế vai trò của con người. Phóng viên vẫn cần kiểm tra nguồn tin, xác minh thông tin và chịu trách nhiệm về nội dung trước khi công bố.",
+        "vocabulary": [
+          { "zh": "人工智能", "pinyin": "réngōng zhìnéng", "vi": "Trí tuệ nhân tạo" },
+          { "zh": "新闻工作", "pinyin": "xīnwén gōngzuò", "vi": "Hoạt động báo chí" },
+          { "zh": "记者", "pinyin": "jìzhě", "vi": "Phóng viên" },
+          { "zh": "被使用", "pinyin": "bèi shǐyòng", "vi": "Được sử dụng" },
+          { "zh": "越来越多", "pinyin": "yuèláiyuè duō", "vi": "Ngày càng nhiều" },
+          { "zh": "搜索信息", "pinyin": "sōusuǒ xìnxī", "vi": "Tìm kiếm thông tin" },
+          { "zh": "处理数据", "pinyin": "chǔlǐ shùjù", "vi": "Xử lý dữ liệu" },
+          { "zh": "翻译资料", "pinyin": "fānyì zīliào", "vi": "Dịch tài liệu" },
+          { "zh": "生成内容", "pinyin": "shēngchéng nèiróng", "vi": "Tạo nội dung" },
+          { "zh": "取代", "pinyin": "qǔdài", "vi": "Thay thế" },
+          { "zh": "核查信息来源", "pinyin": "héchá xìnxī láiyuán", "vi": "Kiểm tra nguồn tin" },
+          { "zh": "核实信息", "pinyin": "héshí xìnxī", "vi": "Xác minh thông tin" },
+          { "zh": "承担责任", "pinyin": "chéngdān zérèn", "vi": "Chịu trách nhiệm" },
+          { "zh": "发布", "pinyin": "fābù", "vi": "Công bố" },
+          { "zh": "人的作用", "pinyin": "rén de zuòyòng", "vi": "Vai trò của con người" }
+        ],
+        "patterns": [
+          { "structure": "……越来越多地应用于……", "meaning": "… ngày càng được ứng dụng nhiều vào…" },
+          { "structure": "不能完全取代……", "meaning": "Không thể hoàn toàn thay thế…" },
+          { "structure": "在……之前，需要……", "meaning": "Trước khi…, cần…" }
+        ]
+      }
+    ]
+  },
+  "bai12": {
+    "lessonNumber": 12,
+    "lessonTitle": "Bài 12: Phát triển dân số và xã hội (第十二课：人口发展与社会)",
+    "objectives": "Nắm vững từ vựng, thuật ngữ chuyên ngành và cách diễn đạt thường dùng trong các chủ đề phát triển dân số, cơ cấu dân số, gia tăng dân số, già hóa dân số, việc làm và an sinh xã hội; nâng cao năng lực biên dịch Trung – Việt và Việt – Trung đối với các văn bản về dân số và xã hội; có khả năng xử lý chính xác các nội dung liên quan đến biến động dân số, phát triển xã hội, việc làm và chăm sóc người cao tuổi.",
+    "texts": [
+      {
+        "id": "text1",
+        "direction": "zh_to_vi",
+        "title": "课文一：人口结构的变化",
+        "titleVi": "Bài khóa 1: Sự thay đổi cơ cấu dân số",
+        "originalText": "随着经济和社会的发展，一些国家和地区的人口结构正在发生变化。出生率下降、人口老龄化等问题越来越受到社会关注。人口结构的变化不仅会影响劳动力数量，也会给医疗、养老和社会保障带来新的挑战。因此，各国需要根据人口发展的实际情况，制定合理的社会政策。",
+        "vocabulary": [
+          { "zh": "人口结构", "pinyin": "rénkǒu jiégòu", "vi": "Cơ cấu dân số" },
+          { "zh": "人口发展", "pinyin": "rénkǒu fāzhǎn", "vi": "Phát triển dân số" },
+          { "zh": "经济和社会发展", "pinyin": "jīngjì hé shèhuì fāzhǎn", "vi": "Phát triển kinh tế và xã hội" },
+          { "zh": "出生率", "pinyin": "chūshēnglǜ", "vi": "Tỷ lệ sinh" },
+          { "zh": "下降", "pinyin": "xiàjiàng", "vi": "Giảm, sụt giảm" },
+          { "zh": "人口老龄化", "pinyin": "rénkǒu lǎolínghuà", "vi": "Già hóa dân số" },
+          { "zh": "社会关注", "pinyin": "shèhuì guānzhù", "vi": "Sự quan tâm của xã hội" },
+          { "zh": "劳动力", "pinyin": "láodònglì", "vi": "Lực lượng lao động" },
+          { "zh": "医疗", "pinyin": "yīliáo", "vi": "Y tế" },
+          { "zh": "养老", "pinyin": "yǎnglǎo", "vi": "Chăm sóc người cao tuổi" },
+          { "zh": "社会保障", "pinyin": "shèhuì bǎozhàng", "vi": "An sinh xã hội" },
+          { "zh": "挑战", "pinyin": "tiǎozhàn", "vi": "Thách thức" },
+          { "zh": "实际情况", "pinyin": "shíjì qíngkuàng", "vi": "Tình hình thực tế" },
+          { "zh": "社会政策", "pinyin": "shèhuì zhèngcè", "vi": "Chính sách xã hội" },
+          { "zh": "制定", "pinyin": "zhìdìng", "vi": "Xây dựng" }
+        ],
+        "patterns": [
+          { "structure": "随着……的发展，……正在发生变化", "meaning": "Cùng với sự phát triển của…, … đang có những thay đổi." },
+          { "structure": "……越来越受到……的关注", "meaning": "… ngày càng nhận được sự quan tâm của…" },
+          { "structure": "……不仅会……，也会……", "meaning": "… không chỉ…, mà còn…" },
+          { "structure": "根据……的实际情况，……", "meaning": "Căn cứ vào tình hình thực tế của…" }
+        ]
+      },
+      {
+        "id": "text2",
+        "direction": "zh_to_vi",
+        "title": "课文二：人口老龄化与社会保障",
+        "titleVi": "Bài khóa 2: Già hóa dân số và an sinh xã hội",
+        "originalText": "人口老龄化已经成为许多国家面临的重要社会问题。随着老年人口不断增加，社会对医疗服务、养老服务和社会保障的需求也在不断增长。为了应对这一变化，一些国家正在完善养老制度，提高医疗服务水平，同时鼓励年轻人积极就业。解决人口老龄化问题需要政府、社会和家庭共同努力。",
+        "vocabulary": [
+          { "zh": "人口老龄化", "pinyin": "rénkǒu lǎolínghuà", "vi": "Già hóa dân số" },
+          { "zh": "老年人口", "pinyin": "lǎonián rénkǒu", "vi": "Dân số cao tuổi" },
+          { "zh": "社会问题", "pinyin": "shèhuì wèntí", "vi": "Vấn đề xã hội" },
+          { "zh": "面临", "pinyin": "miànlín", "vi": "Đối mặt với" },
+          { "zh": "医疗服务", "pinyin": "yīliáo fúwù", "vi": "Dịch vụ y tế" },
+          { "zh": "养老服务", "pinyin": "yǎnglǎo fúwù", "vi": "Dịch vụ chăm sóc người cao tuổi" },
+          { "zh": "需求", "pinyin": "xūqiú", "vi": "Nhu cầu" },
+          { "zh": "不断增加", "pinyin": "bùduàn zēngjiā", "vi": "Không ngừng tăng" },
+          { "zh": "应对", "pinyin": "yìngduì", "vi": "Ứng phó" },
+          { "zh": "完善", "pinyin": "wánshàn", "vi": "Hoàn thiện" },
+          { "zh": "养老制度", "pinyin": "yǎnglǎo zhìdù", "vi": "Chế độ chăm sóc người cao tuổi" },
+          { "zh": "医疗服务水平", "pinyin": "yīliáo fúwù shuǐpíng", "vi": "Mức độ dịch vụ y tế" },
+          { "zh": "鼓励", "pinyin": "gǔlì", "vi": "Khuyến khích" },
+          { "zh": "积极就业", "pinyin": "jījí jiùyè", "vi": "Tích cực tham gia việc làm" },
+          { "zh": "共同努力", "pinyin": "gòngtóng nǔlì", "vi": "Cùng nỗ lực" }
+        ],
+        "patterns": [
+          { "structure": "……已经成为……的重要问题", "meaning": "… đã trở thành vấn đề quan trọng…" },
+          { "structure": "随着 + A + 不断增加，B + 也 + 不断增长", "meaning": "Cùng với việc… không ngừng tăng, … cũng không ngừng tăng." },
+          { "structure": "为了应对……，……", "meaning": "Để ứng phó với…, …" },
+          { "structure": "……需要 + A、B、C + 共同努力", "meaning": "Cần có sự nỗ lực chung của…" }
+        ]
+      },
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 1 (Dịch sang Hán): Phát triển dân số và việc làm",
+        "titleVi": "Phát triển dân số và việc làm",
+        "originalText": "Trong quá trình phát triển kinh tế – xã hội, thay đổi dân số có ảnh hưởng trực tiếp đến thị trường lao động. Khi số lượng người trong độ tuổi lao động giảm, một số ngành có thể gặp khó khăn trong việc tuyển dụng nhân lực. Ngược lại, nếu lực lượng lao động tăng nhanh nhưng cơ hội việc làm không đủ, tỷ lệ thất nghiệp có thể gia tăng. Vì vậy, phát triển nguồn nhân lực cần phù hợp với nhu cầu của xã hội.",
+        "vocabulary": [
+          { "zh": "经济社会发展", "pinyin": "jīngjì shèhuì fāzhǎn", "vi": "Phát triển kinh tế – xã hội" },
+          { "zh": "人口变化", "pinyin": "rénkǒu biànhuà", "vi": "Thay đổi dân số" },
+          { "zh": "劳动力市场", "pinyin": "láodònglì shìchǎng", "vi": "Thị trường lao động" },
+          { "zh": "劳动年龄", "pinyin": "láodòng niánlíng", "vi": "Độ tuổi lao động" },
+          { "zh": "减少", "pinyin": "jiǎnshǎo", "vi": "Giảm" },
+          { "zh": "行业", "pinyin": "hángyè", "vi": "Ngành" },
+          { "zh": "招聘", "pinyin": "zhāopìn", "vi": "Tuyển dụng" },
+          { "zh": "人力资源", "pinyin": "rénlì zīyuán", "vi": "Nhân lực" },
+          { "zh": "劳动力", "pinyin": "láodònglì", "vi": "Lực lượng lao động" },
+          { "zh": "就业机会", "pinyin": "jiùyè jīhuì", "vi": "Cơ hội việc làm" },
+          { "zh": "失业率", "pinyin": "shīyè lǜ", "vi": "Tỷ lệ thất nghiệp" },
+          { "zh": "增加", "pinyin": "zēngjiā", "vi": "Gia tăng" },
+          { "zh": "人力资源", "pinyin": "rénlì zīyuán", "vi": "Nguồn nhân lực" },
+          { "zh": "符合", "pinyin": "fúhé", "vi": "Phù hợp với" },
+          { "zh": "社会需求", "pinyin": "shèhuì xūqiú", "vi": "Nhu cầu xã hội" }
+        ],
+        "patterns": [
+          { "structure": "……对……有直接影响", "meaning": "… có ảnh hưởng trực tiếp đến…" },
+          { "structure": "……需要与……相适应", "meaning": "… cần phù hợp với…" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "Bài khóa 2 (Dịch sang Hán): Chính sách dân số và phát triển xã hội",
+        "titleVi": "Chính sách dân số và phát triển xã hội",
+        "originalText": "Các chính sách dân số có vai trò quan trọng đối với sự phát triển lâu dài của xã hội. Trước những thay đổi về tỷ lệ sinh, tuổi thọ và cơ cấu dân số, nhiều quốc gia đang điều chỉnh chính sách để phù hợp với tình hình mới. Bên cạnh việc hỗ trợ gia đình, cần tăng cường dịch vụ y tế, giáo dục và an sinh xã hội. Những chính sách phù hợp sẽ góp phần tạo điều kiện cho xã hội phát triển ổn định.",
+        "vocabulary": [
+          { "zh": "人口政策", "pinyin": "rénkǒu zhèngcè", "vi": "Chính sách dân số" },
+          { "zh": "重要作用", "pinyin": "zhòngyào zuòyòng", "vi": "Vai trò quan trọng" },
+          { "zh": "长期发展", "pinyin": "chángqī fāzhǎn", "vi": "Phát triển lâu dài" },
+          { "zh": "出生率", "pinyin": "chūshēnglǜ", "vi": "Tỷ lệ sinh" },
+          { "zh": "预期寿命", "pinyin": "yùqī shòumìng", "vi": "Tuổi thọ" },
+          { "zh": "人口结构", "pinyin": "rénkǒu jiégòu", "vi": "Cơ cấu dân số" },
+          { "zh": "调整", "pinyin": "tiáozhěng", "vi": "Điều chỉnh" },
+          { "zh": "新情况", "pinyin": "xīn qíngkuàng", "vi": "Tình hình mới" },
+          { "zh": "支持家庭", "pinyin": "zhīchí jiātíng", "vi": "Hỗ trợ gia đình" },
+          { "zh": "加强", "pinyin": "jiāqiáng", "vi": "Tăng cường" },
+          { "zh": "教育", "pinyin": "jiàoyù", "vi": "Giáo dục" },
+          { "zh": "社会保障", "pinyin": "shèhuì bǎozhàng", "vi": "An sinh xã hội" },
+          { "zh": "合理", "pinyin": "hélǐ", "vi": "Phù hợp" },
+          { "zh": "有助于", "pinyin": "yǒuzhùyú", "vi": "Góp phần" },
+          { "zh": "稳定发展", "pinyin": "wěndìng fāzhǎn", "vi": "Phát triển ổn định" }
+        ],
+        "patterns": [
+          { "structure": "……对……具有重要作用", "meaning": "… có vai trò quan trọng đối với…" },
+          { "structure": "……将有助于……", "meaning": "… sẽ góp phần vào … / …sẽ có lợi cho …" }
+        ]
+      }
+    ]
+  }
+}
+}
