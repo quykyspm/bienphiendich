@@ -93,20 +93,47 @@ async function callGemini(promptText) {
   return data.text;
 }
 
-/* ================= LOGIC ĐỌC EXCEL & LUYỆN VIẾT ================= */
+/* ================= LOGIC NẠP JSON & LUYỆN VIẾT (KHÔNG DÙNG EXCEL) ================= */
 let allWords = [], activeWords = [], currentIndex = 0, canvasInstances = [];
 const memorizedWords = new Map(), needReviewWords = new Map();
 
+// Hàm xáo bài ngẫu nhiên chuẩn (Fisher-Yates) - Chống lặp từ 100%
+function shuffleWords(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// 1. Thay thế autoLoadExcel bằng hàm nạp trực tiếp từ curriculum_db.json
 async function autoLoadExcel() {
   try {
-    const res = await fetch("words.xlsx?t=" + Date.now());
-    const buf = await res.arrayBuffer();
-    const wb = XLSX.read(new Uint8Array(buf), { type: "array" });
-    allWords = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) || [];
+    const res = await fetch("curriculum_db.json?t=" + Date.now());
+    const data = await res.json();
+    
+    allWords = [];
+    if (data && data.translation) {
+      Object.keys(data.translation).forEach(k => {
+        const lesson = data.translation[k];
+        const lessonNum = lesson.lessonNumber || parseInt(k.replace("bai", ""), 10) || 1;
+        (lesson.texts || []).forEach(txt => {
+          (txt.vocabulary || []).forEach(v => {
+            allWords.push({
+              hanzi: v.zh,
+              pinyin: v.pinyin,
+              vn: v.vi,
+              lesson: `Bài ${lessonNum}`
+            });
+          });
+        });
+      });
+    }
+
     setupLessonDropdown();
     applyFilters();
   } catch(e) {
-    document.getElementById("prompt-vn").innerText = "Lỗi: Không tìm thấy file words.xlsx";
+    document.getElementById("prompt-vn").innerText = "Lỗi: Không tìm thấy file curriculum_db.json";
   }
 }
 
@@ -117,30 +144,49 @@ function setupLessonDropdown() {
   const s3 = document.getElementById("listenLessonFilter");
 
   const optionAll = '<option value="all">Tất cả các bài</option>';
-  s1.innerHTML = optionAll;
-  s2.innerHTML = optionAll;
+  if (s1) s1.innerHTML = optionAll;
+  if (s2) s2.innerHTML = optionAll;
   if (s3) s3.innerHTML = optionAll;
 
   lessons.forEach(l => {
     const opt = `<option value="${l}">${l}</option>`;
-    s1.innerHTML += opt;
-    s2.innerHTML += opt;
+    if (s1) s1.innerHTML += opt;
+    if (s2) s2.innerHTML += opt;
     if (s3) s3.innerHTML += opt;
   });
 }
 
+// 2. Lọc danh sách và xử lý ngẫu nhiên không trùng lặp
 function applyFilters() {
-  const l = document.getElementById("lessonFilter").value;
-  const m = document.getElementById("modeFilter").value;
-  const lim = document.getElementById("limitFilter").value;
+  const lEl = document.getElementById("lessonFilter");
+  const mEl = document.getElementById("modeFilter");
+  const limEl = document.getElementById("limitFilter");
+
+  const l = lEl ? lEl.value : "all";
+  // Mặc định luôn là "random" nếu chưa chọn
+  const m = mEl ? mEl.value : "random";
+  const lim = limEl ? limEl.value : "all";
 
   let list = (l === "all") ? [...allWords] : allWords.filter(w => String(w.lesson) === l);
-  if (m === "random") list.sort(() => Math.random() - 0.5);
-  if (lim !== "all") list = list.slice(0, parseInt(lim, 10));
+
+  // Xáo trộn toàn bộ danh sách 1 lần duy nhất (như xáo cỗ bài)
+  if (m === "random") {
+    list = shuffleWords(list);
+  }
+
+  if (lim !== "all") {
+    list = list.slice(0, parseInt(lim, 10));
+  }
 
   activeWords = list;
   currentIndex = 0;
-  if (activeWords.length > 0) loadWord(0);
+  
+  if (activeWords.length > 0) {
+    loadWord(0);
+  } else {
+    document.getElementById("prompt-vn").innerText = "Không có từ vựng phù hợp!";
+    document.getElementById("boxesContainer").innerHTML = "";
+  }
 }
 
 function loadWord(idx) {
@@ -242,9 +288,10 @@ async function checkAllBoxes() {
   else if (ok) {
     msg.className = "msg-correct"; msg.innerText = `Chính xác! (${cur.hanzi})`;
     memorizedWords.set(cur.hanzi, cur); needReviewWords.delete(cur.hanzi);
-    if (!masteredWordsSet.has(cur.hanzi)) {
+    if (typeof masteredWordsSet !== "undefined" && !masteredWordsSet.has(cur.hanzi)) {
       masteredWordsSet.add(cur.hanzi);
-      document.getElementById("myCorrectScore").innerText = masteredWordsSet.size;
+      const scoreEl = document.getElementById("myCorrectScore");
+      if (scoreEl) scoreEl.innerText = masteredWordsSet.size;
     }
   } else {
     msg.className = "msg-wrong"; msg.innerText = "Có chữ chưa đúng!";
@@ -263,12 +310,19 @@ function renderStats() {
   document.getElementById("wrong-count").innerText = needReviewWords.size;
 }
 
+// 3. Sửa hàm nextWord: Đi hết danh sách mới thông báo và xáo lượt mới (không lặp lại giữa chừng)
 function nextWord() {
   if (activeWords.length === 0) return;
-  currentIndex = (currentIndex + 1) % activeWords.length;
+  currentIndex++;
+  
+  if (currentIndex >= activeWords.length) {
+    alert("🎉 Bạn đã luyện viết hết tất cả các từ trong lượt này!");
+    applyFilters(); // Xáo trộn lại một lượt mới hoàn toàn
+    return;
+  }
+  
   loadWord(currentIndex);
 }
-
 /* ================= LOGIC TAB LUYỆN NGHE ================= */
 let currentListenWord = null;
 
