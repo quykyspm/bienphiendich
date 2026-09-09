@@ -704,5 +704,39 @@ button.main-btn {
   background: linear-gradient(135deg, #0369a1, #075985);
   transform: translateY(-1px);
 }
+
+/* ================= KHUNG THUẬT NGỮ & MẪU CÂU GỢI Ý ================= */
+.vocab-ref-card {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 10px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.vocab-ref-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.vocab-ref-body {
+  color: #166534;
+  line-height: 1.6;
+}
+
+.vocab-badge {
+  display: inline-block;
+  background: #ffffff;
+  border: 1px solid #86efac;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin: 2px 4px 2px 0;
+  font-size: 12px;
+  color: #14532d;
+}
 .leaderboard-table th, .leaderboard-table td { padding: 10px 8px; }
 .leaderboard-table tbody tr:nth-child(even) { background: #f8fafc; }
