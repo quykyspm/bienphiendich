@@ -47,8 +47,8 @@ function switchMode(tabKey, displayName) {
   if (dropdown) dropdown.classList.remove("show");
 
   if (tabKey === 'listen' && !currentListenWord) setupListenQuestion();
-  if (tabKey === 'interpret' && typeof currentInterpretScenario !== 'undefined' && !currentInterpretScenario.speechText) {
-    generateAIInterpretationScenario();
+  if (tabKey === 'interpret' && typeof currentInterScenario !== 'undefined' && !currentInterScenario.sourceText && pdDB) {
+    loadCurrentInterExercise();
   }
 }
 
