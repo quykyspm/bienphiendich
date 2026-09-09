@@ -25,7 +25,7 @@
           { "zh": "宣布", "pinyin": "xuānbù", "vi": "tuyên bố" }
         ],
         "patterns": [
-          { "structure": "会议即将在\(^+\)地点\(^+\)开始，请....尽快\(^+\)动词", "meaning": "Hội nghị sắp bắt đầu tại..., kính mời... nhanh chóng..." },
+          { "structure": "会议即将在 [Địa điểm] 开始，请....尽快 [Động từ]", "meaning": "Hội nghị sắp bắt đầu tại..., kính mời... nhanh chóng..." },
           { "structure": "尊敬的各位......，大家......好！", "meaning": "Kính thưa..., xin chào..." },
           { "structure": "本次会议的主题是......", "meaning": "Chủ đề của hội nghị lần này là..." },
           { "structure": "现在，有请......致开幕词", "meaning": "Trân trọng kính mời... phát biểu khai mạc" },
@@ -79,7 +79,7 @@
         ],
         "patterns": [
           { "structure": "今天，...正式开幕。", "meaning": "Hôm nay, ... chính thức khai mạc." },
-          { "structure": "本次....为....搭建了....平台。", "meaning": "Lan ... nay đã tạo dựng một nền tảng/cơ hội cho..." },
+          { "structure": "本次....为....搭建了....平台。", "meaning": "Lần... này đã tạo dựng một nền tảng/cơ hội cho..." },
           { "structure": "旨在共同探讨....", "meaning": "Nhằm cùng nhau thảo luận / nghiên cứu..." },
           { "structure": "我谨代表....对....表示热烈欢迎。", "meaning": "Tôi xin thay mặt... nhiệt liệt chào mừng..." },
           { "structure": "预祝......取得圆满成功！", "meaning": "Kính chúc... thành công tốt đẹp!" }
@@ -166,64 +166,64 @@
           { "structure": "祝......", "meaning": "Chúc..." }
         ]
       },
-     {
-  "id": "text3",
-  "direction": "vi_to_zh",
-  "title": "课文三",
-  "titleVi": "Bài khóa 3",
-  "originalText": "Kính thưa quý vị đại biểu,\n\nCuộc thi hôm nay đã kết thúc thành công tốt đẹp.\n\nXin chân thành cảm ơn các thầy cô, các em học sinh và toàn thể quý vị đã nhiệt tình tham gia và ủng hộ cuộc thi.\n\nThông qua cuộc thi này, chúng ta không chỉ học được nhiều kiến thức mới mà còn có cơ hội giao lưu và học hỏi lẫn nhau.\n\nHi vọng trong tương lai, mọi người sẽ tiếp tục cố gắng và đạt được nhiều thành tích tốt hơn.\n\nCuối cùng, kính chúc quý thầy cô luôn mạnh khỏe, chúc các em học sinh học tập tiến bộ và chúc tất cả mọi người mọi việc thuận lợi.\n\nXin trân trọng cảm ơn.",
-  "vocabulary": [
-    { "zh": "比赛", "pinyin": "bǐsài", "vi": "Cuộc thi" },
-    { "zh": "圆满结束", "pinyin": "yuánmǎn jiéshù", "vi": "Kết thúc thành công tốt đẹp" },
-    { "zh": "积极", "pinyin": "jījí", "vi": "Tích cực, nhiệt tình" },
-    { "zh": "参加", "pinyin": "cānjiā", "vi": "Tham gia" },
-    { "zh": "支持", "pinyin": "zhīchí", "vi": "Ủng hộ, hỗ trợ" },
-    { "zh": "通过", "pinyin": "tōngguò", "vi": "Thông qua, qua" },
-    { "zh": "知识", "pinyin": "zhīshi", "vi": "Kiến thức" },
-    { "zh": "交流", "pinyin": "jiāoliú", "vi": "Giao lưu, trao đổi" },
-    { "zh": "互相", "pinyin": "hùxiāng", "vi": "Lẫn nhau" },
-    { "zh": "努力", "pinyin": "nǔlì", "vi": "Cố gắng" },
-    { "zh": "成绩", "pinyin": "chéngjì", "vi": "Thành tích, kết quả" },
-    { "zh": "一切顺利", "pinyin": "yīqiè shùnlì", "vi": "Mọi việc thuận lợi" }
-  ],
-  "patterns": [
-    { "structure": "非常感谢……", "meaning": "Xin chân thành cảm ơn…" },
-    { "structure": "通过……不仅……还……", "meaning": "Thông qua… không chỉ… mà còn…" },
-    { "structure": "希望……继续……", "meaning": "Hy vọng… tiếp tục…" },
-    { "structure": "取得……", "meaning": "Đạt được…" }
-  ]
-},
-{
-  "id": "text4",
-  "direction": "vi_to_zh",
-  "title": "课文四",
-  "titleVi": "Bài khóa 4",
-  "originalText": "Thời gian qua đi, hôm nay khóa học của chúng tôi đã kết thúc.\n\nTrong suốt thời gian học tập, các thầy cô đã luôn tận tình giảng dạy và giúp đỡ chúng tôi.\n\nChúng tôi xin gửi lời cảm ơn chân thành đến tất cả các thầy cô và các bạn.\n\nHy vọng sau khóa học này, chúng tôi sẽ tiếp tục giữ liên lạc, cùng nhau học tập và cùng nhau tiến bộ.\n\nCuối cùng, kính chúc các thầy cô luôn mạnh khỏe, công tác thuận lợi và chúc các bạn đạt được nhiều thành công trong học tập.\n\nXin chân thành cảm ơn.",
-  "vocabulary": [
-    { "zh": "时间", "pinyin": "shíjiān", "vi": "Thời gian" },
-    { "zh": "课程", "pinyin": "kèchéng", "vi": "Khóa học, môn học" },
-    { "zh": "结束", "pinyin": "jiéshù", "vi": "Kết thúc" },
-    { "zh": "学习期间", "pinyin": "xuéxí qījiān", "vi": "Trong thời gian học tập" },
-    { "zh": "认真", "pinyin": "rènzhēn", "vi": "Nghiêm túc, tận tình" },
-    { "zh": "教学", "pinyin": "jiàoxué", "vi": "Giảng dạy" },
-    { "zh": "表示感谢", "pinyin": "biǎoshì gǎnxiè", "vi": "Bày tỏ lời cảm ơn" },
-    { "zh": "保持联系", "pinyin": "bǎochí liánxì", "vi": "Giữ liên lạc" },
-    { "zh": "进步", "pinyin": "jìnbù", "vi": "Tiến bộ" },
-    { "zh": "取得", "pinyin": "qǔdé", "vi": "Đạt được" },
-    { "zh": "成绩", "pinyin": "chéngjì", "vi": "Thành tích, kết quả" },
-    { "zh": "工作顺利", "pinyin": "gōngzuò shùnlì", "vi": "Công tác thuận lợi" }
-  ],
-  "patterns": [
-    { "structure": "在……期间", "meaning": "Trong suốt thời gian…" },
-    { "structure": "向……表示衷心的感谢", "meaning": "Gửi lời cảm ơn chân thành đến…" },
-    { "structure": "希望……继续……", "meaning": "Hy vọng… tiếp tục…" }
-  ]
-}
+      {
+        "id": "text3",
+        "direction": "vi_to_zh",
+        "title": "课文三",
+        "titleVi": "Bài khóa 3",
+        "originalText": "Kính thưa quý vị đại biểu,\n\nCuộc thi hôm nay đã kết thúc thành công tốt đẹp.\n\nXin chân thành cảm ơn các thầy cô, các em học sinh và toàn thể quý vị đã nhiệt tình tham gia và ủng hộ cuộc thi.\n\nThông qua cuộc thi này, chúng ta không chỉ học được nhiều kiến thức mới mà còn có cơ hội giao lưu và học hỏi lẫn nhau.\n\nHi vọng trong tương lai, mọi người sẽ tiếp tục cố gắng và đạt được nhiều thành tích tốt hơn.\n\nCuối cùng, kính chúc quý thầy cô luôn mạnh khỏe, chúc các em học sinh học tập tiến bộ và chúc tất cả mọi người mọi việc thuận lợi.\n\nXin trân trọng cảm ơn.",
+        "vocabulary": [
+          { "zh": "比赛", "pinyin": "bǐsài", "vi": "Cuộc thi" },
+          { "zh": "圆满结束", "pinyin": "yuánmǎn jiéshù", "vi": "Kết thúc thành công tốt đẹp" },
+          { "zh": "积极", "pinyin": "jījí", "vi": "Tích cực, nhiệt tình" },
+          { "zh": "参加", "pinyin": "cānjiā", "vi": "Tham gia" },
+          { "zh": "支持", "pinyin": "zhīchí", "vi": "Ủng hộ, hỗ trợ" },
+          { "zh": "通过", "pinyin": "tōngguò", "vi": "Thông qua, qua" },
+          { "zh": "知识", "pinyin": "zhīshi", "vi": "Kiến thức" },
+          { "zh": "交流", "pinyin": "jiāoliú", "vi": "Giao lưu, trao đổi" },
+          { "zh": "互相", "pinyin": "hùxiāng", "vi": "Lẫn nhau" },
+          { "zh": "努力", "pinyin": "nǔlì", "vi": "Cố gắng" },
+          { "zh": "成绩", "pinyin": "chéngjì", "vi": "Thành tích, kết quả" },
+          { "zh": "一切顺利", "pinyin": "yīqiè shùnlì", "vi": "Mọi việc thuận lợi" }
+        ],
+        "patterns": [
+          { "structure": "非常感谢……", "meaning": "Xin chân thành cảm ơn…" },
+          { "structure": "通过……不仅……还……", "meaning": "Thông qua… không chỉ… mà còn…" },
+          { "structure": "希望……继续……", "meaning": "Hy vọng… tiếp tục…" },
+          { "structure": "取得……", "meaning": "Đạt được…" }
+        ]
+      },
+      {
+        "id": "text4",
+        "direction": "vi_to_zh",
+        "title": "课文四",
+        "titleVi": "Bài khóa 4",
+        "originalText": "Thời gian qua đi, hôm nay khóa học của chúng tôi đã kết thúc.\n\nTrong suốt thời gian học tập, các thầy cô đã luôn tận tình giảng dạy và giúp đỡ chúng tôi.\n\nChúng tôi xin gửi lời cảm ơn chân thành đến tất cả các thầy cô và các bạn.\n\nHy vọng sau khóa học này, chúng tôi sẽ tiếp tục giữ liên lạc, cùng nhau học tập và cùng nhau tiến bộ.\n\nCuối cùng, kính chúc các thầy cô luôn mạnh khỏe, công tác thuận lợi và chúc các bạn đạt được nhiều thành công trong học tập.\n\nXin chân thành cảm ơn.",
+        "vocabulary": [
+          { "zh": "时间", "pinyin": "shíjiān", "vi": "Thời gian" },
+          { "zh": "课程", "pinyin": "kèchéng", "vi": "Khóa học, môn học" },
+          { "zh": "结束", "pinyin": "jiéshù", "vi": "Kết thúc" },
+          { "zh": "学习期间", "pinyin": "xuéxí qījiān", "vi": "Trong thời gian học tập" },
+          { "zh": "认真", "pinyin": "rènzhēn", "vi": "Nghiêm túc, tận tình" },
+          { "zh": "教学", "pinyin": "jiàoxué", "vi": "Giảng dạy" },
+          { "zh": "表示感谢", "pinyin": "biǎoshì gǎnxiè", "vi": "Bày tỏ lời cảm ơn" },
+          { "zh": "保持联系", "pinyin": "bǎochí liánxì", "vi": "Giữ liên lạc" },
+          { "zh": "进步", "pinyin": "jìnbù", "vi": "Tiến bộ" },
+          { "zh": "取得", "pinyin": "qǔdé", "vi": "Đạt được" },
+          { "zh": "成绩", "pinyin": "chéngjì", "vi": "Thành tích, kết quả" },
+          { "zh": "工作顺利", "pinyin": "gōngzuò shùnlì", "vi": "Công tác thuận lợi" }
+        ],
+        "patterns": [
+          { "structure": "在……期间", "meaning": "Trong suốt thời gian…" },
+          { "structure": "向……表示衷心的感谢", "meaning": "Gửi lời cảm ơn chân thành đến…" },
+          { "structure": "希望……继续……", "meaning": "Hy vọng… tiếp tục…" }
+        ]
+      }
     ]
   },
   "bai3": {
     "lessonNumber": 3,
-    "lessonTitle": "Bài 3: Bế mạc hội nghị (第三课 闭幕开幕)",
+    "lessonTitle": "Bài 3: Bế mạc hội nghị (第三课 闭幕式)",
     "objectives": "Nắm vững, ghi nhớ và sử dụng được các từ vựng, thuật ngữ trọng tâm liên quan đến chủ đề bế mạc hội nghị. Hiểu và vận dụng được các mẫu câu thường dùng trong bài phát biểu bế mạc, lời cảm ơn và tuyên bố kết thúc hội nghị.",
     "texts": [
       {
@@ -316,7 +316,7 @@
         ],
         "patterns": [
           { "structure": "为.....做出贡献", "meaning": "Góp phần vào việc gì đó / Cống hiến cho..." },
-          { "structure": "期待在下一届\(^+\)[Sự kiện]\(^+\)与各位再次相聚", "meaning": "Hẹn gặp lại quý vị trong kỳ... tiếp theo / Mong chờ kỳ... tiếp theo lại được gặp gỡ quý vị." }
+          { "structure": "期待在下一届 [Sự kiện] 与各位再次相聚", "meaning": "Hẹn gặp lại quý vị trong kỳ... tiếp theo / Mong chờ kỳ... tiếp theo lại được gặp gỡ quý vị." }
         ]
       }
     ]
@@ -473,7 +473,7 @@
           { "zh": "优惠", "pinyin": "yōuhuì", "vi": "ưu đãi, giảm giá" }
         ],
         "patterns": [
-          { "structure": "这是 \(^+\) 主体 \(^+\) 推出的 \(^+\) 产品", "meaning": "Đây là sản phẩm do một công ty hoặc đơn vị nào đó cho ra mắt." },
+          { "structure": "这是 [Chủ thể] 推出的 [Sản phẩm]", "meaning": "Đây là sản phẩm do một công ty hoặc đơn vị nào đó cho ra mắt." },
           { "structure": "特点是……", "meaning": "Đặc điểm của... là..." },
           { "structure": "已经通过……认证", "meaning": "Đã đạt được thông qua một loại chứng nhận nào đó." },
           { "structure": "在……很受欢迎", "meaning": "Rất được ưa chuộng tại thị trường của một quốc gia hoặc khu vực nào đó." },
@@ -529,10 +529,10 @@
         ],
         "patterns": [
           { "structure": "通过....事情/活动，主语+动词....", "meaning": "Thông qua một sự việc hoặc hoạt động nào đó, chủ ngữ thực hiện hoặc đạt được điều gì." },
-          { "structure": "不少来自+地点 \(^+\) 的 \(^+\) 人/单位", "meaning": "Nhiều người hoặc đơn vị đến từ một địa điểm nào đó." },
+          { "structure": "不少来自 [Địa điểm] 的 [Người/Đơn vị]", "meaning": "Nhiều người hoặc đơn vị đến từ một địa điểm nào đó." },
           { "structure": "......，并......", "meaning": "...đồng thời/cùng..." },
-          { "structure": "经过 \(^+\) 过程/活动，主语 \(^+\) 动词....", "meaning": "Sau khi trải qua một quá trình hoặc hoạt động nào đó, chủ thể đưa ra quyết định hoặc đạt được kết quả." },
-          { "structure": "建立 \(^+\) 关系/制度/机制", "meaning": "Thiết lập, xây dựng một mối quan hệ, chế độ hoặc cơ chế nào đó." }
+          { "structure": "经过 [Quá trình/Hoạt động]，主语 + 动词....", "meaning": "Sau khi trải qua một quá trình hoặc hoạt động nào đó, chủ thể đưa ra quyết định hoặc đạt được kết quả." },
+          { "structure": "建立 [Quan hệ/Cơ chế]", "meaning": "Thiết lập, xây dựng một mối quan hệ, chế độ hoặc cơ chế nào đó." }
         ]
       }
     ]
@@ -567,7 +567,7 @@
           { "structure": "进行得十分……", "meaning": "... diễn ra vô cùng..." },
           { "structure": "双方多次……", "meaning": "Hai bên nhiều lần..." },
           { "structure": "凭借……，最终……", "meaning": "Nhờ vào... cuối cùng..." },
-          { "structure": "A以 \(^+\) 比分 \(^+\) 战胜B", "meaning": "A chiến thắng B với tỉ số..." },
+          { "structure": "A以 [Tỉ số] 战胜B", "meaning": "A chiến thắng B với tỉ số..." },
           { "structure": "给......留下深刻印象", "meaning": "Để lại ấn tượng sâu sắc cho..." }
         ]
       },
