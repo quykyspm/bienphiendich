@@ -284,31 +284,63 @@
       <div id="interpretAIResult" class="interpret-eval-box"></div>
     </div>
 
-    <!-- ================= TAB 4: AI DỊCH THUẬT ================= -->
+<!-- ================= TAB 4: AI DỊCH THUẬT (BIÊN DỊCH 12 BÀI GIÁO TRÌNH) ================= -->
     <div id="tab-ai" class="tab-content">
-      <div class="filter-panel" style="justify-content: flex-start; gap: 15px;">
-        <div class="filter-item">
-          <label>Lấy từ vựng từ:</label>
-          <select id="aiLessonFilter"><option value="all">Tất cả các bài</option></select>
-        </div>
-        <div class="filter-item" style="justify-content: flex-end;">
-          <div style="display:flex; gap:8px;">
-            <button class="btn-ai-mode" onclick="requestAITask('vi_to_zh')">✨ Đề Việt ➔ Trung</button>
-            <button class="btn-ai-mode" onclick="requestAITask('zh_to_vi')">✨ Đề Trung ➔ Việt</button>
+      <div class="interpret-control-panel">
+        
+        <!-- 1. Danh sách 12 bài học dạng thẻ bấm (Chip buttons) -->
+        <div class="control-group" style="width: 100%;">
+          <label class="group-label">1. Chọn bài học (Giáo trình Biên Dịch 1):</label>
+          <div class="topic-chips-container" id="transTopicsContainer">
+            <!-- Tự động nạp Bài 1 -> 12 từ curriculum_db.json -->
           </div>
         </div>
+
+        <!-- 2. Chọn 1 trong 4 Bài khóa của bài đó -->
+        <div class="control-group" style="width: 100%; margin-top: 6px;">
+          <label class="group-label">2. Chọn bài khóa luyện dịch:</label>
+          <div class="pill-group" id="transTextsPillGroup">
+            <!-- Tự động nạp 4 nút thẻ bài khóa -->
+          </div>
+        </div>
+
+        <!-- 3. Chế độ luyện tập -->
+        <div class="control-group" style="width: 100%; margin-top: 6px;">
+          <label class="group-label">3. Chế độ luyện tập:</label>
+          <div class="pill-group" id="transPracticeModeGroup">
+            <button class="pill-btn active" data-mode="book" onclick="selectTransPracticeMode('book', this)">📖 Dịch bài khóa trong sách</button>
+            <button class="pill-btn" data-mode="ai_generate" onclick="selectTransPracticeMode('ai_generate', this)">✨ AI tạo đề mở rộng tương tự</button>
+          </div>
+        </div>
+
       </div>
 
-      <div style="text-align: left; font-weight: bold; color: #475569; font-size: 14px;">Đoạn văn do AI tạo:</div>
-      <div id="aiPromptDisplay" class="ai-prompt-box">Bấm một trong hai nút bên trên để tạo đề bài...</div>
+      <!-- Khung gợi ý Từ vựng & Mẫu câu trọng tâm của bài khóa -->
+      <div id="transVocabReferenceBox" class="vocab-ref-card" style="display: none;">
+        <div class="vocab-ref-header">
+          <span style="font-weight: bold; font-size: 13px; color: #1e293b;">📌 Thuật ngữ & Mẫu câu trọng tâm:</span>
+          <button class="btn-clear-single" onclick="toggleVocabReference()">Ẩn / Hiện</button>
+        </div>
+        <div id="transVocabListContent" class="vocab-ref-body"></div>
+      </div>
 
-      <textarea id="aiUserInput" class="ai-textarea" placeholder="Gõ bản dịch của bạn vào đây..."></textarea>
+      <!-- Ô hiển thị đề bài -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; margin-bottom: 6px;">
+        <span style="font-weight: bold; color: #475569; font-size: 14px;" id="transPromptTitle">Đoạn văn đề bài:</span>
+        <button id="btnRegenAIText" class="btn-clear-single" style="display: none;" onclick="requestAITranslationTask()">🔄 Đổi đề AI khác</button>
+      </div>
+      <div id="aiPromptDisplay" class="ai-prompt-box">Đang tải dữ liệu bài khóa...</div>
 
+      <!-- Ô nhập bản dịch -->
+      <textarea id="aiUserInput" class="ai-textarea" placeholder="Gõ bài dịch văn bản của bạn vào đây..."></textarea>
+
+      <!-- Nhóm nút thao tác -->
       <div class="button-group">
         <button class="main-btn btn-clear-all" onclick="document.getElementById('aiUserInput').value=''">Xóa bài làm</button>
-        <button class="main-btn btn-check" id="btnSubmitAI" onclick="submitTranslationToAI()">Gửi AI chấm bài</button>
+        <button class="main-btn btn-check" id="btnSubmitAI" onclick="submitTranslationToAI()">⚖️ Gửi AI Thẩm Định Bản Dịch</button>
       </div>
 
+      <!-- Kết quả AI chấm bài -->
       <div id="aiEvaluationResult" class="ai-result-box"></div>
     </div>
 
