@@ -336,67 +336,239 @@ function nextListenWord() {
   setupListenQuestion();
 }
 
-/* ================= AI DỊCH THUẬT (BIÊN DỊCH VIẾT) ================= */
-let currentAIExercise = { text: "", source: "", target: "" };
+/* ================= AI BIÊN DỊCH THEO 12 BÀI GIÁO TRÌNH ================= */
+let curriculumDB = null;
+let currentTransLessonId = "bai1";
+let currentTransTextId = "text1";
+let currentPracticeMode = "book"; // 'book' (dịch trong sách) hoặc 'ai_generate' (AI tạo đề mới)
+let currentTransExercise = {
+  sourceText: "",
+  sourceLang: "",
+  targetLang: "",
+  topicTitle: "",
+  textTitle: "",
+  vocabList: [],
+  patternList: []
+};
 
-async function requestAITask(mode) {
-  const selectedLesson = document.getElementById("aiLessonFilter").value;
-  let words = (selectedLesson === "all") ? allWords : allWords.filter(w => String(w.lesson) === selectedLesson);
+// 1. Tải file curriculum_db.json
+async function loadCurriculumDatabase() {
+  try {
+    const res = await fetch("curriculum_db.json?t=" + Date.now());
+    curriculumDB = await res.json();
+    initTransLessonChips();
+  } catch (err) {
+    console.error("Lỗi khi tải curriculum_db.json:", err);
+    document.getElementById("aiPromptDisplay").innerText = "Không tìm thấy file curriculum_db.json. Vui lòng kiểm tra lại!";
+  }
+}
+window.addEventListener("DOMContentLoaded", loadCurriculumDatabase);
 
-  if (words.length === 0) return alert("Không có từ vựng trong bài đã chọn!");
-  const sampleWords = [...words].sort(() => Math.random() - 0.5).slice(0, 5);
+// 2. Render danh sách 12 bài học
+function initTransLessonChips() {
+  const container = document.getElementById("transTopicsContainer");
+  if (!container || !curriculumDB || !curriculumDB.translation) return;
 
-  const promptDisplay = document.getElementById("aiPromptDisplay");
-  promptDisplay.innerText = "⏳ AI đang biên soạn nội dung theo từ vựng...";
+  container.innerHTML = "";
+  Object.keys(curriculumDB.translation).forEach((key) => {
+    const lesson = curriculumDB.translation[key];
+    const chip = document.createElement("button");
+    chip.className = `topic-chip ${key === currentTransLessonId ? "active" : ""}`;
+    chip.innerText = lesson.lessonTitle.split("(")[0].trim();
+    chip.onclick = () => selectTransLesson(key, chip);
+    container.appendChild(chip);
+  });
+
+  // Khởi tạo bài khóa của bài hiện tại
+  renderTransTextPills();
+}
+
+function selectTransLesson(lessonKey, chipEl) {
+  document.querySelectorAll("#transTopicsContainer .topic-chip").forEach(c => c.classList.remove("active"));
+  chipEl.classList.add("active");
+  currentTransLessonId = lessonKey;
+  currentTransTextId = "text1"; // reset về bài khóa 1
+  renderTransTextPills();
+}
+
+// 3. Render 4 nút thẻ Bài khóa tương ứng của bài đã chọn
+function renderTransTextPills() {
+  const container = document.getElementById("transTextsPillGroup");
+  if (!container || !curriculumDB || !curriculumDB.translation) return;
+
+  const lesson = curriculumDB.translation[currentTransLessonId];
+  if (!lesson || !lesson.texts) return;
+
+  container.innerHTML = "";
+  lesson.texts.forEach((txt) => {
+    const btn = document.createElement("button");
+    btn.className = `pill-btn ${txt.id === currentTransTextId ? "active" : ""}`;
+    const flag = (txt.direction === "zh_to_vi") ? "🇨🇳➔🇻🇳" : "🇻🇳➔🇨🇳";
+    btn.innerText = `[${flag}] ${txt.titleVi || txt.title}`;
+    btn.onclick = () => selectTransText(txt.id, btn);
+    container.appendChild(btn);
+  });
+
+  loadCurrentExercise();
+}
+
+function selectTransText(textId, btnEl) {
+  document.querySelectorAll("#transTextsPillGroup .pill-btn").forEach(b => b.classList.remove("active"));
+  btnEl.classList.add("active");
+  currentTransTextId = textId;
+  loadCurrentExercise();
+}
+
+// 4. Chọn Chế độ Luyện tập: Dịch sách hoặc AI tạo đề
+function selectTransPracticeMode(mode, btnEl) {
+  document.querySelectorAll("#transPracticeModeGroup .pill-btn").forEach(b => b.classList.remove("active"));
+  btnEl.classList.add("active");
+  currentPracticeMode = mode;
+  
+  const btnRegen = document.getElementById("btnRegenAIText");
+  if (btnRegen) btnRegen.style.display = (mode === "ai_generate") ? "inline-block" : "none";
+
+  loadCurrentExercise();
+}
+
+// 5. Nạp bài tập hiện tại
+async function loadCurrentExercise() {
+  if (!curriculumDB || !curriculumDB.translation) return;
+
+  const lesson = curriculumDB.translation[currentTransLessonId];
+  const textObj = lesson.texts.find(t => t.id === currentTransTextId) || lesson.texts[0];
+
+  currentTransExercise.topicTitle = lesson.lessonTitle;
+  currentTransExercise.textTitle = textObj.titleVi || textObj.title;
+  currentTransExercise.vocabList = textObj.vocabulary || [];
+  currentTransExercise.patternList = textObj.patterns || [];
+
+  if (textObj.direction === "zh_to_vi") {
+    currentTransExercise.sourceLang = "Tiếng Trung";
+    currentTransExercise.targetLang = "Tiếng Việt";
+  } else {
+    currentTransExercise.sourceLang = "Tiếng Việt";
+    currentTransExercise.targetLang = "Tiếng Trung";
+  }
+
+  // Cập nhật khung tham khảo từ vựng
+  renderVocabReference(textObj);
+
+  // Xóa kết quả làm bài trước
+  document.getElementById("aiUserInput").value = "";
+  document.getElementById("aiEvaluationResult").style.display = "none";
+
+  const titleEl = document.getElementById("transPromptTitle");
+  const displayEl = document.getElementById("aiPromptDisplay");
+
+  if (currentPracticeMode === "book") {
+    // CHẾ ĐỘ 1: Dịch bài khóa có sẵn trong sách
+    currentTransExercise.sourceText = textObj.originalText;
+    titleEl.innerText = `Đoạn văn sách giáo khoa (${currentTransExercise.sourceLang}):`;
+    displayEl.innerText = currentTransExercise.sourceText;
+  } else {
+    // CHẾ ĐỘ 2: Gọi AI tạo đề mới dựa trên từ vựng của bài
+    titleEl.innerText = `Đoạn văn do AI tạo tương tự (${currentTransExercise.sourceLang}):`;
+    requestAITranslationTask();
+  }
+}
+
+// Render khung gợi ý từ vựng & mẫu câu
+function renderVocabReference(textObj) {
+  const box = document.getElementById("transVocabReferenceBox");
+  const content = document.getElementById("transVocabListContent");
+  if (!box || !content) return;
+
+  box.style.display = "block";
+  let html = "<div><strong>Từ vựng trọng tâm:</strong> ";
+  (textObj.vocabulary || []).forEach(v => {
+    html += `<span class="vocab-badge">${v.zh} (${v.vi})</span>`;
+  });
+  html += "</div>";
+
+  if (textObj.patterns && textObj.patterns.length > 0) {
+    html += "<div style='margin-top:6px;'><strong>Mẫu câu:</strong> ";
+    textObj.patterns.forEach(p => {
+      html += `<span class="vocab-badge">${p.structure}</span>`;
+    });
+    html += "</div>";
+  }
+  content.innerHTML = html;
+}
+
+function toggleVocabReference() {
+  const content = document.getElementById("transVocabListContent");
+  if (content) content.style.display = (content.style.display === "none") ? "block" : "none";
+}
+
+// 6. AI Tạo đề bài mới mở rộng (bám sát từ vựng bài khóa đang chọn)
+async function requestAITranslationTask() {
+  const displayEl = document.getElementById("aiPromptDisplay");
+  displayEl.innerText = `⏳ AI đang biên soạn đoạn văn tương tự theo [${currentTransExercise.textTitle}]...`;
   document.getElementById("aiEvaluationResult").style.display = "none";
   document.getElementById("aiUserInput").value = "";
 
+  const vocabSamples = currentTransExercise.vocabList.slice(0, 6);
+  const zhVocabs = vocabSamples.map(v => v.zh).join(", ");
+  const viVocabs = vocabSamples.map(v => `"${v.vi}"`).join(", ");
+  const patternSample = currentTransExercise.patternList[0] ? currentTransExercise.patternList[0].structure : "";
+
   let prompt = "";
-  if (mode === "vi_to_zh") {
-    currentAIExercise = { source: "Tiếng Việt", target: "Tiếng Trung" };
-    const vnVocabList = sampleWords.map(w => `"${w.vn}"`).join(", ");
-    prompt = `Bạn là giáo viên tiếng Trung. Hãy viết 1 đoạn văn ngắn hoàn toàn bằng TIẾNG VIỆT (khoảng 2-3 câu, tối đa 40 từ), ngữ cảnh tự nhiên, có sử dụng các khái niệm/từ ngữ sau: [${vnVocabList}]. 
+  if (currentTransExercise.sourceLang === "Tiếng Việt") {
+    prompt = `Bạn là giảng viên Biên dịch tiếng Trung.
+Chủ đề: [${currentTransExercise.topicTitle}] - Bài: [${currentTransExercise.textTitle}].
+Hãy viết 1 đoạn văn ngắn bằng TIẾNG VIỆT (2-3 câu ngắn gọn, tối đa 50 từ), ngữ cảnh trang trọng, sử dụng các từ ngữ sau: [${viVocabs}].
 QUY TẮC BẮT BUỘC:
-1. 100% bằng tiếng Việt thuần túy.
-2. Tuyệt đối KHÔNG chứa bất kỳ chữ Hán, Pinyin hay ký tự Trung Quốc nào.
-3. Không thêm giải thích hay lời chào, chỉ trả về nội dung đoạn văn.`;
+1. 100% tiếng Việt thuần túy, tuyệt đối không chứa chữ Hán hay Pinyin.
+2. Chỉ trả về nội dung đoạn văn, không thêm lời chào hay giải thích.`;
   } else {
-    currentAIExercise = { source: "Tiếng Trung", target: "Tiếng Việt" };
-    const zhVocabList = sampleWords.map(w => w.hanzi).join(", ");
-    prompt = `Bạn là giáo viên tiếng Trung. Hãy viết một đoạn văn ngắn bằng Tiếng Trung (2-3 câu, cấp độ HSK 2-3) sử dụng các từ sau: [${zhVocabList}]. Chỉ trả về duy nhất chữ Hán, không thêm lời chào hay giải thích nào.`;
+    prompt = `Bạn là giảng viên Biên dịch tiếng Trung.
+Chủ đề: [${currentTransExercise.topicTitle}] - Bài: [${currentTransExercise.textTitle}].
+Hãy viết 1 đoạn văn ngắn bằng TIẾNG TRUNG (khoảng 2-3 câu, tối đa 50 chữ Hán), sử dụng các từ vựng: [${zhVocabs}] và kết cấu: "${patternSample}".
+QUY TẮC BẮT BUỘC:
+1. Chỉ trả về DUY NHẤT chữ Hán, không thêm pinyin hay dịch tiếng Việt.
+2. Không thêm lời giải thích nào khác.`;
   }
 
   try {
     const result = await callGemini(prompt);
-    currentAIExercise.text = result.trim();
-    promptDisplay.innerText = currentAIExercise.text;
+    currentTransExercise.sourceText = result.trim();
+    displayEl.innerText = currentTransExercise.sourceText;
   } catch (err) {
-    promptDisplay.innerText = "Lỗi: " + err.message;
+    displayEl.innerText = "Lỗi tạo đề: " + err.message;
   }
 }
 
+// 7. Gửi AI Thẩm định bản dịch
 async function submitTranslationToAI() {
   const userText = document.getElementById("aiUserInput").value.trim();
-  if (!userText) return alert("Vui lòng nhập bài làm của bạn!");
-  if (!currentAIExercise.text) return alert("Chưa có đề bài, hãy bấm tạo đề trước!");
+  if (!userText) return alert("Vui lòng nhập bản dịch của bạn vào ô!");
+  if (!currentTransExercise.sourceText) return alert("Chưa có đề bài, vui lòng chờ nạp bài!");
 
   const btn = document.getElementById("btnSubmitAI");
   const resultBox = document.getElementById("aiEvaluationResult");
-  btn.innerText = "⏳ AI đang chấm bài...";
+  btn.innerText = "⏳ AI đang thẩm định bản dịch...";
   btn.disabled = true;
 
-  const evalPrompt = `
-Bạn là chuyên gia thẩm định biên phiên dịch tiếng Trung.
-Đề bài (${currentAIExercise.source}):
-"${currentAIExercise.text}"
+  const standardTerms = currentTransExercise.vocabList.map(v => `${v.zh} (${v.vi})`).join(", ");
+  const patternStructures = currentTransExercise.patternList.map(p => p.structure).join(" | ");
 
-Bản dịch của học viên (${currentAIExercise.target}):
+  const evalPrompt = `
+Bạn là chuyên gia thẩm định Biên dịch tiếng Trung học thuật.
+Chủ đề: [${currentTransExercise.topicTitle}] - [${currentTransExercise.textTitle}].
+Bảng thuật ngữ chuẩn của bài: [${standardTerms}].
+Cấu trúc mẫu câu của bài: [${patternStructures}].
+
+Đoạn văn gốc (${currentTransExercise.sourceLang}):
+"${currentTransExercise.sourceText}"
+
+Bản dịch của học viên (${currentTransExercise.targetLang}):
 "${userText}"
 
-Hãy đánh giá chi tiết theo mẫu:
-- Điểm số: .../10
-- Nhận xét chi tiết: Khen ưu điểm, chỉ rõ lỗi sai về từ vựng, ngữ pháp, ngữ cảnh (nếu có).
-- Bản dịch tối ưu tham khảo: (cung cấp câu dịch tự nhiên và chuẩn xác nhất).
+Hãy đánh giá chi tiết:
+1. Điểm số: .../10
+2. Đánh giá độ chuẩn xác & Thuật ngữ: Học viên đã dịch sát nghĩa chưa? Đã vận dụng chính xác các thuật ngữ và mẫu câu trọng tâm của bài chưa? Chỉ rõ ưu điểm và các lỗi dùng từ/ngữ pháp (nếu có).
+3. Bản dịch mẫu tối ưu nhất: Cung cấp bản dịch trau chuốt, tự nhiên và đạt chuẩn văn phong học thuật nhất để học viên học tập.
 `;
 
   try {
@@ -406,7 +578,7 @@ Hãy đánh giá chi tiết theo mẫu:
   } catch (err) {
     alert("Lỗi chấm bài: " + err.message);
   } finally {
-    btn.innerText = "Gửi AI chấm bài";
+    btn.innerText = "⚖️ Gửi AI Thẩm Định Bản Dịch";
     btn.disabled = false;
   }
 }
