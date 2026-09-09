@@ -214,7 +214,7 @@ function renderInterVocabReference(textObj) {
   content.innerHTML = html;
 }
 
-function toggleInterVocabRef() {
+function toggleInterpretVocabRef() {
   const content = document.getElementById("interpretVocabRefContent");
   if (content) content.style.display = (content.style.display === "none") ? "block" : "none";
 }
