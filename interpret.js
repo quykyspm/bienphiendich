@@ -28,19 +28,22 @@ let isRecording = false;
 
 // 1. Tải dữ liệu từ file curriculum_pd.json
 async function loadInterpretationDatabase() {
+  const notice = document.getElementById("speechBlindNotice");
   try {
     const res = await fetch("curriculum_pd.json?t=" + Date.now());
-    pdDB = await res.json();
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} - Không thể tải file từ server`);
+    }
+    const text = await res.text();
+    pdDB = JSON.parse(text);
     renderInterLessonChips();
   } catch (err) {
-    console.error("Lỗi khi tải curriculum_pd.json:", err);
-    const notice = document.getElementById("speechBlindNotice");
+    console.error("Chi tiết lỗi curriculum_pd.json:", err);
     if (notice) {
-      notice.innerHTML = '<span class="blind-icon">⚠️</span> <span>Không tìm thấy file curriculum_pd.json!</span>';
+      notice.innerHTML = `<span class="blind-icon">⚠️</span> <span>Lỗi: ${err.message}</span>`;
     }
   }
 }
-
 window.addEventListener("DOMContentLoaded", loadInterpretationDatabase);
 
 // 2. Render danh sách các bài học (Bài 1 -> 6 sáng đèn, Bài 7 -> 12 mờ/khóa)
