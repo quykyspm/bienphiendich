@@ -198,91 +198,102 @@
       <div id="listen-result-msg"></div>
     </div>
 
-  <!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH (THẺ BẤM CHỌN TRỰC QUAN) ================= -->
-    <div id="tab-interpret" class="tab-content">
-      <div class="interpret-control-panel">
-        
-        <!-- 1. Chiều phiên dịch dạng nút bấm chọn -->
-        <div class="control-group">
-          <label class="group-label">Chiều phiên dịch:</label>
-          <div class="pill-group" id="dirPillGroup">
-            <button class="pill-btn active" data-val="zh_to_vi" onclick="selectInterpretDirection(this)">🇨🇳 Trung ➔ 🇻🇳 Việt</button>
-            <button class="pill-btn" data-val="vi_to_zh" onclick="selectInterpretDirection(this)">🇻🇳 Việt ➔ 🇨🇳 Trung</button>
-          </div>
-        </div>
-
-        <!-- 2. Tốc độ phát dạng nút bấm chọn -->
-        <div class="control-group">
-          <label class="group-label">Tốc độ diễn giả:</label>
-          <div class="pill-group" id="ratePillGroup">
-            <button class="pill-btn" data-val="0.5" onclick="selectInterpretRate(this)">0.5x (Chậm)</button>
-            <button class="pill-btn" data-val="0.75" onclick="selectInterpretRate(this)">0.75x</button>
-            <button class="pill-btn active" data-val="1.0" onclick="selectInterpretRate(this)">1.0x (Chuẩn)</button>
-          </div>
-        </div>
-
-        <!-- 3. Chủ đề 12 bài giáo trình dạng danh sách thẻ chọn cuộn ngang/lưới -->
-        <div class="control-group" style="width: 100%;">
-          <label class="group-label">Chủ đề bài học (Giáo trình Phiên Dịch 1):</label>
-          <div class="topic-chips-container" id="interpretTopicsContainer">
-            <!-- JavaScript sẽ tự động render 12 thẻ bài học vào đây -->
-          </div>
-        </div>
-
-        <!-- Nút tạo tình huống to nổi bật -->
-        <div style="width: 100%; margin-top: 10px;">
-          <button class="btn-create-scenario-big" onclick="generateAIInterpretationScenario()">
-            ✨ AI Tạo Tình Huống Mới
-          </button>
-        </div>
-
-      </div>
-
-      <!-- Bục diễn giả phát biểu (CHE KÍN CHỮ) -->
-      <div class="speaker-card">
-        <div class="speaker-title">
-          <span id="speakerRoleTag">🎙️ DIỄN GIẢ PHÁT BIỂU</span>
-          <button class="btn-repeat-speech" onclick="playSpeakerAudio()">🔊 Nghe lại diễn giả</button>
-        </div>
-        
-        <div class="blind-speech-box">
-          <div class="audio-wave-placeholder" id="speechBlindNotice">
-            <span class="blind-icon">🔒</span>
-            <span>Nội dung phát biểu đã được che để rèn phản xạ tai nghe!</span>
-          </div>
-          <div class="original-speech-text" id="revealedSpeechText" style="display: none;"></div>
-        </div>
-        
-        <div style="text-align: right; margin-top: 8px;">
-          <button class="btn-peek-text" onclick="toggleRevealSpeech()">👁️ Mở/Đóng xem bản gốc</button>
-        </div>
-      </div>
-
-      <!-- Cabin của phiên dịch viên -->
-      <div class="interpreter-desk">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <label style="font-size: 13px; font-weight: bold; color: #475569;">Bản dịch của bạn (Nói vào Micro hoặc Gõ tay):</label>
-          <span id="recordingStatusTag" class="status-tag idle">Đang chờ mic</span>
-        </div>
-
-        <div class="voice-controls-row">
-          <button class="mic-btn" id="btnToggleRecord" onclick="toggleSpeechRecording()">
-            <span class="mic-icon">🎤</span>
-            <span id="micBtnText">BẤM VÀO ĐỂ DỊCH (NÓI)</span>
-          </button>
-        </div>
-
-        <textarea id="interpretUserTranscript" class="transcript-textarea" placeholder="Bấm micro để nói (hoặc gõ bài dịch trực tiếp vào đây nếu ở nơi ồn ào)..."></textarea>
-      </div>
-
-      <div class="button-group">
-        <button class="main-btn btn-clear-all" onclick="document.getElementById('interpretUserTranscript').value=''">Xóa câu dịch</button>
-        <button class="main-btn btn-check" id="btnSubmitInterpret" onclick="submitInterpretationToAI()">⚖️ AI Thẩm Định Phiên Dịch</button>
-      </div>
-
-      <div id="interpretAIResult" class="interpret-eval-box"></div>
+<!-- ================= TAB 3: PHÒNG LUYỆN PHIÊN DỊCH ================= -->
+<div id="tab-interpret" class="tab-content">
+  <div class="interpret-control-panel">
+    
+    <!-- 1. Danh sách chọn bài học dạng nút chip -->
+    <div class="control-group" style="width: 100%;">
+      <label class="group-label">1. Chọn bài học (Giáo trình Phiên Dịch 1):</label>
+      <div class="topic-chips-container" id="interpretTopicsContainer"></div>
     </div>
 
+    <!-- 2. Chọn 1 trong 4 đoạn bài khóa -->
+    <div class="control-group" style="width: 100%; margin-top: 6px;">
+      <label class="group-label">2. Chọn bài khóa luyện dịch:</label>
+      <div class="pill-group" id="interpretTextsPillGroup"></div>
+    </div>
+
+    <!-- 3. Chế độ luyện tập -->
+    <div class="control-group" style="flex: 1; min-width: 260px; margin-top: 6px;">
+      <label class="group-label">3. Nguồn phát bài luyện:</label>
+      <div class="pill-group" id="interpretPracticeModeGroup">
+        <button class="pill-btn active" data-mode="book" onclick="selectInterpretPracticeMode('book', this)">🎧 Bài khóa trong sách (MP3 gốc)</button>
+        <button class="pill-btn" data-mode="ai_generate" onclick="selectInterpretPracticeMode('ai_generate', this)">✨ AI tạo đề tương tự</button>
+      </div>
+    </div>
+
+    <!-- Tốc độ phát (áp dụng cho AI TTS) -->
+    <div class="control-group" style="margin-top: 6px;" id="rateControlGroup">
+      <label class="group-label">Tốc độ phát:</label>
+      <div class="pill-group" id="ratePillGroup">
+        <button class="pill-btn" data-val="0.8" onclick="selectInterpretRate(this)">0.8x</button>
+        <button class="pill-btn active" data-val="1.0" onclick="selectInterpretRate(this)">1.0x</button>
+      </div>
+    </div>
+
+    <!-- Nút đổi đề mới khi ở chế độ AI -->
+    <div style="width: 100%; margin-top: 8px; display: none;" id="btnInterpretRegenContainer">
+      <button class="btn-create-scenario-big" onclick="requestAIInterpretTask()">
+        🔄 Đổi kịch bản AI khác
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Khung tham khảo Thuật ngữ & Mẫu câu của bài khóa -->
+  <div id="interpretVocabRefBox" class="vocab-ref-card" style="display: none;">
+    <div class="vocab-ref-header">
+      <span style="font-weight: bold; font-size: 13px; color: #1e293b;">📌 Thuật ngữ & Mẫu câu trọng tâm:</span>
+      <button class="btn-clear-single" onclick="toggleInterpretVocabRef()">Ẩn / Hiện</button>
+    </div>
+    <div id="interpretVocabRefContent" class="vocab-ref-body"></div>
+  </div>
+
+  <!-- Bục phát âm thanh diễn giả (CHE KỊCH BẢN) -->
+  <div class="speaker-card" style="margin-top: 14px;">
+    <div class="speaker-title">
+      <span id="speakerRoleTag">🎙️ BÀI KHÓA PHÁT BIỂU</span>
+      <button class="btn-repeat-speech" id="btnPlayAudio" onclick="playSpeakerAudio()">▶️ Phát âm thanh</button>
+    </div>
+    
+    <div class="blind-speech-box">
+      <div class="audio-wave-placeholder" id="speechBlindNotice">
+        <span class="blind-icon">🔒</span>
+        <span>Bài khóa đã sẵn sàng! Bấm "Phát âm thanh" để nghe.</span>
+      </div>
+      <div class="original-speech-text" id="revealedSpeechText" style="display: none;"></div>
+    </div>
+    
+    <div style="text-align: right; margin-top: 8px;">
+      <button class="btn-peek-text" onclick="toggleRevealSpeech()">👁️ Mở/Đóng kịch bản chữ</button>
+    </div>
+  </div>
+
+  <!-- Cabin nhập bản dịch -->
+  <div class="interpreter-desk">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <label style="font-size: 13px; font-weight: bold; color: #475569;" id="interpretDeskTitle">Bản dịch của bạn (Gõ nội dung hoặc dùng Mic):</label>
+      <span id="recordingStatusTag" class="status-tag idle">Sẵn sàng</span>
+    </div>
+
+    <div class="voice-controls-row">
+      <button class="mic-btn" id="btnToggleRecord" onclick="toggleSpeechRecording()">
+        <span class="mic-icon">🎤</span>
+        <span id="micBtnText">BẤM VÀO ĐỂ DỊCH (NÓI)</span>
+      </button>
+    </div>
+
+    <textarea id="interpretUserTranscript" class="transcript-textarea" placeholder="Nghe và gõ bản dịch của bạn vào đây (hoặc bấm nút Micro để nói)..."></textarea>
+  </div>
+
+  <div class="button-group">
+    <button class="main-btn btn-clear-all" onclick="document.getElementById('interpretUserTranscript').value=''">Xóa câu dịch</button>
+    <button class="main-btn btn-check" id="btnSubmitInterpret" onclick="submitInterpretationToAI()">⚖️ Gửi AI Thẩm Định Phiên Dịch</button>
+  </div>
+
+  <div id="interpretAIResult" class="interpret-eval-box"></div>
+</div>
 <!-- ================= TAB 4: AI DỊCH THUẬT (BIÊN DỊCH 12 BÀI GIÁO TRÌNH) ================= -->
     <div id="tab-ai" class="tab-content">
       <div class="interpret-control-panel">
