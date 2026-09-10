@@ -325,11 +325,13 @@ QUY TẮC: 100% tiếng Việt thuần túy, không chứa chữ Hán, không gi
   }
 }
 
-// 8. Thu âm giọng nói qua Web Speech API
+/* ================= 8. THU ÂM GIỌNG NÓI CHỐNG LẶP CHỮ & TỰ ĐỘNG GIỮ MIC ================= */
+let finalTranscriptAccumulated = ""; // Biến lưu chữ chuẩn không bị lặp
+
 function toggleSpeechRecording() {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRec) {
-    alert("Trình duyệt không hỗ trợ Web Speech API. Bạn có thể gõ trực tiếp bản dịch vào ô văn bản!");
+    alert("Trình duyệt này không hỗ trợ Micro (hoặc đang mở trong Messenger/Zalo). Vui lòng mở bằng Chrome hoặc Safari để thu âm, hoặc gõ tay trực tiếp!");
     return;
   }
 
@@ -338,38 +340,89 @@ function toggleSpeechRecording() {
   const txtArea = document.getElementById("interpretUserTranscript");
 
   if (isRecording) {
-    if (speechRecognizer) speechRecognizer.stop();
+    isRecording = false;
+    if (speechRecognizer) {
+      speechRecognizer.stop();
+    }
+    stopRecordingUI();
     return;
   }
 
-  speechRecognizer = new SpeechRec();
+  // Khởi tạo một phiên ghi âm mới
+  try {
+    speechRecognizer = new SpeechRec();
+  } catch (e) {
+    alert("Không thể khởi động Micro. Vui lòng cấp quyền Micro trên trình duyệt!");
+    return;
+  }
+
   speechRecognizer.continuous = true;
   speechRecognizer.interimResults = true;
   speechRecognizer.lang = currentInterScenario.targetLangCode;
+
+  // Lấy sẵn văn bản người dùng đang có trong ô (tránh xóa mất khi nói tiếp)
+  finalTranscriptAccumulated = txtArea.value.trim();
+  if (finalTranscriptAccumulated.length > 0) {
+    finalTranscriptAccumulated += " ";
+  }
 
   speechRecognizer.onstart = () => {
     isRecording = true;
     btn.classList.add("active");
     document.getElementById("micBtnText").innerText = "ĐANG THU ÂM... (BẤM DỪNG)";
     tag.className = "status-tag recording";
-    tag.innerText = "● Đang ghi âm giọng bạn...";
+    tag.innerText = "● Đang lắng nghe giọng bạn...";
   };
 
+  // XỬ LÝ CHỐNG LẶP TỪ TUYỆT ĐỐI
   speechRecognizer.onresult = (event) => {
-    let finalTranscript = "";
+    let interimTranscript = "";
+    let newlyFinalText = "";
+
     for (let i = event.resultIndex; i < event.results.length; ++i) {
+      const transcriptChunk = event.results[i][0].transcript;
       if (event.results[i].isFinal) {
-        finalTranscript += event.results[i][0].transcript;
+        newlyFinalText += transcriptChunk;
+      } else {
+        interimTranscript += transcriptChunk;
       }
     }
-    if (finalTranscript) {
-      txtArea.value = (txtArea.value + " " + finalTranscript).trim();
+
+    if (newlyFinalText) {
+      finalTranscriptAccumulated += newlyFinalText + " ";
+    }
+
+    // Hiển thị trực tiếp: Chữ đã chốt + chữ đang nói dở
+    txtArea.value = (finalTranscriptAccumulated + interimTranscript).trim();
+  };
+
+  speechRecognizer.onerror = (event) => {
+    console.warn("Lỗi mic SpeechRecognition:", event.error);
+    if (event.error === 'not-allowed') {
+      alert("Bạn chưa cấp quyền Micro! Hãy bấm vào biểu tượng ổ khóa/cài đặt cạnh thanh địa chỉ web để Cho phép (Allow) Micro.");
+      stopRecordingUI();
     }
   };
 
-  speechRecognizer.onerror = () => stopRecordingUI();
-  speechRecognizer.onend = () => stopRecordingUI();
-  speechRecognizer.start();
+  speechRecognizer.onend = () => {
+    // Nếu người dùng chưa bấm nút dừng mà máy tự ngắt (do mạng hoặc im lặng), tự bật lại
+    if (isRecording) {
+      try {
+        speechRecognizer.start();
+      } catch (e) {
+        stopRecordingUI();
+      }
+    } else {
+      stopRecordingUI();
+    }
+  };
+
+  try {
+    speechRecognizer.start();
+  } catch (err) {
+    console.error("Lỗi khi gọi mic:", err);
+    stopRecordingUI();
+  }
 }
 
 function stopRecordingUI() {
