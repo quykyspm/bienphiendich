@@ -273,7 +273,7 @@ async function routeTTS(text, selectedVoice, btn) {
       ? "zh_female_taozi_conversation_v4_wvae_bigtts" 
       : "zh_male_yangguang_conversation_v4_wvae_bigtts";
 
-    try {
+  try {
       if (btn) btn.innerText = "⏳ Đang tải giọng Doubao...";
       
       const response = await fetch("https://gemini-api-backend-rho.vercel.app/api/doubao-tts", {
@@ -282,27 +282,33 @@ async function routeTTS(text, selectedVoice, btn) {
         body: JSON.stringify({ text: text, speaker: speakerId })
       });
 
-      if (!response.ok) throw new Error("Vercel Doubao trả về mã lỗi: " + response.status);
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Lỗi HTTP ${response.status}`);
+      }
 
       const blob = await response.blob();
-      const audioUrl = URL.createObjectURL(blob);
+      
+      // KIỂM TRA: Nếu kích thước file nhỏ hơn 1000 bytes thì là file rỗng/lỗi
+      if (!blob || blob.size < 1000) {
+        throw new Error(`Dữ liệu âm thanh nhận về không hợp lệ (Dung lượng: ${blob.size} bytes)`);
+      }
+
+      const audioBlob = new Blob([blob], { type: "audio/mpeg" });
+      const audioUrl = URL.createObjectURL(audioBlob);
 
       doubaoAudioElement.src = audioUrl;
       doubaoAudioElement.playbackRate = selectedInterRate;
       
-      doubaoAudioElement.onplay = () => {
-        if (btn) btn.innerText = "⏸️ Đang phát (Doubao)";
-      };
-      doubaoAudioElement.onended = () => {
-        if (btn) btn.innerText = "🔄 Nghe lại (Doubao)";
-      };
+      doubaoAudioElement.onplay = () => { if (btn) btn.innerText = "⏸️ Đang phát (Doubao)"; };
+      doubaoAudioElement.onended = () => { if (btn) btn.innerText = "🔄 Nghe lại bài"; };
 
       await doubaoAudioElement.play();
       return;
     } catch (err) {
       console.warn("Lỗi kết nối Doubao TTS, chuyển về giọng mặc định:", err);
+      // Fallback: Nếu lỗi thì chuyển về giọng trình duyệt
     }
-  }
 
   // Fallback: Phát bằng Web Speech API nếu là tiếng Việt hoặc Doubao gặp sự cố
   playFallbackTTS(text);
