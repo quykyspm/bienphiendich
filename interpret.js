@@ -220,10 +220,10 @@ function toggleInterpretVocabRef() {
 }
 
 // ==========================================================================
-// 6. PHÁT ÂM THANH (MP3 GỐC, DOUBAO AI HOẶC WEB TTS)
+// 6. Phát âm thanh (MP3 gốc, Doubao TTS hoặc Web Speech)
 // ==========================================================================
 
-let doubaoAudioElement = new Audio(); // Quản lý âm thanh phát từ Doubao
+let doubaoAudioElement = new Audio();
 
 async function playSpeakerAudio() {
   const btn = document.getElementById("btnPlayAudio");
@@ -231,7 +231,7 @@ async function playSpeakerAudio() {
   const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
 
   if (currentInterPracticeMode === "book") {
-    // CHẾ ĐỘ 1: PHÁT FILE MP3 TRƯỜNG CÓ SẴN
+    // PHÁT FILE MP3 TRƯỜNG
     if (!audioElement.paused && audioElement.src.includes(currentInterScenario.audioSrc)) {
       audioElement.pause();
       if (btn) btn.innerText = "▶️ Tiếp tục nghe";
@@ -251,29 +251,27 @@ async function playSpeakerAudio() {
       if (btn) btn.innerText = "🔄 Nghe lại bài";
     };
   } else {
-    // CHẾ ĐỘ 2: PHÁT ĐỀ DO AI TẠO BẰNG TTS
+    // PHÁT ĐỀ DO AI TẠO BẰNG TTS
     routeTTS(currentInterScenario.sourceText, selectedVoice, btn);
   }
 }
 
-// Hàm điều hướng: nếu là tiếng Trung & chọn Doubao thì gọi Vercel, còn lại fallback về Web Speech
 async function routeTTS(text, selectedVoice, btn) {
   if (!text) return;
 
-  // Dừng phát nếu đang chạy Doubao
   if (!doubaoAudioElement.paused) {
     doubaoAudioElement.pause();
     if (btn) btn.innerText = "▶️ Phát âm thanh";
     return;
   }
 
-  // Chỉ kích hoạt Doubao khi văn bản phát là Tiếng Trung (dir: zh_to_vi) và người dùng chọn Doubao
+  // Nếu chọn Doubao và là bài tiếng Trung
   if (currentInterScenario.sourceLangCode === "zh-CN" && selectedVoice.startsWith("doubao")) {
     const speakerId = (selectedVoice === "doubao_taozi") 
       ? "zh_female_taozi_conversation_v4_wvae_bigtts" 
       : "zh_male_yangguang_conversation_v4_wvae_bigtts";
 
-  try {
+    try {
       if (btn) btn.innerText = "⏳ Đang tải giọng Doubao...";
       
       const response = await fetch("https://gemini-api-backend-rho.vercel.app/api/doubao-tts", {
@@ -284,14 +282,12 @@ async function routeTTS(text, selectedVoice, btn) {
 
       if (!response.ok) {
         const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || `Lỗi HTTP ${response.status}`);
+        throw new Error(errData.error || `HTTP ${response.status}`);
       }
 
       const blob = await response.blob();
-      
-      // KIỂM TRA: Nếu kích thước file nhỏ hơn 1000 bytes thì là file rỗng/lỗi
       if (!blob || blob.size < 1000) {
-        throw new Error(`Dữ liệu âm thanh nhận về không hợp lệ (Dung lượng: ${blob.size} bytes)`);
+        throw new Error(`Dữ liệu âm thanh rỗng (${blob.size} bytes)`);
       }
 
       const audioBlob = new Blob([blob], { type: "audio/mpeg" });
@@ -307,10 +303,10 @@ async function routeTTS(text, selectedVoice, btn) {
       return;
     } catch (err) {
       console.warn("Lỗi kết nối Doubao TTS, chuyển về giọng mặc định:", err);
-      // Fallback: Nếu lỗi thì chuyển về giọng trình duyệt
     }
+  }
 
-  // Fallback: Phát bằng Web Speech API nếu là tiếng Việt hoặc Doubao gặp sự cố
+  // Fallback về giọng đọc trình duyệt
   playFallbackTTS(text);
 }
 
