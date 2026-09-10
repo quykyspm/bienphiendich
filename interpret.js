@@ -219,34 +219,93 @@ function toggleInterpretVocabRef() {
   if (content) content.style.display = (content.style.display === "none") ? "block" : "none";
 }
 
-// 6. Phát âm thanh (MP3 gốc hoặc TTS)
-function playSpeakerAudio() {
+// ==========================================================================
+// 6. PHÁT ÂM THANH (MP3 GỐC, DOUBAO AI HOẶC WEB TTS)
+// ==========================================================================
+
+let doubaoAudioElement = new Audio(); // Quản lý âm thanh phát từ Doubao
+
+async function playSpeakerAudio() {
   const btn = document.getElementById("btnPlayAudio");
+  const voiceSelect = document.getElementById("selectVoiceType");
+  const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
 
   if (currentInterPracticeMode === "book") {
-    // PHÁT FILE MP3 TRƯỜNG
+    // CHẾ ĐỘ 1: PHÁT FILE MP3 TRƯỜNG CÓ SẴN
     if (!audioElement.paused && audioElement.src.includes(currentInterScenario.audioSrc)) {
       audioElement.pause();
-      btn.innerText = "▶️ Tiếp tục nghe";
+      if (btn) btn.innerText = "▶️ Tiếp tục nghe";
       return;
     }
 
     audioElement.src = currentInterScenario.audioSrc;
     audioElement.playbackRate = selectedInterRate;
     audioElement.play().then(() => {
-      btn.innerText = "⏸️ Tạm dừng";
+      if (btn) btn.innerText = "⏸️ Tạm dừng";
     }).catch(err => {
-      console.warn("Không tìm thấy file MP3 cục bộ, chuyển sang đọc TTS tự động:", err);
-      playFallbackTTS(currentInterScenario.sourceText);
+      console.warn("Không tìm thấy file MP3 cục bộ, chuyển sang TTS tự động:", err);
+      routeTTS(currentInterScenario.sourceText, selectedVoice, btn);
     });
 
     audioElement.onended = () => {
-      btn.innerText = "🔄 Nghe lại bài";
+      if (btn) btn.innerText = "🔄 Nghe lại bài";
     };
   } else {
-    // PHÁT ĐỀ DO AI TẠO BẰNG TTS
-    playFallbackTTS(currentInterScenario.sourceText);
+    // CHẾ ĐỘ 2: PHÁT ĐỀ DO AI TẠO BẰNG TTS
+    routeTTS(currentInterScenario.sourceText, selectedVoice, btn);
   }
+}
+
+// Hàm điều hướng: nếu là tiếng Trung & chọn Doubao thì gọi Vercel, còn lại fallback về Web Speech
+async function routeTTS(text, selectedVoice, btn) {
+  if (!text) return;
+
+  // Dừng phát nếu đang chạy Doubao
+  if (!doubaoAudioElement.paused) {
+    doubaoAudioElement.pause();
+    if (btn) btn.innerText = "▶️ Phát âm thanh";
+    return;
+  }
+
+  // Chỉ kích hoạt Doubao khi văn bản phát là Tiếng Trung (dir: zh_to_vi) và người dùng chọn Doubao
+  if (currentInterScenario.sourceLangCode === "zh-CN" && selectedVoice.startsWith("doubao")) {
+    const speakerId = (selectedVoice === "doubao_taozi") 
+      ? "zh_female_taozi_conversation_v4_wvae_bigtts" 
+      : "zh_male_yangguang_conversation_v4_wvae_bigtts";
+
+    try {
+      if (btn) btn.innerText = "⏳ Đang tải giọng Doubao...";
+      
+      const response = await fetch("https://gemini-api-backend-rho.vercel.app/api/doubao-tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text, speaker: speakerId })
+      });
+
+      if (!response.ok) throw new Error("Vercel Doubao trả về mã lỗi: " + response.status);
+
+      const blob = await response.blob();
+      const audioUrl = URL.createObjectURL(blob);
+
+      doubaoAudioElement.src = audioUrl;
+      doubaoAudioElement.playbackRate = selectedInterRate;
+      
+      doubaoAudioElement.onplay = () => {
+        if (btn) btn.innerText = "⏸️ Đang phát (Doubao)";
+      };
+      doubaoAudioElement.onended = () => {
+        if (btn) btn.innerText = "🔄 Nghe lại (Doubao)";
+      };
+
+      await doubaoAudioElement.play();
+      return;
+    } catch (err) {
+      console.warn("Lỗi kết nối Doubao TTS, chuyển về giọng mặc định:", err);
+    }
+  }
+
+  // Fallback: Phát bằng Web Speech API nếu là tiếng Việt hoặc Doubao gặp sự cố
+  playFallbackTTS(text);
 }
 
 function playFallbackTTS(text) {
@@ -262,12 +321,24 @@ function playFallbackTTS(text) {
   const matched = voices.find(v => v.lang.toLowerCase().replace('_', '-').startsWith(isZh ? "zh" : "vi"));
   if (matched) u.voice = matched;
 
+  const btn = document.getElementById("btnPlayAudio");
+  u.onstart = () => { if (btn) btn.innerText = "⏸️ Đang phát..."; };
+  u.onend = () => { if (btn) btn.innerText = "🔄 Nghe lại bài"; };
+
   window.speechSynthesis.speak(u);
 }
 
 function stopAllAudio() {
-  if (audioElement) audioElement.pause();
+  if (audioElement) {
+    audioElement.pause();
+    audioElement.currentTime = 0;
+  }
+  if (doubaoAudioElement) {
+    doubaoAudioElement.pause();
+    doubaoAudioElement.currentTime = 0;
+  }
   if (window.speechSynthesis) window.speechSynthesis.cancel();
+  
   const btn = document.getElementById("btnPlayAudio");
   if (btn) btn.innerText = "▶️ Phát âm thanh";
 }
