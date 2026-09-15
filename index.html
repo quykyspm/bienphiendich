@@ -47,120 +47,47 @@
           <span class="arrow-icon">▾</span>
         </button>
 
-        <div class="menu-dropdown-box" id="menuDropdownBox">
-          <div class="menu-group-label">CHẾ ĐỘ HỌC TẬP</div>
+       <div class="menu-dropdown-box" id="menuDropdownBox">
+          <div class="menu-group-label">CÁC MÔN HỌC CHUYÊN NGÀNH</div>
           
-          <div class="menu-nav-option active" onclick="switchMode('write', '✍️ Luyện Viết')">
+          <!-- MÔN 1: BIÊN DỊCH -->
+          <div class="menu-nav-option active" onclick="switchSubject('biendich', '✍️ Môn Biên Dịch')">
             <span class="icon">✍️</span>
             <div class="info">
-              <span class="title">Luyện Viết Chữ Hán</span>
-              <span class="sub">Tập viết theo ô mễ & nhận diện nét</span>
+              <span class="title">Biên Dịch (笔译)</span>
+              <span class="sub">Từ vựng, ngữ pháp, luyện viết & dịch văn bản</span>
             </div>
           </div>
 
-          <div class="menu-nav-option" onclick="switchMode('listen', '🎧 Luyện Nghe')">
-            <span class="icon">🎧</span>
-            <div class="info">
-              <span class="title">Luyện Nghe Phát Âm</span>
-              <span class="sub">Luyện tai với giọng chuẩn Bắc Kinh zh-CN</span>
-            </div>
-          </div>
-
-          <div class="menu-nav-option" onclick="switchMode('interpret', '🎙️ Luyện Phiên Dịch')">
+          <!-- MÔN 2: PHIÊN DỊCH -->
+          <div class="menu-nav-option" onclick="switchSubject('phiendich', '🎙️ Môn Phiên Dịch')">
             <span class="icon">🎙️</span>
             <div class="info">
-              <span class="title">Phòng Luyện Phiên Dịch</span>
-              <span class="sub">AI kịch bản diễn giả & Dịch Nói 12 bài</span>
+              <span class="title">Phiên Dịch (口译)</span>
+              <span class="sub">Thuật ngữ, luyện nghe & cabin dịch nói AI</span>
             </div>
           </div>
 
-          <div class="menu-nav-option" onclick="switchMode('ai', '🤖 AI Dịch Thuật')">
-            <span class="icon">🤖</span>
+          <!-- MÔN 3: ĐẤT NƯỚC HỌC -->
+          <div class="menu-nav-option" onclick="switchSubject('dnh', '🏛️ Đất Nước Học')">
+            <span class="icon">🏛️</span>
             <div class="info">
-              <span class="title">AI Dịch Thuật (Viết)</span>
-              <span class="sub">Tạo đề đoạn văn & AI thẩm định điểm số</span>
+              <span class="title">Đất Nước Học Trung Quốc</span>
+              <span class="sub">中国概况: Tri thức, địa lý & trắc nghiệm</span>
             </div>
           </div>
 
-          <div class="menu-nav-option" onclick="switchMode('arena', '🏆 Đấu Trường')">
+          <div class="menu-divider"></div>
+          <div class="menu-group-label">THỰC CHIẾN & TRANH HẠNG</div>
+
+          <!-- ĐẤU TRƯỜNG -->
+          <div class="menu-nav-option" onclick="switchSubject('arena', '🏆 Đấu Trường Solo')">
             <span class="icon">🏆</span>
             <div class="info">
               <span class="title">Đấu Trường Solo (60s)</span>
               <span class="sub">Đua top bảng xếp hạng thời gian thực</span>
             </div>
           </div>
-
-          <div class="menu-divider"></div>
-          <div class="menu-group-label">KIẾN THỨC MỞ RỘNG</div>
-
-          <div class="menu-nav-option" onclick="switchMode('dnh', '🏛️ Đất Nước Học')">
-            <span class="icon">🏛️</span>
-            <div class="info">
-              <span class="title">Đất Nước Học Trung Quốc</span>
-              <span class="sub">中国概况: Tri thức, địa lý, từ vựng & trắc nghiệm</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thanh Người chơi -->
-    <div class="player-bar">
-      <div style="display: flex; align-items: center; gap: 6px;">
-        <span>👤: <strong id="displayNameTag">---</strong></span>
-        <button onclick="openNameModal()" style="background:none;border:none;color:#64748b;cursor:pointer;font-size:12px;text-decoration:underline;">(Đổi tên)</button>
-      </div>
-      <div style="font-weight: bold; color: var(--primary);">Từ đã thuộc: <span id="myCorrectScore">0</span></div>
-    </div>
-
-    <!-- ================= TAB 1: LUYỆN VIẾT ================= -->
-    <div id="tab-write" class="tab-content active">
-      <div class="filter-panel">
-        <div class="filter-item">
-          <label>Chọn bài:</label>
-          <select id="lessonFilter" onchange="applyFilters()"><option value="all">Tất cả các bài</option></select>
-        </div>
-        <div class="filter-item">
-          <label>Thứ tự:</label>
-          <select id="modeFilter" onchange="applyFilters()">
-            <option value="order">Tuần tự</option>
-            <option value="random" selected>Ngẫu nhiên</option>
-          </select>
-        </div>
-        <div class="filter-item">
-          <label>Số lượng:</label>
-          <select id="limitFilter" onchange="applyFilters()">
-            <option value="all">Tất cả</option>
-            <option value="10">10 từ</option>
-            <option value="20">20 từ</option>
-          </select>
-        </div>
-      </div>
-
-      <div style="font-size: 22px; font-weight: bold; margin-bottom: 8px;" id="prompt-vn">Đang tải dữ liệu...</div>
-      
-      <div style="margin-bottom: 16px;">
-        <button class="btn-clear-single" onclick="togglePinyin()">👁 Gợi ý Pinyin</button>
-        <span id="prompt-pinyin" style="color: #0284c7; font-weight: bold; display: none; margin-left: 8px;"></span>
-      </div>
-
-      <div class="boxes-container" id="boxesContainer"></div>
-
-      <div class="button-group">
-        <button class="main-btn btn-clear-all" onclick="clearAllBoxes()">Xóa hết</button>
-        <button class="main-btn btn-check" onclick="checkAllBoxes()">Kiểm tra</button>
-        <button class="main-btn btn-next" onclick="nextWord()">Tiếp theo ➔</button>
-      </div>
-      <div id="result-msg"></div>
-
-      <div class="lists-container">
-        <div class="list-box correct-box">
-          <div style="font-weight:bold;color:var(--success);margin-bottom:8px;">Đã thuộc: <span id="correct-count">0</span></div>
-          <div id="correct-list"></div>
-        </div>
-        <div class="list-box wrong-box">
-          <div style="font-weight:bold;color:var(--error);margin-bottom:8px;">Cần ôn: <span id="wrong-count">0</span></div>
-          <div id="wrong-list"></div>
         </div>
       </div>
     </div>
