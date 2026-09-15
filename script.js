@@ -39,6 +39,7 @@ function switchMode(tabKey, displayName) {
   document.querySelectorAll(".menu-nav-option").forEach(opt => opt.classList.remove("active"));
   if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
+  // Tự động ẩn các tab khác và kích hoạt tab có id tương ứng (ví dụ: tab-dnh)
   document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
   const activeTabEl = document.getElementById(`tab-${tabKey}`);
   if (activeTabEl) activeTabEl.classList.add("active");
@@ -49,6 +50,11 @@ function switchMode(tabKey, displayName) {
   if (tabKey === 'listen' && !currentListenWord) setupListenQuestion();
   if (tabKey === 'interpret' && typeof currentInterScenario !== 'undefined' && !currentInterScenario.sourceText && pdDB) {
     loadCurrentInterExercise();
+  }
+  
+  // Tự động nạp thẻ bài tri thức khi vừa bấm vào tab Đất Nước Học
+  if (tabKey === 'dnh' && typeof switchDnhSubTab === 'function') {
+    switchDnhSubTab('cards');
   }
 }
 
