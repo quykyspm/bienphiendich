@@ -1,0 +1,125 @@
+{
+  "chapter1": {
+    "title": "第一章 中国的国土 (Lãnh thổ Trung Quốc)",
+    "cards": [
+      {
+        "category": "Lãnh thổ & Vị trí",
+        "title": "Cương vực & Tiếp giáp",
+        "badge": "Lãnh thổ",
+        "points": [
+          "Diện tích lục địa: ~9.600.000 km² (đứng thứ 3 thế giới).",
+          "Biên giới đất liền: >22.800 km, tiếp giáp 14 quốc gia láng giềng.",
+          "Bờ biển lục địa: >18.000 km, giáp 4 vùng biển (Bột Hải, Hoàng Hải, Đông Hải, Nam Hải).",
+          "4 điểm cực: Bắc (Mạc Hà), Nam (Tăng Mẫu Ám Sa), Đông (Hắc Long Giang & Ô Tô Lý), Tây (Cao nguyên Pamir)."
+        ]
+      },
+      {
+        "category": "Địa hình",
+        "title": "Địa thế 3 Bậc thang (西高东低)",
+        "badge": "Địa hình",
+        "points": [
+          "Đặc trưng tổng quan: Tây cao, Đông thấp (dốc dần ra biển).",
+          "Bậc 1 (>4.000m): Cao nguyên Thanh Tạng (Nóc nhà thế giới), bồn địa Qaidam, đỉnh Everest (8.848,86m).",
+          "Bậc 2 (1.000 - 2.000m): 3 bồn địa (Tarim, Chuẩn Cát Nhĩ, Tứ Xuyên), 3 cao nguyên (Nội Mông Cổ, Hoàng Thổ, Vân Quý).",
+          "Bậc 3 (<500m): 3 đồng bằng màu mỡ (Đông Bắc, Hoa Bắc, Trung hạ du Trường Giang) và vùng đồi núi thấp."
+        ]
+      },
+      {
+        "category": "Thủy văn",
+        "title": "Hệ thống Sông ngòi & Hồ lớn",
+        "badge": "Sông hồ",
+        "points": [
+          "Trường Giang (长江): Dài 6.300 km (dài nhất TQ, hạng 3 thế giới).",
+          "Hoàng Hà (黄河): Dài 5.464 km (sông mẹ nuôi dưỡng văn minh Hoa Hạ).",
+          "Hồ nước mặn lớn nhất: Hồ Thanh Hải (青海湖).",
+          "Hồ nước ngọt lớn nhất: Hồ Bà Dương (鄱阳湖 - Giang Tây)."
+        ]
+      },
+      {
+        "category": "Hành chính",
+        "title": "34 Đơn vị Hành chính cấp Tỉnh",
+        "badge": "Hành chính",
+        "points": [
+          "23 Tỉnh (省): Bao gồm tỉnh Đài Loan.",
+          "5 Khu tự trị (自治区): Nội Mông Cổ, Tân Cương, Tây Tạng, Ninh Hạ, Quảng Tây.",
+          "4 Thành phố trực thuộc TƯ (直辖市): Bắc Kinh, Thiên Tân, Thượng Hải, Trùng Khánh.",
+          "2 Đặc khu hành chính (特别行政区): Hồng Kông (1997) và Ma Cao (1999)."
+        ]
+      }
+    ],
+    "vocab": [
+      { "zh": "疆域", "pinyin": "jiāngyù", "hanviet": "cương vực", "meaning": "Lãnh thổ, biên cương" },
+      { "zh": "阶梯", "pinyin": "jiētī", "hanviet": "giai thê", "meaning": "Bậc thang địa hình" },
+      { "zh": "世界屋脊", "pinyin": "shìjiè wūjǐ", "hanviet": "thế giới ốc tích", "meaning": "Nóc nhà thế giới" },
+      { "zh": "盆地", "pinyin": "péndì", "hanviet": "bồn địa", "meaning": "Bồn địa, thung lũng lòng chảo" },
+      { "zh": "丘陵", "pinyin": "qiūlíng", "hanviet": "khâu lăng", "meaning": "Đồi núi thấp" },
+      { "zh": "直辖市", "pinyin": "zhíxiáshì", "hanviet": "trực hạt thị", "meaning": "Thành phố trực thuộc TƯ" },
+      { "zh": "自治区", "pinyin": "zìzhìqū", "hanviet": "tự trị khu", "meaning": "Khu tự trị" },
+      { "zh": "特别行政区", "pinyin": "tèbié xíngzhèngqū", "hanviet": "đặc biệt hành chính khu", "meaning": "Đặc khu hành chính" },
+      { "zh": "咸水湖", "pinyin": "xiánshuǐhú", "hanviet": "hàm thủy hồ", "meaning": "Hồ nước mặn (Hồ Thanh Hải)" },
+      { "zh": "淡水湖", "pinyin": "dànshuǐhú", "hanviet": "đạm thủy hồ", "meaning": "Hồ nước ngọt (Hồ Bà Dương)" }
+    ],
+    "quizzes": [
+      {
+        "q": "中国的陆地领土面积约为多少平方千米？",
+        "options": ["960万", "930万", "990万", "1000万"],
+        "answer": "960万",
+        "explain": "Diện tích lãnh thổ trên đất liền của Trung Quốc khoảng 9,6 triệu km² (960 vạn km²)."
+      },
+      {
+        "q": "中国陆地边界线长达2.28万多千米，与多少个国家接壤？",
+        "options": ["14个", "12个", "15个", "16个"],
+        "answer": "14个",
+        "explain": "Trung Quốc tiếp giáp với 14 quốc gia trên đất liền."
+      },
+      {
+        "q": "中国地势的总特征是？",
+        "options": ["西高东低", "东高西低", "南高北低", "北高南低"],
+        "answer": "西高东低",
+        "explain": "Địa hình Trung Quốc dốc từ Tây sang Đông (西高东低) tạo thành 3 bậc thang lớn."
+      },
+      {
+        "q": "被称为“世界屋脊”的青藏高原位于哪一级阶梯？",
+        "options": ["第一级阶梯", "第二级阶梯", "第三级阶梯", "第四级阶梯"],
+        "answer": "第一级阶梯",
+        "explain": "Cao nguyên Thanh Tạng có độ cao trên 4.000m, nằm trọn ở bậc thang thứ nhất."
+      },
+      {
+        "q": "中国面积最大的咸水湖是？",
+        "options": ["青海湖", "鄱阳湖", "洞庭湖", "太湖"],
+        "answer": "青海湖",
+        "explain": "Hồ Thanh Hải là hồ lớn nhất và là hồ nước mặn lớn nhất Trung Quốc."
+      },
+      {
+        "q": "中国面积最大的淡水湖是？",
+        "options": ["鄱阳湖", "洞庭湖", "太湖", "洪泽湖"],
+        "answer": "鄱阳湖",
+        "explain": "Hồ Bà Dương (tỉnh Giang Tây) là hồ nước ngọt lớn nhất Trung Quốc."
+      },
+      {
+        "q": "中国目前共有多少个省级行政单位？",
+        "options": ["34个", "32个", "33个", "35个"],
+        "answer": "34个",
+        "explain": "Bao gồm: 23 tỉnh, 5 khu tự trị, 4 thành phố trực thuộc TƯ, 2 đặc khu hành chính."
+      },
+      {
+        "q": "中国最长的河流是？",
+        "options": ["长江", "黄河", "黑龙江", "珠江"],
+        "answer": "长江",
+        "explain": "Trường Giang dài 6.300 km, là sông dài nhất Trung Quốc và thứ 3 thế giới."
+      },
+      {
+        "q": "下列哪座城市不属于中国的四个直辖市之一？",
+        "options": ["广州", "北京", "上海", "重庆"],
+        "answer": "广州",
+        "explain": "4 thành phố trực thuộc TƯ gồm: Bắc Kinh, Thiên Tân, Thượng Hải, Trùng Khánh. Quảng Châu là tỉnh lỵ tỉnh Quảng Đông."
+      },
+      {
+        "q": "中国的内海是？",
+        "options": ["渤海", "黄海", "东海", "南海"],
+        "answer": "渤海",
+        "explain": "Biển Bột Hải là vùng nội hải nằm kín bên trong lãnh thổ Trung Quốc."
+      }
+    ]
+  }
+}
