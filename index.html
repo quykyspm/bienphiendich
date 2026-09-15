@@ -364,6 +364,44 @@
       <div id="aiEvaluationResult" class="ai-result-box"></div>
     </div>
 
+    <!-- Đổi id thành tab-dnh và thêm class="tab-content" -->
+<div id="tab-dnh" class="tab-content" style="max-width: 900px; margin: 0 auto; padding: 15px;">
+  
+  <!-- Thanh chọn Tab con (Thẻ bài / Từ vựng / Trắc nghiệm) -->
+  <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+    <button class="pill-btn active" id="btnTabDnhCards" onclick="switchDnhSubTab('cards')">📖 Thẻ Tri Thức</button>
+    <button class="pill-btn" id="btnTabDnhVocab" onclick="switchDnhSubTab('vocab')">🔤 Từ Vựng Chuyên Ngành</button>
+    <button class="pill-btn" id="btnTabDnhQuiz" onclick="switchDnhSubTab('quiz')">✍️ Trắc Nghiệm Ôn Tập</button>
+  </div>
+
+  <!-- 1. KHU VỰC THẺ KIẾN THỨC -->
+  <div id="dnhSubTabCards" class="dnh-subtab">
+    <div id="dnhCardsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;"></div>
+  </div>
+
+  <!-- 2. KHU VỰC TỪ VỰNG CHUYÊN NGÀNH -->
+  <div id="dnhSubTabVocab" class="dnh-subtab" style="display: none;">
+    <div id="dnhVocabTableContainer" style="background: #1e293b; border-radius: 10px; padding: 15px; overflow-x: auto;"></div>
+  </div>
+
+  <!-- 3. KHU VỰC TRẮC NGHIỆM TƯƠNG TÁC -->
+  <div id="dnhSubTabQuiz" class="dnh-subtab" style="display: none;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <span id="dnhQuizProgress" style="font-weight: bold; color: #38bdf8;">Đang tải câu hỏi...</span>
+      <button class="pill-btn" onclick="startDnhQuiz()" style="background: #0284c7; color: white;">🔀 Đảo câu & Làm lại</button>
+    </div>
+    
+    <div id="dnhQuizBox" style="background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155;"></div>
+
+    <div id="dnhQuizSummary" style="display: none; text-align: center; background: #1e293b; border-radius: 12px; padding: 25px; margin-top: 15px;">
+      <h3 style="color: #4ade80; margin-bottom: 10px;">🎉 Hoàn Thành Bài Ôn Tập!</h3>
+      <p id="dnhQuizScoreText" style="font-size: 18px; color: #f8fafc; margin-bottom: 15px;"></p>
+      <button class="pill-btn" onclick="startDnhQuiz()" style="background: #3b82f6; color: white; padding: 8px 20px;">Làm Lại Lần Nữa (Đề Khác)</button>
+    </div>
+  </div>
+
+</div>
+
     <!-- ================= TAB 5: ĐẤU TRƯỜNG ================= -->
     <div id="tab-arena" class="tab-content">
       <div class="arena-banner">
