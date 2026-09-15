@@ -32,29 +32,73 @@ window.addEventListener("click", () => {
   }
 });
 
-function switchMode(tabKey, displayName) {
+/* ================= XỬ LÝ MENU TỔNG ĐIỀU HƯỚNG MÔN HỌC ================= */
+function toggleMenuPopup(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById("menuDropdownBox");
+  if (dropdown) dropdown.classList.toggle("show");
+}
+
+window.addEventListener("click", () => {
+  const dropdown = document.getElementById("menuDropdownBox");
+  if (dropdown && dropdown.classList.contains("show")) {
+    dropdown.classList.remove("show");
+  }
+});
+
+// Chuyển đổi giữa 3 Môn học chính và Đấu trường
+function switchSubject(subjectKey, displayName) {
   const label = document.getElementById("currentActiveTabLabel");
   if (label) label.innerText = displayName;
 
   document.querySelectorAll(".menu-nav-option").forEach(opt => opt.classList.remove("active"));
   if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-  // Tự động ẩn các tab khác và kích hoạt tab có id tương ứng (ví dụ: tab-dnh)
   document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
-  const activeTabEl = document.getElementById(`tab-${tabKey}`);
+  const activeTabEl = document.getElementById(`tab-${subjectKey}`);
   if (activeTabEl) activeTabEl.classList.add("active");
 
   const dropdown = document.getElementById("menuDropdownBox");
   if (dropdown) dropdown.classList.remove("show");
 
-  if (tabKey === 'listen' && !currentListenWord) setupListenQuestion();
-  if (tabKey === 'interpret' && typeof currentInterScenario !== 'undefined' && !currentInterScenario.sourceText && pdDB) {
-    loadCurrentInterExercise();
+  // Kích hoạt dữ liệu mặc định khi vừa vào môn
+  if (subjectKey === 'biendich') {
+    switchBiendichSubTab('trans');
+  } else if (subjectKey === 'phiendich') {
+    switchPhiendichSubTab('cabin');
+    if (typeof loadCurrentInterExercise === "function" && pdDB) {
+      loadCurrentInterExercise();
+    }
+  } else if (subjectKey === 'dnh') {
+    if (typeof switchDnhSubTab === "function") switchDnhSubTab('cards');
   }
+}
+
+// Chuyển Tab con môn Biên Dịch (Dịch văn bản <-> Luyện viết)
+function switchBiendichSubTab(tab) {
+  const isTrans = (tab === 'trans');
+  document.getElementById("biendichSubTrans").style.display = isTrans ? "block" : "none";
+  document.getElementById("biendichSubWrite").style.display = isTrans ? "none" : "block";
   
-  // Tự động nạp thẻ bài tri thức khi vừa bấm vào tab Đất Nước Học
-  if (tabKey === 'dnh' && typeof switchDnhSubTab === 'function') {
-    switchDnhSubTab('cards');
+  document.getElementById("btnBiendichTrans").classList.toggle("active", isTrans);
+  document.getElementById("btnBiendichWrite").classList.toggle("active", !isTrans);
+
+  if (!isTrans && activeWords.length === 0) {
+    applyFilters();
+  }
+}
+
+// Chuyển Tab con môn Phiên Dịch (Cabin dịch nói <-> Luyện nghe)
+function switchPhiendichSubTab(tab) {
+  const isCabin = (tab === 'cabin');
+  document.getElementById("phiendichSubCabin").style.display = isCabin ? "block" : "none";
+  document.getElementById("phiendichSubListen").style.display = isCabin ? "none" : "block";
+
+  document.getElementById("btnPhiendichCabin").classList.toggle("active", isCabin);
+  document.getElementById("btnPhiendichListen").classList.toggle("active", !isCabin);
+
+  if (!isCabin && !currentListenWord) {
+    setupListenQuestion();
   }
 }
 
