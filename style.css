@@ -738,5 +738,57 @@ button.main-btn {
   font-size: 12px;
   color: #14532d;
 }
+
+/* ================= THANH ĐIỀU HƯỚNG CON THEO MÔN (SUB-NAV) ================= */
+.subject-subnav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 18px;
+}
+
+.subnav-btn {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: #475569;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.subnav-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.subnav-btn.active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+/* Thẻ tri thức Đất Nước Học */
+.dnh-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+.dnh-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
 .leaderboard-table th, .leaderboard-table td { padding: 10px 8px; }
 .leaderboard-table tbody tr:nth-child(even) { background: #f8fafc; }
