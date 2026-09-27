@@ -46,7 +46,7 @@ async function loadInterpretationDatabase() {
 }
 window.addEventListener("DOMContentLoaded", loadInterpretationDatabase);
 
-// 2. Render danh sách các bài học (Bài 1 -> 6 sáng đèn, Bài 7 -> 12 mờ/khóa)
+// 2. Render danh sách đầy đủ 12 bài học
 function renderInterLessonChips() {
   const container = document.getElementById("interpretTopicsContainer");
   if (!container || !pdDB) return;
@@ -55,34 +55,17 @@ function renderInterLessonChips() {
   Object.keys(pdDB).forEach((key) => {
     const lesson = pdDB[key];
     const chip = document.createElement("button");
-    const isAvailable = lesson.texts && lesson.texts[0] && lesson.texts[0].originalText !== "";
     
+    // Mở khóa toàn bộ 12 bài học
     chip.className = `topic-chip ${key === currentInterLessonId ? "active" : ""}`;
-    if (!isAvailable) {
-      chip.style.opacity = "0.5";
-      chip.innerText = `${lesson.lessonTitle.split("(")[0].trim()} (Sắp có)`;
-    } else {
-      chip.innerText = lesson.lessonTitle.split("(")[0].trim();
-    }
+    chip.innerText = lesson.lessonTitle.split("(")[0].trim();
 
     chip.onclick = () => {
-      if (!isAvailable) {
-        alert("Bài học này đang được bổ sung nội dung bài khóa!");
-        return;
-      }
       selectInterLesson(key, chip);
     };
     container.appendChild(chip);
   });
 
-  renderInterTextPills();
-}
-
-function selectInterLesson(lessonKey, chipEl) {
-  document.querySelectorAll("#interpretTopicsContainer .topic-chip").forEach(c => c.classList.remove("active"));
-  chipEl.classList.add("active");
-  currentInterLessonId = lessonKey;
-  currentInterTextId = "text1";
   renderInterTextPills();
 }
 
