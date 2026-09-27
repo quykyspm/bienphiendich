@@ -120,8 +120,8 @@ function selectInterpretRate(btn) {
 async function loadCurrentInterExercise() {
   if (!pdDB) return;
 
-  // Dừng phát âm thanh cũ nếu đang chạy
-  stopAll();
+// Dừng phát âm thanh cũ nếu đang chạy (gọi đúng tên hàm stopAllAudio)
+  stopAllAudio();
 
   const lesson = pdDB[currentInterLessonId];
   if (!lesson || !lesson.texts) return;
@@ -137,7 +137,13 @@ async function loadCurrentInterExercise() {
   // Lấy số thứ tự bài và bài khóa để khớp tên file mp3
   const lessonNum = lesson.lessonNumber || parseInt(currentInterLessonId.replace("bai", ""), 10) || 1;
   const textNum = parseInt(textObj.id.replace("text", ""), 10) || 1;
-  currentInterScenario.Src = `/bai${lessonNum}_baikhoa${textNum}.mp3`;
+
+  // Tự động phân luồng: bài 1-6 theo tên cũ, bài 7-12 theo tên BaikhoaX_baiY.mp3
+  if (lessonNum >= 7) {
+    currentInterScenario.audioSrc = `audio/Baikhoa${lessonNum}_bai${textNum}.mp3`;
+  } else {
+    currentInterScenario.audioSrc = `audio/bai${lessonNum}_baikhoa${textNum}.mp3`;
+  }
 
   if (textObj.direction === "zh_to_vi") {
     currentInterScenario.sourceLangCode = "zh-CN";
