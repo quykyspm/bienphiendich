@@ -669,36 +669,98 @@
         "direction": "zh_to_vi",
         "title": "课文一",
         "titleVi": "Bài khóa 1",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "会安是越南中部著名的古镇，位于广南省。这里曾经是16世纪到19世纪的繁华商港，拥有悠久的历史。1999年，会安古城被联合国教科文组织列入世界文化遗产名录。会安以古老的房屋、五彩缤纷的灯笼和传统节日为特色，每年吸引成千上万的游客。",
+        "vocabulary": [
+          { "zh": "古镇", "pinyin": "gǔzhèn", "vi": "Phố cổ" },
+          { "zh": "成千上万", "pinyin": "chéng qiān shàng wàn", "vi": "Hàng nghìn, hàng vạn" },
+          { "zh": "世界遗产", "pinyin": "shìjiè yíchǎn", "vi": "Di sản thế giới" },
+          { "zh": "著名", "pinyin": "zhùmíng", "vi": "Nổi tiếng" },
+          { "zh": "悠久", "pinyin": "yōujiǔ", "vi": "Lâu đời" },
+          { "zh": "灯笼", "pinyin": "dēnglong", "vi": "Đèn lồng" },
+          { "zh": "五彩缤纷", "pinyin": "wǔcǎi bīnfēn", "vi": "Sặc sỡ, lung linh nhiều màu sắc" },
+          { "zh": "繁华", "pinyin": "fánhuá", "vi": "Phồn hoa, sầm uất" },
+          { "zh": "商港", "pinyin": "shānggǎng", "vi": "Thương cảng" },
+          { "zh": "会安", "pinyin": "Huì'ān", "vi": "Hội An" },
+          { "zh": "广南", "pinyin": "Guǎngnán", "vi": "Quảng Nam" },
+          { "zh": "联合国教科文组织", "pinyin": "Liánhéguó Jiàokēwén Zǔzhī", "vi": "UNESCO" }
+        ],
+        "patterns": [
+          { "structure": "......位于+地点", "meaning": "... nằm tại, tọa lạc tại..." },
+          { "structure": "......曾经是......", "meaning": "... từng là..." },
+          { "structure": ".......被......列入......", "meaning": "... được... đưa vào, công nhận là..." },
+          { "structure": "......以......为特色", "meaning": "... có đặc trưng là, nổi bật với..." },
+          { "structure": "每年吸引......", "meaning": "Mỗi năm thu hút..." }
+        ]
       },
       {
         "id": "text2",
         "direction": "zh_to_vi",
         "title": "课文二",
         "titleVi": "Bài khóa 2",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "北京是中国的首都，也是中国的政治、文化和经济中心。这里风景优美，有故宫、长城和天安门等热门景点与名胜古迹，其中一些已被列入世界遗产。北京有三千多年的悠久历史，每年都有很多游客选择跟团游。春季和秋季是旅游旺季，冬季是淡季，如果想了解中国文化，北京是一个很好的选择。",
+        "vocabulary": [
+          { "zh": "优美", "pinyin": "yōuměi", "vi": "Đẹp, đẹp đẽ" },
+          { "zh": "淡季", "pinyin": "dànjì", "vi": "Mùa ít khách, mùa thấp điểm" },
+          { "zh": "旺季", "pinyin": "wàngjì", "vi": "Mùa cao điểm" },
+          { "zh": "热门景点", "pinyin": "rèmén jǐngdiǎn", "vi": "Điểm tham quan nổi tiếng" },
+          { "zh": "名胜古迹", "pinyin": "míngshèng gǔjì", "vi": "Danh lam thắng cảnh" },
+          { "zh": "跟团游", "pinyin": "gēntuányóu", "vi": "Du lịch theo đoàn" },
+          { "zh": "天安门", "pinyin": "Tiān'ānmén", "vi": "Thiên An Môn" },
+          { "zh": "故宫", "pinyin": "Gùgōng", "vi": "Cố Cung" },
+          { "zh": "长城", "pinyin": "Chángchéng", "vi": "Trường Thành" },
+          { "zh": "遗产", "pinyin": "yíchǎn", "vi": "Di sản" }
+        ],
+        "patterns": [
+          { "structure": "A是B，也是C", "meaning": "A là B, đồng thời cũng là C." },
+          { "structure": "这里有......等......", "meaning": "Nơi đây có... và các... khác." },
+          { "structure": "......有......年的历史", "meaning": "... có lịch sử... năm." },
+          { "structure": "每年都有......选择......", "meaning": "Mỗi năm đều có... lựa chọn..." },
+          { "structure": "如果想......，......是一个很好的选择", "meaning": "Khi muốn..., ... là một lựa chọn rất tốt." }
+        ]
       },
       {
         "id": "text3",
         "direction": "vi_to_zh",
         "title": "课文三",
         "titleVi": "Bài khóa 3",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Vịnh Hạ Long là một kỳ quan thiên nhiên nổi tiếng của Việt Nam và đã được UNESCO công nhận là di sản thế giới. Nơi đây nổi tiếng với hàng nghìn đảo đá vôi, nhiều hang động đẹp và các bãi biển có phong cảnh tuyệt đẹp. Du khách có thể đi thuyền, chèo thuyền kayak và tham quan các hang động. Mùa hè và mùa thu là mùa du lịch cao điểm, thời tiết mát mẻ, rất thích hợp để tham quan Vịnh Hạ Long.",
+        "vocabulary": [
+          { "zh": "海滩", "pinyin": "hǎitān", "vi": "Bãi biển" },
+          { "zh": "奇迹", "pinyin": "qíjì", "vi": "Kỳ quan" },
+          { "zh": "石灰岩", "pinyin": "shíhuīyán", "vi": "Đá vôi" },
+          { "zh": "岛屿", "pinyin": "dǎoyǔ", "vi": "Đảo, hòn đảo" },
+          { "zh": "皮划艇", "pinyin": "píhuátǐng", "vi": "Thuyền kayak" },
+          { "zh": "溶洞", "pinyin": "róngdòng", "vi": "Hang động đá vôi" },
+          { "zh": "下龙湾", "pinyin": "Xiàlóngwān", "vi": "Vịnh Hạ Long" }
+        ],
+        "patterns": [
+          { "structure": "以......而闻名", "meaning": "Nổi tiếng với..." },
+          { "structure": "有+数量+量词+名词", "meaning": "Có một số lượng... nào đó." },
+          { "structure": "既可以......，也可以......", "meaning": "Vừa có thể... vừa có thể..." },
+          { "structure": "在......期间", "meaning": "Trong thời gian, trong khoảng..." },
+          { "structure": "被认为是......", "meaning": "Được xem là..." }
+        ]
       },
       {
         "id": "text4",
         "direction": "vi_to_zh",
         "title": "课文四",
         "titleVi": "Bài khóa 4",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Trương Gia Giới nằm tại tỉnh Hồ Nam, Trung Quốc, là một điểm tham quan nổi tiếng. Nơi đây có phong cảnh thiên nhiên đẹp và được nhiều người xem là một kỳ quan. Du khách có thể đi cáp treo lên núi, tham quan các danh lam thắng cảnh và ngắm phong cảnh từ trên cao. Một số khu vực của Trương Gia Giới đã được UNESCO công nhận là di sản thế giới. Mỗi năm, nơi đây thu hút hàng nghìn, hàng vạn du khách.",
+        "vocabulary": [
+          { "zh": "优美", "pinyin": "yōuměi", "vi": "Phong cảnh đẹp" },
+          { "zh": "缆车", "pinyin": "lǎnchē", "vi": "Cáp treo" },
+          { "zh": "著名", "pinyin": "zhùmíng", "vi": "Nổi tiếng" },
+          { "zh": "张家界", "pinyin": "Zhāngjiājiè", "vi": "Trương Gia Giới" },
+          { "zh": "湖南省", "pinyin": "Húnán Shěng", "vi": "Tỉnh Hồ Nam" }
+        ],
+        "patterns": [
+          { "structure": "......最大的特点是......", "meaning": "Đặc điểm nổi bật nhất của... là..." },
+          { "structure": "乘坐......上山", "meaning": "Đi lên núi bằng..." },
+          { "structure": "从+地点+欣赏......", "meaning": "Ngắm... từ một địa điểm nào đó." },
+          { "structure": "一年四季都有......", "meaning": "Bốn mùa trong năm đều có..." },
+          { "structure": "吸引 + 数量 + 游客", "meaning": "Thu hút một số lượng du khách nào đó." }
+        ]
       }
     ]
   },
@@ -712,36 +774,118 @@
         "direction": "zh_to_vi",
         "title": "课文一",
         "titleVi": "Bài khóa 1",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "近日，一位女歌手在接受采访时，感谢了粉丝多年来的支持。随后，这条消息迅速登上热搜，并引起网友关注。据新闻媒体报道，她将参加下个月举行的音乐节。她在活动中的红毯造型也引发了热议。与此同时，由于受到观众的热烈支持，她的演唱会门票很快售罄。",
+        "vocabulary": [
+          { "zh": "采访", "pinyin": "cǎifǎng", "vi": "Phỏng vấn, săn tin" },
+          { "zh": "粉丝", "pinyin": "fěnsī", "vi": "Người hâm mộ" },
+          { "zh": "长期支持", "pinyin": "chángqī zhīchí", "vi": "Sự ủng hộ lâu dài" },
+          { "zh": "迅速", "pinyin": "xùnsù", "vi": "Nhanh chóng" },
+          { "zh": "登上热搜", "pinyin": "dēngshàng rèsōu", "vi": "Lọt vào xu hướng tìm kiếm" },
+          { "zh": "网友关注", "pinyin": "wǎngyǒu guānzhù", "vi": "Sự chú ý của cư dân mạng" },
+          { "zh": "据媒体报道", "pinyin": "jù méitǐ bàodào", "vi": "Theo truyền thông đưa tin" },
+          { "zh": "音乐节", "pinyin": "yīnyuèjié", "vi": "Lễ hội âm nhạc" },
+          { "zh": "红毯造型", "pinyin": "hóngtǎn zàoxíng", "vi": "Tạo hình thảm đỏ" },
+          { "zh": "引发热议", "pinyin": "yǐnfā rèyì", "vi": "Gây thảo luận sôi nổi" },
+          { "zh": "演唱会门票", "pinyin": "yǎnchànghuì ménpiào", "vi": "Vé buổi hòa nhạc" },
+          { "zh": "售罄", "pinyin": "shòuqìng", "vi": "Bán hết, cháy vé" }
+        ],
+        "patterns": [
+          { "structure": "在接受采访时......", "meaning": "Trong khi nhận phỏng vấn..." },
+          { "structure": "随后，......迅速登上.......", "meaning": "Sau đó,... nhanh chóng lọt vào/lên..." },
+          { "structure": "据......报道，.......", "meaning": "Theo... đưa tin,..." },
+          { "structure": "........引起/引发.......关注/热议", "meaning": "... thu hút/gây ra sự chú ý hoặc thảo luận sôi nổi của..." },
+          { "structure": "与此同时，......", "meaning": "Đồng thời, cùng lúc đó...." },
+          { "structure": "由于受到.............很快.......", "meaning": "Do nhận được... nên... nhanh chóng..." }
+        ]
       },
       {
         "id": "text2",
         "direction": "zh_to_vi",
         "title": "课文二",
         "titleVi": "Bài khóa 2",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "近日，著名演员李晨在北京为新电影《追光者》举行了发布会。许多新闻媒体和记者到场采访，现场气氛十分热烈。李晨表示，他希望通过这部作品传递积极向上的能量，并鼓励年轻人勇敢面对困难。电影预告片发布后受到观众欢迎，很快成为公众关注的焦点。有关活动的话题还进入了娱乐新闻榜单。",
+        "vocabulary": [
+          { "zh": "著名演员", "pinyin": "zhùmíng yǎnyuán", "vi": "Diễn viên nổi tiếng" },
+          { "zh": "新电影", "pinyin": "xīn diànyǐng", "vi": "Bộ phim mới" },
+          { "zh": "发布会", "pinyin": "fābùhuì", "vi": "Buổi họp báo" },
+          { "zh": "到场", "pinyin": "dàochǎng", "vi": "Có mặt tại hiện trường" },
+          { "zh": "记者", "pinyin": "jìzhě", "vi": "Phóng viên, nhà báo" },
+          { "zh": "现场气氛", "pinyin": "xiànchǎng qìfēn", "vi": "Không khí tại hiện trường" },
+          { "zh": "表示", "pinyin": "biǎoshì", "vi": "Cho biết, bày tỏ" },
+          { "zh": "传递", "pinyin": "chuándì", "vi": "Truyền tải, truyền đạt" },
+          { "zh": "积极能量", "pinyin": "jījí néngliàng", "vi": "Năng lượng tích cực" },
+          { "zh": "预告片", "pinyin": "yùgàopiàn", "vi": "Đoạn giới thiệu phim" },
+          { "zh": "公众焦点", "pinyin": "gōngzhòng jiāodiǎn", "vi": "Tâm điểm của công chúng" },
+          { "zh": "娱乐新闻榜单", "pinyin": "yúlè xīnwén bǎngdān", "vi": "Bảng tin giải trí" }
+        ],
+        "patterns": [
+          { "structure": "为.......举行发布会", "meaning": "Tổ chức buổi họp báo cho..." },
+          { "structure": "有......到场........", "meaning": "Có... có mặt để..." },
+          { "structure": "........表示，希望通过.......传递......", "meaning": "... cho biết và hy vọng thông qua... truyền tải..." },
+          { "structure": "........发布后受到......欢迎", "meaning": "Sau khi... được công bố, nội dung đó nhận được sự yêu thích của..." },
+          { "structure": "很快成为.......的焦点", "meaning": "Nhanh chóng trở thành tâm điểm của..." },
+          { "structure": "进入.......榜单", "meaning": "Lọt vào bảng xếp hạng/danh sách..." }
+        ]
       },
       {
         "id": "text3",
         "direction": "vi_to_zh",
         "title": "课文三",
         "titleVi": "Bài khóa 3",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Một nam diễn viên trẻ thường xuyên chia sẻ cuộc sống hàng ngày trên mạng xã hội. Gần đây, một đoạn video ghi lại cảnh anh giúp đỡ một người lớn tuổi được nhiều cơ quan báo chí chia sẻ lại và khiến nhiều cư dân mạng cảm thấy ấm áp. Sau đó, trên mạng xuất hiện một số tin đồn không chính xác về đời tư của anh. Sau khi xác minh thông tin, phía quản lý đã lên tiếng làm rõ và nhắc mọi người không nên lan truyền những nội dung chưa được xác nhận, tránh gây hoang mang.",
+        "vocabulary": [
+          { "zh": "社交平台", "pinyin": "shèjiāo píngtái", "vi": "Mạng xã hội" },
+          { "zh": "分享日常生活", "pinyin": "fēnxiǎng rìcháng shēnghuó", "vi": "Chia sẻ cuộc sống hằng ngày" },
+          { "zh": "记录", "pinyin": "jìlù", "vi": "Ghi lại" },
+          { "zh": "帮助老人", "pinyin": "bāngzhù lǎorén", "vi": "Giúp đỡ người lớn tuổi" },
+          { "zh": "被新闻媒体转发", "pinyin": "bèi xīnwén méitǐ zhuǎnfā", "vi": "Được cơ quan báo chí chia sẻ lại" },
+          { "zh": "网民", "pinyin": "wǎngmín", "vi": "Cư dân mạng" },
+          { "zh": "感到温暖", "pinyin": "gǎndào wēnnuǎn", "vi": "Cảm thấy ấm áp" },
+          { "zh": "私生活", "pinyin": "sīshēnghuó", "vi": "Đời tư" },
+          { "zh": "不实传闻", "pinyin": "bùshí chuánwén", "vi": "Tin đồn không chính xác" },
+          { "zh": "核实信息", "pinyin": "héshí xìnxī", "vi": "Kiểm tra, xác minh thông tin" },
+          { "zh": "作出澄清", "pinyin": "zuòchū chéngqīng", "vi": "Lên tiếng làm rõ" },
+          { "zh": "未经证实的内容", "pinyin": "wèijīng zhèngshí de nèiróng", "vi": "Nội dung chưa được xác nhận" },
+          { "zh": "引起恐慌", "pinyin": "yǐnqǐ kǒnghuāng", "vi": "Gây hoang mang" }
+        ],
+        "patterns": [
+          { "structure": "经常在......上分享.......", "meaning": "Thường xuyên chia sẻ... trên..." },
+          { "structure": "一段......被......", "meaning": "Một đoạn nội dung... được..." },
+          { "structure": "让......感到......", "meaning": "Khiến... cảm thấy..." },
+          { "structure": "后来，网上出现了......", "meaning": "Sau đó, trên mạng xuất hiện..." },
+          { "structure": "核实......后，......", "meaning": "Sau khi kiểm tra/xác minh... thì..." },
+          { "structure": "提醒.......不要......，以免........", "meaning": "Nhắc nhở... không nên... để tránh..." }
+        ]
       },
       {
         "id": "text4",
         "direction": "vi_to_zh",
         "title": "课文四",
         "titleVi": "Bài khóa 4",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Trong buổi phỏng vấn về bộ phim \"Muốn gặp em\", diễn viên Hứa Quang Hán cho biết anh đã đọc lại kịch bản nhiều lần và dành nhiều thời gian nói chuyện với chuyên gia tâm lý để chuẩn bị cho vai Lý Tử Duy. Điều anh muốn nắm bắt không phải là nỗi đau buồn mà là sức mạnh giúp một người phấn chấn trở lại và bước ra khỏi mất mát. Đối mặt với những cảnh quay nguy hiểm, anh ấy chọn tự mình lái xe máy thay vì sử dụng diễn viên đóng thế vì muốn thể hiện sự hoảng loạn và cấp thiết chân thật nhất. Anh cho rằng đây là trách nhiệm của mình đối với nhân vật, đồng thời hy vọng bộ phim có thể mang lại dũng khí và giúp khán giả luôn ôm ấp hy vọng.",
+        "vocabulary": [
+          { "zh": "剧本", "pinyin": "jùběn", "vi": "Kịch bản" },
+          { "zh": "心理专家", "pinyin": "xīnlǐ zhuānjiā", "vi": "Chuyên gia tâm lý" },
+          { "zh": "角色", "pinyin": "juésè", "vi": "Vai diễn, nhân vật" },
+          { "zh": "捕捉", "pinyin": "bǔzhuō", "vi": "Nắm bắt" },
+          { "zh": "振作", "pinyin": "zhènzuò", "vi": "Phấn chấn trở lại" },
+          { "zh": "从失去中走出来", "pinyin": "cóng shīqù zhōng zǒu chūlái", "vi": "Bước ra khỏi mất mát" },
+          { "zh": "危险的特技镜头", "pinyin": "wēixiǎn de tèjì jìngtóu", "vi": "Cảnh hành động nguy hiểm" },
+          { "zh": "亲自骑摩托车", "pinyin": "qīnzì qí mótuōchē", "vi": "Tự mình lái xe máy" },
+          { "zh": "替身演员", "pinyin": "tìshēn yǎnyuán", "vi": "Diễn viên đóng thế" },
+          { "zh": "呈现", "pinyin": "chéngxiàn", "vi": "Thể hiện" },
+          { "zh": "急切", "pinyin": "jíqiè", "vi": "Cấp thiết, vội vàng" },
+          { "zh": "对角色的责任", "pinyin": "duì juésè de zérèn", "vi": "Trách nhiệm đối với nhân vật" },
+          { "zh": "怀抱希望", "pinyin": "huáibào xīwàng", "vi": "Ôm ấp hy vọng" }
+        ],
+        "patterns": [
+          { "structure": "为了..........", "meaning": "Để..., ..." },
+          { "structure": "多次.......并花了大量时间......", "meaning": "Nhiều lần... và dành rất nhiều thời gian..." },
+          { "structure": "想捕捉的不是......，而是......", "meaning": "Điều muốn nắm bắt không phải là... mà là..." },
+          { "structure": "面对.......选择......而不用......", "meaning": "Đối mặt với..., lựa chọn... thay vì sử dụng..." },
+          { "structure": "这是.............的责任", "meaning": "Đây là trách nhiệm của... đối với..." },
+          { "structure": "希望.......能给......带来.............", "meaning": "Hy vọng... có thể mang lại... cho... và giúp..." }
+        ]
       }
     ]
   },
@@ -755,36 +899,115 @@
         "direction": "zh_to_vi",
         "title": "课文一",
         "titleVi": "Bài khóa 1",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "在中国，一些科技企业实行996工作制，员工从早上9点工作到晚上9点，一周工作6天。尤其在互联网公司，加班过去非常普遍，工作节奏也比较快。不过，现在越来越多的年轻人开始优先考虑工作与生活的平衡，希望企业在提高效率的同时，也关注员工的幸福感。",
+        "vocabulary": [
+          { "zh": "科技企业", "pinyin": "kējì qǐyè", "vi": "Doanh nghiệp công nghệ" },
+          { "zh": "“996”工作制", "pinyin": "“jiǔ-jiǔ-liù” gōngzuòzhì", "vi": "Chế độ làm việc “996”" },
+          { "zh": "实行", "pinyin": "shíxíng", "vi": "Thực hiện, áp dụng" },
+          { "zh": "工作节奏", "pinyin": "gōngzuò jiézòu", "vi": "Nhịp độ làm việc" },
+          { "zh": "互联网公司", "pinyin": "hùliánwǎng gōngsī", "vi": "Công ty internet" },
+          { "zh": "加班", "pinyin": "jiābān", "vi": "Tăng ca, làm thêm giờ" },
+          { "zh": "普遍", "pinyin": "pǔbiàn", "vi": "Phổ biến, rộng rãi" },
+          { "zh": "越来越多", "pinyin": "yuèláiyuè duō", "vi": "Ngày càng nhiều" },
+          { "zh": "优先考虑", "pinyin": "yōuxiān kǎolǜ", "vi": "Ưu tiên cân nhắc" },
+          { "zh": "工作与生活的平衡", "pinyin": "gōngzuò yǔ shēnghuó de pínghéng", "vi": "Sự cân bằng giữa công việc và cuộc sống" },
+          { "zh": "提高效率", "pinyin": "tígāo xiàolǜ", "vi": "Nâng cao hiệu quả" },
+          { "zh": "幸福感", "pinyin": "xìngfúgǎn", "vi": "Cảm giác hạnh phúc" }
+        ],
+        "patterns": [
+          { "structure": "在……，一些……实行……制度", "meaning": "Tại…, một số… áp dụng chế độ…" },
+          { "structure": "从 + 时间一 + 工作到 + 时间二", "meaning": "Làm việc từ thời điểm thứ nhất đến thời điểm thứ hai." },
+          { "structure": "尤其在……，……非常普遍", "meaning": "Đặc biệt tại…, … rất phổ biến." },
+          { "structure": "……的节奏比较……", "meaning": "Nhịp độ của… tương đối…" },
+          { "structure": "越来越多的……开始……", "meaning": "Ngày càng có nhiều… bắt đầu…" },
+          { "structure": "在……的同时，也……", "meaning": "Trong khi… đồng thời cũng…" }
+        ]
       },
       {
         "id": "text2",
         "direction": "zh_to_vi",
         "title": "课文二",
         "titleVi": "Bài khóa 2",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "在越南，不少企业为员工安排较长的午休，一般从12点到下午1点半。员工可以吃饭、休息或午睡，这有助于恢复精力，以便下午更好地工作。与中国部分企业相比，不少越南员工更希望按时下班，留出时间陪伴家人。这种安排反映了人们对个人生活的重视。",
+        "vocabulary": [
+          { "zh": "不少企业", "pinyin": "bùshǎo qǐyè", "vi": "Không ít doanh nghiệp" },
+          { "zh": "较长的午休", "pinyin": "jiàocháng de wǔxiū", "vi": "Thời gian nghỉ trưa tương đối dài" },
+          { "zh": "午睡", "pinyin": "wǔshuì", "vi": "Ngủ trưa" },
+          { "zh": "恢复精力", "pinyin": "huīfù jīnglì", "vi": "Phục hồi sức lực" },
+          { "zh": "以便", "pinyin": "yǐbiàn", "vi": "Để, nhằm tiện cho việc" },
+          { "zh": "按时下班", "pinyin": "ànshí xiàbān", "vi": "Tan làm đúng giờ" },
+          { "zh": "留出时间", "pinyin": "liúchū shíjiān", "vi": "Dành ra thời gian" },
+          { "zh": "陪伴家人", "pinyin": "péibàn jiārén", "vi": "Dành thời gian bên gia đình" },
+          { "zh": "个人生活", "pinyin": "gèrén shēnghuó", "vi": "Cuộc sống cá nhân" },
+          { "zh": "这种安排", "pinyin": "zhè zhǒng ānpái", "vi": "Cách sắp xếp này" },
+          { "zh": "反映", "pinyin": "fǎnyìng", "vi": "Phản ánh, thể hiện" },
+          { "zh": "部分企业", "pinyin": "bùfen qǐyè", "vi": "Một bộ phận doanh nghiệp" }
+        ],
+        "patterns": [
+          { "structure": "为 + 人 + 安排……", "meaning": "Sắp xếp… cho một đối tượng nào đó." },
+          { "structure": "一般从……到……", "meaning": "Thông thường từ… đến…" },
+          { "structure": "……有助于……，以便……", "meaning": "… có lợi cho…, để…" },
+          { "structure": "与……相比，……", "meaning": "So với… thì…" },
+          { "structure": "留出时间 + 动词短语", "meaning": "Dành ra thời gian để thực hiện một hoạt động nào đó." },
+          { "structure": "……反映了……", "meaning": "… phản ánh, thể hiện…" }
+        ]
       },
       {
         "id": "text3",
         "direction": "vi_to_zh",
         "title": "课文三",
         "titleVi": "Bài khóa 3",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Nhiều doanh nghiệp Việt Nam coi trọng sự đoàn kết và hợp tác trong công việc. Một số công ty áp dụng chế độ làm việc linh hoạt, cho phép nhân viên điều chỉnh giờ làm theo tình hình cá nhân, một số doanh nghiệp còn cung cấp cơ hội làm việc từ xa. Việc quản lý thời gian hiệu quả giúp người lao động hoàn thành nhiệm vụ đúng hạn. Cách làm này vừa đáp ứng nhu cầu của nhân viên, vừa tạo điều kiện thuận lợi cho sự phát triển của doanh nghiệp.",
+        "vocabulary": [
+          { "zh": "工作中的团结和合作", "pinyin": "gōngzuò zhōng de tuánjié hé hézuò", "vi": "Sự đoàn kết và hợp tác trong công việc" },
+          { "zh": "弹性工作制", "pinyin": "tánxìng gōngzuòzhì", "vi": "Chế độ làm việc linh hoạt" },
+          { "zh": "采用", "pinyin": "cǎiyòng", "vi": "Áp dụng" },
+          { "zh": "允许", "pinyin": "yǔnxǔ", "vi": "Cho phép" },
+          { "zh": "调整上班时间", "pinyin": "tiáozhěng shàngbān shíjiān", "vi": "Điều chỉnh giờ làm" },
+          { "zh": "个人情况", "pinyin": "gèrén qíngkuàng", "vi": "Hoàn cảnh cá nhân" },
+          { "zh": "远程办公", "pinyin": "yuǎnchéng bàngōng", "vi": "Làm việc từ xa" },
+          { "zh": "提供机会", "pinyin": "tígōng jīhuì", "vi": "Cung cấp cơ hội" },
+          { "zh": "有效的时间管理", "pinyin": "yǒuxiào de shíjiān guǎnlǐ", "vi": "Quản lý thời gian hiệu quả" },
+          { "zh": "按时完成任务", "pinyin": "ànshí wánchéng rènwu", "vi": "Hoàn thành nhiệm vụ đúng hạn" },
+          { "zh": "满足需要", "pinyin": "mǎnzú xūyào", "vi": "Đáp ứng nhu cầu" },
+          { "zh": "企业发展", "pinyin": "qǐyè fāzhǎn", "vi": "Phát triển doanh nghiệp" }
+        ],
+        "patterns": [
+          { "structure": "重视 + 名词 / 动词短语", "meaning": "Coi trọng một sự việc hoặc hoạt động nào đó." },
+          { "structure": "采用 + 制度 / 方式", "meaning": "Áp dụng một chế độ hoặc phương thức nào đó." },
+          { "structure": "允许 + 人 + 根据……调整……", "meaning": "Cho phép ai đó căn cứ vào… để điều chỉnh…" },
+          { "structure": "提供……的机会", "meaning": "Cung cấp cơ hội…" },
+          { "structure": "……能够帮助 + 人 + 动词……", "meaning": "… có thể giúp ai đó thực hiện một hoạt động." },
+          { "structure": "既能……，也能……", "meaning": "Vừa có thể… vừa có thể…" }
+        ]
       },
       {
         "id": "text4",
         "direction": "vi_to_zh",
         "title": "课文四",
         "titleVi": "Bài khóa 4",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Khi doanh nghiệp Việt Nam và Trung Quốc hợp tác, sự khác biệt về chế độ làm việc và thói quen giao tiếp có thể ảnh hưởng đến phương thức phối hợp giữa hai bên. Tìm hiểu trước văn hóa doanh nghiệp của đối tác, tôn trọng các ý kiến khác nhau và duy trì giao tiếp tốt là điều rất quan trọng. Hai bên cũng cần cân nhắc thói quen của đối phương để tránh xảy ra hiểu lầm. Đây là cơ sở quan trọng để xây dựng lòng tin và bảo đảm hợp tác thành công.",
+        "vocabulary": [
+          { "zh": "工作制度差异", "pinyin": "gōngzuò zhìdù chāyì", "vi": "Khác biệt về chế độ làm việc" },
+          { "zh": "沟通习惯", "pinyin": "gōutōng xíguàn", "vi": "Thói quen giao tiếp" },
+          { "zh": "合作方式", "pinyin": "hézuò fāngshì", "vi": "Phương thức hợp tác" },
+          { "zh": "提前了解", "pinyin": "tíqián liǎojiě", "vi": "Tìm hiểu trước" },
+          { "zh": "企业文化", "pinyin": "qǐyè wénhuà", "vi": "Văn hóa doanh nghiệp" },
+          { "zh": "合作伙伴", "pinyin": "hézuò huǒbàn", "vi": "Đối tác hợp tác" },
+          { "zh": "不同的意见", "pinyin": "bùtóng de yìjiàn", "vi": "Ý kiến khác nhau" },
+          { "zh": "保持良好沟通", "pinyin": "bǎochí liánghǎo gōutōng", "vi": "Duy trì giao tiếp tốt" },
+          { "zh": "考虑对方的习惯", "pinyin": "kǎolǜ duìfāng de xíguàn", "vi": "Cân nhắc thói quen của đối phương" },
+          { "zh": "避免产生误会", "pinyin": "bìmiǎn chǎnshēng wùhuì", "vi": "Tránh xảy ra hiểu lầm" },
+          { "zh": "建立信任", "pinyin": "jiànlì xìnrèn", "vi": "Xây dựng lòng tin" },
+          { "zh": "重要基础", "pinyin": "zhòngyào jīchǔ", "vi": "Cơ sở quan trọng" }
+        ],
+        "patterns": [
+          { "structure": "……时，……可能会影响……", "meaning": "Khi… thì… có thể ảnh hưởng đến…" },
+          { "structure": "提前了解 + 人 / 事物", "meaning": "Tìm hiểu trước về một người hoặc sự việc nào đó." },
+          { "structure": "尊重……并保持……", "meaning": "Tôn trọng… và duy trì…" },
+          { "structure": "需要考虑……，避免……", "meaning": "Cần cân nhắc… để tránh…" },
+          { "structure": "这是……的重要基础", "meaning": "Đây là cơ sở quan trọng của…" }
+        ]
       }
     ]
   },
@@ -798,36 +1021,116 @@
         "direction": "zh_to_vi",
         "title": "课文一",
         "titleVi": "Bài khóa 1",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "明天白天，河内预计有小雨，气温在24到30摄氏度之间。上午天气比较凉爽，中午阳光较强，最高气温可能达到30度，外出时最好准备防晒霜和帽子。到晚上，降雨会慢慢停止，天气逐渐转晴，适合外出散步。市民可以根据天气变化，合理安排当天的活动。",
+        "vocabulary": [
+          { "zh": "天气预报", "pinyin": "tiānqì yùbào", "vi": "Dự báo thời tiết" },
+          { "zh": "预计", "pinyin": "yùjì", "vi": "Dự báo, dự kiến" },
+          { "zh": "小雨", "pinyin": "xiǎoyǔ", "vi": "Mưa nhỏ" },
+          { "zh": "气温", "pinyin": "qìwēn", "vi": "Nhiệt độ" },
+          { "zh": "摄氏度", "pinyin": "shèshìdù", "vi": "Độ C" },
+          { "zh": "凉爽", "pinyin": "liángshuǎng", "vi": "Mát mẻ" },
+          { "zh": "阳光强烈", "pinyin": "yángguāng qiángliè", "vi": "Nắng gắt" },
+          { "zh": "最高气温", "pinyin": "zuìgāo qìwēn", "vi": "Nhiệt độ cao nhất" },
+          { "zh": "防晒霜", "pinyin": "fángshàishuāng", "vi": "Kem chống nắng" },
+          { "zh": "逐渐转晴", "pinyin": "zhújiàn zhuǎnqíng", "vi": "Dần chuyển quang đãng" },
+          { "zh": "外出散步", "pinyin": "wàichū sànbù", "vi": "Ra ngoài đi dạo" },
+          { "zh": "合理安排", "pinyin": "hélǐ ānpái", "vi": "Sắp xếp hợp lý" }
+        ],
+        "patterns": [
+          { "structure": "预计有 + 天气现象", "meaning": "Dự báo sẽ có một hiện tượng thời tiết nào đó." },
+          { "structure": "气温在 + 数字 + 到 + 数字 + 摄氏度之间", "meaning": "Nhiệt độ nằm trong khoảng từ… đến… độ C." },
+          { "structure": "最高气温可能达到 + 数字", "meaning": "Nhiệt độ cao nhất có thể đạt tới…" },
+          { "structure": "外出时最好 + 动词", "meaning": "Khi ra ngoài, tốt nhất nên…" },
+          { "structure": "到 + 时间，……逐渐……", "meaning": "Đến một thời điểm nào đó, … dần dần…" },
+          { "structure": "适合 + 动词 / 活动", "meaning": "Thích hợp để thực hiện một hoạt động nào đó." }
+        ]
       },
       {
         "id": "text2",
         "direction": "zh_to_vi",
         "title": "课文二",
         "titleVi": "Bài khóa 2",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "受台风影响，明天岘港及附近沿海地区将连续出现暴雨和强风，部分时段可能伴有雷电。预计从上午开始，风雨逐步增强，交通和海上活动可能受到较大影响。气象部门提醒市民，尽量减少外出，提前做好防风防雨准备。出行人员应注意安全，并及时关注最新预报。",
+        "vocabulary": [
+          { "zh": "台风", "pinyin": "táifēng", "vi": "Bão" },
+          { "zh": "沿海地区", "pinyin": "yánhǎi dìqū", "vi": "Khu vực ven biển" },
+          { "zh": "连续", "pinyin": "liánxù", "vi": "Liên tục, liên tiếp" },
+          { "zh": "暴雨", "pinyin": "bàoyǔ", "vi": "Mưa lớn, mưa to" },
+          { "zh": "强风", "pinyin": "qiángfēng", "vi": "Gió mạnh" },
+          { "zh": "雷电", "pinyin": "léidiàn", "vi": "Sấm sét" },
+          { "zh": "逐步增强", "pinyin": "zhúbù zēngqiáng", "vi": "Dần tăng mạnh" },
+          { "zh": "海上活动", "pinyin": "hǎishàng huódòng", "vi": "Hoạt động trên biển" },
+          { "zh": "气象部门", "pinyin": "qìxiàng bùmén", "vi": "Cơ quan khí tượng" },
+          { "zh": "减少外出", "pinyin": "jiǎnshǎo wàichū", "vi": "Hạn chế ra ngoài" },
+          { "zh": "防风防雨", "pinyin": "fángfēng fángyǔ", "vi": "Phòng chống gió và mưa" },
+          { "zh": "出行安全", "pinyin": "chūxíng ānquán", "vi": "An toàn khi đi lại" }
+        ],
+        "patterns": [
+          { "structure": "受……影响，……", "meaning": "Do chịu ảnh hưởng của… nên…" },
+          { "structure": "连续 + 时间 + 出现……", "meaning": "Liên tục xuất hiện… trong một khoảng thời gian." },
+          { "structure": "从……开始，……逐步……", "meaning": "Bắt đầu từ…, … dần dần…" },
+          { "structure": "……受到较大影响", "meaning": "… chịu ảnh hưởng tương đối lớn." },
+          { "structure": "提醒 + 人 + 尽量……", "meaning": "Nhắc nhở ai cố gắng/hạn chế…" },
+          { "structure": "提前做好……准备", "meaning": "Chuẩn bị trước cho…" }
+        ]
       },
       {
         "id": "text3",
         "direction": "vi_to_zh",
         "title": "课文三",
         "titleVi": "Bài khóa 3",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Cùng với sự thay đổi của khí hậu, tổng lượng mưa hàng năm tại Việt Nam đang có xu hướng tăng. Tuy nhiên, so với mọi năm, mùa mưa tại một số khu vực Đông Nam Á đến muộn hơn và lượng mưa giảm rõ rệt. Sự thay đổi này tuy có thể có lợi cho tưới tiêu ở một số nơi nhưng cũng làm tăng nguy cơ lũ quét và sạt lở đất ở nơi khác. Các địa phương cần theo dõi sát tình hình để giảm thiểu rủi ro đối với sản xuất nông nghiệp và an ninh lương thực.",
+        "vocabulary": [
+          { "zh": "气候变化", "pinyin": "qìhòu biànhuà", "vi": "Biến đổi khí hậu" },
+          { "zh": "年降雨总量", "pinyin": "nián jiàngyǔ zǒngliàng", "vi": "Tổng lượng mưa hằng năm" },
+          { "zh": "呈增加趋势", "pinyin": "chéng zēngjiā qūshì", "vi": "Có xu hướng tăng" },
+          { "zh": "与往年相比", "pinyin": "yǔ wǎngnián xiāngbǐ", "vi": "So với mọi năm" },
+          { "zh": "雨季", "pinyin": "yǔjì", "vi": "Mùa mưa" },
+          { "zh": "推迟", "pinyin": "tuīchí", "vi": "Đến muộn, trì hoãn" },
+          { "zh": "明显减少", "pinyin": "míngxiǎn jiǎnshǎo", "vi": "Giảm rõ rệt" },
+          { "zh": "农业灌溉", "pinyin": "nóngyè guàngài", "vi": "Tưới tiêu nông nghiệp" },
+          { "zh": "山洪", "pinyin": "shānhóng", "vi": "Lũ quét" },
+          { "zh": "泥石流", "pinyin": "níshíliú", "vi": "Sạt lở đất, lũ bùn đá" },
+          { "zh": "潜在风险", "pinyin": "qiánzài fēngxiǎn", "vi": "Nguy cơ tiềm ẩn" },
+          { "zh": "粮食安全", "pinyin": "liángshí ānquán", "vi": "An ninh lương thực" }
+        ],
+        "patterns": [
+          { "structure": "随着……，……呈……趋势", "meaning": "Cùng với…, … có xu hướng…" },
+          { "structure": "与……相比，……", "meaning": "So với… thì…" },
+          { "structure": "……来得更晚", "meaning": "… đến muộn hơn." },
+          { "structure": "虽然……，但也……", "meaning": "Tuy… nhưng đồng thời cũng…" },
+          { "structure": "增加……的潜在风险", "meaning": "Làm tăng nguy cơ tiềm ẩn của…" },
+          { "structure": "需要密切关注……，减少……", "meaning": "Cần theo dõi sát… để giảm…" }
+        ]
       },
       {
         "id": "text4",
         "direction": "vi_to_zh",
         "title": "课文四",
         "titleVi": "Bài khóa 4",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Sự nóng lên toàn cầu đang khiến các hiện tượng thời tiết cực đoan xảy ra ngày càng thường xuyên, từ hạn hán kéo dài, mưa bất thường đến lũ lụt trên diện rộng. Các chuyên gia cho rằng đây là biểu hiện trực tiếp của tình trạng mất cân bằng khí hậu khu vực. Những hiện tượng này không chỉ ảnh hưởng đến cuộc sống và cơ sở hạ tầng mà còn trở thành thách thức đối với sự phát triển bền vững. Vì vậy, các quốc gia cần tăng cường hợp tác để cùng ứng phó.",
+        "vocabulary": [
+          { "zh": "全球变暖", "pinyin": "quánqiú biànnuǎn", "vi": "Sự nóng lên toàn cầu" },
+          { "zh": "极端天气现象", "pinyin": "jíduān tiānqì xiànxiàng", "vi": "Hiện tượng thời tiết cực đoan" },
+          { "zh": "频繁发生", "pinyin": "pínfán fāshēng", "vi": "Xảy ra thường xuyên" },
+          { "zh": "长期干旱", "pinyin": "chángqī gānhàn", "vi": "Hạn hán kéo dài" },
+          { "zh": "异常降雨", "pinyin": "yìcháng jiàngyǔ", "vi": "Mưa bất thường" },
+          { "zh": "大范围洪涝灾害", "pinyin": "dà fànwéi hónglào zāihài", "vi": "Lũ lụt trên diện rộng" },
+          { "zh": "气候失衡", "pinyin": "qìhòu shīhéng", "vi": "Mất cân bằng khí hậu" },
+          { "zh": "基础设施", "pinyin": "jīchǔ shèshī", "vi": "Cơ sở hạ tầng" },
+          { "zh": "可持续发展", "pinyin": "kěchíxù fāzhǎn", "vi": "Phát triển bền vững" },
+          { "zh": "挑战", "pinyin": "tiǎozhàn", "vi": "Thách thức" },
+          { "zh": "加强合作", "pinyin": "jiāqiáng hézuò", "vi": "Tăng cường hợp tác" },
+          { "zh": "共同应对", "pinyin": "gòngtóng yìngduì", "vi": "Cùng ứng phó" }
+        ],
+        "patterns": [
+          { "structure": "……使……越来越……", "meaning": "… khiến… ngày càng…" },
+          { "structure": "从……到……都……", "meaning": "Từ… đến… đều…" },
+          { "structure": "……是……的直接体现", "meaning": "… là biểu hiện trực tiếp của…" },
+          { "structure": "不仅……，也……", "meaning": "Không chỉ… mà cũng…" },
+          { "structure": "已成为……面临的挑战", "meaning": "Đã trở thành thách thức mà… phải đối mặt." },
+          { "structure": "加强……，共同……", "meaning": "Tăng cường… và cùng nhau…" }
+        ]
       }
     ]
   },
@@ -841,36 +1144,116 @@
         "direction": "zh_to_vi",
         "title": "课文一",
         "titleVi": "Bài khóa 1",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "很多学生常常觉得时间不够用，其实主要原因是没有提前制定计划。每天开始学习以前，可以先写下任务清单，再按照轻重缓急安排顺序。对于重要而紧急的事情，应该优先处理，并为每项任务设定完成时间。学习时要把手机调成静音，避免被消息打扰。这样既能提高效率，也能减少临时赶作业的压力。",
+        "vocabulary": [
+          { "zh": "时间不够用", "pinyin": "shíjiān bú gòu yòng", "vi": "Thời gian không đủ dùng" },
+          { "zh": "提前制定计划", "pinyin": "tíqián zhìdìng jìhuà", "vi": "Lập kế hoạch từ trước" },
+          { "zh": "任务清单", "pinyin": "rènwu qīngdān", "vi": "Danh sách nhiệm vụ" },
+          { "zh": "轻重缓急", "pinyin": "qīngzhòng huǎnjí", "vi": "Mức độ quan trọng và khẩn cấp" },
+          { "zh": "安排顺序", "pinyin": "ānpái shùnxù", "vi": "Sắp xếp thứ tự" },
+          { "zh": "重要而紧急", "pinyin": "zhòngyào ér jǐnjí", "vi": "Quan trọng và khẩn cấp" },
+          { "zh": "优先处理", "pinyin": "yōuxiān chǔlǐ", "vi": "Ưu tiên xử lý" },
+          { "zh": "设定完成时间", "pinyin": "shèdìng wánchéng shíjiān", "vi": "Đặt thời gian hoàn thành" },
+          { "zh": "调成静音", "pinyin": "tiáochéng jìngyīn", "vi": "Chuyển sang chế độ im lặng" },
+          { "zh": "避免干扰", "pinyin": "bìmiǎn gānrǎo", "vi": "Tránh bị làm phiền" },
+          { "zh": "提高效率", "pinyin": "tígāo xiàolǜ", "vi": "Nâng cao hiệu quả" },
+          { "zh": "临时赶作业", "pinyin": "línshí gǎn zuòyè", "vi": "Vội làm bài vào phút cuối" }
+        ],
+        "patterns": [
+          { "structure": "主要原因是……", "meaning": "Nguyên nhân chủ yếu là…" },
+          { "structure": "……以前，可以先……，再……", "meaning": "Trước khi…, có thể… trước, sau đó…" },
+          { "structure": "按照……安排……", "meaning": "Sắp xếp… theo/căn cứ vào…" },
+          { "structure": "对于……，应该……", "meaning": "Đối với…, nên…" },
+          { "structure": "把……调成……", "meaning": "Chuyển/điều chỉnh… thành…" },
+          { "structure": "这样既能……，也能……", "meaning": "Cách này vừa có thể… vừa có thể…" }
+        ]
       },
       {
         "id": "text2",
         "direction": "zh_to_vi",
         "title": "课文二",
         "titleVi": "Bài khóa 2",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "为了保持专注，有些人采用番茄工作法，连续学习25分钟，然后休息5分钟。一个学习阶段结束后，可以站起来活动身体或喝水，但不要立刻查看社交软件。短暂休息能够帮助大脑恢复精力，使下一阶段的学习更加有效。如果任务比较复杂，可以把它分成几个小步骤，逐个完成。使用这种方法时，最重要的是严格遵守时间段，不随意延长休息。",
+        "vocabulary": [
+          { "zh": "番茄工作法", "pinyin": "fānqié gōngzuòfǎ", "vi": "Phương pháp Pomodoro" },
+          { "zh": "连续学习", "pinyin": "liánxù xuéxí", "vi": "Học liên tục" },
+          { "zh": "短暂休息", "pinyin": "duǎnzàn xiūxi", "vi": "Nghỉ ngắn" },
+          { "zh": "查看社交软件", "pinyin": "chákàn shèjiāo ruǎnjiàn", "vi": "Kiểm tra mạng xã hội" },
+          { "zh": "恢复精力", "pinyin": "huīfù jīnglì", "vi": "Phục hồi năng lượng" },
+          { "zh": "学习阶段", "pinyin": "xuéxí jiēduàn", "vi": "Giai đoạn học tập" },
+          { "zh": "复杂任务", "pinyin": "fùzá rènwu", "vi": "Nhiệm vụ phức tạp" },
+          { "zh": "分成小步骤", "pinyin": "fēnchéng xiǎo bùzhòu", "vi": "Chia thành các bước nhỏ" },
+          { "zh": "逐个完成", "pinyin": "zhúgè wánchéng", "vi": "Hoàn thành lần lượt" },
+          { "zh": "严格遵守", "pinyin": "yángé zūnshǒu", "vi": "Tuân thủ nghiêm túc" },
+          { "zh": "时间段", "pinyin": "shíjiānduàn", "vi": "Khoảng thời gian" },
+          { "zh": "随意延长", "pinyin": "suíyì yáncháng", "vi": "Tùy ý kéo dài" }
+        ],
+        "patterns": [
+          { "structure": "为了……，有些人采用……", "meaning": "Để…, một số người áp dụng/sử dụng…" },
+          { "structure": "……，然后……", "meaning": "… rồi/sau đó…" },
+          { "structure": "……后，可以……，但不要……", "meaning": "Sau khi…, có thể…, nhưng không nên…" },
+          { "structure": "……能够帮助……，使……", "meaning": "… có thể giúp…, khiến…" },
+          { "structure": "如果……，可以把……分成……", "meaning": "Nếu…, có thể chia… thành…" },
+          { "structure": "最重要的是……", "meaning": "Điều quan trọng nhất là…" }
+        ]
       },
       {
         "id": "text3",
         "direction": "vi_to_zh",
         "title": "课文三",
         "titleVi": "Bài khóa 3",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Trong một dự án nhóm, nếu các thành viên không thống nhất tiến độ, công việc rất dễ bị chậm. Ngay từ đầu, nhóm nên phân công rõ trách nhiệm, xác định thời hạn cho từng phần và thường xuyên báo cáo tiến độ. Khi xuất hiện nhiệm vụ đột xuất, mọi người cần trao đổi kịp thời và điều chỉnh kế hoạch chung. Người phụ trách cũng nên dành một khoảng thời gian dự phòng để xử lý những vấn đề bất ngờ. Nhờ phối hợp hợp lý, cả nhóm có thể nộp sản phẩm đúng hạn và bảo đảm chất lượng.",
+        "vocabulary": [
+          { "zh": "小组项目", "pinyin": "xiǎozǔ xiàngmù", "vi": "Dự án nhóm" },
+          { "zh": "统一进度", "pinyin": "tǒngyī jìndù", "vi": "Thống nhất tiến độ" },
+          { "zh": "被耽误", "pinyin": "bèi dānwu", "vi": "Bị chậm" },
+          { "zh": "明确分工", "pinyin": "míngquè fēngōng", "vi": "Phân công rõ trách nhiệm" },
+          { "zh": "截止日期", "pinyin": "jiézhǐ rìqī", "vi": "Thời hạn" },
+          { "zh": "汇报进展", "pinyin": "huìbào jìnzhǎn", "vi": "Báo cáo tiến độ" },
+          { "zh": "临时任务", "pinyin": "línshí rènwu", "vi": "Nhiệm vụ đột xuất" },
+          { "zh": "及时沟通", "pinyin": "jíshí gōutōng", "vi": "Trao đổi kịp thời" },
+          { "zh": "共同计划", "pinyin": "gòngtóng jìhuà", "vi": "Kế hoạch chung" },
+          { "zh": "预留时间", "pinyin": "yùliú shíjiān", "vi": "Thời gian dự phòng" },
+          { "zh": "突发问题", "pinyin": "tūfā wèntí", "vi": "Vấn đề bất ngờ" },
+          { "zh": "按时提交成果", "pinyin": "ànshí tíjiāo chéngguǒ", "vi": "Nộp sản phẩm đúng hạn" }
+        ],
+        "patterns": [
+          { "structure": "在……中，如果……，……很容易……", "meaning": "Trong…, nếu… thì… rất dễ…" },
+          { "structure": "一开始，……应该……", "meaning": "Ngay từ đầu,… nên…" },
+          { "structure": "为……确定……", "meaning": "Xác định… cho…" },
+          { "structure": "出现……时，需要……", "meaning": "Khi xuất hiện…, cần…" },
+          { "structure": "……还应……，用来……", "meaning": "… còn nên…, dùng để…" },
+          { "structure": "通过……，……可以……", "meaning": "Thông qua/nhờ…, … có thể…" }
+        ]
       },
       {
         "id": "text4",
         "direction": "vi_to_zh",
         "title": "课文四",
         "titleVi": "Bài khóa 4",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Quản lý thời gian không có nghĩa là làm việc liên tục, mà là sử dụng thời gian một cách có mục đích. Người học cần kết hợp học tập và nghỉ ngơi, duy trì giờ giấc sinh hoạt ổn định và không để lịch trình quá kín. Mỗi tuần nên dành thời gian xem lại những việc đã hoàn thành, tìm ra nguyên nhân của sự trì hoãn và điều chỉnh mục tiêu cho tuần sau. Khi duy trì thói quen này trong thời gian dài, chúng ta sẽ dần nâng cao khả năng tự quản lý. Đồng thời, trạng thái tinh thần cũng thoải mái hơn và chất lượng cuộc sống được cải thiện.",
+        "vocabulary": [
+          { "zh": "有目的地使用时间", "pinyin": "yǒu mùdì de shǐyòng shíjiān", "vi": "Sử dụng thời gian có mục đích" },
+          { "zh": "劳逸结合", "pinyin": "láoyì jiéhé", "vi": "Kết hợp học tập và nghỉ ngơi" },
+          { "zh": "规律作息", "pinyin": "guīlǜ zuòxī", "vi": "Giờ giấc sinh hoạt ổn định" },
+          { "zh": "日程安排过满", "pinyin": "rìchéng ānpái guòmǎn", "vi": "Lịch trình quá kín" },
+          { "zh": "回顾", "pinyin": "huígù", "vi": "Xem lại" },
+          { "zh": "拖延", "pinyin": "tuōyán", "vi": "Sự trì hoãn" },
+          { "zh": "调整目标", "pinyin": "tiáozhěng mùbiāo", "vi": "Điều chỉnh mục tiêu" },
+          { "zh": "长期保持", "pinyin": "chángqī bǎochí", "vi": "Duy trì lâu dài" },
+          { "zh": "自我管理能力", "pinyin": "zìwǒ guǎnlǐ nénglì", "vi": "Khả năng tự quản lý" },
+          { "zh": "精神状态", "pinyin": "jīngshén zhuàngtài", "vi": "Trạng thái tinh thần" },
+          { "zh": "生活质量", "pinyin": "shēnghuó zhìliàng", "vi": "Chất lượng cuộc sống" },
+          { "zh": "得到改善", "pinyin": "dédào gǎishàn", "vi": "Được cải thiện" }
+        ],
+        "patterns": [
+          { "structure": "……并不意味着……，而是……", "meaning": "… không có nghĩa là… mà là…" },
+          { "structure": "需要做到……", "meaning": "Cần thực hiện/đạt được…" },
+          { "structure": "不要把……安排得……", "meaning": "Không nên sắp xếp… quá…" },
+          { "structure": "每周应该留出时间……", "meaning": "Mỗi tuần nên dành thời gian để…" },
+          { "structure": "找出……的原因，并……", "meaning": "Tìm ra nguyên nhân của… và…" },
+          { "structure": "……会逐步……；同时，……也会……", "meaning": "… sẽ dần…; đồng thời… cũng sẽ…" }
+        ]
       }
     ]
   },
@@ -884,37 +1267,112 @@
         "direction": "zh_to_vi",
         "title": "课文一",
         "titleVi": "Bài khóa 1",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "近年来，越南人口接近一亿，但人口增长速度逐渐放缓。随着教育水平提高和人们观念变化，许多家庭选择少生孩子，城市出生率低于农村。与此同时，农村人口不断向城市迁移，城市人口密度持续上升。人口变化要求各地进一步改善住房、交通和医疗等基础设施。",
+        "vocabulary": [
+          { "zh": "人口接近一亿", "pinyin": "rénkǒu jiējìn yí yì", "vi": "Dân số gần 100 triệu người" },
+          { "zh": "增长速度", "pinyin": "zēngzhǎng sùdù", "vi": "Tốc độ tăng trưởng" },
+          { "zh": "逐渐放缓", "pinyin": "zhújiàn fànghuǎn", "vi": "Dần chậm lại" },
+          { "zh": "教育水平", "pinyin": "jiàoyù shuǐpíng", "vi": "Trình độ giáo dục" },
+          { "zh": "观念变化", "pinyin": "guānniàn biànhuà", "vi": "Sự thay đổi quan niệm" },
+          { "zh": "选择少生", "pinyin": "xuǎnzé shǎoshēng", "vi": "Lựa chọn sinh ít con" },
+          { "zh": "城市出生率", "pinyin": "chéngshì chūshēnglǜ", "vi": "Tỷ lệ sinh ở thành thị" },
+          { "zh": "低于农村", "pinyin": "dīyú nóngcūn", "vi": "Thấp hơn khu vực nông thôn" },
+          { "zh": "向城市迁移", "pinyin": "xiàng chéngshì qiānyí", "vi": "Di chuyển đến thành phố" },
+          { "zh": "人口密度", "pinyin": "rénkǒu mìdù", "vi": "Mật độ dân số" },
+          { "zh": "持续上升", "pinyin": "chíxù shàngshēng", "vi": "Tiếp tục tăng lên" },
+          { "zh": "城市基础设施", "pinyin": "chéngshì jīchǔ shèshī", "vi": "Cơ sở hạ tầng đô thị" }
+        ],
+        "patterns": [
+          { "structure": "近年来，……逐渐……", "meaning": "Trong những năm gần đây,… dần dần…" },
+          { "structure": "随着……的提高，……", "meaning": "Cùng với sự nâng cao của… thì…" },
+          { "structure": "A 低于 B", "meaning": "A thấp hơn B." },
+          { "structure": "与此同时，……不断……", "meaning": "Đồng thời,… không ngừng…" },
+          { "structure": "……要求……进一步……", "meaning": "… yêu cầu/đòi hỏi… tiếp tục…" }
+        ]
       },
       {
         "id": "text2",
         "direction": "zh_to_vi",
         "title": "课文二",
         "titleVi": "Bài khóa 2",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "中国人口超过14亿，但近年来，出生率有所下降，老龄化问题日益严重。人口老龄化可能导致劳动力不足，也给养老保障和社会发展带来压力。为了应对人口结构变化，政府调整了生育政策，并逐步放宽生育限制。各地还在改善教育、住房和托育条件，努力减轻家庭负担。",
+        "vocabulary": [
+          { "zh": "十四亿人口", "pinyin": "shísì yì rénkǒu", "vi": "Dân số 1,4 tỷ người" },
+          { "zh": "出生率下降", "pinyin": "chūshēnglǜ xiàjiàng", "vi": "Tỷ lệ sinh giảm" },
+          { "zh": "老龄化问题", "pinyin": "lǎolínghuà wèntí", "vi": "Vấn đề già hóa" },
+          { "zh": "日益严重", "pinyin": "rìyì yánzhòng", "vi": "Ngày càng nghiêm trọng" },
+          { "zh": "劳动力不足", "pinyin": "láodònglì bùzú", "vi": "Thiếu lực lượng lao động" },
+          { "zh": "养老保障", "pinyin": "yǎnglǎo bǎozhàng", "vi": "Bảo đảm an sinh tuổi già" },
+          { "zh": "人口结构变化", "pinyin": "rénkǒu jiégòu biànhuà", "vi": "Sự thay đổi cơ cấu dân số" },
+          { "zh": "调整生育政策", "pinyin": "tiáozhěng shēngyù zhèngcè", "vi": "Điều chỉnh chính sách sinh đẻ" },
+          { "zh": "放宽生育限制", "pinyin": "fàngkuān shēngyù xiànzhì", "vi": "Nới lỏng hạn chế sinh con" },
+          { "zh": "鼓励适龄生育", "pinyin": "gǔlì shìlíng shēngyù", "vi": "Khuyến khích sinh con ở độ tuổi phù hợp" },
+          { "zh": "托育条件", "pinyin": "tuōyù tiáojiàn", "vi": "Điều kiện chăm sóc trẻ nhỏ" },
+          { "zh": "减轻家庭负担", "pinyin": "jiǎnqīng jiātíng fùdān", "vi": "Giảm gánh nặng gia đình" }
+        ],
+        "patterns": [
+          { "structure": "……超过……，但……", "meaning": "… vượt quá…, nhưng…" },
+          { "structure": "……可能导致……，也给……带来……", "meaning": "… có thể dẫn đến…, đồng thời gây ra… cho…" },
+          { "structure": "为了应对……，……", "meaning": "Để ứng phó với…, …" },
+          { "structure": "调整……，并逐步放宽……", "meaning": "Điều chỉnh… và từng bước nới lỏng…" },
+          { "structure": "各地还在……，努力……", "meaning": "Các địa phương còn đang… và nỗ lực…" }
+        ]
       },
       {
         "id": "text3",
         "direction": "vi_to_zh",
         "title": "课文三",
         "titleVi": "Bài khóa 3",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Quá trình đô thị hóa đang làm thay đổi rõ rệt sự phân bố dân cư ở Việt Nam. Nhiều người trẻ rời nông thôn đến các thành phố lớn để học tập và tìm kiếm việc làm, vì vậy quy mô dân số thành thị tiếp tục mở rộng. Dòng dịch chuyển này đã bổ sung nguồn nhân lực cho thành phố, nhưng đồng thời cũng gây áp lực lên giao thông, nhà ở và dịch vụ công cộng. Các địa phương cần thúc đẩy phát triển cân bằng giữa thành thị và nông thôn, từ đó thu hẹp khoảng cách giữa các khu vực.",
+        "vocabulary": [
+          { "zh": "城市化进程", "pinyin": "chéngshìhuà jìnchéng", "vi": "Quá trình đô thị hóa" },
+          { "zh": "人口分布", "pinyin": "rénkǒu fēnbù", "vi": "Phân bố dân cư" },
+          { "zh": "离开农村", "pinyin": "líkāi nóngcūn", "vi": "Rời khỏi nông thôn" },
+          { "zh": "寻找工作", "pinyin": "xúnzhǎo gōngzuò", "vi": "Tìm kiếm việc làm" },
+          { "zh": "城市人口规模", "pinyin": "chéngshì rénkǒu guīmó", "vi": "Quy mô dân số thành thị" },
+          { "zh": "继续扩大", "pinyin": "jìxù kuòdà", "vi": "Tiếp tục mở rộng" },
+          { "zh": "人口流动", "pinyin": "rénkǒu liúdòng", "vi": "Dòng dịch chuyển dân cư" },
+          { "zh": "增加人力资源", "pinyin": "zēngjiā rénlì zīyuán", "vi": "Bổ sung nguồn nhân lực" },
+          { "zh": "公共服务", "pinyin": "gōnggòng fúwù", "vi": "Dịch vụ công cộng" },
+          { "zh": "造成压力", "pinyin": "zàochéng yālì", "vi": "Gây áp lực" },
+          { "zh": "城乡均衡发展", "pinyin": "chéngxiāng jūnhéng fāzhǎn", "vi": "Phát triển cân bằng thành thị và nông thôn" },
+          { "zh": "缩小地区差距", "pinyin": "suōxiǎo dìqū chājù", "vi": "Thu hẹp khoảng cách giữa các khu vực" }
+        ],
+        "patterns": [
+          { "structure": "……正在明显改变……", "meaning": "… đang làm thay đổi rõ rệt…" },
+          { "structure": "许多……离开……，前往……", "meaning": "Nhiều… rời… để đi đến…" },
+          { "structure": "因此……继续……", "meaning": "Vì vậy… tiếp tục…" },
+          { "structure": "……为……增加了……，但同时也……", "meaning": "… bổ sung… cho…, nhưng đồng thời cũng…" },
+          { "structure": "需要推动……，从而缩小……", "meaning": "Cần thúc đẩy… từ đó thu hẹp…" }
+        ]
       },
       {
         "id": "text4",
         "direction": "vi_to_zh",
         "title": "课文四",
         "titleVi": "Bài khóa 4",
-        "originalText": "",
-        "vocabulary": [],
-        "patterns": []
+        "originalText": "Tỷ lệ người cao tuổi ở Việt Nam đang tăng, đồng thời tuổi thọ bình quân của người dân ngày càng cao. Điều này khiến nhu cầu chăm sóc sức khỏe dài hạn và các cơ sở dành cho người cao tuổi lớn hơn trước. Để thích ứng với xu hướng đó, xã hội cần đào tạo thêm nhân viên chăm sóc, xây dựng môi trường sống thân thiện và tạo điều kiện để người cao tuổi tiếp tục tham gia các hoạt động cộng đồng. Đây là một quá trình lâu dài, cần sự phối hợp của gia đình, doanh nghiệp và chính phủ mới có thể đạt hiệu quả tốt hơn.",
+        "vocabulary": [
+          { "zh": "老年人口比例", "pinyin": "lǎonián rénkǒu bǐlì", "vi": "Tỷ lệ người cao tuổi" },
+          { "zh": "居民平均寿命", "pinyin": "jūmín píngjūn shòumìng", "vi": "Tuổi thọ bình quân của người dân" },
+          { "zh": "长期健康照护", "pinyin": "chángqī jiànkāng zhàohù", "vi": "Chăm sóc sức khỏe dài hạn" },
+          { "zh": "老年服务设施", "pinyin": "lǎonián fúwù shèshī", "vi": "Cơ sở dành cho người cao tuổi" },
+          { "zh": "适应发展趋势", "pinyin": "shìyìng fāzhǎn qūshì", "vi": "Thích ứng với xu hướng phát triển" },
+          { "zh": "护理人员", "pinyin": "hùlǐ rényuán", "vi": "Nhân viên chăm sóc" },
+          { "zh": "友好型生活环境", "pinyin": "yǒuhǎoxíng shēnghuó huánjìng", "vi": "Môi trường sống thân thiện" },
+          { "zh": "创造有利条件", "pinyin": "chuàngzào yǒulì tiáojiàn", "vi": "Tạo điều kiện thuận lợi" },
+          { "zh": "社区活动", "pinyin": "shèqū huódòng", "vi": "Hoạt động cộng đồng" },
+          { "zh": "长期过程", "pinyin": "chángqī guòchéng", "vi": "Quá trình lâu dài" },
+          { "zh": "多方协作", "pinyin": "duōfāng xiézuò", "vi": "Phối hợp giữa nhiều bên" },
+          { "zh": "取得更好效果", "pinyin": "qǔdé gèng hǎo xiàoguǒ", "vi": "Đạt hiệu quả tốt hơn" }
+        ],
+        "patterns": [
+          { "structure": "……的比例正在上升", "meaning": "Tỷ lệ của… đang tăng lên." },
+          { "structure": "这使……的需求比过去更大", "meaning": "Điều này khiến nhu cầu về… lớn hơn trước." },
+          { "structure": "为了适应……，……", "meaning": "Để thích ứng với…, …" },
+          { "structure": "为……继续……创造条件", "meaning": "Tạo điều kiện để… tiếp tục…" },
+          { "structure": "需要……共同配合，才能……", "meaning": "Cần sự phối hợp chung của… thì mới có thể…" }
+        ]
       }
     ]
   }
-}
