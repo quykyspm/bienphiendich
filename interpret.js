@@ -121,7 +121,7 @@ async function loadCurrentInterExercise() {
   if (!pdDB) return;
 
   // Dừng phát âm thanh cũ nếu đang chạy
-  stopAllAudio();
+  stopAll();
 
   const lesson = pdDB[currentInterLessonId];
   if (!lesson || !lesson.texts) return;
@@ -137,7 +137,7 @@ async function loadCurrentInterExercise() {
   // Lấy số thứ tự bài và bài khóa để khớp tên file mp3
   const lessonNum = lesson.lessonNumber || parseInt(currentInterLessonId.replace("bai", ""), 10) || 1;
   const textNum = parseInt(textObj.id.replace("text", ""), 10) || 1;
-  currentInterScenario.audioSrc = `audio/bai${lessonNum}_baikhoa${textNum}.mp3`;
+  currentInterScenario.Src = `/bai${lessonNum}_baikhoa${textNum}.mp3`;
 
   if (textObj.direction === "zh_to_vi") {
     currentInterScenario.sourceLangCode = "zh-CN";
@@ -206,9 +206,9 @@ function toggleInterpretVocabRef() {
 // 6. Phát âm thanh (MP3 gốc, Doubao TTS hoặc Web Speech)
 // ==========================================================================
 
-let doubaoAudioElement = new Audio();
+let doubaoElement = new ();
 
-async function playSpeakerAudio() {
+async function playSpeaker() {
   const btn = document.getElementById("btnPlayAudio");
   const voiceSelect = document.getElementById("selectVoiceType");
   const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
