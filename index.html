@@ -17,23 +17,9 @@
   <!-- Favicon chữ Dịch 译 sang trọng -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><text x='50%' y='50%' font-size='62' font-family='sans-serif' font-weight='bold' fill='%23ffffff' dominant-baseline='central' text-anchor='middle'>译</text></svg>">
   
-  <!-- Thư viện ngoài -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-
-  <link rel="stylesheet" href="style.css?v=6.1">
+  <link rel="stylesheet" href="style.css?v=6.2">
 </head>
 <body>
-
-  <!-- Modal nhập tên -->
-  <div id="nameModal" class="name-modal-overlay">
-    <div class="name-modal-box">
-      <h2 style="margin: 0; color: #1e293b;">Chào mừng bạn! 👋</h2>
-      <p style="font-size: 14px; color: #64748b; margin-top: 8px;">Nhập tên hoặc biệt danh để tham gia xếp hạng:</p>
-      <input type="text" id="modalNameInput" placeholder="Ví dụ: Tiểu Long..." onkeydown="if(event.key==='Enter') submitPlayerName()">
-      <button onclick="submitPlayerName()">Bắt đầu ➔</button>
-    </div>
-  </div>
 
   <div class="card">
     
@@ -43,7 +29,7 @@
       
       <div class="main-menu-wrapper">
         <button class="main-menu-trigger" id="mainMenuTrigger" onclick="toggleMenuPopup(event)">
-          <span id="currentActiveTabLabel">✍️ Luyện Viết</span>
+          <span id="currentActiveTabLabel">✍️ Môn Biên Dịch</span>
           <span class="arrow-icon">▾</span>
         </button>
 
@@ -51,7 +37,7 @@
           <div class="menu-group-label">CÁC MÔN HỌC CHUYÊN NGÀNH</div>
           
           <!-- MÔN 1: BIÊN DỊCH -->
-          <div class="menu-nav-option active" onclick="switchSubject('biendich', '✍️ Môn Biên Dịch')">
+          <div class="menu-nav-option active" onclick="switchSubject('biendich', '✍️ Môn Biên Dịch', this)">
             <span class="icon">✍️</span>
             <div class="info">
               <span class="title">Biên Dịch (笔译)</span>
@@ -60,32 +46,11 @@
           </div>
 
           <!-- MÔN 2: PHIÊN DỊCH -->
-          <div class="menu-nav-option" onclick="switchSubject('phiendich', '🎙️ Môn Phiên Dịch')">
+          <div class="menu-nav-option" onclick="switchSubject('phiendich', '🎙️ Môn Phiên Dịch', this)">
             <span class="icon">🎙️</span>
             <div class="info">
               <span class="title">Phiên Dịch (口译)</span>
               <span class="sub">Thuật ngữ, luyện nghe & cabin dịch nói AI</span>
-            </div>
-          </div>
-
-          <!-- MÔN 3: ĐẤT NƯỚC HỌC -->
-          <div class="menu-nav-option" onclick="switchSubject('dnh', '🏛️ Đất Nước Học')">
-            <span class="icon">🏛️</span>
-            <div class="info">
-              <span class="title">Đất Nước Học Trung Quốc</span>
-              <span class="sub">中国概况: Tri thức, địa lý & trắc nghiệm</span>
-            </div>
-          </div>
-
-          <div class="menu-divider"></div>
-          <div class="menu-group-label">THỰC CHIẾN & TRANH HẠNG</div>
-
-          <!-- ĐẤU TRƯỜNG -->
-          <div class="menu-nav-option" onclick="switchSubject('arena', '🏆 Đấu Trường Solo')">
-            <span class="icon">🏆</span>
-            <div class="info">
-              <span class="title">Đấu Trường Solo (60s)</span>
-              <span class="sub">Đua top bảng xếp hạng thời gian thực</span>
             </div>
           </div>
         </div>
@@ -237,6 +202,15 @@
             </div>
           </div>
 
+          <div class="control-group" style="margin-top: 6px;" id="voiceControlGroup">
+            <label class="group-label">Giọng đọc AI (TTS):</label>
+            <select id="selectVoiceType" class="pill-select">
+              <option value="doubao_yangguang">Giọng Nam (Dương Quang - Doubao)</option>
+              <option value="doubao_taozi">Giọng Nữ (Đào Tử - Doubao)</option>
+              <option value="browser">Giọng máy trình duyệt (Web Speech)</option>
+            </select>
+          </div>
+
           <div style="width: 100%; margin-top: 8px; display: none;" id="btnInterpretRegenContainer">
             <button class="btn-create-scenario-big" onclick="requestAIInterpretTask()">🔄 Đổi kịch bản AI khác</button>
           </div>
@@ -320,93 +294,9 @@
       </div>
     </div>
 
-    <!-- ================================================================= -->
-    <!-- MÔN 3: ĐẤT NƯỚC HỌC TRUNG QUỐC (中国概况) -->
-    <!-- ================================================================= -->
-    <div id="tab-dnh" class="tab-content" style="max-width: 900px; margin: 0 auto;">
-      <div class="subject-subnav">
-        <button class="subnav-btn active" id="btnTabDnhCards" onclick="switchDnhSubTab('cards')">📖 Thẻ Tri Thức</button>
-        <button class="subnav-btn" id="btnTabDnhVocab" onclick="switchDnhSubTab('vocab')">🔤 Từ Vựng Địa Lý</button>
-        <button class="subnav-btn" id="btnTabDnhQuiz" onclick="switchDnhSubTab('quiz')">✍️ Trắc Nghiệm Ôn Tập</button>
-      </div>
-
-      <div id="dnhSubTabCards" class="dnh-subtab">
-        <div id="dnhCardsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;"></div>
-      </div>
-
-      <div id="dnhSubTabVocab" class="dnh-subtab" style="display: none;">
-        <div id="dnhVocabTableContainer" style="background: #1e293b; border-radius: 10px; padding: 15px; overflow-x: auto;"></div>
-      </div>
-
-      <div id="dnhSubTabQuiz" class="dnh-subtab" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-          <span id="dnhQuizProgress" style="font-weight: bold; color: #0284c7;">Đang tải câu hỏi...</span>
-          <button class="pill-btn" onclick="startDnhQuiz()" style="background: #0284c7; color: white;">🔀 Đảo câu & Làm lại</button>
-        </div>
-        <div id="dnhQuizBox" style="background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155;"></div>
-        <div id="dnhQuizSummary" style="display: none; text-align: center; background: #1e293b; border-radius: 12px; padding: 25px; margin-top: 15px;">
-          <h3 style="color: #4ade80; margin-bottom: 10px;">🎉 Hoàn Thành Bài Ôn Tập!</h3>
-          <p id="dnhQuizScoreText" style="font-size: 18px; color: #f8fafc; margin-bottom: 15px;"></p>
-          <button class="pill-btn" onclick="startDnhQuiz()" style="background: #3b82f6; color: white; padding: 8px 20px;">Làm Lại Lần Nữa (Đề Khác)</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- KHU VỰC TRANH TÀI: ĐẤU TRƯỜNG SOLO 60S -->
-    <!-- ================================================================= -->
-    <div id="tab-arena" class="tab-content">
-      <div class="arena-banner">
-        <h2 style="margin: 0 0 6px 0;">⚔️ SOLO ĐẤU TRƯỜNG</h2>
-        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Viết đúng càng nhiều từ càng tốt trong 60 giây để tranh Top 1!</p>
-      </div>
-
-      <div class="arena-score-box">
-        <div>Kỷ lục của bạn: <span id="arenaHighScore" style="color: #d97706; font-size: 18px;">0</span> từ</div>
-        <div id="arenaLiveScoreTag" style="display:none; color:#2563eb;">Điểm hiệp này: <span id="arenaCurrentScore" style="font-size: 18px;">0</span></div>
-      </div>
-
-      <div id="arenaLobby">
-        <button class="main-btn" style="background:#d97706; color:white; font-size:18px; padding:15px;" onclick="startArenaMatch()">🚀 BẮT ĐẦU SOLO (60s)</button>
-      </div>
-
-      <div id="arenaGameArea" style="display: none; margin-top: 15px;">
-        <div class="arena-timer">⏱ Thời gian còn lại: <span id="arenaTimerDisplay">60</span>s</div>
-        <div style="font-size: 22px; font-weight: bold; margin-bottom: 12px;" id="arena-prompt-vn">Đang tạo đề...</div>
-        <div class="boxes-container" id="arenaBoxesContainer"></div>
-        <div class="button-group">
-          <button class="main-btn btn-clear-all" onclick="clearArenaBoxes()">Xóa nét</button>
-          <button class="main-btn btn-check" onclick="checkArenaBoxes()">Gửi đáp án ➔</button>
-          <button class="main-btn" style="background:#64748b; color:white;" onclick="skipArenaWord()">Bỏ qua</button>
-        </div>
-        <div id="arena-result-msg"></div>
-      </div>
-
-      <div class="leaderboard-card">
-        <div style="font-weight: bold; color: #1e293b; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 16px;">🏆 Bảng Phong Thần (Top 10 Cao Thủ)</span>
-          <span style="font-size: 12px; color: #16a34a;">● Trực tiếp</span>
-        </div>
-        <table class="leaderboard-table">
-          <thead>
-            <tr style="border-bottom: 2px solid #e2e8f0; color: #64748b;">
-              <th style="width: 60px; text-align: left;">Hạng</th>
-              <th style="text-align: left;">Học viên</th>
-              <th style="width: 100px; text-align: right;">Kỷ lục</th>
-            </tr>
-          </thead>
-          <tbody id="leaderboardBody">
-            <tr><td colspan="3" style="text-align:center;color:#64748b;padding: 16px;">Đang tải dữ liệu xếp hạng...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
 
-  <script src="script.js?v=6.1"></script>
-  <script src="interpret.js?v=3.0"></script>
-  <script src="dnh.js"></script>
-</body>
+  <script src="script.js?v=7.0"></script>
+  <script src="interpret.js?v=4.0"></script>
 </body>
 </html>

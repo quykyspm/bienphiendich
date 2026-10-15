@@ -27,6 +27,18 @@ let isSpeechRevealed = false;
 let speechRecognizer = null;
 let isRecording = false;
 
+// Ánh xạ chính xác theo tên file thực tế trong thư mục audio (xử lý sai khác chữ hoa/thường và khoảng trắng)
+function getAudioFilePath(lessonNum, textNum) {
+  if (lessonNum === 4 && textNum === 4) return "audio/Bai4_baikhoa4.mp3";
+  if (lessonNum === 6 && textNum === 4) return "audio/Bai6_baikhoa4.mp3";
+  if (lessonNum === 7 && textNum === 2) return "audio/Baikhoa7_bai2 .mp3";
+  if (lessonNum === 7 && textNum === 4) return "audio/Baikhoa7_bai4 .mp3";
+  if (lessonNum >= 7) {
+    return `audio/Baikhoa${lessonNum}_bai${textNum}.mp3`;
+  }
+  return `audio/bai${lessonNum}_baikhoa${textNum}.mp3`;
+}
+
 // 1. Tải dữ liệu từ file curriculum_pd.json
 async function loadInterpretationDatabase() {
   const notice = document.getElementById("speechBlindNotice");
@@ -140,15 +152,10 @@ async function loadCurrentInterExercise() {
   currentInterScenario.patternList = textObj.patterns || [];
   currentInterScenario.dir = textObj.direction || "zh_to_vi";
 
-  // Phân luồng đường dẫn file MP3
+  // Phân luồng đường dẫn file MP3 theo đúng tên file thực tế trong thư mục audio
   const lessonNum = lesson.lessonNumber || parseInt(currentInterLessonId.replace("bai", ""), 10) || 1;
   const textNum = parseInt(textObj.id.replace("text", ""), 10) || 1;
-
-  if (lessonNum >= 7) {
-    currentInterScenario.audioSrc = `audio/Baikhoa${lessonNum}_bai${textNum}.mp3`;
-  } else {
-    currentInterScenario.audioSrc = `audio/bai${lessonNum}_baikhoa${textNum}.mp3`;
-  }
+  currentInterScenario.audioSrc = getAudioFilePath(lessonNum, textNum);
 
   const roleTag = document.getElementById("speakerRoleTag");
   const deskTitle = document.getElementById("interpretDeskTitle");
@@ -228,7 +235,8 @@ function playSpeakerAudio() {
   const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
 
   if (currentInterPracticeMode === "book") {
-    if (!audioElement.paused && audioElement.src.includes(currentInterScenario.audioSrc)) {
+    const currentDecodedSrc = decodeURI(audioElement.src || "");
+    if (!audioElement.paused && currentDecodedSrc.includes(currentInterScenario.audioSrc)) {
       audioElement.pause();
       if (btn) btn.innerText = "▶️ Tiếp tục nghe";
       return;
@@ -257,6 +265,12 @@ async function routeTTS(text, selectedVoice, btn) {
   if (!doubaoAudioElement.paused) {
     doubaoAudioElement.pause();
     if (btn) btn.innerText = "▶️ Phát âm thanh";
+    return;
+  }
+
+  // Nếu người dùng chọn giọng trình duyệt, chạy trực tiếp Web Speech
+  if (selectedVoice === "browser") {
+    playFallbackTTS(text);
     return;
   }
 
@@ -295,7 +309,7 @@ async function routeTTS(text, selectedVoice, btn) {
       await doubaoAudioElement.play();
       return;
     } catch (err) {
-      console.warn("Chuyển TTS mặc định:", err);
+      console.warn("Doubao TTS không khả dụng (khi test local CORS yêu cầu domain quykyspm.github.io). Tự động chuyển sang Web Speech TTS:", err);
     }
   }
 
@@ -303,7 +317,11 @@ async function routeTTS(text, selectedVoice, btn) {
 }
 
 function playFallbackTTS(text) {
-  if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ Web Speech!");
+  const btn = document.getElementById("btnPlayAudio");
+  if (!window.speechSynthesis) {
+    if (btn) btn.innerText = "▶️ Phát âm thanh";
+    return alert("Trình duyệt không hỗ trợ Web Speech!");
+  }
   window.speechSynthesis.cancel();
 
   const u = new SpeechSynthesisUtterance(text);
@@ -315,9 +333,9 @@ function playFallbackTTS(text) {
   const matched = voices.find(v => v.lang.toLowerCase().replace('_', '-').startsWith(isZh ? "zh" : "vi"));
   if (matched) u.voice = matched;
 
-  const btn = document.getElementById("btnPlayAudio");
-  u.onstart = () => { if (btn) btn.innerText = "⏸️ Đang phát..."; };
+  u.onstart = () => { if (btn) btn.innerText = "⏸️ Đang phát (TTS)..."; };
   u.onend = () => { if (btn) btn.innerText = "🔄 Nghe lại bài"; };
+  u.onerror = () => { if (btn) btn.innerText = "▶️ Phát âm thanh"; };
 
   window.speechSynthesis.speak(u);
 }

@@ -1,40 +1,6 @@
-/* ================= CẤU HÌNH FIREBASE ================= */
-const firebaseConfig = {
-  apiKey: "AIzaSyD0zd7k81GaRAHN4apend-4fzjZhKFtQxQ",
-  authDomain: "chinese-leaderboard.firebaseapp.com",
-  databaseURL: "https://chinese-leaderboard-default-rtdb.firebaseio.com",
-  projectId: "chinese-leaderboard",
-  storageBucket: "chinese-leaderboard.firebasestorage.app",
-  messagingSenderId: "896587858259",
-  appId: "1:896587858259:web:5aa9af795127d2c973a1a6",
-  measurementId: "G-GN32J5JEQ6"
-};
-
-let db = null;
-try {
-  firebase.initializeApp(firebaseConfig);
-  db = firebase.database();
-} catch(e) {
-  console.warn("Lỗi Firebase:", e);
-}
-
-/* ================= XỬ LÝ MENU TỔNG ĐIỀU HƯỚNG ================= */
-function toggleMenuPopup(event) {
-  event.stopPropagation();
-  const dropdown = document.getElementById("menuDropdownBox");
-  if (dropdown) dropdown.classList.toggle("show");
-}
-
-window.addEventListener("click", () => {
-  const dropdown = document.getElementById("menuDropdownBox");
-  if (dropdown && dropdown.classList.contains("show")) {
-    dropdown.classList.remove("show");
-  }
-});
-
 /* ================= XỬ LÝ MENU TỔNG ĐIỀU HƯỚNG MÔN HỌC ================= */
 function toggleMenuPopup(event) {
-  event.stopPropagation();
+  if (event && event.stopPropagation) event.stopPropagation();
   const dropdown = document.getElementById("menuDropdownBox");
   if (dropdown) dropdown.classList.toggle("show");
 }
@@ -46,13 +12,17 @@ window.addEventListener("click", () => {
   }
 });
 
-// Chuyển đổi giữa 3 Môn học chính và Đấu trường
-function switchSubject(subjectKey, displayName) {
+// Chuyển đổi giữa 2 Môn học: Biên Dịch & Phiên Dịch
+function switchSubject(subjectKey, displayName, clickedEl) {
   const label = document.getElementById("currentActiveTabLabel");
   if (label) label.innerText = displayName;
 
   document.querySelectorAll(".menu-nav-option").forEach(opt => opt.classList.remove("active"));
-  if (event && event.currentTarget) event.currentTarget.classList.add("active");
+  if (clickedEl && clickedEl.classList) {
+    clickedEl.classList.add("active");
+  } else if (typeof event !== "undefined" && event && event.currentTarget) {
+    event.currentTarget.classList.add("active");
+  }
 
   document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
   const activeTabEl = document.getElementById(`tab-${subjectKey}`);
@@ -66,11 +36,9 @@ function switchSubject(subjectKey, displayName) {
     switchBiendichSubTab('trans');
   } else if (subjectKey === 'phiendich') {
     switchPhiendichSubTab('cabin');
-    if (typeof loadCurrentInterExercise === "function" && pdDB) {
+    if (typeof loadCurrentInterExercise === "function" && typeof pdDB !== "undefined" && pdDB) {
       loadCurrentInterExercise();
     }
-  } else if (subjectKey === 'dnh') {
-    if (typeof switchDnhSubTab === "function") switchDnhSubTab('cards');
   }
 }
 
@@ -338,11 +306,6 @@ async function checkAllBoxes() {
   else if (ok) {
     msg.className = "msg-correct"; msg.innerText = `Chính xác! (${cur.hanzi})`;
     memorizedWords.set(cur.hanzi, cur); needReviewWords.delete(cur.hanzi);
-    if (typeof masteredWordsSet !== "undefined" && !masteredWordsSet.has(cur.hanzi)) {
-      masteredWordsSet.add(cur.hanzi);
-      const scoreEl = document.getElementById("myCorrectScore");
-      if (scoreEl) scoreEl.innerText = masteredWordsSet.size;
-    }
   } else {
     msg.className = "msg-wrong"; msg.innerText = "Có chữ chưa đúng!";
     if (!memorizedWords.has(cur.hanzi)) needReviewWords.set(cur.hanzi, cur);
@@ -687,221 +650,4 @@ Hãy đánh giá chi tiết:
   }
 }
 
-/* ================= ĐẤU TRƯỜNG THI ĐẤU (60 GIÂY) ================= */
-let arenaTimer = null;
-let arenaTimeLeft = 60;
-let arenaCurrentScore = 0;
-let arenaCurrentWord = null;
-let arenaCanvasInstances = [];
-
-function startArenaMatch() {
-  if (allWords.length === 0) return alert("Chưa nạp xong từ vựng, vui lòng chờ!");
-  document.getElementById("arenaLobby").style.display = "none";
-  document.getElementById("arenaGameArea").style.display = "block";
-  document.getElementById("arenaLiveScoreTag").style.display = "block";
-  
-  arenaCurrentScore = 0;
-  arenaTimeLeft = 60;
-  document.getElementById("arenaCurrentScore").innerText = "0";
-  document.getElementById("arenaTimerDisplay").innerText = "60";
-  document.getElementById("arena-result-msg").innerText = "";
-
-  loadNextArenaWord();
-
-  clearInterval(arenaTimer);
-  arenaTimer = setInterval(() => {
-    arenaTimeLeft--;
-    document.getElementById("arenaTimerDisplay").innerText = arenaTimeLeft;
-    if (arenaTimeLeft <= 0) endArenaMatch();
-  }, 1000);
-}
-
-function endArenaMatch() {
-  clearInterval(arenaTimer);
-  document.getElementById("arenaLobby").style.display = "block";
-  document.getElementById("arenaGameArea").style.display = "none";
-  document.getElementById("arenaLiveScoreTag").style.display = "none";
-  
-  alert(`⏰ HẾT GIỜ!\nBạn hoàn thành: ${arenaCurrentScore} từ!`);
-  if (arenaCurrentScore > myBestScore) {
-    syncScoreToFirebase(arenaCurrentScore);
-  }
-}
-
-function loadNextArenaWord() {
-  const randomIndex = Math.floor(Math.random() * allWords.length);
-  arenaCurrentWord = allWords[randomIndex];
-  document.getElementById("arena-prompt-vn").innerText = `Viết: "${arenaCurrentWord.vn || ''}"`;
-  document.getElementById("arena-result-msg").innerText = "";
-  setupArenaCanvas(String(arenaCurrentWord.hanzi).trim());
-}
-
-function skipArenaWord() {
-  loadNextArenaWord();
-}
-
-function setupArenaCanvas(word) {
-  const container = document.getElementById("arenaBoxesContainer");
-  container.innerHTML = "";
-  arenaCanvasInstances = [];
-  for (let i = 0; i < word.length; i++) {
-    const wrap = document.createElement("div"); wrap.className = "box-wrapper";
-    const cBox = document.createElement("div"); cBox.className = "canvas-container";
-    const cv = document.createElement("canvas"); cv.width = 180; cv.height = 180;
-
-    cBox.appendChild(cv); wrap.appendChild(cBox); container.appendChild(wrap);
-    const ctx = cv.getContext("2d");
-    ctx.lineWidth = 6; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#1e293b";
-
-    const st = { char: word[i], cv, ctx, cBox, strokes: [], sx: [], sy: [], st: [], drawing: false, t0: 0 };
-    initCanvasEvents(st);
-    arenaCanvasInstances.push(st);
-  }
-}
-
-function clearArenaBoxes() {
-  for (let s of arenaCanvasInstances) {
-    s.ctx.clearRect(0, 0, 180, 180);
-    s.strokes = []; s.cBox.classList.remove("correct", "wrong");
-  }
-  document.getElementById("arena-result-msg").innerText = "";
-}
-
-async function checkArenaBoxes() {
-  const msg = document.getElementById("arena-result-msg");
-  msg.innerText = "Đang kiểm tra nét...";
-  let ok = true, empty = false;
-
-  for (let s of arenaCanvasInstances) {
-    if (s.strokes.length === 0) { s.cBox.classList.add("wrong"); empty = true; ok = false; continue; }
-    const p = {
-      app_version: 0.4, api_level: "537.36", device: "5.0", input_type: "0", options: "enable_pre_space",
-      requests: [{ writing_guide: { writing_area_width: 180, writing_area_height: 180 }, pre_context: "", max_num_results: 10, max_completions: 0, language: "zh-t-i0-handwrit", ink: s.strokes }]
-    };
-    try {
-      const res = await fetch("https://inputtools.google.com/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p)
-      });
-      const d = await res.json();
-      const cand = d[0] === "SUCCESS" ? d[1][0][1] : [];
-      if (cand.includes(s.char)) { s.cBox.classList.remove("wrong"); s.cBox.classList.add("correct"); }
-      else { s.cBox.classList.remove("correct"); s.cBox.classList.add("wrong"); ok = false; }
-    } catch(e) { ok = false; }
-  }
-
-  if (empty) { msg.className = "msg-wrong"; msg.innerText = "Chưa viết đủ ô!"; }
-  else if (ok) {
-    msg.className = "msg-correct"; msg.innerText = `+1 Điểm! (${arenaCurrentWord.hanzi})`;
-    arenaCurrentScore++;
-    document.getElementById("arenaCurrentScore").innerText = arenaCurrentScore;
-    setTimeout(loadNextArenaWord, 500);
-  } else {
-    msg.className = "msg-wrong"; msg.innerText = "Chưa đúng!";
-  }
-}
-
-/* ================= THÔNG TIN NGƯỜI DÙNG & REALTIME DATABASE ================= */
-const masteredWordsSet = new Set();
-let playerId = localStorage.getItem("chinese_player_id");
-let playerName = localStorage.getItem("chinese_player_name") || "";
-let myBestScore = parseInt(localStorage.getItem("chinese_arena_best") || "0", 10);
-
-if (!playerId) {
-  playerId = "user_" + Math.random().toString(36).substr(2, 9);
-  localStorage.setItem("chinese_player_id", playerId);
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("arenaHighScore").innerText = myBestScore;
-  if (!playerName) {
-    openNameModal();
-  } else {
-    document.getElementById("nameModal").classList.add("hidden");
-    document.getElementById("displayNameTag").innerText = playerName;
-  }
-});
-
-function openNameModal() {
-  document.getElementById("nameModal").classList.remove("hidden");
-  const input = document.getElementById("modalNameInput");
-  input.value = playerName;
-  setTimeout(() => input.focus(), 100);
-}
-
-function submitPlayerName() {
-  const input = document.getElementById("modalNameInput");
-  const val = input ? input.value.trim() : "";
-  if (!val) return alert("Vui lòng nhập tên!");
-  
-  playerName = val;
-  localStorage.setItem("chinese_player_name", playerName);
-  
-  const tag = document.getElementById("displayNameTag");
-  if (tag) tag.innerText = playerName;
-  
-  const modal = document.getElementById("nameModal");
-  if (modal) modal.classList.add("hidden");
-
-  syncScoreToFirebase(myBestScore);
-}
-
-function syncScoreToFirebase(scoreToSave) {
-  if (!db || !playerName) return;
-
-  const numScore = Number(scoreToSave) || 0;
-  if (numScore >= myBestScore) {
-    myBestScore = numScore;
-    localStorage.setItem("chinese_arena_best", myBestScore);
-  }
-  
-  const highEl = document.getElementById("arenaHighScore");
-  if (highEl) highEl.innerText = myBestScore;
-
-  db.ref("leaderboard/" + playerId).set({
-    name: playerName,
-    score: myBestScore,
-    updatedAt: Date.now()
-  }).catch(err => {
-    console.error("Firebase từ chối ghi dữ liệu (kiểm tra lại tab Rules):", err);
-  });
-}
-
-function listenLeaderboard() {
-  if (!db) return;
-  
-  db.ref("leaderboard").on("value", snapshot => {
-    const data = snapshot.val();
-    const tbody = document.getElementById("leaderboardBody");
-    tbody.innerHTML = "";
-
-    if (!data) {
-      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:16px;">Chưa có kỷ lục nào được ghi nhận!</td></tr>';
-      return;
-    }
-
-    const list = Object.values(data)
-      .sort((a, b) => (b.score || 0) - (a.score || 0))
-      .slice(0, 10);
-
-    list.forEach((p, idx) => {
-      let badge = `#${idx + 1}`;
-      if (idx === 0) badge = "🥇 1";
-      else if (idx === 1) badge = "🥈 2";
-      else if (idx === 2) badge = "🥉 3";
-
-      const isMe = (p.name === playerName) ? 'style="font-weight:bold; color:var(--primary);"' : '';
-      tbody.innerHTML += `
-        <tr ${isMe}>
-          <td style="font-weight:bold;">${badge}</td>
-          <td>${p.name || 'Vô danh'}</td>
-          <td style="text-align:right;font-weight:bold;color:#d97706;">${p.score || 0} từ</td>
-        </tr>
-      `;
-    });
-  }, err => {
-    console.error("Lỗi đọc Firebase:", err);
-  });
-}
-
 autoLoadExcel();
-listenLeaderboard();
