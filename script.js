@@ -1,3 +1,118 @@
+/* ==========================================================================
+   HỆ THỐNG BIÊN PHIÊN DỊCH STUDIO BY QUYKY (NÂNG CẤP TOÀN DIỆN)
+   ========================================================================== */
+
+/* ================= TIỆN ÍCH AN TOÀN (STORAGE, TOAST, CLIPBOARD) ================= */
+function safeGetStorage(key, fallback = null) {
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function safeSetStorage(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    // Bỏ qua nếu trình duyệt chặn localStorage trong iframe
+  }
+}
+
+function showToast(message, type = "info") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+  const item = document.createElement("div");
+  item.className = `toast-item ${type}`;
+  item.innerText = message;
+  container.appendChild(item);
+  setTimeout(() => {
+    item.style.opacity = "0";
+    item.style.transition = "opacity 0.25s ease";
+    setTimeout(() => item.remove(), 260);
+  }, 3200);
+}
+
+function copyTextToClipboard(text, successMsg = "📋 Đã sao chép vào bộ nhớ tạm!") {
+  if (!text) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(successMsg, "success");
+    }).catch(() => fallbackCopyText(text, successMsg));
+  } else {
+    fallbackCopyText(text, successMsg);
+  }
+}
+
+function fallbackCopyText(text, successMsg) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try {
+    document.execCommand("copy");
+    showToast(successMsg, "success");
+  } catch (e) {
+    showToast("Không thể sao chép tự động", "warning");
+  }
+  document.body.removeChild(ta);
+}
+
+// Chuẩn hóa Pinyin (bỏ dấu thanh điệu để so khớp linh hoạt)
+function stripPinyinTones(str) {
+  if (!str) return "";
+  return String(str)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ü/g, "v")
+    .toLowerCase()
+    .trim();
+}
+
+// Chèn ký tự tại vị trí con trỏ trong textarea
+function insertAtCursor(textareaId, textToInsert) {
+  const area = document.getElementById(textareaId);
+  if (!area) return;
+  const start = area.selectionStart || 0;
+  const end = area.selectionEnd || 0;
+  const val = area.value;
+  area.value = val.substring(0, start) + textToInsert + val.substring(end);
+  area.focus();
+  const nextPos = (textToInsert === "“”" || textToInsert === "《》") ? start + 1 : start + textToInsert.length;
+  area.setSelectionRange(nextPos, nextPos);
+  if (textareaId === "aiUserInput") onTransInputChanged();
+  if (textareaId === "interpretUserTranscript" && typeof onInterTranscriptChanged === "function") {
+    onInterTranscriptChanged();
+  }
+}
+
+/* ================= GIAO DIỆN SÁNG / TỐI (DARK MODE) ================= */
+function initTheme() {
+  const saved = safeGetStorage("quyky_theme", "light");
+  if (saved === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+    const btn = document.getElementById("themeToggleBtn");
+    if (btn) btn.innerText = "☀️ Sáng";
+  }
+}
+
+function toggleDarkMode() {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const nextTheme = isDark ? "light" : "dark";
+  if (nextTheme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+  safeSetStorage("quyky_theme", nextTheme);
+  const btn = document.getElementById("themeToggleBtn");
+  if (btn) btn.innerText = nextTheme === "dark" ? "☀️ Sáng" : "🌙 Tối";
+}
+
 /* ================= XỬ LÝ MENU TỔNG ĐIỀU HƯỚNG MÔN HỌC ================= */
 function toggleMenuPopup(event) {
   if (event && event.stopPropagation) event.stopPropagation();
@@ -12,16 +127,31 @@ window.addEventListener("click", () => {
   }
 });
 
+// Phím tắt Ctrl+K mở Từ điển & Esc đóng Modal
+window.addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    openDictionaryModal();
+  } else if (e.key === "Escape") {
+    closeDictionaryModal();
+  }
+});
+
 // Chuyển đổi giữa 2 Môn học: Biên Dịch & Phiên Dịch
 function switchSubject(subjectKey, displayName, clickedEl) {
   const label = document.getElementById("currentActiveTabLabel");
   if (label) label.innerText = displayName;
 
   document.querySelectorAll(".menu-nav-option").forEach(opt => opt.classList.remove("active"));
-  if (clickedEl && clickedEl.classList) {
+  const menuOpt = document.getElementById(subjectKey === "biendich" ? "menuOptBiendich" : "menuOptPhiendich");
+  if (menuOpt) menuOpt.classList.add("active");
+
+  document.querySelectorAll(".quick-subject-btn").forEach(btn => btn.classList.remove("active"));
+  const quickBtn = document.getElementById(subjectKey === "biendich" ? "quickBtnBiendich" : "quickBtnPhiendich");
+  if (quickBtn) quickBtn.classList.add("active");
+
+  if (clickedEl && clickedEl.classList && clickedEl.classList.contains("menu-nav-option")) {
     clickedEl.classList.add("active");
-  } else if (typeof event !== "undefined" && event && event.currentTarget) {
-    event.currentTarget.classList.add("active");
   }
 
   document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
@@ -31,46 +161,60 @@ function switchSubject(subjectKey, displayName, clickedEl) {
   const dropdown = document.getElementById("menuDropdownBox");
   if (dropdown) dropdown.classList.remove("show");
 
-  // Kích hoạt dữ liệu mặc định khi vừa vào môn
-  if (subjectKey === 'biendich') {
-    switchBiendichSubTab('trans');
-  } else if (subjectKey === 'phiendich') {
-    switchPhiendichSubTab('cabin');
+  if (subjectKey === "biendich") {
+    switchBiendichSubTab("trans");
+  } else if (subjectKey === "phiendich") {
+    switchPhiendichSubTab("cabin");
     if (typeof loadCurrentInterExercise === "function" && typeof pdDB !== "undefined" && pdDB) {
       loadCurrentInterExercise();
     }
   }
 }
 
-// Chuyển Tab con môn Biên Dịch (Dịch văn bản <-> Luyện viết)
+// Chuyển Tab con môn Biên Dịch (Dịch văn bản <-> Luyện viết <-> Flashcard)
 function switchBiendichSubTab(tab) {
-  const isTrans = (tab === 'trans');
-  document.getElementById("biendichSubTrans").style.display = isTrans ? "block" : "none";
-  document.getElementById("biendichSubWrite").style.display = isTrans ? "none" : "block";
-  
-  document.getElementById("btnBiendichTrans").classList.toggle("active", isTrans);
-  document.getElementById("btnBiendichWrite").classList.toggle("active", !isTrans);
+  const transBox = document.getElementById("biendichSubTrans");
+  const writeBox = document.getElementById("biendichSubWrite");
+  const fcBox = document.getElementById("biendichSubFlashcard");
 
-  if (!isTrans && activeWords.length === 0) {
+  if (transBox) transBox.style.display = (tab === "trans") ? "block" : "none";
+  if (writeBox) writeBox.style.display = (tab === "write") ? "block" : "none";
+  if (fcBox) fcBox.style.display = (tab === "flashcard") ? "block" : "none";
+
+  const btnTrans = document.getElementById("btnBiendichTrans");
+  const btnWrite = document.getElementById("btnBiendichWrite");
+  const btnFc = document.getElementById("btnBiendichFlashcard");
+
+  if (btnTrans) btnTrans.classList.toggle("active", tab === "trans");
+  if (btnWrite) btnWrite.classList.toggle("active", tab === "write");
+  if (btnFc) btnFc.classList.toggle("active", tab === "flashcard");
+
+  if (tab === "write" && activeWords.length === 0) {
     applyFilters();
+  } else if (tab === "flashcard" && flashcardDeck.length === 0) {
+    initFlashcardDeck();
   }
 }
 
 // Chuyển Tab con môn Phiên Dịch (Cabin dịch nói <-> Luyện nghe)
 function switchPhiendichSubTab(tab) {
-  const isCabin = (tab === 'cabin');
-  document.getElementById("phiendichSubCabin").style.display = isCabin ? "block" : "none";
-  document.getElementById("phiendichSubListen").style.display = isCabin ? "none" : "block";
+  const isCabin = (tab === "cabin");
+  const cabinEl = document.getElementById("phiendichSubCabin");
+  const listenEl = document.getElementById("phiendichSubListen");
+  if (cabinEl) cabinEl.style.display = isCabin ? "block" : "none";
+  if (listenEl) listenEl.style.display = isCabin ? "none" : "block";
 
-  document.getElementById("btnPhiendichCabin").classList.toggle("active", isCabin);
-  document.getElementById("btnPhiendichListen").classList.toggle("active", !isCabin);
+  const btnCabin = document.getElementById("btnPhiendichCabin");
+  const btnListen = document.getElementById("btnPhiendichListen");
+  if (btnCabin) btnCabin.classList.toggle("active", isCabin);
+  if (btnListen) btnListen.classList.toggle("active", !isCabin);
 
   if (!isCabin && !currentListenWord) {
     setupListenQuestion();
   }
 }
 
-/* ================= BỘ GIỌNG ĐỌC DIỄN GIẢ ================= */
+/* ================= BỘ GIỌNG ĐỌC DIỄN GIẢ (TTS) ================= */
 let availableVoices = [];
 function initVoiceList() {
   if (!window.speechSynthesis) return;
@@ -80,19 +224,25 @@ if (window.speechSynthesis) {
   window.speechSynthesis.onvoiceschanged = initVoiceList;
 }
 
-function playDiplomaticSpeech(text, lang = 'zh-CN') {
-  if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ phát âm!");
+function playDiplomaticSpeech(text, lang = "zh-CN", rate = 0.92) {
+  if (!window.speechSynthesis) {
+    showToast("Trình duyệt không hỗ trợ phát âm Web Speech!", "warning");
+    return;
+  }
   window.speechSynthesis.cancel();
-  
-  const u = new SpeechSynthesisUtterance(text);
+  const cleanText = String(text).replace(/…+/g, " ").replace(/\.{2,}/g, " ");
+  const u = new SpeechSynthesisUtterance(cleanText);
   u.lang = lang;
-  u.rate = 0.9;
-  u.pitch = 0.95;
+  u.rate = rate;
+  u.pitch = 0.98;
 
   if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
-  const matchedVoice = availableVoices.find(v => v.lang.startsWith(lang.split('-')[0]) && (v.name.includes("Natural") || v.name.includes("Neural")));
-  if (matchedVoice) u.voice = matchedVoice;
+  const prefix = lang.split("-")[0].toLowerCase();
+  const matchedVoice = availableVoices.find(
+    v => v.lang.toLowerCase().replace("_", "-").startsWith(prefix) && (v.name.includes("Natural") || v.name.includes("Neural"))
+  ) || availableVoices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(prefix));
 
+  if (matchedVoice) u.voice = matchedVoice;
   window.speechSynthesis.speak(u);
 }
 
@@ -111,83 +261,234 @@ async function callGemini(promptText) {
   return data.text;
 }
 
-/* ================= LOGIC NẠP JSON & LUYỆN VIẾT (KHÔNG DÙNG EXCEL) ================= */
-let allWords = [], activeWords = [], currentIndex = 0, canvasInstances = [];
-const memorizedWords = new Map(), needReviewWords = new Map();
+// Định dạng kết quả AI trả về thành giao diện thẻ trực quan
+function formatAIEvaluationHTML(rawText, titleLabel = "Kết quả Thẩm định AI") {
+  const scoreMatch = String(rawText).match(/(\d+(?:[.,]\d+)?)\s*\/\s*10/);
+  const scoreBadge = scoreMatch ? `🎯 Điểm: ${scoreMatch[1]}/10` : "⚖️ Đã thẩm định";
 
-// Hàm xáo bài ngẫu nhiên chuẩn (Fisher-Yates) - Chống lặp từ 100%
-function shuffleWords(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+  const escaped = String(rawText)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\n/g, "<br>");
+
+  return `
+    <div class="eval-score-header">
+      <strong style="font-size: 15px; color: var(--success);">✨ ${titleLabel}</strong>
+      <span class="score-circle-badge">${scoreBadge}</span>
+    </div>
+    <div class="eval-formatted-body">${escaped}</div>
+  `;
 }
 
-// 1. Thay thế autoLoadExcel bằng hàm nạp trực tiếp từ curriculum_db.json
+/* ================= DỮ LIỆU TỪ VỰNG TỔNG HỢP (BIÊN DỊCH + PHIÊN DỊCH) ================= */
+let bdWords = [];
+let pdWords = [];
+let allCombinedWords = [];
+let allPatternsList = [];
+let allWords = [];
+let activeWords = [];
+let currentIndex = 0;
+let canvasInstances = [];
+const memorizedWords = new Map();
+const needReviewWords = new Map();
+
+function loadSavedVocabProgress() {
+  const savedMem = safeGetStorage("quyky_memorized_words", []);
+  const savedRev = safeGetStorage("quyky_review_words", []);
+  savedMem.forEach(w => { if (w && w.hanzi) memorizedWords.set(w.hanzi, w); });
+  savedRev.forEach(w => { if (w && w.hanzi && !memorizedWords.has(w.hanzi)) needReviewWords.set(w.hanzi, w); });
+}
+
+function saveVocabProgressToStorage() {
+  safeSetStorage("quyky_memorized_words", Array.from(memorizedWords.values()));
+  safeSetStorage("quyky_review_words", Array.from(needReviewWords.values()));
+  updateGlobalStatsBadges();
+}
+
+function updateGlobalStatsBadges() {
+  const memBadge = document.getElementById("globalMemorizedBadge");
+  const revBadge = document.getElementById("globalReviewBadge");
+  if (memBadge) memBadge.innerText = `✅ Đã thuộc: ${memorizedWords.size} từ`;
+  if (revBadge) revBadge.innerText = `📌 Cần ôn: ${needReviewWords.size} từ`;
+}
+
+function resetSavedVocabStats() {
+  memorizedWords.clear();
+  needReviewWords.clear();
+  saveVocabProgressToStorage();
+  renderStats();
+  showToast("Đã đặt lại danh sách từ Đã thuộc & Cần ôn", "info");
+}
+
+function practiceNeedReviewWords() {
+  if (needReviewWords.size === 0) {
+    showToast("Chưa có từ nào trong danh sách Cần ôn!", "info");
+    return;
+  }
+  const srcSelect = document.getElementById("sourceCurriculumFilter");
+  if (srcSelect) srcSelect.value = "review_only";
+  applyFilters();
+  showToast(`Đang ôn tập ${needReviewWords.size} từ cần củng cố!`, "info");
+}
+
+// Hàm xáo bài ngẫu nhiên chuẩn (Fisher-Yates)
+function shuffleWords(array) {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+// Tải JSON linh hoạt (Ưu tiên dữ liệu nhúng sẵn cho Canvas/Offline, fallback sang XHR)
+function loadJSONResource(url, embeddedGlobal) {
+  if (embeddedGlobal) {
+    return Promise.resolve(embeddedGlobal);
+  }
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url + "?t=" + Date.now(), true);
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          resolve(JSON.parse(xhr.responseText));
+        } catch (e) {
+          reject(e);
+        }
+      } else {
+        reject(new Error("HTTP " + xhr.status));
+      }
+    };
+    xhr.onerror = () => reject(new Error("Lỗi mạng khi tải " + url));
+    xhr.send();
+  });
+}
+
 async function autoLoadExcel() {
+  loadSavedVocabProgress();
   try {
-    const res = await fetch("curriculum_db.json?t=" + Date.now());
-    const data = await res.json();
-    
-    allWords = [];
-    if (data && data.translation) {
-      Object.keys(data.translation).forEach(k => {
-        const lesson = data.translation[k];
+    const dataBD = await loadJSONResource("curriculum_db.json", window.EMBEDDED_CURRICULUM_DB);
+    const dataPD = await loadJSONResource("curriculum_pd.json", window.EMBEDDED_CURRICULUM_PD).catch(() => null);
+
+    bdWords = [];
+    pdWords = [];
+    allPatternsList = [];
+
+    if (dataBD && dataBD.translation) {
+      Object.keys(dataBD.translation).forEach(k => {
+        const lesson = dataBD.translation[k];
         const lessonNum = lesson.lessonNumber || parseInt(k.replace("bai", ""), 10) || 1;
         (lesson.texts || []).forEach(txt => {
           (txt.vocabulary || []).forEach(v => {
-            allWords.push({
+            bdWords.push({
               hanzi: v.zh,
               pinyin: v.pinyin,
               vn: v.vi,
-              lesson: `Bài ${lessonNum}`
+              lesson: `Bài ${lessonNum}`,
+              subject: "Biên Dịch"
+            });
+          });
+          (txt.patterns || []).forEach(p => {
+            allPatternsList.push({
+              structure: p.structure,
+              meaning: p.meaning,
+              lesson: `Biên Dịch - Bài ${lessonNum}`
             });
           });
         });
       });
     }
 
+    if (dataPD) {
+      Object.keys(dataPD).forEach(k => {
+        const lesson = dataPD[k];
+        const lessonNum = lesson.lessonNumber || parseInt(k.replace("bai", ""), 10) || 1;
+        (lesson.texts || []).forEach(txt => {
+          (txt.vocabulary || []).forEach(v => {
+            pdWords.push({
+              hanzi: v.zh,
+              pinyin: v.pinyin,
+              vn: v.vi,
+              lesson: `Bài ${lessonNum}`,
+              subject: "Phiên Dịch"
+            });
+          });
+          (txt.patterns || []).forEach(p => {
+            allPatternsList.push({
+              structure: p.structure,
+              meaning: p.meaning,
+              lesson: `Phiên Dịch - Bài ${lessonNum}`
+            });
+          });
+        });
+      });
+    }
+
+    allCombinedWords = [...bdWords, ...pdWords];
+    allWords = [...bdWords];
+
     setupLessonDropdown();
     applyFilters();
-  } catch(e) {
-    document.getElementById("prompt-vn").innerText = "Lỗi: Không tìm thấy file curriculum_db.json";
+    renderStats();
+    updateGlobalStatsBadges();
+  } catch (e) {
+    const pVn = document.getElementById("prompt-vn");
+    if (pVn) pVn.innerText = "Lỗi: Không tìm thấy dữ liệu giáo trình";
   }
 }
 
-function setupLessonDropdown() {
-  const lessons = [...new Set(allWords.map(w => w.lesson).filter(Boolean))];
-  const s1 = document.getElementById("lessonFilter");
-  const s2 = document.getElementById("aiLessonFilter");
-  const s3 = document.getElementById("listenLessonFilter");
+function getWordsBySourceCode(sourceCode) {
+  if (sourceCode === "bd") return [...bdWords];
+  if (sourceCode === "pd") return [...pdWords];
+  if (sourceCode === "review_only") return Array.from(needReviewWords.values());
+  return [...allCombinedWords];
+}
 
-  const optionAll = '<option value="all">Tất cả các bài</option>';
+function onChangeWriteCurriculumSource() {
+  const srcSelect = document.getElementById("sourceCurriculumFilter");
+  const code = srcSelect ? srcSelect.value : "bd";
+  allWords = getWordsBySourceCode(code);
+  setupLessonDropdown();
+  applyFilters();
+}
+
+function setupLessonDropdown() {
+  const lessons = [...new Set(allCombinedWords.map(w => w.lesson).filter(Boolean))];
+  const s1 = document.getElementById("lessonFilter");
+  const s3 = document.getElementById("listenLessonFilter");
+  const s4 = document.getElementById("fcLessonFilter");
+
+  const optionAll = '<option value="all">Tất cả các bài (1-12)</option>';
   if (s1) s1.innerHTML = optionAll;
-  if (s2) s2.innerHTML = optionAll;
   if (s3) s3.innerHTML = optionAll;
+  if (s4) s4.innerHTML = optionAll;
 
   lessons.forEach(l => {
     const opt = `<option value="${l}">${l}</option>`;
     if (s1) s1.innerHTML += opt;
-    if (s2) s2.innerHTML += opt;
     if (s3) s3.innerHTML += opt;
+    if (s4) s4.innerHTML += opt;
   });
 }
 
-// 2. Lọc danh sách và xử lý ngẫu nhiên không trùng lặp
+/* ================= PHÂN HỆ LUYỆN VIẾT CHỮ HÁN (Ô MỄ 米字格) ================= */
 function applyFilters() {
+  const srcEl = document.getElementById("sourceCurriculumFilter");
   const lEl = document.getElementById("lessonFilter");
   const mEl = document.getElementById("modeFilter");
   const limEl = document.getElementById("limitFilter");
 
+  const srcCode = srcEl ? srcEl.value : "bd";
   const l = lEl ? lEl.value : "all";
-  // Mặc định luôn là "random" nếu chưa chọn
   const m = mEl ? mEl.value : "random";
   const lim = limEl ? limEl.value : "all";
 
-  let list = (l === "all") ? [...allWords] : allWords.filter(w => String(w.lesson) === l);
+  let basePool = getWordsBySourceCode(srcCode);
+  let list = (l === "all") ? [...basePool] : basePool.filter(w => String(w.lesson) === l);
 
-  // Xáo trộn toàn bộ danh sách 1 lần duy nhất (như xáo cỗ bài)
   if (m === "random") {
     list = shuffleWords(list);
   }
@@ -198,49 +499,174 @@ function applyFilters() {
 
   activeWords = list;
   currentIndex = 0;
-  
+
   if (activeWords.length > 0) {
     loadWord(0);
   } else {
-    document.getElementById("prompt-vn").innerText = "Không có từ vựng phù hợp!";
+    document.getElementById("prompt-vn").innerText = "Không có từ vựng phù hợp trong bộ lọc này!";
     document.getElementById("boxesContainer").innerHTML = "";
+    updateWriteProgressUI();
   }
+}
+
+function updateWriteProgressUI() {
+  const counterEl = document.getElementById("writeProgressCounter");
+  const fillEl = document.getElementById("writeProgressBarFill");
+  if (!activeWords || activeWords.length === 0) {
+    if (counterEl) counterEl.innerText = "0 / 0 từ";
+    if (fillEl) fillEl.style.width = "0%";
+    return;
+  }
+  const pos = Math.min(currentIndex + 1, activeWords.length);
+  if (counterEl) counterEl.innerText = `Từ ${pos} / ${activeWords.length}`;
+  if (fillEl) fillEl.style.width = `${Math.round((pos / activeWords.length) * 100)}%`;
 }
 
 function loadWord(idx) {
   if (activeWords.length === 0) return;
   const item = activeWords[idx];
-  document.getElementById("prompt-vn").innerText = `${item.lesson ? '['+item.lesson+'] ' : ''}Viết: "${item.vn || ''}"`;
-  document.getElementById("prompt-pinyin").innerText = `[ ${item.pinyin || ''} ]`;
+  const subjectPrefix = item.subject ? `${item.subject} • ` : "";
+  document.getElementById("prompt-vn").innerText = `[${subjectPrefix}${item.lesson || ""}] Viết: "${item.vn || ""}"`;
+  document.getElementById("prompt-pinyin").innerText = `[ ${item.pinyin || ""} ]`;
   document.getElementById("prompt-pinyin").style.display = "none";
   document.getElementById("result-msg").innerText = "";
+  updateWriteProgressUI();
   setupCanvas(String(item.hanzi).trim());
+}
+
+function speakCurrentWriteWord() {
+  if (activeWords.length === 0 || !activeWords[currentIndex]) return;
+  playDiplomaticSpeech(activeWords[currentIndex].hanzi, "zh-CN", 0.85);
 }
 
 function togglePinyin() {
   const p = document.getElementById("prompt-pinyin");
-  p.style.display = p.style.display === "none" ? "inline" : "none";
+  if (p) p.style.display = p.style.display === "none" ? "inline" : "none";
+}
+
+function toggleAllGhostChars() {
+  const overlays = document.querySelectorAll("#boxesContainer .ghost-char-overlay");
+  if (overlays.length === 0) return;
+  const anyHidden = Array.from(overlays).some(el => !el.classList.contains("visible"));
+  overlays.forEach(el => el.classList.toggle("visible", anyHidden));
+}
+
+function isHanziChar(ch) {
+  return /[\u4e00-\u9fff]/.test(ch);
 }
 
 function setupCanvas(word) {
   const container = document.getElementById("boxesContainer");
   container.innerHTML = "";
   canvasInstances = [];
-  for (let i = 0; i < word.length; i++) {
-    const wrap = document.createElement("div"); wrap.className = "box-wrapper";
-    const cBox = document.createElement("div"); cBox.className = "canvas-container";
-    const cv = document.createElement("canvas"); cv.width = 180; cv.height = 180;
-    const btn = document.createElement("button"); btn.className = "btn-clear-single";
-    btn.innerText = `Xóa ô ${i+1}`; btn.onclick = () => clearBox(i);
 
-    cBox.appendChild(cv); wrap.appendChild(cBox); wrap.appendChild(btn); container.appendChild(wrap);
+  let hanziBoxIndex = 0;
+  let i = 0;
+  while (i < word.length) {
+    const ch = word[i];
+    if (!isHanziChar(ch)) {
+      // Nhóm các ký tự không phải chữ Hán (như ……, /, 、, 996, U23) thành thẻ tĩnh
+      let staticRun = ch;
+      while (i + 1 < word.length && !isHanziChar(word[i + 1])) {
+        i++;
+        staticRun += word[i];
+      }
+      const staticTile = document.createElement("div");
+      staticTile.className = "static-char-tile";
+      staticTile.title = "Ký tự cố định (không cần viết)";
+      staticTile.innerText = staticRun;
+      container.appendChild(staticTile);
+      i++;
+      continue;
+    }
+
+    const myIdx = hanziBoxIndex;
+    hanziBoxIndex++;
+
+    const wrap = document.createElement("div");
+    wrap.className = "box-wrapper";
+
+    const cBox = document.createElement("div");
+    cBox.className = "canvas-container";
+
+    const ghost = document.createElement("div");
+    ghost.className = "ghost-char-overlay";
+    ghost.innerText = ch;
+
+    const cv = document.createElement("canvas");
+    cv.width = 180;
+    cv.height = 180;
+
+    cBox.appendChild(ghost);
+    cBox.appendChild(cv);
+
+    const miniControls = document.createElement("div");
+    miniControls.className = "box-mini-controls";
+
+    const btnClear = document.createElement("button");
+    btnClear.className = "btn-clear-single";
+    btnClear.innerText = `Xóa ô ${myIdx + 1}`;
+    btnClear.onclick = () => clearBox(myIdx);
+
+    const btnUndo = document.createElement("button");
+    btnUndo.className = "btn-clear-single";
+    btnUndo.title = "Hoàn tác nét vừa viết";
+    btnUndo.innerText = "↩️ Nét";
+    btnUndo.onclick = () => undoBoxStroke(myIdx);
+
+    const btnGhost = document.createElement("button");
+    btnGhost.className = "btn-clear-single";
+    btnGhost.title = "Hiện chữ mờ mẫu để đồ theo";
+    btnGhost.innerText = "👁 Mẫu";
+    btnGhost.onclick = () => ghost.classList.toggle("visible");
+
+    miniControls.appendChild(btnClear);
+    miniControls.appendChild(btnUndo);
+    miniControls.appendChild(btnGhost);
+
+    wrap.appendChild(cBox);
+    wrap.appendChild(miniControls);
+    container.appendChild(wrap);
+
     const ctx = cv.getContext("2d");
-    ctx.lineWidth = 6; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#1e293b";
+    ctx.lineWidth = 6;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "#1e293b";
 
-    const st = { char: word[i], cv, ctx, cBox, strokes: [], sx: [], sy: [], st: [], drawing: false, t0: 0 };
+    const st = { char: ch, cv, ctx, cBox, ghost, strokes: [], sx: [], sy: [], st: [], drawing: false, t0: 0 };
     initCanvasEvents(st);
     canvasInstances.push(st);
+    i++;
   }
+}
+
+function redrawCanvasStrokes(st) {
+  st.ctx.clearRect(0, 0, 180, 180);
+  st.ctx.lineWidth = 6;
+  st.ctx.lineCap = "round";
+  st.ctx.lineJoin = "round";
+  st.ctx.strokeStyle = "#1e293b";
+
+  for (const stroke of st.strokes) {
+    const xs = stroke[0];
+    const ys = stroke[1];
+    if (!xs || xs.length === 0) continue;
+    st.ctx.beginPath();
+    st.ctx.moveTo(xs[0], ys[0]);
+    for (let k = 1; k < xs.length; k++) {
+      st.ctx.lineTo(xs[k], ys[k]);
+    }
+    st.ctx.stroke();
+  }
+}
+
+function undoBoxStroke(idx) {
+  const s = canvasInstances[idx];
+  if (!s || s.strokes.length === 0) return;
+  s.strokes.pop();
+  s.cBox.classList.remove("correct", "wrong");
+  redrawCanvasStrokes(s);
 }
 
 function initCanvasEvents(st) {
@@ -251,27 +677,44 @@ function initCanvasEvents(st) {
     return [Math.round(x - r.left), Math.round(y - r.top)];
   };
   const down = e => {
-    st.drawing = true; st.t0 = Date.now();
-    const [x, y] = getCoord(e); st.ctx.beginPath(); st.ctx.moveTo(x, y);
-    st.sx = [x]; st.sy = [y]; st.st = [0];
+    st.drawing = true;
+    st.t0 = Date.now();
+    const [x, y] = getCoord(e);
+    st.ctx.beginPath();
+    st.ctx.moveTo(x, y);
+    st.sx = [x];
+    st.sy = [y];
+    st.st = [0];
   };
   const move = e => {
-    if (!st.drawing) return; e.preventDefault();
-    const [x, y] = getCoord(e); st.ctx.lineTo(x, y); st.ctx.stroke();
-    st.sx.push(x); st.sy.push(y); st.st.push(Date.now() - st.t0);
+    if (!st.drawing) return;
+    e.preventDefault();
+    const [x, y] = getCoord(e);
+    st.ctx.lineTo(x, y);
+    st.ctx.stroke();
+    st.sx.push(x);
+    st.sy.push(y);
+    st.st.push(Date.now() - st.t0);
   };
   const up = () => {
-    if (!st.drawing) return; st.drawing = false;
+    if (!st.drawing) return;
+    st.drawing = false;
     st.strokes.push([st.sx, st.sy, st.st]);
   };
-  st.cv.addEventListener("mousedown", down); st.cv.addEventListener("mousemove", move); window.addEventListener("mouseup", up);
-  st.cv.addEventListener("touchstart", down, {passive:false}); st.cv.addEventListener("touchmove", move, {passive:false}); window.addEventListener("touchend", up);
+  st.cv.addEventListener("mousedown", down);
+  st.cv.addEventListener("mousemove", move);
+  window.addEventListener("mouseup", up);
+  st.cv.addEventListener("touchstart", down, { passive: false });
+  st.cv.addEventListener("touchmove", move, { passive: false });
+  window.addEventListener("touchend", up);
 }
 
 function clearBox(i) {
   const s = canvasInstances[i];
+  if (!s) return;
   s.ctx.clearRect(0, 0, 180, 180);
-  s.strokes = []; s.cBox.classList.remove("correct", "wrong");
+  s.strokes = [];
+  s.cBox.classList.remove("correct", "wrong");
 }
 
 function clearAllBoxes() {
@@ -281,76 +724,280 @@ function clearAllBoxes() {
 
 async function checkAllBoxes() {
   const msg = document.getElementById("result-msg");
-  msg.innerText = "Đang kiểm tra nét...";
+  msg.innerText = "⏳ Đang nhận diện nét chữ...";
   let ok = true, empty = false;
 
   for (let s of canvasInstances) {
-    if (s.strokes.length === 0) { s.cBox.classList.add("wrong"); empty = true; ok = false; continue; }
+    if (s.strokes.length === 0) {
+      s.cBox.classList.add("wrong");
+      empty = true;
+      ok = false;
+      continue;
+    }
     const p = {
-      app_version: 0.4, api_level: "537.36", device: "5.0", input_type: "0", options: "enable_pre_space",
-      requests: [{ writing_guide: { writing_area_width: 180, writing_area_height: 180 }, pre_context: "", max_num_results: 10, max_completions: 0, language: "zh-t-i0-handwrit", ink: s.strokes }]
+      app_version: 0.4,
+      api_level: "537.36",
+      device: "5.0",
+      input_type: "0",
+      options: "enable_pre_space",
+      requests: [{
+        writing_guide: { writing_area_width: 180, writing_area_height: 180 },
+        pre_context: "",
+        max_num_results: 12,
+        max_completions: 0,
+        language: "zh-t-i0-handwrit",
+        ink: s.strokes
+      }]
     };
     try {
       const res = await fetch("https://inputtools.google.com/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(p)
       });
       const d = await res.json();
       const cand = d[0] === "SUCCESS" ? d[1][0][1] : [];
-      if (cand.includes(s.char)) { s.cBox.classList.remove("wrong"); s.cBox.classList.add("correct"); }
-      else { s.cBox.classList.remove("correct"); s.cBox.classList.add("wrong"); ok = false; }
-    } catch(e) { ok = false; }
+      if (cand.includes(s.char)) {
+        s.cBox.classList.remove("wrong");
+        s.cBox.classList.add("correct");
+      } else {
+        s.cBox.classList.remove("correct");
+        s.cBox.classList.add("wrong");
+        s.ghost.classList.add("visible");
+        ok = false;
+      }
+    } catch (e) {
+      // Nếu mất mạng hoặc bị chặn, kiểm tra số nét tối thiểu (>=2 nét)
+      if (s.strokes.length >= 2) {
+        s.cBox.classList.remove("wrong");
+        s.cBox.classList.add("correct");
+      } else {
+        ok = false;
+      }
+    }
   }
 
   const cur = activeWords[currentIndex];
-  if (empty) { msg.className = "msg-wrong"; msg.innerText = "Chưa viết đủ ô!"; }
-  else if (ok) {
-    msg.className = "msg-correct"; msg.innerText = `Chính xác! (${cur.hanzi})`;
-    memorizedWords.set(cur.hanzi, cur); needReviewWords.delete(cur.hanzi);
+  if (empty) {
+    msg.className = "msg-wrong";
+    msg.innerText = "⚠️ Chưa viết đủ các ô chữ Hán!";
+  } else if (ok) {
+    msg.className = "msg-correct";
+    msg.innerText = `🎉 Chính xác! ${cur.hanzi} [${cur.pinyin}] - ${cur.vn}`;
+    playDiplomaticSpeech(cur.hanzi, "zh-CN", 0.9);
+    memorizedWords.set(cur.hanzi, cur);
+    needReviewWords.delete(cur.hanzi);
+    saveVocabProgressToStorage();
   } else {
-    msg.className = "msg-wrong"; msg.innerText = "Có chữ chưa đúng!";
+    msg.className = "msg-wrong";
+    msg.innerText = `❌ Có chữ chưa đúng! Đã bật chữ mờ gợi ý (${cur.hanzi})`;
     if (!memorizedWords.has(cur.hanzi)) needReviewWords.set(cur.hanzi, cur);
+    saveVocabProgressToStorage();
   }
   renderStats();
 }
 
 function renderStats() {
-  const cL = document.getElementById("correct-list"); cL.innerHTML = "";
-  memorizedWords.forEach(w => cL.innerHTML += `<div><strong>${w.hanzi}</strong>: ${w.vn}</div>`);
-  document.getElementById("correct-count").innerText = memorizedWords.size;
+  const cL = document.getElementById("correct-list");
+  if (cL) {
+    cL.innerHTML = "";
+    memorizedWords.forEach(w => {
+      cL.innerHTML += `<div style="padding:3px 0; border-bottom:1px dashed var(--border-subtle); cursor:pointer;" onclick="playDiplomaticSpeech('${w.hanzi}', 'zh-CN')">🔊 <strong>${w.hanzi}</strong> <span style="color:var(--text-muted); font-size:12px;">[${w.pinyin || ""}]</span>: ${w.vn}</div>`;
+    });
+  }
+  const cCnt = document.getElementById("correct-count");
+  if (cCnt) cCnt.innerText = memorizedWords.size;
 
-  const wL = document.getElementById("wrong-list"); wL.innerHTML = "";
-  needReviewWords.forEach(w => wL.innerHTML += `<div><strong>${w.hanzi}</strong>: ${w.vn}</div>`);
-  document.getElementById("wrong-count").innerText = needReviewWords.size;
+  const wL = document.getElementById("wrong-list");
+  if (wL) {
+    wL.innerHTML = "";
+    needReviewWords.forEach(w => {
+      wL.innerHTML += `<div style="padding:3px 0; border-bottom:1px dashed var(--border-subtle); cursor:pointer;" onclick="playDiplomaticSpeech('${w.hanzi}', 'zh-CN')">🔊 <strong>${w.hanzi}</strong> <span style="color:var(--text-muted); font-size:12px;">[${w.pinyin || ""}]</span>: ${w.vn}</div>`;
+    });
+  }
+  const wCnt = document.getElementById("wrong-count");
+  if (wCnt) wCnt.innerText = needReviewWords.size;
 }
 
-// 3. Sửa hàm nextWord: Đi hết danh sách mới thông báo và xáo lượt mới (không lặp lại giữa chừng)
 function nextWord() {
   if (activeWords.length === 0) return;
   currentIndex++;
-  
+
   if (currentIndex >= activeWords.length) {
-    alert("🎉 Bạn đã luyện viết hết tất cả các từ trong lượt này!");
-    applyFilters(); // Xáo trộn lại một lượt mới hoàn toàn
+    showToast("🎉 Bạn đã hoàn thành hết các từ trong lượt này! Đang trộn lượt mới...", "success");
+    applyFilters();
     return;
   }
-  
+
   loadWord(currentIndex);
 }
-/* ================= LOGIC TAB LUYỆN NGHE ================= */
+
+/* ================= PHÂN HỆ FLASHCARD 3D & TRẮC NGHIỆM 4 ĐÁP ÁN ================= */
+let flashcardDeck = [];
+let fcIndex = 0;
+let currentQuizItem = null;
+let quizCorrectTotal = 0;
+let quizStreak = 0;
+
+function initFlashcardDeck() {
+  const srcEl = document.getElementById("fcSourceFilter");
+  const lesEl = document.getElementById("fcLessonFilter");
+  const src = srcEl ? srcEl.value : "all";
+  const les = lesEl ? lesEl.value : "all";
+
+  let pool = getWordsBySourceCode(src);
+  if (les !== "all") {
+    pool = pool.filter(w => String(w.lesson) === les);
+  }
+  flashcardDeck = shuffleWords(pool);
+  fcIndex = 0;
+
+  if (flashcardDeck.length > 0) {
+    renderCurrentFlashcard();
+    nextQuizQuestion();
+  }
+}
+
+function switchFlashcardMode() {
+  const modeEl = document.getElementById("fcModeSelect");
+  const mode = modeEl ? modeEl.value : "flip";
+  const flipBox = document.getElementById("fcFlipContainer");
+  const quizBox = document.getElementById("fcQuizContainer");
+  if (flipBox) flipBox.style.display = (mode === "flip") ? "block" : "none";
+  if (quizBox) quizBox.style.display = (mode === "quiz") ? "block" : "none";
+  if (mode === "quiz") nextQuizQuestion();
+}
+
+function renderCurrentFlashcard() {
+  if (flashcardDeck.length === 0) return;
+  const item = flashcardDeck[fcIndex];
+  const inner = document.getElementById("flashcardInner");
+  if (inner) inner.classList.remove("flipped");
+
+  const counter = document.getElementById("fcCounterText");
+  if (counter) counter.innerText = `Thẻ ${fcIndex + 1} / ${flashcardDeck.length}`;
+
+  const tag = document.getElementById("fcFrontLessonTag");
+  if (tag) tag.innerText = `${item.subject || "Học phần"} • ${item.lesson || ""}`;
+
+  const fHz = document.getElementById("fcFrontHanzi");
+  if (fHz) fHz.innerText = item.hanzi;
+
+  const bHz = document.getElementById("fcBackHanzi");
+  if (bHz) bHz.innerText = item.hanzi;
+
+  const bPy = document.getElementById("fcBackPinyin");
+  if (bPy) bPy.innerText = `[ ${item.pinyin || ""} ]`;
+
+  const bVn = document.getElementById("fcBackVn");
+  if (bVn) bVn.innerText = item.vn;
+}
+
+function flipCurrentFlashcard() {
+  const inner = document.getElementById("flashcardInner");
+  if (inner) inner.classList.toggle("flipped");
+}
+
+function prevFlashcard() {
+  if (flashcardDeck.length === 0) return;
+  fcIndex = (fcIndex - 1 + flashcardDeck.length) % flashcardDeck.length;
+  renderCurrentFlashcard();
+}
+
+function speakCurrentFlashcard() {
+  if (flashcardDeck.length === 0) return;
+  playDiplomaticSpeech(flashcardDeck[fcIndex].hanzi, "zh-CN", 0.9);
+}
+
+function markFlashcardKnown() {
+  if (flashcardDeck.length === 0) return;
+  const cur = flashcardDeck[fcIndex];
+  memorizedWords.set(cur.hanzi, cur);
+  needReviewWords.delete(cur.hanzi);
+  saveVocabProgressToStorage();
+  renderStats();
+  fcIndex = (fcIndex + 1) % flashcardDeck.length;
+  renderCurrentFlashcard();
+}
+
+function nextQuizQuestion() {
+  if (flashcardDeck.length < 4) {
+    flashcardDeck = shuffleWords(allCombinedWords);
+  }
+  if (flashcardDeck.length === 0) return;
+
+  currentQuizItem = flashcardDeck[Math.floor(Math.random() * flashcardDeck.length)];
+  const distractors = shuffleWords(
+    flashcardDeck.filter(w => w.vn !== currentQuizItem.vn)
+  ).slice(0, 3);
+  const options = shuffleWords([currentQuizItem, ...distractors]);
+
+  document.getElementById("quizQuestionTag").innerText = `${currentQuizItem.subject || ""} • ${currentQuizItem.lesson || ""}`;
+  document.getElementById("quizQuestionHanzi").innerText = currentQuizItem.hanzi;
+  document.getElementById("quizQuestionPinyin").innerText = `[ ${currentQuizItem.pinyin || ""} ]`;
+  document.getElementById("quizFeedbackMsg").innerText = "";
+
+  const grid = document.getElementById("quizOptionsGrid");
+  grid.innerHTML = "";
+  options.forEach((opt, idx) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "quiz-option-btn";
+    btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt.vn}`;
+    btn.onclick = () => checkQuizOption(btn, opt);
+    grid.appendChild(btn);
+  });
+}
+
+function speakQuizWord() {
+  if (!currentQuizItem) return;
+  playDiplomaticSpeech(currentQuizItem.hanzi, "zh-CN", 0.9);
+}
+
+function checkQuizOption(clickedBtn, chosenOpt) {
+  const allBtns = document.querySelectorAll("#quizOptionsGrid .quiz-option-btn");
+  allBtns.forEach(b => (b.disabled = true));
+  const msg = document.getElementById("quizFeedbackMsg");
+
+  if (chosenOpt.hanzi === currentQuizItem.hanzi) {
+    clickedBtn.classList.add("correct");
+    quizCorrectTotal++;
+    quizStreak++;
+    msg.className = "msg-correct";
+    msg.innerText = `🎉 Chính xác! ${currentQuizItem.hanzi} = ${currentQuizItem.vn}`;
+    playDiplomaticSpeech(currentQuizItem.hanzi, "zh-CN", 0.95);
+  } else {
+    clickedBtn.classList.add("wrong");
+    quizStreak = 0;
+    msg.className = "msg-wrong";
+    msg.innerText = `❌ Đáp án đúng là: "${currentQuizItem.vn}"`;
+  }
+
+  document.getElementById("quizScoreCorrect").innerText = quizCorrectTotal;
+  document.getElementById("quizStreakCount").innerText = quizStreak;
+}
+
+/* ================= LOGIC TAB LUYỆN NGHE PHẢN XẠ ================= */
 let currentListenWord = null;
+let listenStreak = 0;
 
 function playAudio(text, rate = 1.0) {
-  if (!window.speechSynthesis) return alert("Trình duyệt không hỗ trợ phát âm!");
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'zh-CN';
-  u.rate = parseFloat(rate) || 1.0;
-  window.speechSynthesis.speak(u);
+  playDiplomaticSpeech(text, "zh-CN", parseFloat(rate) || 1.0);
+}
+
+function onChangeListenSource() {
+  setupListenQuestion();
 }
 
 function setupListenQuestion() {
-  const lesson = document.getElementById("listenLessonFilter").value;
-  let words = (lesson === "all") ? allWords : allWords.filter(w => String(w.lesson) === lesson);
+  const srcEl = document.getElementById("listenSourceFilter");
+  const lessonEl = document.getElementById("listenLessonFilter");
+  const src = srcEl ? srcEl.value : "pd";
+  const lesson = lessonEl ? lessonEl.value : "all";
+
+  let pool = getWordsBySourceCode(src);
+  let words = (lesson === "all") ? pool : pool.filter(w => String(w.lesson) === lesson);
+  if (words.length === 0) words = allCombinedWords;
   if (words.length === 0) return;
 
   currentListenWord = words[Math.floor(Math.random() * words.length)];
@@ -366,33 +1013,59 @@ function playCurrentListenWord() {
   playAudio(currentListenWord.hanzi, rate);
 }
 
+function hintListenWord() {
+  if (!currentListenWord) return;
+  const hz = String(currentListenWord.hanzi);
+  const py = String(currentListenWord.pinyin || "");
+  const box = document.getElementById("listenAnswerBox");
+  box.innerHTML = `💡 Gợi ý: Chữ đầu là <strong>${hz[0]}...</strong> (Pinyin: <em>${py.split(" ")[0]}...</em>) — Nghĩa: ${currentListenWord.vn}`;
+  box.style.display = "block";
+}
+
 function checkListenAnswer() {
   if (!currentListenWord) return;
-  const userVal = document.getElementById("listenInput").value.trim().toLowerCase();
+  const rawInput = document.getElementById("listenInput").value.trim();
+  const userVal = rawInput.toLowerCase();
   const msg = document.getElementById("listen-result-msg");
-  const targetHanzi = String(currentListenWord.hanzi).trim().toLowerCase();
-  const targetPinyin = String(currentListenWord.pinyin || '').trim().toLowerCase();
 
   if (!userVal) {
     msg.className = "msg-wrong";
-    msg.innerText = "Vui lòng nhập đáp án!";
+    msg.innerText = "Vui lòng nhập Chữ Hán, Pinyin hoặc Nghĩa tiếng Việt!";
     return;
   }
 
-  if (userVal === targetHanzi || userVal === targetPinyin) {
+  const targetHanzi = String(currentListenWord.hanzi).trim().toLowerCase();
+  const targetPinyin = String(currentListenWord.pinyin || "").trim().toLowerCase();
+  const targetPinyinToneless = stripPinyinTones(targetPinyin);
+  const userToneless = stripPinyinTones(userVal);
+  const targetVn = String(currentListenWord.vn || "").trim().toLowerCase();
+
+  const isMatch =
+    userVal === targetHanzi ||
+    userVal === targetPinyin ||
+    userToneless === targetPinyinToneless ||
+    userToneless.replace(/\s+/g, "") === targetPinyinToneless.replace(/\s+/g, "") ||
+    (userVal.length >= 4 && targetVn.includes(userVal));
+
+  if (isMatch) {
+    listenStreak++;
     msg.className = "msg-correct";
-    msg.innerText = `Chính xác! 🎉 (${currentListenWord.hanzi} - ${currentListenWord.vn})`;
+    msg.innerText = `🎉 Chính xác! ${currentListenWord.hanzi} [${currentListenWord.pinyin}] — ${currentListenWord.vn}`;
   } else {
+    listenStreak = 0;
     msg.className = "msg-wrong";
-    msg.innerText = "Chưa chính xác, hãy nghe lại!";
+    msg.innerText = "Chưa chính xác, hãy bấm nghe lại hoặc xem gợi ý!";
   }
+
+  const streakBadge = document.getElementById("listenStreakTopBadge");
+  if (streakBadge) streakBadge.innerText = `🔥 Chuỗi nghe đúng: ${listenStreak}`;
 }
 
 function toggleListenAnswer() {
   if (!currentListenWord) return;
   const box = document.getElementById("listenAnswerBox");
   if (box.style.display === "none") {
-    box.innerHTML = `<strong>${currentListenWord.hanzi}</strong> [${currentListenWord.pinyin || ''}]: ${currentListenWord.vn}`;
+    box.innerHTML = `<strong>${currentListenWord.hanzi}</strong> [${currentListenWord.pinyin || ""}]: ${currentListenWord.vn} <span style="color:var(--text-muted); font-size:12px;">(${currentListenWord.subject || ""} • ${currentListenWord.lesson || ""})</span>`;
     box.style.display = "block";
   } else {
     box.style.display = "none";
@@ -407,31 +1080,35 @@ function nextListenWord() {
 let curriculumDB = null;
 let currentTransLessonId = "bai1";
 let currentTransTextId = "text1";
-let currentPracticeMode = "book"; // 'book' (dịch trong sách) hoặc 'ai_generate' (AI tạo đề mới)
+let currentPracticeMode = "book";
+let showTransPinyin = true;
+let isHighlightingTransTerms = false;
+
 let currentTransExercise = {
   sourceText: "",
   sourceLang: "",
   targetLang: "",
   topicTitle: "",
   textTitle: "",
+  objectives: "",
   vocabList: [],
   patternList: []
 };
 
-// 1. Tải file curriculum_db.json
 async function loadCurriculumDatabase() {
   try {
-    const res = await fetch("curriculum_db.json?t=" + Date.now());
-    curriculumDB = await res.json();
+    curriculumDB = await loadJSONResource("curriculum_db.json", window.EMBEDDED_CURRICULUM_DB);
     initTransLessonChips();
   } catch (err) {
     console.error("Lỗi khi tải curriculum_db.json:", err);
-    document.getElementById("aiPromptDisplay").innerText = "Không tìm thấy file curriculum_db.json. Vui lòng kiểm tra lại!";
+    document.getElementById("aiPromptDisplay").innerText = "Không tìm thấy dữ liệu curriculum_db.json!";
   }
 }
-window.addEventListener("DOMContentLoaded", loadCurriculumDatabase);
+window.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  loadCurriculumDatabase();
+});
 
-// 2. Render danh sách 12 bài học
 function initTransLessonChips() {
   const container = document.getElementById("transTopicsContainer");
   if (!container || !curriculumDB || !curriculumDB.translation) return;
@@ -442,11 +1119,11 @@ function initTransLessonChips() {
     const chip = document.createElement("button");
     chip.className = `topic-chip ${key === currentTransLessonId ? "active" : ""}`;
     chip.innerText = lesson.lessonTitle.split("(")[0].trim();
+    chip.title = lesson.lessonTitle;
     chip.onclick = () => selectTransLesson(key, chip);
     container.appendChild(chip);
   });
 
-  // Khởi tạo bài khóa của bài hiện tại
   renderTransTextPills();
 }
 
@@ -454,11 +1131,10 @@ function selectTransLesson(lessonKey, chipEl) {
   document.querySelectorAll("#transTopicsContainer .topic-chip").forEach(c => c.classList.remove("active"));
   chipEl.classList.add("active");
   currentTransLessonId = lessonKey;
-  currentTransTextId = "text1"; // reset về bài khóa 1
+  currentTransTextId = "text1";
   renderTransTextPills();
 }
 
-// 3. Render 4 nút thẻ Bài khóa tương ứng của bài đã chọn
 function renderTransTextPills() {
   const container = document.getElementById("transTextsPillGroup");
   if (!container || !curriculumDB || !curriculumDB.translation) return;
@@ -486,19 +1162,17 @@ function selectTransText(textId, btnEl) {
   loadCurrentExercise();
 }
 
-// 4. Chọn Chế độ Luyện tập: Dịch sách hoặc AI tạo đề
 function selectTransPracticeMode(mode, btnEl) {
   document.querySelectorAll("#transPracticeModeGroup .pill-btn").forEach(b => b.classList.remove("active"));
   btnEl.classList.add("active");
   currentPracticeMode = mode;
-  
+
   const btnRegen = document.getElementById("btnRegenAIText");
   if (btnRegen) btnRegen.style.display = (mode === "ai_generate") ? "inline-block" : "none";
 
   loadCurrentExercise();
 }
 
-// 5. Nạp bài tập hiện tại
 async function loadCurrentExercise() {
   if (!curriculumDB || !curriculumDB.translation) return;
 
@@ -507,8 +1181,18 @@ async function loadCurrentExercise() {
 
   currentTransExercise.topicTitle = lesson.lessonTitle;
   currentTransExercise.textTitle = textObj.titleVi || textObj.title;
+  currentTransExercise.objectives = lesson.objectives || "";
   currentTransExercise.vocabList = textObj.vocabulary || [];
   currentTransExercise.patternList = textObj.patterns || [];
+
+  // Hiển thị mục tiêu bài học
+  const objText = document.getElementById("transObjectivesText");
+  if (objText) objText.innerText = currentTransExercise.objectives;
+
+  const metaCount = document.getElementById("transLessonMetaCount");
+  if (metaCount) {
+    metaCount.innerText = `${currentTransExercise.vocabList.length} thuật ngữ • ${currentTransExercise.patternList.length} mẫu câu`;
+  }
 
   if (textObj.direction === "zh_to_vi") {
     currentTransExercise.sourceLang = "Tiếng Trung";
@@ -518,49 +1202,147 @@ async function loadCurrentExercise() {
     currentTransExercise.targetLang = "Tiếng Trung";
   }
 
-  // Cập nhật khung tham khảo từ vựng
   renderVocabReference(textObj);
 
-  // Xóa kết quả làm bài trước
-  document.getElementById("aiUserInput").value = "";
+  // Khôi phục bản nháp tự động lưu (nếu có)
+  const draftKey = `quyky_draft_bd_${currentTransLessonId}_${currentTransTextId}_${currentPracticeMode}`;
+  const savedDraft = safeGetStorage(draftKey, "");
+  document.getElementById("aiUserInput").value = savedDraft;
   document.getElementById("aiEvaluationResult").style.display = "none";
 
   const titleEl = document.getElementById("transPromptTitle");
-  const displayEl = document.getElementById("aiPromptDisplay");
 
   if (currentPracticeMode === "book") {
-    // CHẾ ĐỘ 1: Dịch bài khóa có sẵn trong sách
     currentTransExercise.sourceText = textObj.originalText;
-    titleEl.innerText = `Đoạn văn sách giáo khoa (${currentTransExercise.sourceLang}):`;
-    displayEl.innerText = currentTransExercise.sourceText;
+    titleEl.innerText = `Đoạn văn sách giáo khoa (${currentTransExercise.sourceLang} ➔ ${currentTransExercise.targetLang}):`;
+    renderTransPassageBox();
   } else {
-    // CHẾ ĐỘ 2: Gọi AI tạo đề mới dựa trên từ vựng của bài
-    titleEl.innerText = `Đoạn văn do AI tạo tương tự (${currentTransExercise.sourceLang}):`;
+    titleEl.innerText = `Đoạn văn do AI tạo tương tự (${currentTransExercise.sourceLang} ➔ ${currentTransExercise.targetLang}):`;
     requestAITranslationTask();
   }
+
+  onTransInputChanged();
 }
 
-// Render khung gợi ý từ vựng & mẫu câu
+function renderTransPassageBox() {
+  const displayEl = document.getElementById("aiPromptDisplay");
+  if (!displayEl) return;
+  const raw = currentTransExercise.sourceText || "";
+
+  if (!isHighlightingTransTerms || currentTransExercise.vocabList.length === 0) {
+    displayEl.innerText = raw;
+    return;
+  }
+
+  // Highlight các từ vựng xuất hiện trong bài khóa
+  let html = raw
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const sortedVocab = [...currentTransExercise.vocabList].sort((a, b) => b.zh.length - a.zh.length);
+  sortedVocab.forEach(v => {
+    const cleanZh = v.zh.split("/")[0].replace(/…+/g, "").trim();
+    if (cleanZh.length >= 2 && html.includes(cleanZh)) {
+      const safeTitle = `${v.zh} [${v.pinyin}]: ${v.vi}`.replace(/"/g, "&quot;");
+      const safeSpeak = cleanZh.replace(/'/g, "");
+      html = html.split(cleanZh).join(
+        `<mark class="term-highlight" title="${safeTitle}" onclick="playDiplomaticSpeech('${safeSpeak}', 'zh-CN')">${cleanZh}</mark>`
+      );
+    }
+  });
+
+  displayEl.innerHTML = html;
+}
+
+function toggleHighlightTransPassage() {
+  isHighlightingTransTerms = !isHighlightingTransTerms;
+  const btn = document.getElementById("btnHighlightTransTerms");
+  if (btn) {
+    btn.style.borderColor = isHighlightingTransTerms ? "var(--primary)" : "";
+    btn.style.color = isHighlightingTransTerms ? "var(--primary)" : "";
+  }
+  renderTransPassageBox();
+}
+
+function speakCurrentTransPassage() {
+  if (!currentTransExercise.sourceText) return;
+  const lang = currentTransExercise.sourceLang === "Tiếng Trung" ? "zh-CN" : "vi-VN";
+  playDiplomaticSpeech(currentTransExercise.sourceText, lang, 0.92);
+}
+
+function copyCurrentTransPassage() {
+  copyTextToClipboard(currentTransExercise.sourceText, "📋 Đã sao chép đoạn văn đề bài!");
+}
+
+function toggleTransVocabPinyin() {
+  showTransPinyin = !showTransPinyin;
+  const lesson = curriculumDB && curriculumDB.translation ? curriculumDB.translation[currentTransLessonId] : null;
+  if (!lesson) return;
+  const textObj = lesson.texts.find(t => t.id === currentTransTextId) || lesson.texts[0];
+  renderVocabReference(textObj);
+}
+
 function renderVocabReference(textObj) {
   const box = document.getElementById("transVocabReferenceBox");
   const content = document.getElementById("transVocabListContent");
   if (!box || !content) return;
 
   box.style.display = "block";
-  let html = "<div><strong>Từ vựng trọng tâm:</strong> ";
-  (textObj.vocabulary || []).forEach(v => {
-    html += `<span class="vocab-badge">${v.zh} (${v.vi})</span>`;
+  const userDraft = (document.getElementById("aiUserInput")?.value || "").toLowerCase();
+
+  let html = "<div><strong>Từ vựng trọng tâm:</strong><div class='vocab-grid-list'>";
+  (textObj.vocabulary || []).forEach((v, idx) => {
+    const cleanZh = v.zh.replace(/…+/g, "");
+    const isUsed =
+      (cleanZh && userDraft.includes(cleanZh.toLowerCase())) ||
+      (v.vi && userDraft.includes(v.vi.toLowerCase()));
+    const pySpan = showTransPinyin && v.pinyin ? `<span class="py-text">[${v.pinyin}]</span>` : "";
+    html += `
+      <span class="vocab-badge ${isUsed ? "used-term" : ""}" onclick="onClickVocabBadge(${idx}, 'trans')" title="Bấm để nghe phát âm & sao chép">
+        <span>🔊</span>
+        <span class="zh-text">${v.zh}</span>
+        ${pySpan}
+        <span class="vi-text">• ${v.vi}</span>
+      </span>
+    `;
   });
-  html += "</div>";
+  html += "</div></div>";
 
   if (textObj.patterns && textObj.patterns.length > 0) {
-    html += "<div style='margin-top:6px;'><strong>Mẫu câu:</strong> ";
-    textObj.patterns.forEach(p => {
-      html += `<span class="vocab-badge">${p.structure}</span>`;
+    html += "<div style='margin-top:10px;'><strong>Mẫu câu &amp; Cấu trúc ngữ pháp:</strong>";
+    textObj.patterns.forEach((p, pIdx) => {
+      html += `
+        <div class="pattern-item-row" onclick="onClickPatternRow(${pIdx}, 'trans')" title="Bấm để nghe mẫu câu">
+          <div>
+            <strong style="color: var(--primary);">🔹 ${p.structure}</strong>
+            <span style="color: var(--text-secondary); margin-left: 8px;">➔ ${p.meaning || ""}</span>
+          </div>
+          <span style="font-size: 12px; color: var(--accent);">🔊 Nghe</span>
+        </div>
+      `;
     });
     html += "</div>";
   }
   content.innerHTML = html;
+}
+
+function onClickVocabBadge(idx, mode) {
+  const list = (mode === "trans")
+    ? currentTransExercise.vocabList
+    : (typeof currentInterScenario !== "undefined" ? currentInterScenario.vocabList : []);
+  const item = list[idx];
+  if (!item) return;
+  playDiplomaticSpeech(item.zh, "zh-CN", 0.9);
+}
+
+function onClickPatternRow(idx, mode) {
+  const list = (mode === "trans")
+    ? currentTransExercise.patternList
+    : (typeof currentInterScenario !== "undefined" ? currentInterScenario.patternList : []);
+  const item = list[idx];
+  if (!item) return;
+  playDiplomaticSpeech(item.structure, "zh-CN", 0.9);
 }
 
 function toggleVocabReference() {
@@ -568,7 +1350,89 @@ function toggleVocabReference() {
   if (content) content.style.display = (content.style.display === "none") ? "block" : "none";
 }
 
-// 6. AI Tạo đề bài mới mở rộng (bám sát từ vựng bài khóa đang chọn)
+function onTransInputChanged() {
+  const val = document.getElementById("aiUserInput")?.value || "";
+  const charEl = document.getElementById("transCharCountText");
+  if (charEl) charEl.innerText = `${val.length} ký tự`;
+
+  // Lưu nháp tự động
+  const draftKey = `quyky_draft_bd_${currentTransLessonId}_${currentTransTextId}_${currentPracticeMode}`;
+  safeSetStorage(draftKey, val);
+
+  // Đếm số thuật ngữ trong bài đã được vận dụng
+  const lower = val.toLowerCase();
+  let usedCount = 0;
+  const total = currentTransExercise.vocabList.length;
+  currentTransExercise.vocabList.forEach(v => {
+    const cleanZh = v.zh.split("/")[0].replace(/…+/g, "").trim().toLowerCase();
+    const cleanVi = v.vi.split(",")[0].trim().toLowerCase();
+    if ((cleanZh && lower.includes(cleanZh)) || (cleanVi && lower.includes(cleanVi))) {
+      usedCount++;
+    }
+  });
+
+  const covEl = document.getElementById("transTermCoverageText");
+  if (covEl) {
+    covEl.innerText = `Thuật ngữ đã dùng: ${usedCount}/${total}`;
+  }
+
+  // Cập nhật highlight thẻ từ vựng
+  if (curriculumDB && curriculumDB.translation) {
+    const lesson = curriculumDB.translation[currentTransLessonId];
+    const textObj = lesson?.texts.find(t => t.id === currentTransTextId);
+    if (textObj) renderVocabReference(textObj);
+  }
+}
+
+function clearTranslationDraft() {
+  const area = document.getElementById("aiUserInput");
+  if (area) area.value = "";
+  onTransInputChanged();
+  showToast("Đã xóa nội dung bài làm", "info");
+}
+
+// Kiểm tra thuật ngữ tức thì (Local Instant Check)
+function runLocalTransCheck() {
+  const userText = (document.getElementById("aiUserInput")?.value || "").trim();
+  if (!userText) {
+    showToast("Vui lòng nhập bản dịch của bạn trước khi kiểm tra!", "warning");
+    return;
+  }
+
+  const lower = userText.toLowerCase();
+  const matched = [];
+  const missed = [];
+
+  currentTransExercise.vocabList.forEach(v => {
+    const cleanZh = v.zh.split("/")[0].replace(/…+/g, "").trim().toLowerCase();
+    const cleanVi = v.vi.split(",")[0].trim().toLowerCase();
+    if ((cleanZh && lower.includes(cleanZh)) || (cleanVi && lower.includes(cleanVi))) {
+      matched.push(`${v.zh} (${v.vi})`);
+    } else {
+      missed.push(`${v.zh} (${v.vi})`);
+    }
+  });
+
+  const ratio = currentTransExercise.vocabList.length > 0
+    ? Math.round((matched.length / currentTransExercise.vocabList.length) * 100)
+    : 100;
+
+  const resultBox = document.getElementById("aiEvaluationResult");
+  resultBox.innerHTML = `
+    <div class="eval-score-header">
+      <strong style="font-size: 15px; color: var(--primary);">⚡ Kiểm tra nhanh độ phủ Thuật ngữ (Tức thì)</strong>
+      <span class="score-circle-badge" style="background: var(--primary);">Độ phủ: ${matched.length}/${currentTransExercise.vocabList.length} (${ratio}%)</span>
+    </div>
+    <div class="eval-formatted-body">
+      <p><strong>✅ Thuật ngữ đã vận dụng (${matched.length}):</strong> ${matched.length ? matched.join(" • ") : "Chưa phát hiện thuật ngữ khớp trực tiếp."}</p>
+      <p><strong>💡 Gợi ý thuật ngữ có thể bổ sung (${missed.length}):</strong> ${missed.length ? missed.join(" • ") : "Tuyệt vời! Bạn đã dùng toàn bộ thuật ngữ."}</p>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">👉 Bấm <strong>"⚖️ Gửi AI Thẩm Định Bản Dịch"</strong> để nhận chấm điểm ngữ pháp, văn phong và bản dịch mẫu hoàn chỉnh từ AI.</p>
+    </div>
+  `;
+  resultBox.style.display = "block";
+}
+
+// AI Tạo đề bài mới mở rộng
 async function requestAITranslationTask() {
   const displayEl = document.getElementById("aiPromptDisplay");
   displayEl.innerText = `⏳ AI đang biên soạn đoạn văn tương tự theo [${currentTransExercise.textTitle}]...`;
@@ -600,17 +1464,23 @@ QUY TẮC BẮT BUỘC:
   try {
     const result = await callGemini(prompt);
     currentTransExercise.sourceText = result.trim();
-    displayEl.innerText = currentTransExercise.sourceText;
+    renderTransPassageBox();
   } catch (err) {
     displayEl.innerText = "Lỗi tạo đề: " + err.message;
   }
 }
 
-// 7. Gửi AI Thẩm định bản dịch
+// Gửi AI Thẩm định bản dịch
 async function submitTranslationToAI() {
   const userText = document.getElementById("aiUserInput").value.trim();
-  if (!userText) return alert("Vui lòng nhập bản dịch của bạn vào ô!");
-  if (!currentTransExercise.sourceText) return alert("Chưa có đề bài, vui lòng chờ nạp bài!");
+  if (!userText) {
+    showToast("Vui lòng nhập bản dịch của bạn vào ô!", "warning");
+    return;
+  }
+  if (!currentTransExercise.sourceText) {
+    showToast("Chưa có đề bài, vui lòng chờ nạp bài!", "warning");
+    return;
+  }
 
   const btn = document.getElementById("btnSubmitAI");
   const resultBox = document.getElementById("aiEvaluationResult");
@@ -640,14 +1510,100 @@ Hãy đánh giá chi tiết:
 
   try {
     const evaluation = await callGemini(evalPrompt);
-    resultBox.innerText = evaluation;
+    resultBox.innerHTML = formatAIEvaluationHTML(evaluation, "Thẩm định Biên Dịch Học Thuật");
     resultBox.style.display = "block";
+    showToast("🎉 Đã hoàn tất thẩm định bản dịch!", "success");
   } catch (err) {
-    alert("Lỗi chấm bài: " + err.message);
+    showToast("Lỗi chấm bài AI: " + err.message, "error");
+    runLocalTransCheck();
   } finally {
     btn.innerText = "⚖️ Gửi AI Thẩm Định Bản Dịch";
     btn.disabled = false;
   }
+}
+
+/* ================= MODAL TRA CỨU TỪ ĐIỂN TOÀN GIÁO TRÌNH ================= */
+function openDictionaryModal() {
+  const modal = document.getElementById("dictModalOverlay");
+  if (!modal) return;
+  modal.classList.add("open");
+  const inp = document.getElementById("dictSearchInput");
+  if (inp) {
+    inp.focus();
+    renderDictionarySearch(inp.value);
+  }
+}
+
+function closeDictionaryModal() {
+  const modal = document.getElementById("dictModalOverlay");
+  if (modal) modal.classList.remove("open");
+}
+
+function renderDictionarySearch(query) {
+  const listEl = document.getElementById("dictResultsList");
+  if (!listEl) return;
+
+  const q = String(query || "").trim().toLowerCase();
+  const qToneless = stripPinyinTones(q);
+
+  let matchedWords = allCombinedWords;
+  let matchedPatterns = allPatternsList;
+
+  if (q) {
+    matchedWords = allCombinedWords.filter(w =>
+      String(w.hanzi).toLowerCase().includes(q) ||
+      String(w.pinyin || "").toLowerCase().includes(q) ||
+      stripPinyinTones(w.pinyin || "").includes(qToneless) ||
+      String(w.vn || "").toLowerCase().includes(q)
+    );
+    matchedPatterns = allPatternsList.filter(p =>
+      String(p.structure).toLowerCase().includes(q) ||
+      String(p.meaning || "").toLowerCase().includes(q)
+    );
+  }
+
+  const topWords = matchedWords.slice(0, 45);
+  const topPatterns = matchedPatterns.slice(0, 15);
+
+  if (topWords.length === 0 && topPatterns.length === 0) {
+    listEl.innerHTML = `<div style="text-align:center; padding: 24px; color: var(--text-muted);">Không tìm thấy thuật ngữ hoặc mẫu câu nào khớp với "${query}".</div>`;
+    return;
+  }
+
+  let html = "";
+  topWords.forEach(w => {
+    const safeSpeak = String(w.hanzi).replace(/'/g, "");
+    html += `
+      <div class="dict-item-card">
+        <div>
+          <strong style="font-size: 16px; color: var(--primary);">${w.hanzi}</strong>
+          <span style="color: var(--accent); font-size: 13px; margin-left: 6px;">[${w.pinyin || ""}]</span>
+          <div style="font-size: 14px; color: var(--text-main); margin-top: 2px;">${w.vn}</div>
+          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">${w.subject} • ${w.lesson}</div>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-clear-single" onclick="playDiplomaticSpeech('${safeSpeak}', 'zh-CN')">🔊 Nghe</button>
+          <button type="button" class="btn-clear-single" onclick="copyTextToClipboard('${safeSpeak}')">📋 Chép</button>
+        </div>
+      </div>
+    `;
+  });
+
+  topPatterns.forEach(p => {
+    const safeSpeak = String(p.structure).replace(/'/g, "");
+    html += `
+      <div class="dict-item-card" style="border-left: 3px solid var(--accent);">
+        <div>
+          <strong style="font-size: 14.5px; color: var(--accent);">🔹 Mẫu câu: ${p.structure}</strong>
+          <div style="font-size: 13.5px; color: var(--text-main); margin-top: 2px;">${p.meaning || ""}</div>
+          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">${p.lesson}</div>
+        </div>
+        <button type="button" class="btn-clear-single" onclick="playDiplomaticSpeech('${safeSpeak}', 'zh-CN')">🔊 Nghe</button>
+      </div>
+    `;
+  });
+
+  listEl.innerHTML = html;
 }
 
 autoLoadExcel();

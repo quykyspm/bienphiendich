@@ -1,13 +1,14 @@
 /* ==========================================================================
-   PHÂN HỆ PHÒNG LUYỆN PHIÊN DỊCH (INTERPRETATION LAB)
-   Nạp độc lập từ curriculum_pd.json & Audio MP3 trường
+   PHÂN HỆ PHÒNG LUYỆN PHIÊN DỊCH (INTERPRETATION LAB NÂNG CẤP)
+   Nạp từ curriculum_pd.json & hỗ trợ Audio Studio + Sổ tay tốc ký + Tách câu
    ========================================================================== */
 
 let pdDB = null;
 let currentInterLessonId = "bai1";
 let currentInterTextId = "text1";
-let currentInterPracticeMode = "book"; // 'book' (MP3 gốc) hoặc 'ai_generate' (AI tạo)
+let currentInterPracticeMode = "book";
 let selectedInterRate = 1.0;
+let showInterPinyin = true;
 
 let currentInterScenario = {
   sourceText: "",
@@ -16,6 +17,7 @@ let currentInterScenario = {
   dir: "zh_to_vi",
   lessonTitle: "",
   textTitle: "",
+  objectives: "",
   audioSrc: "",
   vocabList: [],
   patternList: []
@@ -27,7 +29,16 @@ let isSpeechRevealed = false;
 let speechRecognizer = null;
 let isRecording = false;
 
-// Ánh xạ chính xác theo tên file thực tế trong thư mục audio (xử lý sai khác chữ hoa/thường và khoảng trắng)
+// Biến luyện từng câu (Sentence-by-Sentence Drill)
+let isSentenceDrillActive = false;
+let cabinSentences = [];
+let currentSentenceIdx = 0;
+
+// Biến đồng hồ bấm giờ Cabin
+let cabinTimerSeconds = 0;
+let cabinTimerInterval = null;
+
+// Ánh xạ chính xác theo tên file thực tế trong thư mục audio
 function getAudioFilePath(lessonNum, textNum) {
   if (lessonNum === 4 && textNum === 4) return "audio/Bai4_baikhoa4.mp3";
   if (lessonNum === 6 && textNum === 4) return "audio/Bai6_baikhoa4.mp3";
@@ -39,15 +50,71 @@ function getAudioFilePath(lessonNum, textNum) {
   return `audio/bai${lessonNum}_baikhoa${textNum}.mp3`;
 }
 
+function formatAudioSeconds(sec) {
+  if (!sec || isNaN(sec) || sec < 0) return "00:00";
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
+function bindAudioTimeEvents(aud) {
+  aud.addEventListener("timeupdate", () => {
+    const slider = document.getElementById("cabinAudioSlider");
+    const timeEl = document.getElementById("cabinAudioTime");
+    if (aud.duration && !isNaN(aud.duration)) {
+      if (slider) slider.value = Math.round((aud.currentTime / aud.duration) * 100);
+      if (timeEl) timeEl.innerText = `${formatAudioSeconds(aud.currentTime)} / ${formatAudioSeconds(aud.duration)}`;
+    }
+  });
+}
+bindAudioTimeEvents(audioElement);
+bindAudioTimeEvents(doubaoAudioElement);
+
+function seekCabinAudio(deltaSec) {
+  const activeAud = !audioElement.paused ? audioElement : (!doubaoAudioElement.paused ? doubaoAudioElement : audioElement);
+  if (activeAud && activeAud.duration && !isNaN(activeAud.duration)) {
+    activeAud.currentTime = Math.max(0, Math.min(activeAud.duration, activeAud.currentTime + deltaSec));
+  } else {
+    showToast("Tua nhanh áp dụng khi đang phát file âm thanh MP3/Doubao", "info");
+  }
+}
+
+function onSeekCabinSlider(val) {
+  const activeAud = !audioElement.paused ? audioElement : (!doubaoAudioElement.paused ? doubaoAudioElement : audioElement);
+  if (activeAud && activeAud.duration && !isNaN(activeAud.duration)) {
+    activeAud.currentTime = (parseFloat(val) / 100) * activeAud.duration;
+  }
+}
+
+// Đồng hồ bấm giờ Cabin
+function startCabinTimerIfNeeded() {
+  if (cabinTimerInterval) return;
+  cabinTimerInterval = setInterval(() => {
+    cabinTimerSeconds++;
+    const el = document.getElementById("cabinTimerDisplay");
+    if (el) el.innerText = `⏱️ ${formatAudioSeconds(cabinTimerSeconds)}`;
+  }, 1000);
+}
+
+function stopCabinTimer() {
+  if (cabinTimerInterval) {
+    clearInterval(cabinTimerInterval);
+    cabinTimerInterval = null;
+  }
+}
+
+function resetCabinTimer() {
+  stopCabinTimer();
+  cabinTimerSeconds = 0;
+  const el = document.getElementById("cabinTimerDisplay");
+  if (el) el.innerText = "⏱️ 00:00";
+}
+
 // 1. Tải dữ liệu từ file curriculum_pd.json
 async function loadInterpretationDatabase() {
   const notice = document.getElementById("speechBlindNotice");
   try {
-    const res = await fetch("curriculum_pd.json?t=" + Date.now());
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} - Không thể tải file từ server`);
-    }
-    pdDB = await res.json();
+    pdDB = await loadJSONResource("curriculum_pd.json", window.EMBEDDED_CURRICULUM_PD);
     renderInterLessonChips();
   } catch (err) {
     console.error("Chi tiết lỗi curriculum_pd.json:", err);
@@ -67,13 +134,10 @@ function renderInterLessonChips() {
   Object.keys(pdDB).forEach((key) => {
     const lesson = pdDB[key];
     const chip = document.createElement("button");
-    
     chip.className = `topic-chip ${key === currentInterLessonId ? "active" : ""}`;
     chip.innerText = (lesson.lessonTitle || key).split("(")[0].trim();
-
-    chip.onclick = () => {
-      selectInterLesson(key, chip);
-    };
+    chip.title = lesson.lessonTitle || key;
+    chip.onclick = () => selectInterLesson(key, chip);
     container.appendChild(chip);
   });
 
@@ -133,6 +197,7 @@ function selectInterpretRate(btn) {
   btn.classList.add("active");
   selectedInterRate = parseFloat(btn.getAttribute("data-val")) || 1.0;
   if (audioElement) audioElement.playbackRate = selectedInterRate;
+  if (doubaoAudioElement) doubaoAudioElement.playbackRate = selectedInterRate;
 }
 
 // 5. Nạp bài khóa & cấu hình âm thanh
@@ -140,6 +205,7 @@ async function loadCurrentInterExercise() {
   if (!pdDB) return;
 
   stopAllAudio();
+  resetCabinTimer();
 
   const lesson = pdDB[currentInterLessonId];
   if (!lesson || !lesson.texts) return;
@@ -148,11 +214,14 @@ async function loadCurrentInterExercise() {
 
   currentInterScenario.lessonTitle = lesson.lessonTitle || "";
   currentInterScenario.textTitle = textObj.titleVi || textObj.title || "";
+  currentInterScenario.objectives = lesson.objectives || "";
   currentInterScenario.vocabList = textObj.vocabulary || [];
   currentInterScenario.patternList = textObj.patterns || [];
   currentInterScenario.dir = textObj.direction || "zh_to_vi";
 
-  // Phân luồng đường dẫn file MP3 theo đúng tên file thực tế trong thư mục audio
+  const objEl = document.getElementById("interObjectivesText");
+  if (objEl) objEl.innerText = currentInterScenario.objectives;
+
   const lessonNum = lesson.lessonNumber || parseInt(currentInterLessonId.replace("bai", ""), 10) || 1;
   const textNum = parseInt(textObj.id.replace("text", ""), 10) || 1;
   currentInterScenario.audioSrc = getAudioFilePath(lessonNum, textNum);
@@ -174,12 +243,18 @@ async function loadCurrentInterExercise() {
 
   renderInterVocabReference(textObj);
 
-  // Reset cabin
+  const draftKey = `quyky_draft_pd_${currentInterLessonId}_${currentInterTextId}_${currentInterPracticeMode}`;
+  const noteKey = `quyky_notes_pd_${currentInterLessonId}_${currentInterTextId}`;
+
   const txtArea = document.getElementById("interpretUserTranscript");
-  if (txtArea) txtArea.value = "";
+  if (txtArea) txtArea.value = safeGetStorage(draftKey, "");
+
+  const noteArea = document.getElementById("cabinShorthandInput");
+  if (noteArea) noteArea.value = safeGetStorage(noteKey, "");
+
   const resBox = document.getElementById("interpretAIResult");
   if (resBox) resBox.style.display = "none";
-  
+
   isSpeechRevealed = false;
   const revText = document.getElementById("revealedSpeechText");
   const noticeBox = document.getElementById("speechBlindNotice");
@@ -188,11 +263,77 @@ async function loadCurrentInterExercise() {
 
   if (currentInterPracticeMode === "book") {
     currentInterScenario.sourceText = textObj.originalText || "";
+    prepareCabinSentences();
     if (revText) revText.innerText = currentInterScenario.sourceText;
     if (noticeBox) noticeBox.innerHTML = '<span class="blind-icon">🔒</span> <span>Bài khóa đã sẵn sàng! Bấm "Phát âm thanh" để nghe.</span>';
   } else {
     requestAIInterpretTask();
   }
+
+  onInterTranscriptChanged();
+}
+
+function prepareCabinSentences() {
+  const raw = String(currentInterScenario.sourceText || "").trim();
+  if (!raw) {
+    cabinSentences = [];
+    return;
+  }
+  const parts = raw
+    .split(/(?<=[。！？.!?\n])\s*/)
+    .map(s => s.trim())
+    .filter(Boolean);
+  cabinSentences = parts.length > 0 ? parts : [raw];
+  currentSentenceIdx = 0;
+  updateSentenceDrillUI();
+}
+
+function toggleSentenceDrillMode() {
+  isSentenceDrillActive = !isSentenceDrillActive;
+  const bar = document.getElementById("sentenceDrillBar");
+  if (bar) bar.style.display = isSentenceDrillActive ? "flex" : "none";
+  prepareCabinSentences();
+  if (isSentenceDrillActive) {
+    showToast(`Đã bật chế độ Tách từng câu (${cabinSentences.length} câu)`, "info");
+  }
+}
+
+function updateSentenceDrillUI() {
+  const counter = document.getElementById("sentenceDrillCounter");
+  if (counter && cabinSentences.length > 0) {
+    counter.innerText = `Câu ${currentSentenceIdx + 1} / ${cabinSentences.length}`;
+  }
+  if (isSpeechRevealed && isSentenceDrillActive && cabinSentences.length > 0) {
+    const revText = document.getElementById("revealedSpeechText");
+    if (revText) revText.innerText = cabinSentences[currentSentenceIdx];
+  } else if (isSpeechRevealed) {
+    const revText = document.getElementById("revealedSpeechText");
+    if (revText) revText.innerText = currentInterScenario.sourceText;
+  }
+}
+
+function stepCabinSentence(dir) {
+  if (cabinSentences.length === 0) return;
+  currentSentenceIdx = (currentSentenceIdx + dir + cabinSentences.length) % cabinSentences.length;
+  updateSentenceDrillUI();
+  playCurrentCabinSentence();
+}
+
+function playCurrentCabinSentence() {
+  if (cabinSentences.length === 0) return;
+  const sentence = cabinSentences[currentSentenceIdx];
+  const voiceSelect = document.getElementById("selectVoiceType");
+  const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
+  const btn = document.getElementById("btnPlayAudio");
+  routeTTS(sentence, selectedVoice, btn);
+}
+
+function toggleInterVocabPinyin() {
+  showInterPinyin = !showInterPinyin;
+  const lesson = pdDB ? pdDB[currentInterLessonId] : null;
+  if (!lesson) return;
+  const textObj = lesson.texts.find(t => t.id === currentInterTextId) || lesson.texts[0];
+  renderInterVocabReference(textObj);
 }
 
 // Hiển thị khung từ vựng tham khảo
@@ -206,17 +347,39 @@ function renderInterVocabReference(textObj) {
     return;
   }
 
+  const userTranscript = (document.getElementById("interpretUserTranscript")?.value || "").toLowerCase();
+
   box.style.display = "block";
-  let html = "<div><strong>Thuật ngữ bài:</strong> ";
-  textObj.vocabulary.forEach(v => {
-    html += `<span class="vocab-badge">${v.zh} (${v.vi})</span>`;
+  let html = "<div><strong>Thuật ngữ bài:</strong><div class='vocab-grid-list'>";
+  textObj.vocabulary.forEach((v, idx) => {
+    const cleanZh = v.zh.replace(/\.{2,}|…+/g, "").trim();
+    const isUsed =
+      (cleanZh && userTranscript.includes(cleanZh.toLowerCase())) ||
+      (v.vi && userTranscript.includes(v.vi.toLowerCase()));
+    const pySpan = showInterPinyin && v.pinyin ? `<span class="py-text">[${v.pinyin}]</span>` : "";
+    html += `
+      <span class="vocab-badge ${isUsed ? "used-term" : ""}" onclick="onClickVocabBadge(${idx}, 'inter')" title="Bấm để nghe phát âm">
+        <span>🔊</span>
+        <span class="zh-text">${v.zh}</span>
+        ${pySpan}
+        <span class="vi-text">• ${v.vi}</span>
+      </span>
+    `;
   });
-  html += "</div>";
+  html += "</div></div>";
 
   if (textObj.patterns && textObj.patterns.length > 0) {
-    html += "<div style='margin-top:6px;'><strong>Mẫu câu:</strong> ";
-    textObj.patterns.forEach(p => {
-      html += `<span class="vocab-badge">${p.structure}</span>`;
+    html += "<div style='margin-top:10px;'><strong>Mẫu câu &amp; Cấu trúc:</strong>";
+    textObj.patterns.forEach((p, pIdx) => {
+      html += `
+        <div class="pattern-item-row" onclick="onClickPatternRow(${pIdx}, 'inter')" title="Bấm để nghe mẫu câu">
+          <div>
+            <strong style="color: var(--primary);">🔹 ${p.structure}</strong>
+            <span style="color: var(--text-secondary); margin-left: 8px;">➔ ${p.meaning || ""}</span>
+          </div>
+          <span style="font-size: 12px; color: var(--accent);">🔊 Nghe</span>
+        </div>
+      `;
     });
     html += "</div>";
   }
@@ -228,11 +391,57 @@ function toggleInterpretVocabRef() {
   if (content) content.style.display = (content.style.display === "none") ? "block" : "none";
 }
 
+function onInterTranscriptChanged() {
+  startCabinTimerIfNeeded();
+  const val = document.getElementById("interpretUserTranscript")?.value || "";
+  const draftKey = `quyky_draft_pd_${currentInterLessonId}_${currentInterTextId}_${currentInterPracticeMode}`;
+  safeSetStorage(draftKey, val);
+
+  const lower = val.toLowerCase();
+  let used = 0;
+  const total = currentInterScenario.vocabList.length;
+  currentInterScenario.vocabList.forEach(v => {
+    const cleanZh = v.zh.replace(/\.{2,}|…+/g, "").trim().toLowerCase();
+    const cleanVi = v.vi.split(",")[0].trim().toLowerCase();
+    if ((cleanZh && lower.includes(cleanZh)) || (cleanVi && lower.includes(cleanVi))) {
+      used++;
+    }
+  });
+
+  const badge = document.getElementById("interTermCoverageBadge");
+  if (badge) badge.innerText = `Thuật ngữ: ${used}/${total}`;
+
+  if (pdDB && pdDB[currentInterLessonId]) {
+    const textObj = pdDB[currentInterLessonId].texts.find(t => t.id === currentInterTextId);
+    if (textObj) renderInterVocabReference(textObj);
+  }
+}
+
+function clearInterpretTranscript() {
+  const el = document.getElementById("interpretUserTranscript");
+  if (el) el.value = "";
+  onInterTranscriptChanged();
+  showToast("Đã xóa nội dung phiên dịch", "info");
+}
+
+function clearShorthandPad() {
+  const el = document.getElementById("cabinShorthandInput");
+  if (el) el.value = "";
+  const noteKey = `quyky_notes_pd_${currentInterLessonId}_${currentInterTextId}`;
+  safeSetStorage(noteKey, "");
+  showToast("Đã xóa nháp tốc ký", "info");
+}
+
 // 6. Phát âm thanh (MP3 gốc hoặc TTS)
 function playSpeakerAudio() {
   const btn = document.getElementById("btnPlayAudio");
   const voiceSelect = document.getElementById("selectVoiceType");
   const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
+
+  if (isSentenceDrillActive && cabinSentences.length > 0) {
+    playCurrentCabinSentence();
+    return;
+  }
 
   if (currentInterPracticeMode === "book") {
     const currentDecodedSrc = decodeURI(audioElement.src || "");
@@ -246,8 +455,7 @@ function playSpeakerAudio() {
     audioElement.playbackRate = selectedInterRate;
     audioElement.play().then(() => {
       if (btn) btn.innerText = "⏸️ Tạm dừng";
-    }).catch(err => {
-      console.warn("Không tìm thấy MP3 cục bộ, chuyển sang TTS:", err);
+    }).catch(() => {
       routeTTS(currentInterScenario.sourceText, selectedVoice, btn);
     });
 
@@ -268,20 +476,19 @@ async function routeTTS(text, selectedVoice, btn) {
     return;
   }
 
-  // Nếu người dùng chọn giọng trình duyệt, chạy trực tiếp Web Speech
   if (selectedVoice === "browser") {
     playFallbackTTS(text);
     return;
   }
 
   if (currentInterScenario.sourceLangCode === "zh-CN" && selectedVoice && selectedVoice.startsWith("doubao")) {
-    const speakerId = (selectedVoice === "doubao_taozi") 
-      ? "zh_female_taozi_conversation_v4_wvae_bigtts" 
+    const speakerId = (selectedVoice === "doubao_taozi")
+      ? "zh_female_taozi_conversation_v4_wvae_bigtts"
       : "zh_male_yangguang_conversation_v4_wvae_bigtts";
 
     try {
       if (btn) btn.innerText = "⏳ Đang tải giọng Doubao...";
-      
+
       const response = await fetch("https://gemini-api-backend-rho.vercel.app/api/doubao-tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -294,7 +501,7 @@ async function routeTTS(text, selectedVoice, btn) {
 
       const blob = await response.blob();
       if (!blob || blob.size < 1000) {
-        throw new Error(`Blob rỗng`);
+        throw new Error("Blob rỗng");
       }
 
       const audioBlob = new Blob([blob], { type: "audio/mpeg" });
@@ -302,14 +509,14 @@ async function routeTTS(text, selectedVoice, btn) {
 
       doubaoAudioElement.src = audioUrl;
       doubaoAudioElement.playbackRate = selectedInterRate;
-      
+
       doubaoAudioElement.onplay = () => { if (btn) btn.innerText = "⏸️ Đang phát (Doubao)"; };
       doubaoAudioElement.onended = () => { if (btn) btn.innerText = "🔄 Nghe lại bài"; };
 
       await doubaoAudioElement.play();
       return;
     } catch (err) {
-      console.warn("Doubao TTS không khả dụng (khi test local CORS yêu cầu domain quykyspm.github.io). Tự động chuyển sang Web Speech TTS:", err);
+      console.warn("Chuyển sang Web Speech TTS:", err);
     }
   }
 
@@ -320,7 +527,8 @@ function playFallbackTTS(text) {
   const btn = document.getElementById("btnPlayAudio");
   if (!window.speechSynthesis) {
     if (btn) btn.innerText = "▶️ Phát âm thanh";
-    return alert("Trình duyệt không hỗ trợ Web Speech!");
+    showToast("Trình duyệt không hỗ trợ Web Speech!", "warning");
+    return;
   }
   window.speechSynthesis.cancel();
 
@@ -330,7 +538,7 @@ function playFallbackTTS(text) {
 
   const voices = window.speechSynthesis.getVoices();
   const isZh = (currentInterScenario.sourceLangCode === "zh-CN");
-  const matched = voices.find(v => v.lang.toLowerCase().replace('_', '-').startsWith(isZh ? "zh" : "vi"));
+  const matched = voices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(isZh ? "zh" : "vi"));
   if (matched) u.voice = matched;
 
   u.onstart = () => { if (btn) btn.innerText = "⏸️ Đang phát (TTS)..."; };
@@ -350,9 +558,13 @@ function stopAllAudio() {
     doubaoAudioElement.currentTime = 0;
   }
   if (window.speechSynthesis) window.speechSynthesis.cancel();
-  
+
   const btn = document.getElementById("btnPlayAudio");
   if (btn) btn.innerText = "▶️ Phát âm thanh";
+  const slider = document.getElementById("cabinAudioSlider");
+  if (slider) slider.value = 0;
+  const timeEl = document.getElementById("cabinAudioTime");
+  if (timeEl) timeEl.innerText = "00:00 / 00:00";
 }
 
 function toggleRevealSpeech() {
@@ -364,6 +576,7 @@ function toggleRevealSpeech() {
   if (isSpeechRevealed) {
     revealedBox.style.display = "block";
     blindNotice.style.display = "none";
+    updateSentenceDrillUI();
   } else {
     revealedBox.style.display = "none";
     blindNotice.style.display = "flex";
@@ -375,7 +588,7 @@ async function requestAIInterpretTask() {
   stopAllAudio();
   const notice = document.getElementById("speechBlindNotice");
   const revealedBox = document.getElementById("revealedSpeechText");
-  
+
   if (notice) notice.innerHTML = `<span class="blind-icon">⏳</span> <span>AI đang biên soạn đoạn văn mở rộng...</span>`;
   if (revealedBox) revealedBox.style.display = "none";
   isSpeechRevealed = false;
@@ -400,6 +613,7 @@ QUY TẮC: 100% tiếng Việt thuần túy, không chứa chữ Hán, không gi
   try {
     const res = await callGemini(prompt);
     currentInterScenario.sourceText = res.trim();
+    prepareCabinSentences();
     if (revealedBox) revealedBox.innerText = currentInterScenario.sourceText;
     if (notice) notice.innerHTML = '<span class="blind-icon">🔒</span> <span>Đã tạo kịch bản mới! Bấm "Phát âm thanh" để nghe.</span>';
     playSpeakerAudio();
@@ -414,7 +628,7 @@ let manualPrefixText = "";
 function toggleSpeechRecording() {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRec) {
-    alert("Trình duyệt không hỗ trợ Web Speech API!");
+    showToast("Trình duyệt không hỗ trợ nhận diện giọng nói (Hãy dùng Chrome/Edge)!", "warning");
     return;
   }
 
@@ -432,7 +646,7 @@ function toggleSpeechRecording() {
   try {
     speechRecognizer = new SpeechRec();
   } catch (e) {
-    alert("Không thể kết nối Micro!");
+    showToast("Không thể kết nối Micro!", "error");
     return;
   }
 
@@ -443,6 +657,7 @@ function toggleSpeechRecording() {
 
   speechRecognizer.onstart = () => {
     isRecording = true;
+    startCabinTimerIfNeeded();
     if (btn) btn.classList.add("active");
     const micText = document.getElementById("micBtnText");
     if (micText) micText.innerText = "ĐANG THU ÂM... (BẤM DỪNG)";
@@ -467,8 +682,9 @@ function toggleSpeechRecording() {
       }
     }
 
-    let fullSpoken = (finalPart + interimPart).trim();
+    const fullSpoken = (finalPart + interimPart).trim();
     txtArea.value = manualPrefixText ? (manualPrefixText + " " + fullSpoken) : fullSpoken;
+    onInterTranscriptChanged();
   };
 
   speechRecognizer.onerror = (event) => {
@@ -506,12 +722,60 @@ function stopRecordingUI() {
   }
 }
 
+// Kiểm tra thuật ngữ Cabin tức thì
+function runLocalInterCheck() {
+  const userSpeech = (document.getElementById("interpretUserTranscript")?.value || "").trim();
+  if (!userSpeech) {
+    showToast("Vui lòng nhập hoặc nói bản phiên dịch trước khi kiểm tra!", "warning");
+    return;
+  }
+
+  const lower = userSpeech.toLowerCase();
+  const matched = [];
+  const missed = [];
+
+  currentInterScenario.vocabList.forEach(v => {
+    const cleanZh = v.zh.replace(/\.{2,}|…+/g, "").trim().toLowerCase();
+    const cleanVi = v.vi.split(",")[0].trim().toLowerCase();
+    if ((cleanZh && lower.includes(cleanZh)) || (cleanVi && lower.includes(cleanVi))) {
+      matched.push(`${v.zh} (${v.vi})`);
+    } else {
+      missed.push(`${v.zh} (${v.vi})`);
+    }
+  });
+
+  const ratio = currentInterScenario.vocabList.length > 0
+    ? Math.round((matched.length / currentInterScenario.vocabList.length) * 100)
+    : 100;
+
+  const resBox = document.getElementById("interpretAIResult");
+  resBox.innerHTML = `
+    <div class="eval-score-header">
+      <strong style="font-size: 15px; color: var(--primary);">⚡ Kiểm tra nhanh Thuật ngữ Cabin</strong>
+      <span class="score-circle-badge" style="background: var(--primary);">Độ phủ: ${matched.length}/${currentInterScenario.vocabList.length} (${ratio}%)</span>
+    </div>
+    <div class="eval-formatted-body">
+      <p><strong>✅ Thuật ngữ đã dịch (${matched.length}):</strong> ${matched.length ? matched.join(" • ") : "Chưa phát hiện thuật ngữ khớp trực tiếp."}</p>
+      <p><strong>💡 Thuật ngữ gợi ý bổ sung (${missed.length}):</strong> ${missed.length ? missed.join(" • ") : "Đã bao phủ toàn bộ thuật ngữ bài khóa!"}</p>
+      <p><strong>📜 Kịch bản gốc để đối chiếu:</strong><br>${currentInterScenario.sourceText}</p>
+    </div>
+  `;
+  resBox.style.display = "block";
+}
+
 // 9. Gửi Gemini thẩm định bản dịch
 async function submitInterpretationToAI() {
   const userSpeech = document.getElementById("interpretUserTranscript").value.trim();
-  if (!userSpeech) return alert("Vui lòng gõ nội dung dịch hoặc nói qua Micro!");
-  if (!currentInterScenario.sourceText) return alert("Chưa có đề bài bài khóa!");
+  if (!userSpeech) {
+    showToast("Vui lòng gõ nội dung dịch hoặc nói qua Micro!", "warning");
+    return;
+  }
+  if (!currentInterScenario.sourceText) {
+    showToast("Chưa có đề bài bài khóa!", "warning");
+    return;
+  }
 
+  stopCabinTimer();
   const btn = document.getElementById("btnSubmitInterpret");
   const resBox = document.getElementById("interpretAIResult");
   btn.innerText = "⏳ AI đang thẩm định nghiệp vụ...";
@@ -542,7 +806,7 @@ Hãy thẩm định chi tiết:
 
   try {
     const evaluation = await callGemini(evalPrompt);
-    resBox.innerText = evaluation;
+    resBox.innerHTML = formatAIEvaluationHTML(evaluation, `Thẩm định Phiên Dịch Cabin (Thời gian: ${formatAudioSeconds(cabinTimerSeconds)})`);
     resBox.style.display = "block";
 
     const revText = document.getElementById("revealedSpeechText");
@@ -550,8 +814,10 @@ Hãy thẩm định chi tiết:
     if (revText) revText.style.display = "block";
     if (noticeBox) noticeBox.style.display = "none";
     isSpeechRevealed = true;
+    showToast("🎉 Đã hoàn tất thẩm định phiên dịch!", "success");
   } catch (err) {
-    alert("Lỗi thẩm định: " + err.message);
+    showToast("Lỗi kết nối AI: " + err.message, "error");
+    runLocalInterCheck();
   } finally {
     btn.innerText = "⚖️ Gửi AI Thẩm Định Phiên Dịch";
     btn.disabled = false;

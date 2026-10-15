@@ -12,66 +12,105 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>biên phiên dịch by QuyKy</title>
+  <title>Biên Phiên Dịch Studio by QuyKy</title>
 
   <!-- Favicon chữ Dịch 译 sang trọng -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><text x='50%' y='50%' font-size='62' font-family='sans-serif' font-weight='bold' fill='%23ffffff' dominant-baseline='central' text-anchor='middle'>译</text></svg>">
   
-  <link rel="stylesheet" href="style.css?v=6.2">
+  <link rel="stylesheet" href="style.css?v=8.0">
 </head>
 <body>
 
   <div class="card">
     
-    <!-- THANH MENU CHÍNH DUY NHẤT -->
+    <!-- THANH MENU CHÍNH & HEADER STUDIO -->
     <div class="nav-bar-container">
-      <div class="brand-title">biên phiên dịch by QuyKy</div>
+      <div class="brand-header-left">
+        <div class="brand-logo-badge">译</div>
+        <div>
+          <div class="brand-title">biên phiên dịch by QuyKy</div>
+          <div class="brand-subtitle">24 Bài học chuyên ngành • 1.144 Thuật ngữ • Phòng Lab AI &amp; Ô Mễ</div>
+        </div>
+      </div>
       
-      <div class="main-menu-wrapper">
-        <button class="main-menu-trigger" id="mainMenuTrigger" onclick="toggleMenuPopup(event)">
-          <span id="currentActiveTabLabel">✍️ Môn Biên Dịch</span>
-          <span class="arrow-icon">▾</span>
+      <div class="nav-actions-right">
+        <!-- Chuyển nhanh môn học 1-click -->
+        <div class="quick-subject-switcher">
+          <button type="button" class="quick-subject-btn active" id="quickBtnBiendich" onclick="switchSubject('biendich', '✍️ Môn Biên Dịch', this)">
+            ✍️ Biên Dịch (笔译)
+          </button>
+          <button type="button" class="quick-subject-btn" id="quickBtnPhiendich" onclick="switchSubject('phiendich', '🎙️ Môn Phiên Dịch', this)">
+            🎙️ Phiên Dịch (口译)
+          </button>
+        </div>
+
+        <!-- Nút tra cứu từ điển toàn giáo trình -->
+        <button type="button" class="utility-icon-btn" onclick="openDictionaryModal()" title="Tra cứu nhanh 1.144 thuật ngữ & mẫu câu (Phím tắt: Ctrl+K)">
+          🔍 Tra cứu
         </button>
 
-       <div class="menu-dropdown-box" id="menuDropdownBox">
-          <div class="menu-group-label">CÁC MÔN HỌC CHUYÊN NGÀNH</div>
-          
-          <!-- MÔN 1: BIÊN DỊCH -->
-          <div class="menu-nav-option active" onclick="switchSubject('biendich', '✍️ Môn Biên Dịch', this)">
-            <span class="icon">✍️</span>
-            <div class="info">
-              <span class="title">Biên Dịch (笔译)</span>
-              <span class="sub">Từ vựng, ngữ pháp, luyện viết & dịch văn bản</span>
-            </div>
-          </div>
+        <!-- Nút đổi giao diện Sáng / Tối -->
+        <button type="button" class="utility-icon-btn" id="themeToggleBtn" onclick="toggleDarkMode()" title="Đổi giao diện Sáng/Tối">
+          🌙 Tối
+        </button>
 
-          <!-- MÔN 2: PHIÊN DỊCH -->
-          <div class="menu-nav-option" onclick="switchSubject('phiendich', '🎙️ Môn Phiên Dịch', this)">
-            <span class="icon">🎙️</span>
-            <div class="info">
-              <span class="title">Phiên Dịch (口译)</span>
-              <span class="sub">Thuật ngữ, luyện nghe & cabin dịch nói AI</span>
+        <!-- Menu Dropdown truyền thống -->
+        <div class="main-menu-wrapper">
+          <button class="main-menu-trigger" id="mainMenuTrigger" onclick="toggleMenuPopup(event)">
+            <span id="currentActiveTabLabel">✍️ Môn Biên Dịch</span>
+            <span class="arrow-icon">▾</span>
+          </button>
+
+          <div class="menu-dropdown-box" id="menuDropdownBox">
+            <div class="menu-group-label">CÁC MÔN HỌC CHUYÊN NGÀNH</div>
+            
+            <!-- MÔN 1: BIÊN DỊCH -->
+            <div class="menu-nav-option active" id="menuOptBiendich" onclick="switchSubject('biendich', '✍️ Môn Biên Dịch', this)">
+              <span class="icon">✍️</span>
+              <div class="info">
+                <span class="title">Biên Dịch (笔译)</span>
+                <span class="sub">12 Bài • Từ vựng, ngữ pháp, luyện viết &amp; dịch văn bản</span>
+              </div>
+            </div>
+
+            <!-- MÔN 2: PHIÊN DỊCH -->
+            <div class="menu-nav-option" id="menuOptPhiendich" onclick="switchSubject('phiendich', '🎙️ Môn Phiên Dịch', this)">
+              <span class="icon">🎙️</span>
+              <div class="info">
+                <span class="title">Phiên Dịch (口译)</span>
+                <span class="sub">12 Bài • Thuật ngữ, luyện nghe &amp; cabin dịch nói AI</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-<!-- ================================================================= -->
-    <!-- MÔN 1: BIÊN DỊCH (GỒM: DỊCH BÀI KHÓA, DỊCH AI, LUYỆN VIẾT CHỮ) -->
+    <!-- ================================================================= -->
+    <!-- MÔN 1: BIÊN DỊCH (GỒM: DỊCH BÀI KHÓA, LUYỆN VIẾT CHỮ, FLASHCARD) -->
     <!-- ================================================================= -->
     <div id="tab-biendich" class="tab-content active">
       <!-- Thanh chuyển chức năng con môn Biên Dịch -->
       <div class="subject-subnav">
-        <button class="subnav-btn active" id="btnBiendichTrans" onclick="switchBiendichSubTab('trans')">📖 Luyện Dịch Văn Bản</button>
-        <button class="subnav-btn" id="btnBiendichWrite" onclick="switchBiendichSubTab('write')">🖌️ Luyện Viết Chữ Hán</button>
+        <div class="subnav-left-group">
+          <button class="subnav-btn active" id="btnBiendichTrans" onclick="switchBiendichSubTab('trans')">📖 Luyện Dịch Văn Bản</button>
+          <button class="subnav-btn" id="btnBiendichWrite" onclick="switchBiendichSubTab('write')">🖌️ Luyện Viết Chữ Hán</button>
+          <button class="subnav-btn" id="btnBiendichFlashcard" onclick="switchBiendichSubTab('flashcard')">🃏 Flashcard &amp; Trắc Nghiệm</button>
+        </div>
+        <div class="study-stats-badges">
+          <span class="stat-pill" id="globalMemorizedBadge">✅ Đã thuộc: 0 từ</span>
+          <span class="stat-pill" id="globalReviewBadge">📌 Cần ôn: 0 từ</span>
+        </div>
       </div>
 
       <!-- Phân hệ 1.1: Biên Dịch Văn Bản (Bài khóa + AI) -->
       <div id="biendichSubTrans">
         <div class="interpret-control-panel">
           <div class="control-group" style="width: 100%;">
-            <label class="group-label">1. Chọn bài học (Giáo trình Biên Dịch 1):</label>
+            <label class="group-label">
+              <span>1. Chọn bài học (Giáo trình Biên Dịch 1 - 12 bài):</span>
+              <span id="transLessonMetaCount" style="color: var(--primary); font-weight: 600;"></span>
+            </label>
             <div class="topic-chips-container" id="transTopicsContainer"></div>
           </div>
 
@@ -89,24 +128,57 @@
           </div>
         </div>
 
+        <!-- Mục tiêu bài học Biên Dịch -->
+        <div id="transObjectivesBanner" class="objectives-banner">
+          <strong>🎯 Mục tiêu bài học:</strong>
+          <span id="transObjectivesText">Đang tải mục tiêu bài học...</span>
+        </div>
+
         <div id="transVocabReferenceBox" class="vocab-ref-card" style="display: none;">
           <div class="vocab-ref-header">
-            <span style="font-weight: bold; font-size: 13px; color: #1e293b;">📌 Thuật ngữ & Mẫu câu trọng tâm:</span>
-            <button class="btn-clear-single" onclick="toggleVocabReference()">Ẩn / Hiện</button>
+            <span style="font-weight: bold; font-size: 13.5px;">📌 Thuật ngữ &amp; Mẫu câu trọng tâm (Bấm vào thẻ để nghe 🔊 &amp; chèn từ):</span>
+            <div class="vocab-header-actions">
+              <button type="button" class="btn-clear-single" id="btnToggleTransPinyin" onclick="toggleTransVocabPinyin()">🔤 Ẩn/Hiện Pinyin</button>
+              <button type="button" class="btn-clear-single" onclick="toggleVocabReference()">Ẩn / Hiện</button>
+            </div>
           </div>
           <div id="transVocabListContent" class="vocab-ref-body"></div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; margin-bottom: 6px;">
-          <span style="font-weight: bold; color: #475569; font-size: 14px;" id="transPromptTitle">Đoạn văn đề bài:</span>
-          <button id="btnRegenAIText" class="btn-clear-single" style="display: none;" onclick="requestAITranslationTask()">🔄 Đổi đề AI khác</button>
+        <div class="prompt-toolbar">
+          <span style="font-weight: bold; color: var(--text-secondary); font-size: 14px;" id="transPromptTitle">Đoạn văn đề bài:</span>
+          <div class="prompt-toolbar-actions">
+            <button type="button" class="btn-clear-single" onclick="speakCurrentTransPassage()">🔊 Nghe đọc đề bài</button>
+            <button type="button" class="btn-clear-single" id="btnHighlightTransTerms" onclick="toggleHighlightTransPassage()">🖍️ Highlight thuật ngữ</button>
+            <button type="button" class="btn-clear-single" onclick="copyCurrentTransPassage()">📋 Sao chép đề</button>
+            <button id="btnRegenAIText" class="btn-clear-single" style="display: none;" onclick="requestAITranslationTask()">🔄 Đổi đề AI khác</button>
+          </div>
         </div>
         <div id="aiPromptDisplay" class="ai-prompt-box">Đang tải dữ liệu bài khóa...</div>
 
-        <textarea id="aiUserInput" class="ai-textarea" placeholder="Gõ bài dịch văn bản của bạn vào đây..."></textarea>
+        <!-- Thanh hỗ trợ gõ dấu câu tiếng Trung & Theo dõi tỷ lệ dùng thuật ngữ -->
+        <div class="editor-helper-bar">
+          <div class="punct-bar">
+            <span>Chèn dấu câu:</span>
+            <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '，')">，</button>
+            <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '。')">。</button>
+            <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '、')">、</button>
+            <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '；')">；</button>
+            <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '：')">：</button>
+            <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '“”')">“”</button>
+            <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '《》')">《》</button>
+          </div>
+          <div>
+            <span id="transTermCoverageText" style="font-weight: 600; color: var(--primary);">Thuật ngữ đã dùng: 0/0</span>
+            <span style="margin-left: 10px;" id="transCharCountText">0 ký tự</span>
+          </div>
+        </div>
+
+        <textarea id="aiUserInput" class="ai-textarea" placeholder="Gõ bài dịch văn bản của bạn vào đây (Bản nháp được tự động lưu)..." oninput="onTransInputChanged()"></textarea>
 
         <div class="button-group">
-          <button class="main-btn btn-clear-all" onclick="document.getElementById('aiUserInput').value=''">Xóa bài làm</button>
+          <button class="main-btn btn-clear-all" onclick="clearTranslationDraft()">Xóa bài làm</button>
+          <button type="button" class="main-btn btn-clear-all" onclick="runLocalTransCheck()">⚡ Kiểm tra thuật ngữ tức thì</button>
           <button class="main-btn btn-check" id="btnSubmitAI" onclick="submitTranslationToAI()">⚖️ Gửi AI Thẩm Định Bản Dịch</button>
         </div>
         <div id="aiEvaluationResult" class="ai-result-box"></div>
@@ -115,6 +187,15 @@
       <!-- Phân hệ 1.2: Luyện Viết Ô Mễ -->
       <div id="biendichSubWrite" style="display: none;">
         <div class="filter-panel">
+          <div class="filter-item">
+            <label>Nguồn từ vựng:</label>
+            <select id="sourceCurriculumFilter" onchange="onChangeWriteCurriculumSource()">
+              <option value="bd">Môn Biên Dịch (608 từ)</option>
+              <option value="pd">Môn Phiên Dịch (536 từ)</option>
+              <option value="all">Tất cả 2 môn (1.144 từ)</option>
+              <option value="review_only">🔥 Chỉ từ Cần ôn</option>
+            </select>
+          </div>
           <div class="filter-item">
             <label>Chọn bài:</label>
             <select id="lessonFilter" onchange="applyFilters()"><option value="all">Tất cả các bài</option></select>
@@ -132,14 +213,25 @@
               <option value="all">Tất cả</option>
               <option value="10">10 từ</option>
               <option value="20">20 từ</option>
+              <option value="50">50 từ</option>
             </select>
           </div>
         </div>
 
-        <div style="font-size: 22px; font-weight: bold; margin-bottom: 8px;" id="prompt-vn">Đang tải dữ liệu...</div>
-        <div style="margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text-muted); margin-bottom: 6px;">
+          <span id="writeProgressCounter">Từ 1 / 1</span>
+          <span>Mẹo: Bấm "Chữ mờ" dưới mỗi ô nếu quên nét chữ</span>
+        </div>
+        <div class="write-progress-track">
+          <div class="write-progress-fill" id="writeProgressBarFill"></div>
+        </div>
+
+        <div style="font-size: 22px; font-weight: bold; margin-bottom: 10px;" id="prompt-vn">Đang tải dữ liệu...</div>
+        <div style="margin-bottom: 16px; display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn-clear-single" onclick="speakCurrentWriteWord()">🔊 Nghe phát âm</button>
           <button class="btn-clear-single" onclick="togglePinyin()">👁 Gợi ý Pinyin</button>
-          <span id="prompt-pinyin" style="color: #0284c7; font-weight: bold; display: none; margin-left: 8px;"></span>
+          <button type="button" class="btn-clear-single" onclick="toggleAllGhostChars()">✍️ Hiện/Ẩn chữ mờ mẫu</button>
+          <span id="prompt-pinyin" style="color: #0284c7; font-weight: bold; display: none; margin-left: 6px; font-size: 16px;"></span>
         </div>
         <div class="boxes-container" id="boxesContainer"></div>
 
@@ -152,12 +244,90 @@
 
         <div class="lists-container">
           <div class="list-box correct-box">
-            <div style="font-weight:bold;color:var(--success);margin-bottom:8px;">Đã thuộc: <span id="correct-count">0</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-weight:bold;color:var(--success);">Đã thuộc: <span id="correct-count">0</span></span>
+              <button type="button" class="btn-clear-single" onclick="resetSavedVocabStats()">Đặt lại</button>
+            </div>
             <div id="correct-list"></div>
           </div>
           <div class="list-box wrong-box">
-            <div style="font-weight:bold;color:var(--error);margin-bottom:8px;">Cần ôn: <span id="wrong-count">0</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-weight:bold;color:var(--error);">Cần ôn: <span id="wrong-count">0</span></span>
+              <button type="button" class="btn-clear-single" onclick="practiceNeedReviewWords()">Ôn ngay</button>
+            </div>
             <div id="wrong-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phân hệ 1.3: Flashcard 3D & Trắc Nghiệm Từ Vựng -->
+      <div id="biendichSubFlashcard" style="display: none;">
+        <div class="filter-panel">
+          <div class="filter-item">
+            <label>Nguồn giáo trình:</label>
+            <select id="fcSourceFilter" onchange="initFlashcardDeck()">
+              <option value="all">Cả 2 môn (1.144 từ)</option>
+              <option value="bd">Môn Biên Dịch (608 từ)</option>
+              <option value="pd">Môn Phiên Dịch (536 từ)</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>Chọn bài:</label>
+            <select id="fcLessonFilter" onchange="initFlashcardDeck()">
+              <option value="all">Tất cả các bài</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>Chế độ ôn:</label>
+            <select id="fcModeSelect" onchange="switchFlashcardMode()">
+              <option value="flip">🃏 Lật thẻ Flashcard 3D</option>
+              <option value="quiz">⚡ Trắc nghiệm phản xạ 4 đáp án</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Khung lật thẻ Flashcard -->
+        <div id="fcFlipContainer">
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">
+            <span id="fcCounterText">Thẻ 1 / 100</span> • Bấm vào thẻ để lật mặt sau
+          </div>
+          <div class="flashcard-stage" onclick="flipCurrentFlashcard()">
+            <div class="flashcard-inner" id="flashcardInner">
+              <div class="flashcard-face flashcard-front">
+                <span id="fcFrontLessonTag" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;"></span>
+                <div id="fcFrontHanzi" style="font-size: 38px; font-weight: 800; color: var(--primary); margin-bottom: 10px;"></div>
+                <div style="font-size: 13px; color: var(--text-muted);">👆 Bấm để xem Pinyin &amp; Nghĩa tiếng Việt</div>
+              </div>
+              <div class="flashcard-face flashcard-back">
+                <div id="fcBackHanzi" style="font-size: 28px; font-weight: 800; color: var(--primary);"></div>
+                <div id="fcBackPinyin" style="font-size: 18px; color: var(--accent); font-weight: 600; margin: 8px 0;"></div>
+                <div id="fcBackVn" style="font-size: 20px; font-weight: 700; color: var(--text-main);"></div>
+              </div>
+            </div>
+          </div>
+          <div class="button-group" style="max-width: 520px; margin: 12px auto 0;">
+            <button type="button" class="main-btn btn-clear-all" onclick="prevFlashcard()">⬅ Trước</button>
+            <button type="button" class="main-btn btn-clear-all" onclick="speakCurrentFlashcard()">🔊 Phát âm</button>
+            <button type="button" class="main-btn btn-check" onclick="markFlashcardKnown()">✅ Đã thuộc &amp; Tiếp ➔</button>
+          </div>
+        </div>
+
+        <!-- Khung Trắc nghiệm 4 đáp án -->
+        <div id="fcQuizContainer" style="display: none;">
+          <div style="display:flex; justify-content:center; gap:14px; margin-bottom:10px; font-size:14px; font-weight:700;">
+            <span style="color:var(--success);">Điểm đúng: <span id="quizScoreCorrect">0</span></span>
+            <span style="color:var(--warning);">🔥 Chuỗi đúng: <span id="quizStreakCount">0</span></span>
+          </div>
+          <div class="ai-prompt-box" style="max-width: 620px; margin: 0 auto; text-align: center;">
+            <div id="quizQuestionTag" style="font-size: 12px; color: var(--text-muted);"></div>
+            <div id="quizQuestionHanzi" style="font-size: 34px; font-weight: 800; color: var(--primary); margin: 6px 0;"></div>
+            <div id="quizQuestionPinyin" style="font-size: 15px; color: var(--accent);"></div>
+            <button type="button" class="btn-clear-single" style="margin-top: 8px;" onclick="speakQuizWord()">🔊 Nghe phát âm</button>
+          </div>
+          <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+          <div id="quizFeedbackMsg" style="font-weight: 700; min-height: 24px; margin-top: 8px;"></div>
+          <div style="max-width: 240px; margin: 10px auto 0;">
+            <button type="button" class="main-btn btn-next" onclick="nextQuizQuestion()">Câu tiếp theo ➔</button>
           </div>
         </div>
       </div>
@@ -169,15 +339,20 @@
     <div id="tab-phiendich" class="tab-content">
       <!-- Thanh chuyển chức năng con môn Phiên Dịch -->
       <div class="subject-subnav">
-        <button class="subnav-btn active" id="btnPhiendichCabin" onclick="switchPhiendichSubTab('cabin')">🎙️ Phòng Cabin Dịch Nói</button>
-        <button class="subnav-btn" id="btnPhiendichListen" onclick="switchPhiendichSubTab('listen')">🎧 Luyện Nghe Phản Xạ</button>
+        <div class="subnav-left-group">
+          <button class="subnav-btn active" id="btnPhiendichCabin" onclick="switchPhiendichSubTab('cabin')">🎙️ Phòng Cabin Dịch Nói</button>
+          <button class="subnav-btn" id="btnPhiendichListen" onclick="switchPhiendichSubTab('listen')">🎧 Luyện Nghe Phản Xạ</button>
+        </div>
+        <div class="study-stats-badges">
+          <span class="stat-pill" id="listenStreakTopBadge">🔥 Chuỗi nghe đúng: 0</span>
+        </div>
       </div>
 
       <!-- Phân hệ 2.1: Cabin Phiên Dịch -->
       <div id="phiendichSubCabin">
         <div class="interpret-control-panel">
           <div class="control-group" style="width: 100%;">
-            <label class="group-label">1. Chọn bài học (Giáo trình Phiên Dịch 1):</label>
+            <label class="group-label">1. Chọn bài học (Giáo trình Phiên Dịch 1 - 12 bài):</label>
             <div class="topic-chips-container" id="interpretTopicsContainer"></div>
           </div>
 
@@ -199,6 +374,7 @@
             <div class="pill-group" id="ratePillGroup">
               <button class="pill-btn" data-val="0.8" onclick="selectInterpretRate(this)">0.8x</button>
               <button class="pill-btn active" data-val="1.0" onclick="selectInterpretRate(this)">1.0x</button>
+              <button class="pill-btn" data-val="1.2" onclick="selectInterpretRate(this)">1.2x</button>
             </div>
           </div>
 
@@ -216,10 +392,19 @@
           </div>
         </div>
 
+        <!-- Mục tiêu bài học Phiên Dịch -->
+        <div id="interObjectivesBanner" class="objectives-banner">
+          <strong>🎯 Mục tiêu bài học:</strong>
+          <span id="interObjectivesText">Đang tải mục tiêu bài học...</span>
+        </div>
+
         <div id="interpretVocabRefBox" class="vocab-ref-card" style="display: none;">
           <div class="vocab-ref-header">
-            <span style="font-weight: bold; font-size: 13px; color: #1e293b;">📌 Thuật ngữ & Mẫu câu trọng tâm:</span>
-            <button class="btn-clear-single" onclick="toggleInterpretVocabRef()">Ẩn / Hiện</button>
+            <span style="font-weight: bold; font-size: 13.5px;">📌 Thuật ngữ &amp; Mẫu câu trọng tâm (Bấm để nghe phát âm 🔊):</span>
+            <div class="vocab-header-actions">
+              <button type="button" class="btn-clear-single" onclick="toggleInterVocabPinyin()">🔤 Ẩn/Hiện Pinyin</button>
+              <button class="btn-clear-single" onclick="toggleInterpretVocabRef()">Ẩn / Hiện</button>
+            </div>
           </div>
           <div id="interpretVocabRefContent" class="vocab-ref-body"></div>
         </div>
@@ -227,8 +412,30 @@
         <div class="speaker-card" style="margin-top: 14px;">
           <div class="speaker-title">
             <span id="speakerRoleTag">🎙️ BÀI KHÓA PHÁT BIỂU</span>
-            <button class="btn-repeat-speech" id="btnPlayAudio" onclick="playSpeakerAudio()">▶️ Phát âm thanh</button>
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <button type="button" class="audio-skip-btn" onclick="toggleSentenceDrillMode()" id="btnToggleSentenceDrill">📑 Tách từng câu</button>
+              <button class="btn-repeat-speech" id="btnPlayAudio" onclick="playSpeakerAudio()">▶️ Phát âm thanh</button>
+            </div>
           </div>
+
+          <!-- Thanh điều khiển tua âm thanh MP3/TTS -->
+          <div class="audio-studio-controls">
+            <button type="button" class="audio-skip-btn" onclick="seekCabinAudio(-5)">⏪ -5s</button>
+            <input type="range" id="cabinAudioSlider" class="audio-progress-slider" min="0" max="100" value="0" oninput="onSeekCabinSlider(this.value)">
+            <button type="button" class="audio-skip-btn" onclick="seekCabinAudio(5)">+5s ⏩</button>
+            <span id="cabinAudioTime" class="audio-time-label">00:00 / 00:00</span>
+          </div>
+
+          <!-- Thanh luyện nghe từng câu (ẩn mặc định, bật khi bấm Tách từng câu) -->
+          <div id="sentenceDrillBar" class="sentence-drill-bar" style="display: none;">
+            <span id="sentenceDrillCounter">Câu 1 / 1</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="audio-skip-btn" onclick="stepCabinSentence(-1)">⬅ Câu trước</button>
+              <button type="button" class="audio-skip-btn" onclick="playCurrentCabinSentence()">🔊 Nghe câu này</button>
+              <button type="button" class="audio-skip-btn" onclick="stepCabinSentence(1)">Câu tiếp ➔</button>
+            </div>
+          </div>
+
           <div class="blind-speech-box">
             <div class="audio-wave-placeholder" id="speechBlindNotice">
               <span class="blind-icon">🔒</span>
@@ -241,22 +448,50 @@
           </div>
         </div>
 
-        <div class="interpreter-desk">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <label style="font-size: 13px; font-weight: bold; color: #475569;" id="interpretDeskTitle">Bản dịch của bạn:</label>
-            <span id="recordingStatusTag" class="status-tag idle">Sẵn sàng</span>
+        <!-- Bàn Phiên Dịch & Sổ Tay Tốc Ký 2 Cột -->
+        <div class="cabin-workspace-grid">
+          <div class="interpreter-desk">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+              <label style="font-size: 13.5px; font-weight: bold; color: var(--text-secondary);" id="interpretDeskTitle">Bản dịch của bạn:</label>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <span id="interTermCoverageBadge" style="font-size: 11.5px; font-weight: 600; color: var(--primary);">Thuật ngữ: 0/0</span>
+                <span id="recordingStatusTag" class="status-tag idle">Sẵn sàng</span>
+              </div>
+            </div>
+            <div class="voice-controls-row">
+              <button class="mic-btn" id="btnToggleRecord" onclick="toggleSpeechRecording()">
+                <span class="mic-icon">🎤</span>
+                <span id="micBtnText">BẤM VÀO ĐỂ DỊCH (NÓI)</span>
+              </button>
+              <span class="cabin-timer-badge" id="cabinTimerDisplay" title="Thời gian thực hành phiên dịch">⏱️ 00:00</span>
+              <button type="button" class="btn-clear-single" onclick="resetCabinTimer()">Đặt lại giờ</button>
+            </div>
+            <textarea id="interpretUserTranscript" class="transcript-textarea" placeholder="Nghe và gõ bản dịch vào đây (hoặc bấm nút ĐỎ dùng Micro)..." oninput="onInterTranscriptChanged()"></textarea>
           </div>
-          <div class="voice-controls-row">
-            <button class="mic-btn" id="btnToggleRecord" onclick="toggleSpeechRecording()">
-              <span class="mic-icon">🎤</span>
-              <span id="micBtnText">BẤM VÀO ĐỂ DỊCH (NÓI)</span>
-            </button>
+
+          <!-- Sổ tay tốc ký cho Phiên dịch viên -->
+          <div class="shorthand-notepad">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 13px; color: var(--text-secondary);">📝 Sổ Tay Tốc Ký (Note-taking)</strong>
+              <button type="button" class="btn-clear-single" onclick="clearShorthandPad()">Xóa nháp</button>
+            </div>
+            <div class="shorthand-symbols-bar">
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' ➔ ')">➔</button>
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' ↑ ')">↑</button>
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' ↓ ')">↓</button>
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' ∴ ')">∴</button>
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' ∵ ')">∵</button>
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' ≠ ')">≠</button>
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' 🤝 ')">🤝</button>
+              <button type="button" class="sym-btn" onclick="insertAtCursor('cabinShorthandInput', ' 📈 ')">📈</button>
+            </div>
+            <textarea id="cabinShorthandInput" class="shorthand-textarea" placeholder="Ghi nhanh con số, tên riêng, ký hiệu tốc ký (↑ tăng, ↓ giảm, ∴ do đó...) trong lúc nghe diễn giả nói..."></textarea>
           </div>
-          <textarea id="interpretUserTranscript" class="transcript-textarea" placeholder="Nghe và gõ bản dịch vào đây (hoặc dùng Mic)..."></textarea>
         </div>
 
         <div class="button-group">
-          <button class="main-btn btn-clear-all" onclick="document.getElementById('interpretUserTranscript').value=''">Xóa câu dịch</button>
+          <button class="main-btn btn-clear-all" onclick="clearInterpretTranscript()">Xóa câu dịch</button>
+          <button type="button" class="main-btn btn-clear-all" onclick="runLocalInterCheck()">⚡ Kiểm tra thuật ngữ tức thì</button>
           <button class="main-btn btn-check" id="btnSubmitInterpret" onclick="submitInterpretationToAI()">⚖️ Gửi AI Thẩm Định Phiên Dịch</button>
         </div>
         <div id="interpretAIResult" class="interpret-eval-box"></div>
@@ -265,6 +500,14 @@
       <!-- Phân hệ 2.2: Luyện Tai Nghe Phát Âm -->
       <div id="phiendichSubListen" style="display: none;">
         <div class="filter-panel">
+          <div class="filter-item">
+            <label>Nguồn giáo trình:</label>
+            <select id="listenSourceFilter" onchange="onChangeListenSource()">
+              <option value="all">Cả 2 môn (1.144 từ)</option>
+              <option value="pd" selected>Môn Phiên Dịch (536 từ)</option>
+              <option value="bd">Môn Biên Dịch (608 từ)</option>
+            </select>
+          </div>
           <div class="filter-item">
             <label>Chọn bài:</label>
             <select id="listenLessonFilter" onchange="setupListenQuestion()"><option value="all">Tất cả các bài</option></select>
@@ -280,8 +523,13 @@
 
         <div class="listen-box">
           <button class="audio-btn" onclick="playCurrentListenWord()">🔊 Phát âm thanh</button>
-          <p style="color: #64748b; font-size: 14px; margin-top: 10px;">Lắng nghe và nhập lại Chữ Hán hoặc Pinyin:</p>
-          <input type="text" id="listenInput" class="listen-input" placeholder="Gõ chữ Hán hoặc Pinyin..." onkeydown="if(event.key==='Enter') checkListenAnswer()">
+          <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 12px;">
+            Lắng nghe và nhập <strong>Chữ Hán</strong>, <strong>Pinyin</strong> (có dấu hoặc không dấu) hoặc <strong>Nghĩa tiếng Việt</strong>:
+          </p>
+          <input type="text" id="listenInput" class="listen-input" placeholder="Gõ chữ Hán, Pinyin (vd: kaimushi) hoặc nghĩa Việt..." onkeydown="if(event.key==='Enter') checkListenAnswer()">
+          <div style="margin-top: 10px;">
+            <button type="button" class="btn-clear-single" onclick="hintListenWord()">💡 Gợi ý ký tự đầu</button>
+          </div>
           <div id="listenAnswerBox" class="listen-answer"></div>
         </div>
 
@@ -296,7 +544,27 @@
 
   </div>
 
-  <script src="script.js?v=7.0"></script>
-  <script src="interpret.js?v=4.0"></script>
+  <!-- MODAL TRA CỨU TỪ ĐIỂN TOÀN GIÁO TRÌNH (1.144 TỪ & 429 MẪU CÂU) -->
+  <div class="dict-modal-overlay" id="dictModalOverlay" onclick="if(event.target===this) closeDictionaryModal()">
+    <div class="dict-modal-card">
+      <div class="dict-modal-header">
+        <div>
+          <strong style="font-size: 16px;">🔍 Từ Điển Học Phần Biên - Phiên Dịch</strong>
+          <div style="font-size: 12px; color: var(--text-muted);">Tra cứu tức thì 1.144 thuật ngữ &amp; 429 cấu trúc câu trong 24 bài học</div>
+        </div>
+        <button type="button" class="btn-clear-single" onclick="closeDictionaryModal()">✕ Đóng (Esc)</button>
+      </div>
+      <div style="padding: 12px 20px; border-bottom: 1px solid var(--border-subtle);">
+        <input type="text" id="dictSearchInput" class="dict-search-input" placeholder="Nhập chữ Hán, Pinyin (không dấu/có dấu) hoặc nghĩa tiếng Việt..." oninput="renderDictionarySearch(this.value)">
+      </div>
+      <div class="dict-results-list" id="dictResultsList"></div>
+    </div>
+  </div>
+
+  <!-- VÙNG HIỂN THỊ THÔNG BÁO TOAST HIỆN ĐẠI -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js?v=8.0"></script>
+  <script src="interpret.js?v=5.0"></script>
 </body>
 </html>
