@@ -45,7 +45,7 @@
         </div>
 
         <!-- Nút tra cứu từ điển toàn giáo trình -->
-        <button type="button" class="utility-icon-btn" onclick="openDictionaryModal()" title="Tra cứu nhanh 1.144 thuật ngữ & mẫu câu (Phím tắt: Ctrl+K)">
+        <button type="button" class="utility-icon-btn" onclick="openDictionaryModal()" title="Tra cứu từ vựng & mẫu câu theo 2 học phần Biên - Phiên dịch từ Bài 1 đến Bài 12 (Ctrl+K)">
           🔍 Tra cứu
         </button>
 
@@ -99,7 +99,7 @@
         </div>
         <div class="study-stats-badges">
           <span class="stat-pill" id="globalMemorizedBadge">✅ Đã thuộc: 0 từ</span>
-          <span class="stat-pill" id="globalReviewBadge">📌 Cần ôn: 0 từ</span>
+          <span class="stat-pill" id="globalReviewBadge">📌 Chưa nhớ: 0 từ</span>
         </div>
       </div>
 
@@ -109,7 +109,7 @@
           <div class="control-group" style="width: 100%;">
             <label class="group-label">
               <span>1. Chọn bài học (Giáo trình Biên Dịch 1 - 12 bài):</span>
-              <span id="transLessonMetaCount" style="color: var(--primary); font-weight: 600;"></span>
+              <span id="transLessonMetaCount" style="color: var(--primary-text); font-weight: 700;"></span>
             </label>
             <div class="topic-chips-container" id="transTopicsContainer"></div>
           </div>
@@ -136,8 +136,9 @@
 
         <div id="transVocabReferenceBox" class="vocab-ref-card" style="display: none;">
           <div class="vocab-ref-header">
-            <span style="font-weight: bold; font-size: 13.5px;">📌 Thuật ngữ &amp; Mẫu câu trọng tâm (Bấm vào thẻ để nghe 🔊 &amp; chèn từ):</span>
+            <span style="font-weight: bold; font-size: 13.5px;">📌 Thuật ngữ &amp; Mẫu câu trọng tâm (Bấm vào thẻ để nghe 🔊):</span>
             <div class="vocab-header-actions">
+              <button type="button" class="btn-clear-single btn-stop-audio" onclick="stopTransAudio()">⏹️ Dừng đọc</button>
               <button type="button" class="btn-clear-single" id="btnToggleTransPinyin" onclick="toggleTransVocabPinyin()">🔤 Ẩn/Hiện Pinyin</button>
               <button type="button" class="btn-clear-single" onclick="toggleVocabReference()">Ẩn / Hiện</button>
             </div>
@@ -146,9 +147,10 @@
         </div>
 
         <div class="prompt-toolbar">
-          <span style="font-weight: bold; color: var(--text-secondary); font-size: 14px;" id="transPromptTitle">Đoạn văn đề bài:</span>
+          <span style="font-weight: bold; color: var(--text-main); font-size: 14px;" id="transPromptTitle">Đoạn văn đề bài:</span>
           <div class="prompt-toolbar-actions">
-            <button type="button" class="btn-clear-single" onclick="speakCurrentTransPassage()">🔊 Nghe đọc đề bài</button>
+            <button type="button" class="btn-clear-single" id="btnSpeakTransPassage" onclick="speakCurrentTransPassage()">🔊 Nghe đọc đề bài</button>
+            <button type="button" class="btn-clear-single btn-stop-audio" id="btnStopTransAudio" onclick="stopTransAudio()">⏹️ Dừng âm thanh</button>
             <button type="button" class="btn-clear-single" id="btnHighlightTransTerms" onclick="toggleHighlightTransPassage()">🖍️ Highlight thuật ngữ</button>
             <button type="button" class="btn-clear-single" onclick="copyCurrentTransPassage()">📋 Sao chép đề</button>
             <button id="btnRegenAIText" class="btn-clear-single" style="display: none;" onclick="requestAITranslationTask()">🔄 Đổi đề AI khác</button>
@@ -169,7 +171,7 @@
             <button type="button" class="punct-btn" onclick="insertAtCursor('aiUserInput', '《》')">《》</button>
           </div>
           <div>
-            <span id="transTermCoverageText" style="font-weight: 600; color: var(--primary);">Thuật ngữ đã dùng: 0/0</span>
+            <span id="transTermCoverageText" style="font-weight: 700; color: var(--primary-text);">Thuật ngữ đã dùng: 0/0</span>
             <span style="margin-left: 10px;" id="transCharCountText">0 ký tự</span>
           </div>
         </div>
@@ -193,7 +195,7 @@
               <option value="bd">Môn Biên Dịch (608 từ)</option>
               <option value="pd">Môn Phiên Dịch (536 từ)</option>
               <option value="all">Tất cả 2 môn (1.144 từ)</option>
-              <option value="review_only">🔥 Chỉ từ Cần ôn</option>
+              <option value="review_only">📌 Chỉ từ Chưa nhớ (Cần ôn)</option>
             </select>
           </div>
           <div class="filter-item">
@@ -218,20 +220,21 @@
           </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text-muted); margin-bottom: 6px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 6px;">
           <span id="writeProgressCounter">Từ 1 / 1</span>
-          <span>Mẹo: Bấm "Chữ mờ" dưới mỗi ô nếu quên nét chữ</span>
+          <span>Mẹo: Bấm "👁 Mẫu" dưới mỗi ô nếu quên nét chữ</span>
         </div>
         <div class="write-progress-track">
           <div class="write-progress-fill" id="writeProgressBarFill"></div>
         </div>
 
-        <div style="font-size: 22px; font-weight: bold; margin-bottom: 10px;" id="prompt-vn">Đang tải dữ liệu...</div>
+        <div style="font-size: 22px; font-weight: bold; margin-bottom: 10px; color: var(--text-main);" id="prompt-vn">Đang tải dữ liệu...</div>
         <div style="margin-bottom: 16px; display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap;">
           <button type="button" class="btn-clear-single" onclick="speakCurrentWriteWord()">🔊 Nghe phát âm</button>
+          <button type="button" class="btn-clear-single btn-stop-audio" onclick="stopTransAudio()">⏹️ Dừng</button>
           <button class="btn-clear-single" onclick="togglePinyin()">👁 Gợi ý Pinyin</button>
           <button type="button" class="btn-clear-single" onclick="toggleAllGhostChars()">✍️ Hiện/Ẩn chữ mờ mẫu</button>
-          <span id="prompt-pinyin" style="color: #0284c7; font-weight: bold; display: none; margin-left: 6px; font-size: 16px;"></span>
+          <span id="prompt-pinyin" style="color: var(--pinyin-color); font-weight: bold; display: none; margin-left: 6px; font-size: 16px;"></span>
         </div>
         <div class="boxes-container" id="boxesContainer"></div>
 
@@ -245,14 +248,14 @@
         <div class="lists-container">
           <div class="list-box correct-box">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <span style="font-weight:bold;color:var(--success);">Đã thuộc: <span id="correct-count">0</span></span>
+              <span style="font-weight:bold;color:var(--success-text);">Đã thuộc: <span id="correct-count">0</span></span>
               <button type="button" class="btn-clear-single" onclick="resetSavedVocabStats()">Đặt lại</button>
             </div>
             <div id="correct-list"></div>
           </div>
           <div class="list-box wrong-box">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <span style="font-weight:bold;color:var(--error);">Cần ôn: <span id="wrong-count">0</span></span>
+              <span style="font-weight:bold;color:var(--error-text);">Chưa nhớ (Cần ôn): <span id="wrong-count">0</span></span>
               <button type="button" class="btn-clear-single" onclick="practiceNeedReviewWords()">Ôn ngay</button>
             </div>
             <div id="wrong-list"></div>
@@ -269,6 +272,7 @@
               <option value="all">Cả 2 môn (1.144 từ)</option>
               <option value="bd">Môn Biên Dịch (608 từ)</option>
               <option value="pd">Môn Phiên Dịch (536 từ)</option>
+              <option value="review_only">📌 Chỉ từ Chưa nhớ (Cần ôn)</option>
             </select>
           </div>
           <div class="filter-item">
@@ -288,26 +292,28 @@
 
         <!-- Khung lật thẻ Flashcard -->
         <div id="fcFlipContainer">
-          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">
+          <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">
             <span id="fcCounterText">Thẻ 1 / 100</span> • Bấm vào thẻ để lật mặt sau
           </div>
           <div class="flashcard-stage" onclick="flipCurrentFlashcard()">
             <div class="flashcard-inner" id="flashcardInner">
               <div class="flashcard-face flashcard-front">
-                <span id="fcFrontLessonTag" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;"></span>
-                <div id="fcFrontHanzi" style="font-size: 38px; font-weight: 800; color: var(--primary); margin-bottom: 10px;"></div>
-                <div style="font-size: 13px; color: var(--text-muted);">👆 Bấm để xem Pinyin &amp; Nghĩa tiếng Việt</div>
+                <span class="fc-status-tag" id="fcStatusBadge" style="display: none;"></span>
+                <span id="fcFrontLessonTag" style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600;"></span>
+                <div id="fcFrontHanzi" style="font-size: 40px; font-weight: 800; color: var(--hanzi-color); margin-bottom: 10px;"></div>
+                <div style="font-size: 13px; color: var(--text-secondary);">👆 Bấm để xem Pinyin &amp; Nghĩa tiếng Việt</div>
               </div>
               <div class="flashcard-face flashcard-back">
-                <div id="fcBackHanzi" style="font-size: 28px; font-weight: 800; color: var(--primary);"></div>
-                <div id="fcBackPinyin" style="font-size: 18px; color: var(--accent); font-weight: 600; margin: 8px 0;"></div>
+                <div id="fcBackHanzi" style="font-size: 30px; font-weight: 800; color: var(--hanzi-color);"></div>
+                <div id="fcBackPinyin" style="font-size: 18px; color: var(--pinyin-color); font-weight: 700; margin: 8px 0;"></div>
                 <div id="fcBackVn" style="font-size: 20px; font-weight: 700; color: var(--text-main);"></div>
               </div>
             </div>
           </div>
-          <div class="button-group" style="max-width: 520px; margin: 12px auto 0;">
+          <div class="button-group" style="max-width: 640px; margin: 12px auto 0;">
             <button type="button" class="main-btn btn-clear-all" onclick="prevFlashcard()">⬅ Trước</button>
             <button type="button" class="main-btn btn-clear-all" onclick="speakCurrentFlashcard()">🔊 Phát âm</button>
+            <button type="button" class="main-btn btn-warn" onclick="markFlashcardUnknown()">📌 Chưa nhớ</button>
             <button type="button" class="main-btn btn-check" onclick="markFlashcardKnown()">✅ Đã thuộc &amp; Tiếp ➔</button>
           </div>
         </div>
@@ -315,13 +321,13 @@
         <!-- Khung Trắc nghiệm 4 đáp án -->
         <div id="fcQuizContainer" style="display: none;">
           <div style="display:flex; justify-content:center; gap:14px; margin-bottom:10px; font-size:14px; font-weight:700;">
-            <span style="color:var(--success);">Điểm đúng: <span id="quizScoreCorrect">0</span></span>
-            <span style="color:var(--warning);">🔥 Chuỗi đúng: <span id="quizStreakCount">0</span></span>
+            <span style="color:var(--success-text);">Điểm đúng: <span id="quizScoreCorrect">0</span></span>
+            <span style="color:var(--warning-text);">🔥 Chuỗi đúng: <span id="quizStreakCount">0</span></span>
           </div>
           <div class="ai-prompt-box" style="max-width: 620px; margin: 0 auto; text-align: center;">
-            <div id="quizQuestionTag" style="font-size: 12px; color: var(--text-muted);"></div>
-            <div id="quizQuestionHanzi" style="font-size: 34px; font-weight: 800; color: var(--primary); margin: 6px 0;"></div>
-            <div id="quizQuestionPinyin" style="font-size: 15px; color: var(--accent);"></div>
+            <div id="quizQuestionTag" style="font-size: 12.5px; color: var(--text-muted);"></div>
+            <div id="quizQuestionHanzi" style="font-size: 36px; font-weight: 800; color: var(--hanzi-color); margin: 6px 0;"></div>
+            <div id="quizQuestionPinyin" style="font-size: 15.5px; color: var(--pinyin-color); font-weight: 600;"></div>
             <button type="button" class="btn-clear-single" style="margin-top: 8px;" onclick="speakQuizWord()">🔊 Nghe phát âm</button>
           </div>
           <div class="quiz-options-grid" id="quizOptionsGrid"></div>
@@ -379,12 +385,17 @@
           </div>
 
           <div class="control-group" style="margin-top: 6px;" id="voiceControlGroup">
-            <label class="group-label">Giọng đọc AI (TTS):</label>
-            <select id="selectVoiceType" class="pill-select">
-              <option value="doubao_yangguang">Giọng Nam (Dương Quang - Doubao)</option>
-              <option value="doubao_taozi">Giọng Nữ (Đào Tử - Doubao)</option>
-              <option value="browser">Giọng máy trình duyệt (Web Speech)</option>
-            </select>
+            <label class="group-label">Giọng đọc thuần Tiếng Trung (Native Chinese TTS):</label>
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+              <select id="selectVoiceType" class="pill-select">
+                <option value="zh_cn_auto">🇨🇳 Phổ thông chuẩn Bắc Kinh (普通话 zh-CN - Tự động tối ưu)</option>
+                <option value="zh_cn_female">🇨🇳 Giọng Nữ Phổ thông (普通话女声 - Xiaoxiao / Tingting)</option>
+                <option value="zh_cn_male">🇨🇳 Giọng Nam Phát thanh viên (普通话男声 - Yunxi / Yunyang)</option>
+                <option value="zh_tw">🇹🇼 Quốc ngữ Đài Loan (国语 zh-TW - HsiaoChen / Meijia)</option>
+                <option value="zh_hk">🇭🇰 Tiếng Quảng Đông / HK (粤语 zh-HK - HiuMaan / Sinji)</option>
+              </select>
+              <button type="button" class="btn-clear-single" onclick="previewSelectedChineseVoice()">🔊 Nghe thử giọng</button>
+            </div>
           </div>
 
           <div style="width: 100%; margin-top: 8px; display: none;" id="btnInterpretRegenContainer">
@@ -402,6 +413,7 @@
           <div class="vocab-ref-header">
             <span style="font-weight: bold; font-size: 13.5px;">📌 Thuật ngữ &amp; Mẫu câu trọng tâm (Bấm để nghe phát âm 🔊):</span>
             <div class="vocab-header-actions">
+              <button type="button" class="btn-clear-single btn-stop-audio" onclick="stopAllAudio()">⏹️ Dừng đọc</button>
               <button type="button" class="btn-clear-single" onclick="toggleInterVocabPinyin()">🔤 Ẩn/Hiện Pinyin</button>
               <button class="btn-clear-single" onclick="toggleInterpretVocabRef()">Ẩn / Hiện</button>
             </div>
@@ -412,9 +424,10 @@
         <div class="speaker-card" style="margin-top: 14px;">
           <div class="speaker-title">
             <span id="speakerRoleTag">🎙️ BÀI KHÓA PHÁT BIỂU</span>
-            <div style="display: flex; gap: 6px; align-items: center;">
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
               <button type="button" class="audio-skip-btn" onclick="toggleSentenceDrillMode()" id="btnToggleSentenceDrill">📑 Tách từng câu</button>
               <button class="btn-repeat-speech" id="btnPlayAudio" onclick="playSpeakerAudio()">▶️ Phát âm thanh</button>
+              <button type="button" class="audio-skip-btn" style="background: #dc2626; border-color: #ef4444;" onclick="stopAllAudio()">⏹️ Dừng</button>
             </div>
           </div>
 
@@ -452,9 +465,9 @@
         <div class="cabin-workspace-grid">
           <div class="interpreter-desk">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
-              <label style="font-size: 13.5px; font-weight: bold; color: var(--text-secondary);" id="interpretDeskTitle">Bản dịch của bạn:</label>
+              <label style="font-size: 13.5px; font-weight: bold; color: var(--text-main);" id="interpretDeskTitle">Bản dịch của bạn:</label>
               <div style="display: flex; gap: 6px; align-items: center;">
-                <span id="interTermCoverageBadge" style="font-size: 11.5px; font-weight: 600; color: var(--primary);">Thuật ngữ: 0/0</span>
+                <span id="interTermCoverageBadge" style="font-size: 12px; font-weight: 700; color: var(--primary-text);">Thuật ngữ: 0/0</span>
                 <span id="recordingStatusTag" class="status-tag idle">Sẵn sàng</span>
               </div>
             </div>
@@ -472,7 +485,7 @@
           <!-- Sổ tay tốc ký cho Phiên dịch viên -->
           <div class="shorthand-notepad">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="font-size: 13px; color: var(--text-secondary);">📝 Sổ Tay Tốc Ký (Note-taking)</strong>
+              <strong style="font-size: 13px; color: var(--text-main);">📝 Sổ Tay Tốc Ký (Note-taking)</strong>
               <button type="button" class="btn-clear-single" onclick="clearShorthandPad()">Xóa nháp</button>
             </div>
             <div class="shorthand-symbols-bar">
@@ -522,8 +535,11 @@
         </div>
 
         <div class="listen-box">
-          <button class="audio-btn" onclick="playCurrentListenWord()">🔊 Phát âm thanh</button>
-          <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 12px;">
+          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <button class="audio-btn" onclick="playCurrentListenWord()">🔊 Phát âm thanh</button>
+            <button type="button" class="btn-clear-single btn-stop-audio" style="border-radius: 50px; padding: 10px 18px; font-size: 14px;" onclick="stopTransAudio()">⏹️ Dừng</button>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 13.5px; margin-top: 12px;">
             Lắng nghe và nhập <strong>Chữ Hán</strong>, <strong>Pinyin</strong> (có dấu hoặc không dấu) hoặc <strong>Nghĩa tiếng Việt</strong>:
           </p>
           <input type="text" id="listenInput" class="listen-input" placeholder="Gõ chữ Hán, Pinyin (vd: kaimushi) hoặc nghĩa Việt..." onkeydown="if(event.key==='Enter') checkListenAnswer()">
@@ -544,19 +560,39 @@
 
   </div>
 
-  <!-- MODAL TRA CỨU TỪ ĐIỂN TOÀN GIÁO TRÌNH (1.144 TỪ & 429 MẪU CÂU) -->
+  <!-- MODAL TRA CỨU TỪ ĐIỂN THEO 2 HỌC PHẦN (BIÊN DỊCH & PHIÊN DỊCH) VÀ TỪ BÀI 1 ĐẾN BÀI 12 -->
   <div class="dict-modal-overlay" id="dictModalOverlay" onclick="if(event.target===this) closeDictionaryModal()">
     <div class="dict-modal-card">
       <div class="dict-modal-header">
         <div>
-          <strong style="font-size: 16px;">🔍 Từ Điển Học Phần Biên - Phiên Dịch</strong>
-          <div style="font-size: 12px; color: var(--text-muted);">Tra cứu tức thì 1.144 thuật ngữ &amp; 429 cấu trúc câu trong 24 bài học</div>
+          <strong style="font-size: 16.5px; color: var(--text-main);">🔍 Tra Cứu Học Phần Biên Dịch &amp; Phiên Dịch (Bài 1 ➔ Bài 12)</strong>
+          <div style="font-size: 12px; color: var(--text-muted);">Chia theo 2 học phần chuyên ngành • Hệ thống hóa từ Bài 1 đến Bài 12</div>
         </div>
-        <button type="button" class="btn-clear-single" onclick="closeDictionaryModal()">✕ Đóng (Esc)</button>
+        <div style="display: flex; gap: 6px;">
+          <button type="button" class="btn-clear-single btn-stop-audio" onclick="stopTransAudio()">⏹️ Dừng âm</button>
+          <button type="button" class="btn-clear-single" onclick="closeDictionaryModal()">✕ Đóng (Esc)</button>
+        </div>
       </div>
-      <div style="padding: 12px 20px; border-bottom: 1px solid var(--border-subtle);">
-        <input type="text" id="dictSearchInput" class="dict-search-input" placeholder="Nhập chữ Hán, Pinyin (không dấu/có dấu) hoặc nghĩa tiếng Việt..." oninput="renderDictionarySearch(this.value)">
+
+      <!-- 2 Phần học: Biên Dịch & Phiên Dịch -->
+      <div class="dict-subject-tabs">
+        <button type="button" class="dict-subj-tab active" id="dictTabBD" onclick="switchDictSubject('bd')">
+          ✍️ Học phần Biên Dịch (Bài 1 ➔ Bài 12 • 608 từ)
+        </button>
+        <button type="button" class="dict-subj-tab" id="dictTabPD" onclick="switchDictSubject('pd')">
+          🎙️ Học phần Phiên Dịch (Bài 1 ➔ Bài 12 • 536 từ)
+        </button>
       </div>
+
+      <!-- Thanh chọn nhanh Bài 1 -> Bài 12 -->
+      <div class="dict-lesson-bar" id="dictLessonBar"></div>
+
+      <!-- Ô tìm kiếm lọc nhanh -->
+      <div style="padding: 10px 20px; border-bottom: 1px solid var(--border-subtle); background: var(--surface-muted);">
+        <input type="text" id="dictSearchInput" class="dict-search-input" placeholder="Tìm nhanh chữ Hán, Pinyin (không dấu/có dấu) hoặc nghĩa tiếng Việt trong học phần đang chọn..." oninput="renderDictionarySearch(this.value)">
+      </div>
+
+      <!-- Danh sách hiển thị theo từng bài từ Bài 1 đến Bài 12 -->
       <div class="dict-results-list" id="dictResultsList"></div>
     </div>
   </div>

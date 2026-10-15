@@ -31,7 +31,7 @@ function showToast(message, type = "info") {
     item.style.opacity = "0";
     item.style.transition = "opacity 0.25s ease";
     setTimeout(() => item.remove(), 260);
-  }, 3200);
+  }, 3000);
 }
 
 function copyTextToClipboard(text, successMsg = "📋 Đã sao chép vào bộ nhớ tạm!") {
@@ -62,7 +62,6 @@ function fallbackCopyText(text, successMsg) {
   document.body.removeChild(ta);
 }
 
-// Chuẩn hóa Pinyin (bỏ dấu thanh điệu để so khớp linh hoạt)
 function stripPinyinTones(str) {
   if (!str) return "";
   return String(str)
@@ -73,7 +72,6 @@ function stripPinyinTones(str) {
     .trim();
 }
 
-// Chèn ký tự tại vị trí con trỏ trong textarea
 function insertAtCursor(textareaId, textToInsert) {
   const area = document.getElementById(textareaId);
   if (!area) return;
@@ -127,7 +125,6 @@ window.addEventListener("click", () => {
   }
 });
 
-// Phím tắt Ctrl+K mở Từ điển & Esc đóng Modal
 window.addEventListener("keydown", (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
     e.preventDefault();
@@ -137,8 +134,8 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-// Chuyển đổi giữa 2 Môn học: Biên Dịch & Phiên Dịch
 function switchSubject(subjectKey, displayName, clickedEl) {
+  stopTransAudio();
   const label = document.getElementById("currentActiveTabLabel");
   if (label) label.innerText = displayName;
 
@@ -171,8 +168,8 @@ function switchSubject(subjectKey, displayName, clickedEl) {
   }
 }
 
-// Chuyển Tab con môn Biên Dịch (Dịch văn bản <-> Luyện viết <-> Flashcard)
 function switchBiendichSubTab(tab) {
+  stopTransAudio();
   const transBox = document.getElementById("biendichSubTrans");
   const writeBox = document.getElementById("biendichSubWrite");
   const fcBox = document.getElementById("biendichSubFlashcard");
@@ -191,13 +188,13 @@ function switchBiendichSubTab(tab) {
 
   if (tab === "write" && activeWords.length === 0) {
     applyFilters();
-  } else if (tab === "flashcard" && flashcardDeck.length === 0) {
+  } else if (tab === "flashcard") {
     initFlashcardDeck();
   }
 }
 
-// Chuyển Tab con môn Phiên Dịch (Cabin dịch nói <-> Luyện nghe)
 function switchPhiendichSubTab(tab) {
+  stopTransAudio();
   const isCabin = (tab === "cabin");
   const cabinEl = document.getElementById("phiendichSubCabin");
   const listenEl = document.getElementById("phiendichSubListen");
@@ -214,17 +211,135 @@ function switchPhiendichSubTab(tab) {
   }
 }
 
-/* ================= BỘ GIỌNG ĐỌC DIỄN GIẢ (TTS) ================= */
+/* ================= BỘ GIỌNG ĐỌC THUẦN TIẾNG TRUNG (NATIVE CHINESE TTS) ================= */
 let availableVoices = [];
+let isTransPassageSpeaking = false;
+
 function initVoiceList() {
   if (!window.speechSynthesis) return;
-  availableVoices = window.speechSynthesis.getVoices();
-}
-if (window.speechSynthesis) {
-  window.speechSynthesis.onvoiceschanged = initVoiceList;
+  availableVoices = window.speechSynthesis.getVoices() || [];
+  populateChineseVoiceDropdown();
 }
 
-function playDiplomaticSpeech(text, lang = "zh-CN", rate = 0.92) {
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = initVoiceList;
+  setTimeout(initVoiceList, 300);
+}
+
+// Tự động nạp các giọng thuần Tiếng Trung có sẵn trên thiết bị vào menu chọn giọng
+function populateChineseVoiceDropdown() {
+  const select = document.getElementById("selectVoiceType");
+  if (!select) return;
+  const currentVal = select.value || "zh_cn_auto";
+
+  const baseOptions = [
+    { value: "zh_cn_auto", label: "🇨🇳 Phổ thông chuẩn Bắc Kinh (普通话 zh-CN - Tự động tối ưu)" },
+    { value: "zh_cn_female", label: "🇨🇳 Giọng Nữ Phổ thông (普通话女声 - Xiaoxiao / Tingting)" },
+    { value: "zh_cn_male", label: "🇨🇳 Giọng Nam Phát thanh viên (普通话男声 - Yunxi / Yunyang)" },
+    { value: "zh_tw", label: "🇹🇼 Quốc ngữ Đài Loan (国语 zh-TW - HsiaoChen / Meijia)" },
+    { value: "zh_hk", label: "🇭🇰 Tiếng Quảng Đông / HK (粤语 zh-HK - HiuMaan / Sinji)" }
+  ];
+
+  // Tìm các giọng zh-* thực tế có trên máy người dùng
+  const zhVoices = availableVoices.filter(v => {
+    const l = (v.lang || "").toLowerCase().replace("_", "-");
+    return l.startsWith("zh") || l.startsWith("cmn") || l.startsWith("yue");
+  });
+
+  select.innerHTML = "";
+  baseOptions.forEach(opt => {
+    const o = document.createElement("option");
+    o.value = opt.value;
+    o.innerText = opt.label;
+    select.appendChild(o);
+  });
+
+  if (zhVoices.length > 0) {
+    const group = document.createElement("optgroup");
+    group.label = "── Giọng Tiếng Trung cài sẵn trên thiết bị của bạn ──";
+    zhVoices.forEach(v => {
+      const o = document.createElement("option");
+      o.value = "native:" + v.name;
+      o.innerText = `🎙️ ${v.name} (${v.lang})`;
+      group.appendChild(o);
+    });
+    select.appendChild(group);
+  }
+
+  if (Array.from(select.options).some(o => o.value === currentVal)) {
+    select.value = currentVal;
+  }
+}
+
+// Chọn giọng Tiếng Trung phù hợp nhất theo cấu hình người dùng chọn
+function resolveChineseVoice(lang = "zh-CN") {
+  if (availableVoices.length === 0 && window.speechSynthesis) {
+    availableVoices = window.speechSynthesis.getVoices() || [];
+  }
+  const prefix = lang.split("-")[0].toLowerCase();
+  if (prefix !== "zh") {
+    return (
+      availableVoices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(prefix) && (v.name.includes("Natural") || v.name.includes("Neural"))) ||
+      availableVoices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(prefix)) ||
+      null
+    );
+  }
+
+  const select = document.getElementById("selectVoiceType");
+  const mode = select ? select.value : "zh_cn_auto";
+
+  const zhVoices = availableVoices.filter(v => {
+    const l = (v.lang || "").toLowerCase().replace("_", "-");
+    return l.startsWith("zh") || l.startsWith("cmn") || l.startsWith("yue");
+  });
+
+  if (mode && mode.startsWith("native:")) {
+    const targetName = mode.slice(7);
+    const exact = zhVoices.find(v => v.name === targetName);
+    if (exact) return { voice: exact, pitch: 1.0, lang: exact.lang || "zh-CN" };
+  }
+
+  if (mode === "zh_tw") {
+    const tw = zhVoices.find(v => v.lang.toLowerCase().replace("_", "-").includes("tw") || /hsiao|meijia|taiwan/i.test(v.name));
+    return { voice: tw || zhVoices[0] || null, pitch: 1.02, lang: "zh-TW" };
+  }
+
+  if (mode === "zh_hk") {
+    const hk = zhVoices.find(v => v.lang.toLowerCase().replace("_", "-").includes("hk") || /hiu|sinji|cantonese|hong kong/i.test(v.name));
+    return { voice: hk || zhVoices[0] || null, pitch: 1.0, lang: "zh-HK" };
+  }
+
+  const cnVoices = zhVoices.filter(v => {
+    const l = (v.lang || "").toLowerCase().replace("_", "-");
+    return l.includes("cn") || l.includes("hans") || (!l.includes("tw") && !l.includes("hk"));
+  });
+  const pool = cnVoices.length > 0 ? cnVoices : zhVoices;
+
+  if (mode === "zh_cn_male") {
+    const maleVoice =
+      pool.find(v => /yunxi|yunjian|yunyang|kangkang|male|nan/i.test(v.name)) ||
+      pool.find(v => v.name.includes("Natural") || v.name.includes("Neural")) ||
+      pool[0];
+    return { voice: maleVoice || null, pitch: 0.88, lang: "zh-CN" };
+  }
+
+  if (mode === "zh_cn_female") {
+    const femaleVoice =
+      pool.find(v => /xiaoxiao|xiaoyi|tingting|huihui|yaoyao|female|google/i.test(v.name)) ||
+      pool.find(v => v.name.includes("Natural") || v.name.includes("Neural")) ||
+      pool[0];
+    return { voice: femaleVoice || null, pitch: 1.06, lang: "zh-CN" };
+  }
+
+  // Mặc định zh_cn_auto: Ưu tiên giọng Neural / Natural / Google 普通话
+  const bestCn =
+    pool.find(v => /xiaoxiao|yunxi|natural|neural/i.test(v.name)) ||
+    pool.find(v => /google|tingting|microsoft/i.test(v.name)) ||
+    pool[0];
+  return { voice: bestCn || null, pitch: 0.98, lang: "zh-CN" };
+}
+
+function playDiplomaticSpeech(text, lang = "zh-CN", rate = 0.92, onEndCallback = null) {
   if (!window.speechSynthesis) {
     showToast("Trình duyệt không hỗ trợ phát âm Web Speech!", "warning");
     return;
@@ -232,18 +347,57 @@ function playDiplomaticSpeech(text, lang = "zh-CN", rate = 0.92) {
   window.speechSynthesis.cancel();
   const cleanText = String(text).replace(/…+/g, " ").replace(/\.{2,}/g, " ");
   const u = new SpeechSynthesisUtterance(cleanText);
-  u.lang = lang;
   u.rate = rate;
-  u.pitch = 0.98;
 
-  if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
-  const prefix = lang.split("-")[0].toLowerCase();
-  const matchedVoice = availableVoices.find(
-    v => v.lang.toLowerCase().replace("_", "-").startsWith(prefix) && (v.name.includes("Natural") || v.name.includes("Neural"))
-  ) || availableVoices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(prefix));
+  if (lang.toLowerCase().startsWith("zh")) {
+    const resolved = resolveChineseVoice(lang);
+    u.lang = resolved.lang || "zh-CN";
+    u.pitch = resolved.pitch || 0.98;
+    if (resolved.voice) u.voice = resolved.voice;
+  } else {
+    u.lang = lang;
+    u.pitch = 0.98;
+    const matched = resolveChineseVoice(lang);
+    if (matched) u.voice = matched;
+  }
 
-  if (matchedVoice) u.voice = matchedVoice;
+  u.onend = () => {
+    isTransPassageSpeaking = false;
+    updateTransSpeakBtnUI();
+    if (typeof onEndCallback === "function") onEndCallback();
+  };
+  u.onerror = () => {
+    isTransPassageSpeaking = false;
+    updateTransSpeakBtnUI();
+  };
+
   window.speechSynthesis.speak(u);
+}
+
+function previewSelectedChineseVoice() {
+  playDiplomaticSpeech("尊敬的各位来宾，欢迎大家出席本次中越合作交流活动。", "zh-CN", selectedInterRate || 1.0);
+  showToast("🔊 Đang phát thử giọng Tiếng Trung đã chọn", "info");
+}
+
+function stopTransAudio() {
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+  if (typeof stopAllAudio === "function") {
+    stopAllAudio();
+  }
+  isTransPassageSpeaking = false;
+  updateTransSpeakBtnUI();
+}
+
+function updateTransSpeakBtnUI() {
+  const btn = document.getElementById("btnSpeakTransPassage");
+  if (!btn) return;
+  if (isTransPassageSpeaking) {
+    btn.innerText = "⏸️ Đang đọc đề... (Bấm dừng)";
+  } else {
+    btn.innerText = "🔊 Nghe đọc đề bài";
+  }
 }
 
 /* ================= KẾT NỐI VERCEL PROXY ================= */
@@ -261,7 +415,6 @@ async function callGemini(promptText) {
   return data.text;
 }
 
-// Định dạng kết quả AI trả về thành giao diện thẻ trực quan
 function formatAIEvaluationHTML(rawText, titleLabel = "Kết quả Thẩm định AI") {
   const scoreMatch = String(rawText).match(/(\d+(?:[.,]\d+)?)\s*\/\s*10/);
   const scoreBadge = scoreMatch ? `🎯 Điểm: ${scoreMatch[1]}/10` : "⚖️ Đã thẩm định";
@@ -275,7 +428,7 @@ function formatAIEvaluationHTML(rawText, titleLabel = "Kết quả Thẩm địn
 
   return `
     <div class="eval-score-header">
-      <strong style="font-size: 15px; color: var(--success);">✨ ${titleLabel}</strong>
+      <strong style="font-size: 15px; color: var(--success-text);">✨ ${titleLabel}</strong>
       <span class="score-circle-badge">${scoreBadge}</span>
     </div>
     <div class="eval-formatted-body">${escaped}</div>
@@ -311,7 +464,7 @@ function updateGlobalStatsBadges() {
   const memBadge = document.getElementById("globalMemorizedBadge");
   const revBadge = document.getElementById("globalReviewBadge");
   if (memBadge) memBadge.innerText = `✅ Đã thuộc: ${memorizedWords.size} từ`;
-  if (revBadge) revBadge.innerText = `📌 Cần ôn: ${needReviewWords.size} từ`;
+  if (revBadge) revBadge.innerText = `📌 Chưa nhớ: ${needReviewWords.size} từ`;
 }
 
 function resetSavedVocabStats() {
@@ -319,21 +472,20 @@ function resetSavedVocabStats() {
   needReviewWords.clear();
   saveVocabProgressToStorage();
   renderStats();
-  showToast("Đã đặt lại danh sách từ Đã thuộc & Cần ôn", "info");
+  showToast("Đã đặt lại danh sách từ Đã thuộc & Chưa nhớ", "info");
 }
 
 function practiceNeedReviewWords() {
   if (needReviewWords.size === 0) {
-    showToast("Chưa có từ nào trong danh sách Cần ôn!", "info");
+    showToast("Chưa có từ nào trong danh sách Chưa nhớ (Cần ôn)!", "info");
     return;
   }
   const srcSelect = document.getElementById("sourceCurriculumFilter");
   if (srcSelect) srcSelect.value = "review_only";
   applyFilters();
-  showToast(`Đang ôn tập ${needReviewWords.size} từ cần củng cố!`, "info");
+  showToast(`Đang ôn tập ${needReviewWords.size} từ Chưa nhớ!`, "info");
 }
 
-// Hàm xáo bài ngẫu nhiên chuẩn (Fisher-Yates)
 function shuffleWords(array) {
   const copy = [...array];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -343,7 +495,6 @@ function shuffleWords(array) {
   return copy;
 }
 
-// Tải JSON linh hoạt (Ưu tiên dữ liệu nhúng sẵn cho Canvas/Offline, fallback sang XHR)
 function loadJSONResource(url, embeddedGlobal) {
   if (embeddedGlobal) {
     return Promise.resolve(embeddedGlobal);
@@ -388,6 +539,7 @@ async function autoLoadExcel() {
               pinyin: v.pinyin,
               vn: v.vi,
               lesson: `Bài ${lessonNum}`,
+              lessonKey: k,
               subject: "Biên Dịch"
             });
           });
@@ -395,7 +547,9 @@ async function autoLoadExcel() {
             allPatternsList.push({
               structure: p.structure,
               meaning: p.meaning,
-              lesson: `Biên Dịch - Bài ${lessonNum}`
+              lesson: `Biên Dịch - Bài ${lessonNum}`,
+              lessonKey: k,
+              subject: "Biên Dịch"
             });
           });
         });
@@ -413,6 +567,7 @@ async function autoLoadExcel() {
               pinyin: v.pinyin,
               vn: v.vi,
               lesson: `Bài ${lessonNum}`,
+              lessonKey: k,
               subject: "Phiên Dịch"
             });
           });
@@ -420,7 +575,9 @@ async function autoLoadExcel() {
             allPatternsList.push({
               structure: p.structure,
               meaning: p.meaning,
-              lesson: `Phiên Dịch - Bài ${lessonNum}`
+              lesson: `Phiên Dịch - Bài ${lessonNum}`,
+              lessonKey: k,
+              subject: "Phiên Dịch"
             });
           });
         });
@@ -565,7 +722,6 @@ function setupCanvas(word) {
   while (i < word.length) {
     const ch = word[i];
     if (!isHanziChar(ch)) {
-      // Nhóm các ký tự không phải chữ Hán (như ……, /, 、, 996, U23) thành thẻ tĩnh
       let staticRun = ch;
       while (i + 1 < word.length && !isHanziChar(word[i + 1])) {
         i++;
@@ -767,7 +923,6 @@ async function checkAllBoxes() {
         ok = false;
       }
     } catch (e) {
-      // Nếu mất mạng hoặc bị chặn, kiểm tra số nét tối thiểu (>=2 nét)
       if (s.strokes.length >= 2) {
         s.cBox.classList.remove("wrong");
         s.cBox.classList.add("correct");
@@ -802,7 +957,7 @@ function renderStats() {
   if (cL) {
     cL.innerHTML = "";
     memorizedWords.forEach(w => {
-      cL.innerHTML += `<div style="padding:3px 0; border-bottom:1px dashed var(--border-subtle); cursor:pointer;" onclick="playDiplomaticSpeech('${w.hanzi}', 'zh-CN')">🔊 <strong>${w.hanzi}</strong> <span style="color:var(--text-muted); font-size:12px;">[${w.pinyin || ""}]</span>: ${w.vn}</div>`;
+      cL.innerHTML += `<div style="padding:4px 0; border-bottom:1px dashed var(--border); cursor:pointer;" onclick="playDiplomaticSpeech('${w.hanzi}', 'zh-CN')">🔊 <strong>${w.hanzi}</strong> <span style="color:var(--pinyin-color); font-size:12px;">[${w.pinyin || ""}]</span>: ${w.vn}</div>`;
     });
   }
   const cCnt = document.getElementById("correct-count");
@@ -812,7 +967,7 @@ function renderStats() {
   if (wL) {
     wL.innerHTML = "";
     needReviewWords.forEach(w => {
-      wL.innerHTML += `<div style="padding:3px 0; border-bottom:1px dashed var(--border-subtle); cursor:pointer;" onclick="playDiplomaticSpeech('${w.hanzi}', 'zh-CN')">🔊 <strong>${w.hanzi}</strong> <span style="color:var(--text-muted); font-size:12px;">[${w.pinyin || ""}]</span>: ${w.vn}</div>`;
+      wL.innerHTML += `<div style="padding:4px 0; border-bottom:1px dashed var(--border); cursor:pointer;" onclick="playDiplomaticSpeech('${w.hanzi}', 'zh-CN')">🔊 <strong>${w.hanzi}</strong> <span style="color:var(--pinyin-color); font-size:12px;">[${w.pinyin || ""}]</span>: ${w.vn}</div>`;
     });
   }
   const wCnt = document.getElementById("wrong-count");
@@ -849,6 +1004,13 @@ function initFlashcardDeck() {
   if (les !== "all") {
     pool = pool.filter(w => String(w.lesson) === les);
   }
+
+  if (pool.length === 0 && src === "review_only") {
+    showToast("Chưa có từ nào trong mục 'Chưa nhớ'. Đang hiển thị toàn bộ từ vựng!", "info");
+    if (srcEl) srcEl.value = "all";
+    pool = [...allCombinedWords];
+  }
+
   flashcardDeck = shuffleWords(pool);
   fcIndex = 0;
 
@@ -879,6 +1041,21 @@ function renderCurrentFlashcard() {
 
   const tag = document.getElementById("fcFrontLessonTag");
   if (tag) tag.innerText = `${item.subject || "Học phần"} • ${item.lesson || ""}`;
+
+  const statusBadge = document.getElementById("fcStatusBadge");
+  if (statusBadge) {
+    if (memorizedWords.has(item.hanzi)) {
+      statusBadge.style.display = "inline-block";
+      statusBadge.className = "fc-status-tag known";
+      statusBadge.innerText = "✅ Đã thuộc";
+    } else if (needReviewWords.has(item.hanzi)) {
+      statusBadge.style.display = "inline-block";
+      statusBadge.className = "fc-status-tag unknown";
+      statusBadge.innerText = "📌 Chưa nhớ";
+    } else {
+      statusBadge.style.display = "none";
+    }
+  }
 
   const fHz = document.getElementById("fcFrontHanzi");
   if (fHz) fHz.innerText = item.hanzi;
@@ -916,6 +1093,20 @@ function markFlashcardKnown() {
   needReviewWords.delete(cur.hanzi);
   saveVocabProgressToStorage();
   renderStats();
+  showToast(`✅ Đã thuộc: ${cur.hanzi} (${cur.vn})`, "success");
+  fcIndex = (fcIndex + 1) % flashcardDeck.length;
+  renderCurrentFlashcard();
+}
+
+// Nút "Chưa nhớ" đánh dấu từ vào danh sách cần ôn tập
+function markFlashcardUnknown() {
+  if (flashcardDeck.length === 0) return;
+  const cur = flashcardDeck[fcIndex];
+  needReviewWords.set(cur.hanzi, cur);
+  memorizedWords.delete(cur.hanzi);
+  saveVocabProgressToStorage();
+  renderStats();
+  showToast(`📌 Đã đánh dấu "Chưa nhớ": ${cur.hanzi} (${cur.vn})`, "warning");
   fcIndex = (fcIndex + 1) % flashcardDeck.length;
   renderCurrentFlashcard();
 }
@@ -969,8 +1160,11 @@ function checkQuizOption(clickedBtn, chosenOpt) {
   } else {
     clickedBtn.classList.add("wrong");
     quizStreak = 0;
+    needReviewWords.set(currentQuizItem.hanzi, currentQuizItem);
+    saveVocabProgressToStorage();
+    renderStats();
     msg.className = "msg-wrong";
-    msg.innerText = `❌ Đáp án đúng là: "${currentQuizItem.vn}"`;
+    msg.innerText = `❌ Đáp án đúng là: "${currentQuizItem.vn}" (Đã thêm vào danh sách Chưa nhớ)`;
   }
 
   document.getElementById("quizScoreCorrect").innerText = quizCorrectTotal;
@@ -1128,6 +1322,7 @@ function initTransLessonChips() {
 }
 
 function selectTransLesson(lessonKey, chipEl) {
+  stopTransAudio();
   document.querySelectorAll("#transTopicsContainer .topic-chip").forEach(c => c.classList.remove("active"));
   chipEl.classList.add("active");
   currentTransLessonId = lessonKey;
@@ -1156,6 +1351,7 @@ function renderTransTextPills() {
 }
 
 function selectTransText(textId, btnEl) {
+  stopTransAudio();
   document.querySelectorAll("#transTextsPillGroup .pill-btn").forEach(b => b.classList.remove("active"));
   btnEl.classList.add("active");
   currentTransTextId = textId;
@@ -1163,6 +1359,7 @@ function selectTransText(textId, btnEl) {
 }
 
 function selectTransPracticeMode(mode, btnEl) {
+  stopTransAudio();
   document.querySelectorAll("#transPracticeModeGroup .pill-btn").forEach(b => b.classList.remove("active"));
   btnEl.classList.add("active");
   currentPracticeMode = mode;
@@ -1185,7 +1382,6 @@ async function loadCurrentExercise() {
   currentTransExercise.vocabList = textObj.vocabulary || [];
   currentTransExercise.patternList = textObj.patterns || [];
 
-  // Hiển thị mục tiêu bài học
   const objText = document.getElementById("transObjectivesText");
   if (objText) objText.innerText = currentTransExercise.objectives;
 
@@ -1204,7 +1400,6 @@ async function loadCurrentExercise() {
 
   renderVocabReference(textObj);
 
-  // Khôi phục bản nháp tự động lưu (nếu có)
   const draftKey = `quyky_draft_bd_${currentTransLessonId}_${currentTransTextId}_${currentPracticeMode}`;
   const savedDraft = safeGetStorage(draftKey, "");
   document.getElementById("aiUserInput").value = savedDraft;
@@ -1234,7 +1429,6 @@ function renderTransPassageBox() {
     return;
   }
 
-  // Highlight các từ vựng xuất hiện trong bài khóa
   let html = raw
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -1259,16 +1453,25 @@ function toggleHighlightTransPassage() {
   isHighlightingTransTerms = !isHighlightingTransTerms;
   const btn = document.getElementById("btnHighlightTransTerms");
   if (btn) {
-    btn.style.borderColor = isHighlightingTransTerms ? "var(--primary)" : "";
-    btn.style.color = isHighlightingTransTerms ? "var(--primary)" : "";
+    btn.style.borderColor = isHighlightingTransTerms ? "var(--primary-border)" : "";
+    btn.style.color = isHighlightingTransTerms ? "var(--primary-text)" : "";
   }
   renderTransPassageBox();
 }
 
 function speakCurrentTransPassage() {
   if (!currentTransExercise.sourceText) return;
+  if (isTransPassageSpeaking) {
+    stopTransAudio();
+    return;
+  }
+  isTransPassageSpeaking = true;
+  updateTransSpeakBtnUI();
   const lang = currentTransExercise.sourceLang === "Tiếng Trung" ? "zh-CN" : "vi-VN";
-  playDiplomaticSpeech(currentTransExercise.sourceText, lang, 0.92);
+  playDiplomaticSpeech(currentTransExercise.sourceText, lang, 0.92, () => {
+    isTransPassageSpeaking = false;
+    updateTransSpeakBtnUI();
+  });
 }
 
 function copyCurrentTransPassage() {
@@ -1299,7 +1502,7 @@ function renderVocabReference(textObj) {
       (v.vi && userDraft.includes(v.vi.toLowerCase()));
     const pySpan = showTransPinyin && v.pinyin ? `<span class="py-text">[${v.pinyin}]</span>` : "";
     html += `
-      <span class="vocab-badge ${isUsed ? "used-term" : ""}" onclick="onClickVocabBadge(${idx}, 'trans')" title="Bấm để nghe phát âm & sao chép">
+      <span class="vocab-badge ${isUsed ? "used-term" : ""}" onclick="onClickVocabBadge(${idx}, 'trans')" title="Bấm để nghe phát âm">
         <span>🔊</span>
         <span class="zh-text">${v.zh}</span>
         ${pySpan}
@@ -1315,10 +1518,10 @@ function renderVocabReference(textObj) {
       html += `
         <div class="pattern-item-row" onclick="onClickPatternRow(${pIdx}, 'trans')" title="Bấm để nghe mẫu câu">
           <div>
-            <strong style="color: var(--primary);">🔹 ${p.structure}</strong>
+            <strong style="color: var(--primary-text);">🔹 ${p.structure}</strong>
             <span style="color: var(--text-secondary); margin-left: 8px;">➔ ${p.meaning || ""}</span>
           </div>
-          <span style="font-size: 12px; color: var(--accent);">🔊 Nghe</span>
+          <span style="font-size: 12px; color: var(--pinyin-color); font-weight: 600;">🔊 Nghe</span>
         </div>
       `;
     });
@@ -1355,11 +1558,9 @@ function onTransInputChanged() {
   const charEl = document.getElementById("transCharCountText");
   if (charEl) charEl.innerText = `${val.length} ký tự`;
 
-  // Lưu nháp tự động
   const draftKey = `quyky_draft_bd_${currentTransLessonId}_${currentTransTextId}_${currentPracticeMode}`;
   safeSetStorage(draftKey, val);
 
-  // Đếm số thuật ngữ trong bài đã được vận dụng
   const lower = val.toLowerCase();
   let usedCount = 0;
   const total = currentTransExercise.vocabList.length;
@@ -1376,7 +1577,6 @@ function onTransInputChanged() {
     covEl.innerText = `Thuật ngữ đã dùng: ${usedCount}/${total}`;
   }
 
-  // Cập nhật highlight thẻ từ vựng
   if (curriculumDB && curriculumDB.translation) {
     const lesson = curriculumDB.translation[currentTransLessonId];
     const textObj = lesson?.texts.find(t => t.id === currentTransTextId);
@@ -1391,7 +1591,6 @@ function clearTranslationDraft() {
   showToast("Đã xóa nội dung bài làm", "info");
 }
 
-// Kiểm tra thuật ngữ tức thì (Local Instant Check)
 function runLocalTransCheck() {
   const userText = (document.getElementById("aiUserInput")?.value || "").trim();
   if (!userText) {
@@ -1420,7 +1619,7 @@ function runLocalTransCheck() {
   const resultBox = document.getElementById("aiEvaluationResult");
   resultBox.innerHTML = `
     <div class="eval-score-header">
-      <strong style="font-size: 15px; color: var(--primary);">⚡ Kiểm tra nhanh độ phủ Thuật ngữ (Tức thì)</strong>
+      <strong style="font-size: 15px; color: var(--primary-text);">⚡ Kiểm tra nhanh độ phủ Thuật ngữ (Tức thì)</strong>
       <span class="score-circle-badge" style="background: var(--primary);">Độ phủ: ${matched.length}/${currentTransExercise.vocabList.length} (${ratio}%)</span>
     </div>
     <div class="eval-formatted-body">
@@ -1432,7 +1631,6 @@ function runLocalTransCheck() {
   resultBox.style.display = "block";
 }
 
-// AI Tạo đề bài mới mở rộng
 async function requestAITranslationTask() {
   const displayEl = document.getElementById("aiPromptDisplay");
   displayEl.innerText = `⏳ AI đang biên soạn đoạn văn tương tự theo [${currentTransExercise.textTitle}]...`;
@@ -1470,7 +1668,6 @@ QUY TẮC BẮT BUỘC:
   }
 }
 
-// Gửi AI Thẩm định bản dịch
 async function submitTranslationToAI() {
   const userText = document.getElementById("aiUserInput").value.trim();
   if (!userText) {
@@ -1522,21 +1719,73 @@ Hãy đánh giá chi tiết:
   }
 }
 
-/* ================= MODAL TRA CỨU TỪ ĐIỂN TOÀN GIÁO TRÌNH ================= */
+/* ================= MODAL TRA CỨU TỪ ĐIỂN THEO 2 HỌC PHẦN & TỪ BÀI 1 ĐẾN BÀI 12 ================= */
+let currentDictSubject = "bd"; // 'bd' (Biên dịch) hoặc 'pd' (Phiên dịch)
+let currentDictLessonKey = "all"; // 'all' hoặc 'bai1' .. 'bai12'
+
 function openDictionaryModal() {
   const modal = document.getElementById("dictModalOverlay");
   if (!modal) return;
   modal.classList.add("open");
+  renderDictLessonBar();
   const inp = document.getElementById("dictSearchInput");
   if (inp) {
-    inp.focus();
     renderDictionarySearch(inp.value);
+  } else {
+    renderDictionarySearch("");
   }
 }
 
 function closeDictionaryModal() {
   const modal = document.getElementById("dictModalOverlay");
   if (modal) modal.classList.remove("open");
+}
+
+function switchDictSubject(subj) {
+  currentDictSubject = subj;
+  currentDictLessonKey = "all";
+  const tabBD = document.getElementById("dictTabBD");
+  const tabPD = document.getElementById("dictTabPD");
+  if (tabBD) tabBD.classList.toggle("active", subj === "bd");
+  if (tabPD) tabPD.classList.toggle("active", subj === "pd");
+
+  renderDictLessonBar();
+  const inp = document.getElementById("dictSearchInput");
+  renderDictionarySearch(inp ? inp.value : "");
+}
+
+function selectDictLessonFilter(lessonKey) {
+  currentDictLessonKey = lessonKey;
+  renderDictLessonBar();
+  const inp = document.getElementById("dictSearchInput");
+  renderDictionarySearch(inp ? inp.value : "");
+}
+
+function renderDictLessonBar() {
+  const bar = document.getElementById("dictLessonBar");
+  if (!bar) return;
+
+  let html = `<button type="button" class="dict-lesson-pill ${currentDictLessonKey === "all" ? "active" : ""}" onclick="selectDictLessonFilter('all')">Tất cả (Bài 1 ➔ Bài 12)</button>`;
+  for (let i = 1; i <= 12; i++) {
+    const k = `bai${i}`;
+    html += `<button type="button" class="dict-lesson-pill ${currentDictLessonKey === k ? "active" : ""}" onclick="selectDictLessonFilter('${k}')">Bài ${i}</button>`;
+  }
+  bar.innerHTML = html;
+}
+
+function toggleMarkUnknownFromDict(hanzi, pinyin, vn, lessonLabel, subjectLabel) {
+  if (needReviewWords.has(hanzi)) {
+    needReviewWords.delete(hanzi);
+    showToast(`Đã bỏ đánh dấu Chưa nhớ: ${hanzi}`, "info");
+  } else {
+    needReviewWords.set(hanzi, { hanzi, pinyin, vn, lesson: lessonLabel, subject: subjectLabel });
+    memorizedWords.delete(hanzi);
+    showToast(`📌 Đã đánh dấu "Chưa nhớ": ${hanzi} (${vn})`, "warning");
+  }
+  saveVocabProgressToStorage();
+  renderStats();
+  const inp = document.getElementById("dictSearchInput");
+  renderDictionarySearch(inp ? inp.value : "");
 }
 
 function renderDictionarySearch(query) {
@@ -1546,62 +1795,111 @@ function renderDictionarySearch(query) {
   const q = String(query || "").trim().toLowerCase();
   const qToneless = stripPinyinTones(q);
 
-  let matchedWords = allCombinedWords;
-  let matchedPatterns = allPatternsList;
+  const sourceCurriculum = (currentDictSubject === "bd")
+    ? (curriculumDB && curriculumDB.translation ? curriculumDB.translation : (window.EMBEDDED_CURRICULUM_DB ? window.EMBEDDED_CURRICULUM_DB.translation : null))
+    : (typeof pdDB !== "undefined" && pdDB ? pdDB : window.EMBEDDED_CURRICULUM_PD);
 
-  if (q) {
-    matchedWords = allCombinedWords.filter(w =>
-      String(w.hanzi).toLowerCase().includes(q) ||
-      String(w.pinyin || "").toLowerCase().includes(q) ||
-      stripPinyinTones(w.pinyin || "").includes(qToneless) ||
-      String(w.vn || "").toLowerCase().includes(q)
-    );
-    matchedPatterns = allPatternsList.filter(p =>
-      String(p.structure).toLowerCase().includes(q) ||
-      String(p.meaning || "").toLowerCase().includes(q)
-    );
-  }
+  const subjectLabel = (currentDictSubject === "bd") ? "Biên Dịch" : "Phiên Dịch";
 
-  const topWords = matchedWords.slice(0, 45);
-  const topPatterns = matchedPatterns.slice(0, 15);
-
-  if (topWords.length === 0 && topPatterns.length === 0) {
-    listEl.innerHTML = `<div style="text-align:center; padding: 24px; color: var(--text-muted);">Không tìm thấy thuật ngữ hoặc mẫu câu nào khớp với "${query}".</div>`;
+  if (!sourceCurriculum) {
+    listEl.innerHTML = `<div style="text-align:center; padding: 24px; color: var(--text-muted);">Đang tải dữ liệu học phần...</div>`;
     return;
   }
 
   let html = "";
-  topWords.forEach(w => {
-    const safeSpeak = String(w.hanzi).replace(/'/g, "");
-    html += `
-      <div class="dict-item-card">
-        <div>
-          <strong style="font-size: 16px; color: var(--primary);">${w.hanzi}</strong>
-          <span style="color: var(--accent); font-size: 13px; margin-left: 6px;">[${w.pinyin || ""}]</span>
-          <div style="font-size: 14px; color: var(--text-main); margin-top: 2px;">${w.vn}</div>
-          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">${w.subject} • ${w.lesson}</div>
-        </div>
-        <div style="display:flex; gap:6px;">
-          <button type="button" class="btn-clear-single" onclick="playDiplomaticSpeech('${safeSpeak}', 'zh-CN')">🔊 Nghe</button>
-          <button type="button" class="btn-clear-single" onclick="copyTextToClipboard('${safeSpeak}')">📋 Chép</button>
-        </div>
-      </div>
-    `;
-  });
+  let totalFound = 0;
 
-  topPatterns.forEach(p => {
-    const safeSpeak = String(p.structure).replace(/'/g, "");
+  for (let i = 1; i <= 12; i++) {
+    const key = `bai${i}`;
+    if (currentDictLessonKey !== "all" && currentDictLessonKey !== key) continue;
+
+    const lessonObj = sourceCurriculum[key];
+    if (!lessonObj) continue;
+
+    const lessonVocab = [];
+    const lessonPatterns = [];
+
+    (lessonObj.texts || []).forEach(txt => {
+      (txt.vocabulary || []).forEach(v => {
+        if (
+          !q ||
+          String(v.zh).toLowerCase().includes(q) ||
+          String(v.pinyin || "").toLowerCase().includes(q) ||
+          stripPinyinTones(v.pinyin || "").includes(qToneless) ||
+          String(v.vi || "").toLowerCase().includes(q)
+        ) {
+          lessonVocab.push(v);
+        }
+      });
+      (txt.patterns || []).forEach(p => {
+        if (
+          !q ||
+          String(p.structure).toLowerCase().includes(q) ||
+          String(p.meaning || "").toLowerCase().includes(q)
+        ) {
+          lessonPatterns.push(p);
+        }
+      });
+    });
+
+    if (lessonVocab.length === 0 && lessonPatterns.length === 0) continue;
+    totalFound += lessonVocab.length + lessonPatterns.length;
+
     html += `
-      <div class="dict-item-card" style="border-left: 3px solid var(--accent);">
-        <div>
-          <strong style="font-size: 14.5px; color: var(--accent);">🔹 Mẫu câu: ${p.structure}</strong>
-          <div style="font-size: 13.5px; color: var(--text-main); margin-top: 2px;">${p.meaning || ""}</div>
-          <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">${p.lesson}</div>
+      <div class="dict-lesson-group">
+        <div class="dict-lesson-group-header">
+          <span>📘 ${lessonObj.lessonTitle || `Bài ${i}`}</span>
+          <span style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">
+            ${lessonVocab.length} từ vựng • ${lessonPatterns.length} mẫu câu
+          </span>
         </div>
-        <button type="button" class="btn-clear-single" onclick="playDiplomaticSpeech('${safeSpeak}', 'zh-CN')">🔊 Nghe</button>
+        <div class="dict-lesson-items">
+    `;
+
+    lessonVocab.forEach(v => {
+      const safeSpeak = String(v.zh).replace(/'/g, "");
+      const safePy = String(v.pinyin || "").replace(/'/g, "");
+      const safeVi = String(v.vi || "").replace(/'/g, "");
+      const isMarkedUnknown = needReviewWords.has(v.zh);
+      html += `
+        <div class="dict-item-card">
+          <div>
+            <strong style="font-size: 16px; color: var(--hanzi-color);">${v.zh}</strong>
+            <span style="color: var(--pinyin-color); font-size: 12.5px; font-weight: 600; margin-left: 6px;">[${v.pinyin || ""}]</span>
+            <div style="font-size: 13.5px; color: var(--text-main); margin-top: 3px;">${v.vi}</div>
+          </div>
+          <div style="display:flex; gap:4px; flex-shrink:0;">
+            <button type="button" class="btn-clear-single" onclick="playDiplomaticSpeech('${safeSpeak}', 'zh-CN')" title="Nghe phát âm">🔊</button>
+            <button type="button" class="btn-clear-single" style="${isMarkedUnknown ? "border-color: var(--warning-border); background: var(--warning-soft); color: var(--warning-text);" : ""}" onclick="toggleMarkUnknownFromDict('${safeSpeak}', '${safePy}', '${safeVi}', 'Bài ${i}', '${subjectLabel}')" title="Đánh dấu Chưa nhớ để ôn tập">📌</button>
+            <button type="button" class="btn-clear-single" onclick="copyTextToClipboard('${safeSpeak}')" title="Sao chép">📋</button>
+          </div>
+        </div>
+      `;
+    });
+
+    lessonPatterns.forEach(p => {
+      const safeSpeak = String(p.structure).replace(/'/g, "");
+      html += `
+        <div class="dict-item-card" style="border-left: 3px solid var(--primary);">
+          <div>
+            <strong style="font-size: 13.5px; color: var(--primary-text);">🔹 Mẫu câu: ${p.structure}</strong>
+            <div style="font-size: 13px; color: var(--text-main); margin-top: 2px;">${p.meaning || ""}</div>
+          </div>
+          <button type="button" class="btn-clear-single" onclick="playDiplomaticSpeech('${safeSpeak}', 'zh-CN')">🔊</button>
+        </div>
+      `;
+    });
+
+    html += `
+        </div>
       </div>
     `;
-  });
+  }
+
+  if (totalFound === 0) {
+    listEl.innerHTML = `<div style="text-align:center; padding: 28px; color: var(--text-muted);">Không tìm thấy thuật ngữ hoặc mẫu câu nào khớp với "${query}" trong học phần ${subjectLabel}.</div>`;
+    return;
+  }
 
   listEl.innerHTML = html;
 }

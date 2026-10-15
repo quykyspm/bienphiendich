@@ -1,6 +1,6 @@
 /* ==========================================================================
    PHÂN HỆ PHÒNG LUYỆN PHIÊN DỊCH (INTERPRETATION LAB NÂNG CẤP)
-   Nạp từ curriculum_pd.json & hỗ trợ Audio Studio + Sổ tay tốc ký + Tách câu
+   Nạp từ curriculum_pd.json & hỗ trợ Giọng Thuần Tiếng Trung + Sổ tay tốc ký
    ========================================================================== */
 
 let pdDB = null;
@@ -24,10 +24,10 @@ let currentInterScenario = {
 };
 
 let audioElement = new Audio();
-let doubaoAudioElement = new Audio();
 let isSpeechRevealed = false;
 let speechRecognizer = null;
 let isRecording = false;
+let isCabinTTSSpeaking = false;
 
 // Biến luyện từng câu (Sentence-by-Sentence Drill)
 let isSentenceDrillActive = false;
@@ -68,21 +68,18 @@ function bindAudioTimeEvents(aud) {
   });
 }
 bindAudioTimeEvents(audioElement);
-bindAudioTimeEvents(doubaoAudioElement);
 
 function seekCabinAudio(deltaSec) {
-  const activeAud = !audioElement.paused ? audioElement : (!doubaoAudioElement.paused ? doubaoAudioElement : audioElement);
-  if (activeAud && activeAud.duration && !isNaN(activeAud.duration)) {
-    activeAud.currentTime = Math.max(0, Math.min(activeAud.duration, activeAud.currentTime + deltaSec));
+  if (audioElement && audioElement.duration && !isNaN(audioElement.duration)) {
+    audioElement.currentTime = Math.max(0, Math.min(audioElement.duration, audioElement.currentTime + deltaSec));
   } else {
-    showToast("Tua nhanh áp dụng khi đang phát file âm thanh MP3/Doubao", "info");
+    showToast("Tua nhanh áp dụng khi đang phát file âm thanh MP3 gốc", "info");
   }
 }
 
 function onSeekCabinSlider(val) {
-  const activeAud = !audioElement.paused ? audioElement : (!doubaoAudioElement.paused ? doubaoAudioElement : audioElement);
-  if (activeAud && activeAud.duration && !isNaN(activeAud.duration)) {
-    activeAud.currentTime = (parseFloat(val) / 100) * activeAud.duration;
+  if (audioElement && audioElement.duration && !isNaN(audioElement.duration)) {
+    audioElement.currentTime = (parseFloat(val) / 100) * audioElement.duration;
   }
 }
 
@@ -197,7 +194,6 @@ function selectInterpretRate(btn) {
   btn.classList.add("active");
   selectedInterRate = parseFloat(btn.getAttribute("data-val")) || 1.0;
   if (audioElement) audioElement.playbackRate = selectedInterRate;
-  if (doubaoAudioElement) doubaoAudioElement.playbackRate = selectedInterRate;
 }
 
 // 5. Nạp bài khóa & cấu hình âm thanh
@@ -322,10 +318,7 @@ function stepCabinSentence(dir) {
 function playCurrentCabinSentence() {
   if (cabinSentences.length === 0) return;
   const sentence = cabinSentences[currentSentenceIdx];
-  const voiceSelect = document.getElementById("selectVoiceType");
-  const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
-  const btn = document.getElementById("btnPlayAudio");
-  routeTTS(sentence, selectedVoice, btn);
+  playNativeChineseTTS(sentence);
 }
 
 function toggleInterVocabPinyin() {
@@ -374,10 +367,10 @@ function renderInterVocabReference(textObj) {
       html += `
         <div class="pattern-item-row" onclick="onClickPatternRow(${pIdx}, 'inter')" title="Bấm để nghe mẫu câu">
           <div>
-            <strong style="color: var(--primary);">🔹 ${p.structure}</strong>
+            <strong style="color: var(--primary-text);">🔹 ${p.structure}</strong>
             <span style="color: var(--text-secondary); margin-left: 8px;">➔ ${p.meaning || ""}</span>
           </div>
-          <span style="font-size: 12px; color: var(--accent);">🔊 Nghe</span>
+          <span style="font-size: 12px; color: var(--pinyin-color); font-weight: 600;">🔊 Nghe</span>
         </div>
       `;
     });
@@ -432,11 +425,14 @@ function clearShorthandPad() {
   showToast("Đã xóa nháp tốc ký", "info");
 }
 
-// 6. Phát âm thanh (MP3 gốc hoặc TTS)
+// 6. Phát âm thanh (MP3 gốc hoặc Giọng thuần Tiếng Trung Native TTS)
 function playSpeakerAudio() {
   const btn = document.getElementById("btnPlayAudio");
-  const voiceSelect = document.getElementById("selectVoiceType");
-  const selectedVoice = voiceSelect ? voiceSelect.value : "doubao_yangguang";
+
+  if (isCabinTTSSpeaking) {
+    stopAllAudio();
+    return;
+  }
 
   if (isSentenceDrillActive && cabinSentences.length > 0) {
     playCurrentCabinSentence();
@@ -456,75 +452,21 @@ function playSpeakerAudio() {
     audioElement.play().then(() => {
       if (btn) btn.innerText = "⏸️ Tạm dừng";
     }).catch(() => {
-      routeTTS(currentInterScenario.sourceText, selectedVoice, btn);
+      playNativeChineseTTS(currentInterScenario.sourceText);
     });
 
     audioElement.onended = () => {
       if (btn) btn.innerText = "🔄 Nghe lại bài";
     };
   } else {
-    routeTTS(currentInterScenario.sourceText, selectedVoice, btn);
+    playNativeChineseTTS(currentInterScenario.sourceText);
   }
 }
 
-async function routeTTS(text, selectedVoice, btn) {
+function playNativeChineseTTS(text) {
+  const btn = document.getElementById("btnPlayAudio");
   if (!text) return;
 
-  if (!doubaoAudioElement.paused) {
-    doubaoAudioElement.pause();
-    if (btn) btn.innerText = "▶️ Phát âm thanh";
-    return;
-  }
-
-  if (selectedVoice === "browser") {
-    playFallbackTTS(text);
-    return;
-  }
-
-  if (currentInterScenario.sourceLangCode === "zh-CN" && selectedVoice && selectedVoice.startsWith("doubao")) {
-    const speakerId = (selectedVoice === "doubao_taozi")
-      ? "zh_female_taozi_conversation_v4_wvae_bigtts"
-      : "zh_male_yangguang_conversation_v4_wvae_bigtts";
-
-    try {
-      if (btn) btn.innerText = "⏳ Đang tải giọng Doubao...";
-
-      const response = await fetch("https://gemini-api-backend-rho.vercel.app/api/doubao-tts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text, speaker: speakerId })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const blob = await response.blob();
-      if (!blob || blob.size < 1000) {
-        throw new Error("Blob rỗng");
-      }
-
-      const audioBlob = new Blob([blob], { type: "audio/mpeg" });
-      const audioUrl = URL.createObjectURL(audioBlob);
-
-      doubaoAudioElement.src = audioUrl;
-      doubaoAudioElement.playbackRate = selectedInterRate;
-
-      doubaoAudioElement.onplay = () => { if (btn) btn.innerText = "⏸️ Đang phát (Doubao)"; };
-      doubaoAudioElement.onended = () => { if (btn) btn.innerText = "🔄 Nghe lại bài"; };
-
-      await doubaoAudioElement.play();
-      return;
-    } catch (err) {
-      console.warn("Chuyển sang Web Speech TTS:", err);
-    }
-  }
-
-  playFallbackTTS(text);
-}
-
-function playFallbackTTS(text) {
-  const btn = document.getElementById("btnPlayAudio");
   if (!window.speechSynthesis) {
     if (btn) btn.innerText = "▶️ Phát âm thanh";
     showToast("Trình duyệt không hỗ trợ Web Speech!", "warning");
@@ -533,17 +475,33 @@ function playFallbackTTS(text) {
   window.speechSynthesis.cancel();
 
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = currentInterScenario.sourceLangCode;
   u.rate = selectedInterRate;
 
-  const voices = window.speechSynthesis.getVoices();
   const isZh = (currentInterScenario.sourceLangCode === "zh-CN");
-  const matched = voices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(isZh ? "zh" : "vi"));
-  if (matched) u.voice = matched;
+  if (isZh && typeof resolveChineseVoice === "function") {
+    const resolved = resolveChineseVoice("zh-CN");
+    u.lang = resolved.lang || "zh-CN";
+    u.pitch = resolved.pitch || 1.0;
+    if (resolved.voice) u.voice = resolved.voice;
+  } else {
+    u.lang = currentInterScenario.sourceLangCode;
+    const voices = window.speechSynthesis.getVoices();
+    const matched = voices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(isZh ? "zh" : "vi"));
+    if (matched) u.voice = matched;
+  }
 
-  u.onstart = () => { if (btn) btn.innerText = "⏸️ Đang phát (TTS)..."; };
-  u.onend = () => { if (btn) btn.innerText = "🔄 Nghe lại bài"; };
-  u.onerror = () => { if (btn) btn.innerText = "▶️ Phát âm thanh"; };
+  u.onstart = () => {
+    isCabinTTSSpeaking = true;
+    if (btn) btn.innerText = "⏸️ Đang phát (Bấm dừng)";
+  };
+  u.onend = () => {
+    isCabinTTSSpeaking = false;
+    if (btn) btn.innerText = "🔄 Nghe lại bài";
+  };
+  u.onerror = () => {
+    isCabinTTSSpeaking = false;
+    if (btn) btn.innerText = "▶️ Phát âm thanh";
+  };
 
   window.speechSynthesis.speak(u);
 }
@@ -553,11 +511,8 @@ function stopAllAudio() {
     audioElement.pause();
     audioElement.currentTime = 0;
   }
-  if (doubaoAudioElement) {
-    doubaoAudioElement.pause();
-    doubaoAudioElement.currentTime = 0;
-  }
   if (window.speechSynthesis) window.speechSynthesis.cancel();
+  isCabinTTSSpeaking = false;
 
   const btn = document.getElementById("btnPlayAudio");
   if (btn) btn.innerText = "▶️ Phát âm thanh";
@@ -751,7 +706,7 @@ function runLocalInterCheck() {
   const resBox = document.getElementById("interpretAIResult");
   resBox.innerHTML = `
     <div class="eval-score-header">
-      <strong style="font-size: 15px; color: var(--primary);">⚡ Kiểm tra nhanh Thuật ngữ Cabin</strong>
+      <strong style="font-size: 15px; color: var(--primary-text);">⚡ Kiểm tra nhanh Thuật ngữ Cabin</strong>
       <span class="score-circle-badge" style="background: var(--primary);">Độ phủ: ${matched.length}/${currentInterScenario.vocabList.length} (${ratio}%)</span>
     </div>
     <div class="eval-formatted-body">
